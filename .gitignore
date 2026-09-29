@@ -1,0 +1,12 @@
+sources/
+.env
+.env.*
+!.env.example
+config.local.*
+*.log
+dist/
+build/
+.vscode/
+.idea/
+__pycache__/
+*.pyc
