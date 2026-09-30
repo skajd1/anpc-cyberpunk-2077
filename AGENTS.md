@@ -1,20 +1,31 @@
-# ANPC project
+# ANPC 프로젝트
 
-ANPC is a planned Cyberpunk 2077 mod for player-initiated text conversations and context-aware NPC behavior.
+ANPC는 플레이어가 먼저 시작하는 텍스트 대화와 상황에 따른 NPC 행동을 구현하는 사이버펑크 2077 모드 프로젝트다.
 
-## Directory map
+## 주요 디렉터리
 
-- `docs/`: design and product specifications.
-- `sources/`: read-only reference material synchronized from the ChatGPT project. Do not edit, rename, move, or delete its files; synchronization may replace them.
+- `docs/`: 설계, 제품 요구사항, 구현 가능성 분석 문서.
+- `sources/`: ChatGPT 프로젝트에서 동기화한 읽기 전용 참고 자료. 동기화 과정에서 교체될 수 있으므로 수정·이름 변경·이동·삭제하지 않는다.
 
-## Constraints
+## 공통 제약
 
-- Preserve community NPC characterization and original quest behavior.
-- Give crowd NPCs generated personas that remain stable during a conversation.
-- Treat game state as authoritative and limit AI actions to verified mod capabilities.
-- Use player text input initially; player voice input is out of scope.
+- 모든 프로젝트 문서는 한국어로 작성한다. `README.md`, `AGENTS.md`, `docs/`의 신규·수정 문서에 적용한다. 코드 식별자, API 이름, 제품명과 경로는 원래 표기를 유지할 수 있다. 읽기 전용 `sources/`의 원문은 보존한다.
+- 커뮤니티 NPC의 기존 성격과 원작 퀘스트 행동을 보존한다.
+- 군중 NPC의 생성된 특성은 대화와 유효한 근거리 재접촉 동안 유지한다.
+- 게임 상태를 사실의 기준으로 삼고 AI 행동은 검증된 모딩 기능으로 제한한다.
+- 처음에는 플레이어 텍스트 입력을 사용한다. 플레이어 음성 입력은 범위 밖이다.
+- AI 연결은 플레이어 개인 API 키 사용을 우선한다. 제작자가 운영하는 중계·추론 서버는 두지 않는다.
+- 규격 문서에는 대상·범위·데이터·조건·결과를 명세한다. 구현 근거는 참고 분석에, 시험 방법과 진행 상태는 개발·검증 계획에 둔다. 동일 계약은 한 기준 문서에서만 정의한다.
 
-## Documentation
+## 문서 안내
 
-- [Initial design](docs/initial-design.md): first playable slice, feasibility checks, and build sequence.
-- [Full specification](docs/full-specification.md): complete requirements, NPC policies, architecture, prompt contract, and acceptance criteria.
+- [초기 버전 명세](docs/initial-design.md): 첫 배포의 포함 기능과 제외 범위.
+- [전체 제품 명세](docs/full-specification.md): 제품 요구사항과 분야별 기준 문서 안내.
+- [기술 구조 및 AI 통신 규격](docs/runtime-specification.md): 실행 모듈, 세션, 키 관리, 요청·응답과 오류 계약.
+- [NPC 식별 및 대화 허용 규격](docs/npc-identity-specification.md): NPC 키, 대화 조건, 재접촉 기억과 무효화.
+- [게임 정보 수집 및 NPC 인지 규격](docs/game-context-specification.md): 관찰 필드, 상태·출처, 인물에게 공개할 정보와 갱신.
+- [콘텐츠 데이터 규격](docs/content-specification.md): 캐릭터 카드, 군중 원형, 사실·지식·반응 규칙과 기억 작성.
+- [NPC 대사·행동 생성 프롬프트 명세](docs/prompt-specification.md): 고정 베이스, 교체 가능한 인물 주입 구조, 상황 블록, 생성·예외 규칙과 예시.
+- [NPC 행동 범위 명세](docs/npc-action-scope.md): 행동 ID, 인수, 실행 한도, 결과와 중단·복구.
+- [벤치마크 및 구현 가능성 분석](docs/benchmark-analysis.md): 공개 모드·도구의 구현 근거와 미확인 사항.
+- [개발 및 검증 계획](docs/development-validation.md): 구현 순서, 모의·게임 시험, 출시 판정과 검증 상태.
