@@ -1,0 +1,8 @@
+{
+  "name": "anpc-dialogue-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node prototype/server.js", "test": "node --test prototype/tests/*.test.js" },
+  "engines": { "node": ">=22" }
+}

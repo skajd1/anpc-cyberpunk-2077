@@ -1,0 +1,320 @@
+{
+  "checked_at": "2026-09-30",
+  "sources": [
+    {
+      "id": "CDPR_GAME",
+      "title": "CDPR 공식 게임·인물 소개",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "Characters / Night City",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "CDPR_BOOK",
+      "title": "CDPR Ultimate Edition 안내서",
+      "url": "https://cdn-s-cyberpunk.cdprojektred.com/CP2077-UE-Booklet-EN-1.pdf",
+      "tier": "primary",
+      "access_method": "local_pdf_text",
+      "locator": "PDF 43~46쪽 인물 / 60쪽 현지화. 웹 크기 제한 후 Python으로 읽음",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "CDPR_TRAVEL",
+      "title": "CDPR 도시 장소 안내",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "2024-03-29, 장소별 항목",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_VIKTOR",
+      "title": "Cyberpunk Wiki: Viktor_Vektor",
+      "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_MISTY",
+      "title": "Cyberpunk Wiki: Misty_Olszewski",
+      "url": "https://cyberpunk.fandom.com/wiki/Misty_Olszewski",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_ROGUE",
+      "title": "Cyberpunk Wiki: Rogue_Amendiares",
+      "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_GORO",
+      "title": "Cyberpunk Wiki: Goro_Takemura",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_KERRY",
+      "title": "Cyberpunk Wiki: Kerry_Eurodyne",
+      "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_RIVER",
+      "title": "Cyberpunk Wiki: River_Ward",
+      "url": "https://cyberpunk.fandom.com/wiki/River_Ward",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_EVELYN",
+      "title": "Cyberpunk Wiki: Evelyn_Parker",
+      "url": "https://cyberpunk.fandom.com/wiki/Evelyn_Parker",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_MONEY",
+      "title": "Cyberpunk Wiki: Eurodollar",
+      "url": "https://cyberpunk.fandom.com/wiki/Eurodollar",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_BD",
+      "title": "Cyberpunk Wiki: Braindance",
+      "url": "https://cyberpunk.fandom.com/wiki/Braindance",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_RIPPER",
+      "title": "Cyberpunk Wiki: Ripperdoc",
+      "url": "https://cyberpunk.fandom.com/wiki/Ripperdoc",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_FIXER",
+      "title": "Cyberpunk Wiki: Fixer",
+      "url": "https://cyberpunk.fandom.com/wiki/Fixer",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_RUNNER",
+      "title": "Cyberpunk Wiki: Netrunner",
+      "url": "https://cyberpunk.fandom.com/wiki/Netrunner",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_TT",
+      "title": "Cyberpunk Wiki: Trauma_Team",
+      "url": "https://cyberpunk.fandom.com/wiki/Trauma_Team",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_ARASAKA",
+      "title": "Cyberpunk Wiki: Arasaka",
+      "url": "https://cyberpunk.fandom.com/wiki/Arasaka",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_MILITECH",
+      "title": "Cyberpunk Wiki: Militech",
+      "url": "https://cyberpunk.fandom.com/wiki/Militech",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_POLICE",
+      "title": "Cyberpunk Wiki: Night_City_Police_Department",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City_Police_Department",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_MAXTAC",
+      "title": "Cyberpunk Wiki: MaxTac",
+      "url": "https://cyberpunk.fandom.com/wiki/MaxTac",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_CITY",
+      "title": "Cyberpunk Wiki: Night_City",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_WATSON",
+      "title": "Cyberpunk Wiki: Watson_(2077)",
+      "url": "https://cyberpunk.fandom.com/wiki/Watson_%282077%29",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_HEYWOOD",
+      "title": "Cyberpunk Wiki: Heywood_(2077)",
+      "url": "https://cyberpunk.fandom.com/wiki/Heywood_%282077%29",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_RANCHO",
+      "title": "Cyberpunk Wiki: Rancho_Coronado_(2077)",
+      "url": "https://cyberpunk.fandom.com/wiki/Rancho_Coronado_%282077%29",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_PACIFICA",
+      "title": "Cyberpunk Wiki: Pacifica_(2077)",
+      "url": "https://cyberpunk.fandom.com/wiki/Pacifica_%282077%29",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_TIGER",
+      "title": "Cyberpunk Wiki: Tyger_Claws",
+      "url": "https://cyberpunk.fandom.com/wiki/Tyger_Claws",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_MOX",
+      "title": "Cyberpunk Wiki: The_Mox",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Mox",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_MAELSTROM",
+      "title": "Cyberpunk Wiki: Maelstrom",
+      "url": "https://cyberpunk.fandom.com/wiki/Maelstrom",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_VALENTINOS",
+      "title": "Cyberpunk Wiki: Valentinos",
+      "url": "https://cyberpunk.fandom.com/wiki/Valentinos",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_SIXTH",
+      "title": "Cyberpunk Wiki: 6th_Street",
+      "url": "https://cyberpunk.fandom.com/wiki/6th_Street",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_VOODOO",
+      "title": "Cyberpunk Wiki: Voodoo_Boys",
+      "url": "https://cyberpunk.fandom.com/wiki/Voodoo_Boys",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_NOMADS",
+      "title": "Cyberpunk Wiki: Seven_Nations",
+      "url": "https://cyberpunk.fandom.com/wiki/Seven_Nations",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_ANIMALS",
+      "title": "Cyberpunk Wiki: Animals",
+      "url": "https://cyberpunk.fandom.com/wiki/Animals",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_SCAVS",
+      "title": "Cyberpunk Wiki: Scavengers",
+      "url": "https://cyberpunk.fandom.com/wiki/Scavengers",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_AFTERLIFE",
+      "title": "Cyberpunk Wiki: Afterlife",
+      "url": "https://cyberpunk.fandom.com/wiki/Afterlife",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-09-30"
+    }
+  ]
+}

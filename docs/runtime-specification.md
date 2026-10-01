@@ -1,6 +1,6 @@
 # 기술 구조 및 AI 통신 규격
 
-규격 버전: 0.1 (2026-09-30). 이 문서는 목표 구현 계약이다. 실제 API 연결 가능성·버전 호환성은 [참고 분석](benchmark-analysis.md), 시험 절차는 [개발·검증 계획](development-validation.md)에 기록한다.
+규격 버전: 0.2 (2026-10-01). 이 문서는 목표 구현 계약이다. 실제 API 연결 가능성·버전 호환성은 [참고 분석](benchmark-analysis.md), 시험 절차는 [개발·검증 계획](development-validation.md)에 기록한다.
 
 ## 1. 실행 구조
 
@@ -18,6 +18,7 @@
 | 세션 관리자 | 시작·입력·취소·게임 중단 이벤트 | 세션 상태·요청 수명·정리 |
 | 상태 수집 | NPC·현재 저장 범위 | 필드별 출처가 있는 상태 스냅샷 |
 | 콘텐츠·기억 | NPC 키·상태·대화 | 인물 카드·허용 지식·대화 기억 |
+| 기억 정리 | 확정 사건·소유자·기억 버전·정리 조건 | 비동기 후보·검사·저장. 세부 모듈은 [기억 규격](memory-specification.md) |
 | 프롬프트 조립 | 콘텐츠·상태·허용 행동·입력 | 제공자에 전달할 모델 입력 |
 | 통신 어댑터 | 연결 설정·입력·취소 토큰 | 응답·사용량·표준 오류 |
 | 응답 검사 | 원문 응답·요청 계약 | 정규화된 대사·행동 제안 |
@@ -25,7 +26,7 @@
 
 ## 3. 세션과 동시성
 
-상태는 idle, targeting, active, waiting, closing이다. 대화는 한 번에 NPC 한 명, 모델 요청은 한 번에 하나만 허용한다. waiting에서는 새 입력 전송을 비활성화하고 취소·종료를 제공한다. 요청 취소는 active로, 세션 종료는 closing을 거쳐 idle로 이동한다.
+상태는 idle, targeting, active, waiting, closing이다. 대화는 한 번에 NPC 한 명, 전경 대사 모델 요청은 한 번에 하나만 허용한다. waiting에서는 새 입력 전송을 비활성화하고 취소·종료를 제공한다. 요청 취소는 active로, 세션 종료는 closing을 거쳐 idle로 이동한다. 후속 기억 정리 요청은 별도 작업이며 동시성·대사 우선·취소·늦은 반영은 [기억 규격](memory-specification.md)을 따른다. 정리 완료를 기다리느라 waiting으로 전환하지 않는다.
 
 세션에는 session_id, save_scope, world_epoch, npc_instance_key, request_sequence를 둔다. 요청마다 새 request_id를 생성한다. 응답은 이 값들과 현재 대기 요청이 모두 일치할 때만 수용한다. 대상 소멸·퀘스트 제어 진입·전투는 세션을 닫는다. 저장 로드·빠른 이동·세계 전환은 세션을 닫고 world_epoch도 갱신한다. 통신 자체를 취소할 수 없어도 늦은 응답은 폐기한다.
 
@@ -42,7 +43,7 @@ active 상태에서 입력·UI 조작이 없는 시간이 60초를 넘으면 세
 | timeout_ms | 정수 | 기본 15000, 범위 3000~60000 |
 | output_token_limit | 정수 | 기본 512, 범위 128~2048 |
 
-위 수치는 초기 정책 기본값이며 성능 실측 결과가 아니다. 1차는 비스트리밍 구조화된 텍스트 응답을 사용한다. 제공자별 요청 형식은 어댑터가 변환한다. 인증 헤더와 응답 본문을 그대로 로그에 남기지 않는다.
+위 수치는 초기 정책 기본값이며 성능 실측 결과가 아니다. output_token_limit는 연결 설정의 상한이며 요청별 실제 상한·문맥 선택·비용 원장은 [API 비용 및 응답 효율 규격](api-cost-specification.md)을 따른다. 1차는 비스트리밍 구조화된 텍스트 응답을 사용한다. 제공자별 요청 형식은 어댑터가 변환한다. 인증 헤더와 응답 본문을 그대로 로그에 남기지 않는다.
 
 키는 Windows 보안 저장소 또는 사용자 계정에 묶인 암호화 저장 방식으로 관리한다. 평문 설정 저장을 기본 대안으로 사용하지 않는다. 보안 저장 기능이 없으면 해당 실행 동안 메모리에만 보관한다. 설정 화면은 마스킹 입력과 키 등록·삭제를 제공하며 저장된 키를 재표시하지 않는다. 키 입력·교체·모델 변경은 현재 요청 종료 후 적용한다.
 
@@ -51,6 +52,8 @@ active 상태에서 입력·UI 조작이 없는 시간이 60초를 넘으면 세
 ## 5. 요청·응답 계약
 
 내부 요청의 필수 필드는 schema_version, request_id, session_id, request_sequence, save_scope, world_epoch, npc_instance_key, snapshot_id, prompt_version, content_version, persona, knowledge, memory, allowed_actions, player_text다. 프롬프트 조립기는 [프롬프트 명세](prompt-specification.md)에 따라 요청과 현재 대화 기록을 persona·context·현재 입력으로 변환한다. 로컬 식별자는 어댑터가 필요 없는 경우 외부 제공자에 보내지 않는다. player_text는 최대 1000자로 제한한다.
+
+memory의 목표 형식은 [기억 규격의 대사 입력 뷰](memory-specification.md#9-대사-프롬프트용-기억-뷰)다. 별도 요약 요청은 NPC 응답 객체를 사용하지 않고 기억 후보 계약을 사용한다. 응답 검사·실제 표시 후 확정 사건을 기록하고 행동 결과는 실행기가 확인할 때 추가한다. 저장소·작업 정보는 모델이 생성하거나 덮어쓰지 않는다.
 
 모델 응답 객체에는 아래 필드만 허용한다. 내부 요청 식별자는 어댑터가 붙이며 모델이 돌려준 값으로 덮어쓰지 않는다.
 
@@ -66,7 +69,9 @@ active 상태에서 입력·UI 조작이 없는 시간이 60초를 넘으면 세
 
 ## 6. 오류와 재시도
 
-오류 코드는 auth_failed, rate_limited, timeout, network_error, invalid_response, stale_response, context_unavailable다. 인증 오류·요금 제한은 자동 재시도하지 않는다. 네트워크 실패·형식 오류의 재시도는 요청당 최대 한 번이며 전체 제한 시간을 넘지 않는다. 이미 행동이 실행된 요청은 재시도하지 않는다.
+오류 코드는 auth_failed, rate_limited, timeout, network_error, invalid_response, stale_response, context_unavailable다. 요청 전 비용 예약 한도를 넘으면 budget_exceeded를 반환한다. 재시도 기본값·예외 한도는 [비용 규격](api-cost-specification.md)을 따른다. 이미 행동이 실행된 요청은 재시도하지 않는다.
+
+후속 기억 기능에서 원문·보호 기억을 안전하게 보존할 수 없으면 입력 수용 전에 memory_capacity_exceeded를 반환한다. 기억 정리 작업의 오류는 [기억 규격](memory-specification.md)의 별도 진단이며 대사 요청의 오류 코드로 전파하지 않는다.
 
 실패 시 기존 대화를 유지하고 한국어 오류 안내와 재전송·종료를 제공한다. NPC가 서비스 오류를 세계관 속 사건으로 설명하게 하지 않는다. 비용·사용량은 제공자가 실제 반환한 값만 표시하고 미제공 값은 알 수 없음으로 표시한다.
 

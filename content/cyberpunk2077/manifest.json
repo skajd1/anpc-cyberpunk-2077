@@ -1,0 +1,38 @@
+{
+  "content_version": "research-0.4",
+  "identity_structure_version": "1.0",
+  "status": "조사·작성 후보. 출시 승인 전",
+  "runtime_enabled": false,
+  "files": [
+    "sources.json",
+    "world-facts.json",
+    "knowledge.json",
+    "dialogue-examples.json",
+    "crowd-knowledge-policy.json",
+    "characters/judy.json",
+    "characters/panam.json",
+    "characters/jackie.json",
+    "characters/viktor.json",
+    "characters/misty.json",
+    "characters/rogue.json",
+    "characters/goro.json",
+    "characters/kerry.json",
+    "characters/river.json",
+    "characters/evelyn.json"
+  ],
+  "counts": {
+    "characters": 10,
+    "world_facts": 53,
+    "knowledge_entries": 154,
+    "dialogue_examples": 20,
+    "knowledge_bundles": 13
+  },
+  "scope": "대표 인물 10명·기본 세계관·지식 배분. 전체 원작·모든 퀘스트·대사·샤드의 완전 수록은 아님",
+  "excluded_unverified": [
+    "케리의 악기: 공식 안내서와 위키 표현 불일치",
+    "실제 게임 내부 퀘스트·NPC 키",
+    "미검수 한국어판 호칭",
+    "각 엔딩·과거 시대·확장 비밀의 일괄 공개"
+  ],
+  "player_identity_fact_id": "PLAYER_V"
+}

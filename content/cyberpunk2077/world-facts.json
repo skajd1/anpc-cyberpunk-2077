@@ -1,0 +1,1618 @@
+[
+  {
+    "schema_version": "0.1",
+    "id": "NC_CITY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "나이트 시티는 권력·부·신체 개조가 두드러지는 대도시다",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "나이트 시티는 권력·부·신체 개조가 두드러지는 대도시다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "city"
+    ],
+    "trigger_terms": [
+      "나이트 시티",
+      "도시"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "NC_DISTRICTS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "나이트 시티에는 여섯 주요 구역이 있다",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "2024-03-29, 장소별 항목",
+      "support_summary": "나이트 시티에는 여섯 주요 구역이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "district"
+    ],
+    "trigger_terms": [
+      "구역",
+      "동네"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EDDIES",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "유로달러는 나이트 시티의 통화이며 에디라고도 부른다",
+    "source": {
+      "source_id": "WIKI_MONEY",
+      "url": "https://cyberpunk.fandom.com/wiki/Eurodollar",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "유로달러는 나이트 시티의 통화이며 에디라고도 부른다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "money"
+    ],
+    "trigger_terms": [
+      "돈",
+      "에디",
+      "유로달러"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CYBERWARE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "사이버웨어는 신체 기능을 강화하는 임플란트다",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "사이버웨어는 신체 기능을 강화하는 임플란트다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "cyberware"
+    ],
+    "trigger_terms": [
+      "크롬",
+      "임플란트",
+      "사이버웨어"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "RIPPERDOC",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리퍼닥은 사이버웨어를 이식하는 의료 기술자다",
+    "source": {
+      "source_id": "WIKI_RIPPER",
+      "url": "https://cyberpunk.fandom.com/wiki/Ripperdoc",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "리퍼닥은 사이버웨어를 이식하는 의료 기술자다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "medicine"
+    ],
+    "trigger_terms": [
+      "리퍼닥",
+      "시술"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "FIXER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "픽서는 의뢰인과 용병 사이에서 일거리를 중개한다",
+    "source": {
+      "source_id": "WIKI_FIXER",
+      "url": "https://cyberpunk.fandom.com/wiki/Fixer",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "픽서는 의뢰인과 용병 사이에서 일거리를 중개한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "mercenary"
+    ],
+    "trigger_terms": [
+      "픽서",
+      "의뢰",
+      "일거리"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "BD_EXPERIENCE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "브레인댄스는 기록한 사람의 감각·경험을 재체험하는 기술이다",
+    "source": {
+      "source_id": "WIKI_BD",
+      "url": "https://cyberpunk.fandom.com/wiki/Braindance",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "브레인댄스는 기록한 사람의 감각·경험을 재체험하는 기술이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "bd"
+    ],
+    "trigger_terms": [
+      "BD",
+      "브레인댄스"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "BD_EDITING",
+    "revision": 2,
+    "kind": "world_fact",
+    "statement": "BD 편집은 감각 정보를 조절하고 원본을 분석하는 작업을 포함한다",
+    "source": {
+      "source_id": "WIKI_BD",
+      "url": "https://cyberpunk.fandom.com/wiki/Braindance",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "BD 편집은 감각 정보를 조절하고 원본을 분석하는 작업을 포함한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "bd",
+      "editing"
+    ],
+    "trigger_terms": [
+      "편집",
+      "원본",
+      "감각",
+      "BD 분석",
+      "브레인댄스 분석"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "BD_RISK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "안전하게 기록·편집되지 않은 BD는 이용자에게 위험할 수 있다",
+    "source": {
+      "source_id": "WIKI_BD",
+      "url": "https://cyberpunk.fandom.com/wiki/Braindance",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "안전하게 기록·편집되지 않은 BD는 이용자에게 위험할 수 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "bd",
+      "safety"
+    ],
+    "trigger_terms": [
+      "불법 BD",
+      "원본",
+      "안전"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "NETRUNNER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "넷러너는 신경 인터페이스와 컴퓨터 기술을 사용하는 해커다",
+    "source": {
+      "source_id": "WIKI_RUNNER",
+      "url": "https://cyberpunk.fandom.com/wiki/Netrunner",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "넷러너는 신경 인터페이스와 컴퓨터 기술을 사용하는 해커다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "net"
+    ],
+    "trigger_terms": [
+      "넷러너",
+      "해킹"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "NET_CORP_DEFENSE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "기업은 데이터 보안을 위해 넷러너를 고용한다",
+    "source": {
+      "source_id": "WIKI_RUNNER",
+      "url": "https://cyberpunk.fandom.com/wiki/Netrunner",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "기업은 데이터 보안을 위해 넷러너를 고용한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "net",
+      "corporation"
+    ],
+    "trigger_terms": [
+      "보안",
+      "데이터",
+      "넷러너"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "NET_BLACKWALL",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "2077년의 넷에는 블랙월로 격리된 위험한 영역이 있다",
+    "source": {
+      "source_id": "WIKI_RUNNER",
+      "url": "https://cyberpunk.fandom.com/wiki/Netrunner",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "2077년의 넷에는 블랙월로 격리된 위험한 영역이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "net",
+      "blackwall"
+    ],
+    "trigger_terms": [
+      "블랙월",
+      "구 넷"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ARASAKA_SECURITY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "아라사카는 기업·개인 보안 서비스를 제공하는 거대 기업이다",
+    "source": {
+      "source_id": "WIKI_ARASAKA",
+      "url": "https://cyberpunk.fandom.com/wiki/Arasaka",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "아라사카는 기업·개인 보안 서비스를 제공하는 거대 기업이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "corporation"
+    ],
+    "trigger_terms": [
+      "아라사카",
+      "기업"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MILITECH_ARMS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "밀리테크는 무기·군사 장비와 전투 서비스를 제공한다",
+    "source": {
+      "source_id": "WIKI_MILITECH",
+      "url": "https://cyberpunk.fandom.com/wiki/Militech",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "밀리테크는 무기·군사 장비와 전투 서비스를 제공한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "corporation",
+      "weapons"
+    ],
+    "trigger_terms": [
+      "밀리테크",
+      "무기"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TT_SERVICE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "트라우마 팀은 무장 응급 의료 서비스를 제공한다",
+    "source": {
+      "source_id": "WIKI_TT",
+      "url": "https://cyberpunk.fandom.com/wiki/Trauma_Team",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "트라우마 팀은 무장 응급 의료 서비스를 제공한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "medicine"
+    ],
+    "trigger_terms": [
+      "트라우마 팀",
+      "응급"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TT_COVERAGE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "트라우마 팀의 서비스 범위는 가입한 보장 상품에 따라 다르다",
+    "source": {
+      "source_id": "WIKI_TT",
+      "url": "https://cyberpunk.fandom.com/wiki/Trauma_Team",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "트라우마 팀의 서비스 범위는 가입한 보장 상품에 따라 다르다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "medicine",
+      "money"
+    ],
+    "trigger_terms": [
+      "보험",
+      "가입",
+      "트라우마 팀"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "NCPD",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "NCPD는 나이트 시티의 경찰 조직이다",
+    "source": {
+      "source_id": "WIKI_POLICE",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City_Police_Department",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "NCPD는 나이트 시티의 경찰 조직이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "police"
+    ],
+    "trigger_terms": [
+      "경찰",
+      "NCPD"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MAXTAC",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "맥스택은 사이버사이코 등 고위험 상황에 대응하는 NCPD 특수 조직이다",
+    "source": {
+      "source_id": "WIKI_MAXTAC",
+      "url": "https://cyberpunk.fandom.com/wiki/MaxTac",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "맥스택은 사이버사이코 등 고위험 상황에 대응하는 NCPD 특수 조직이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "optional",
+    "topic_tags": [
+      "police",
+      "risk"
+    ],
+    "trigger_terms": [
+      "맥스택",
+      "사이버사이코"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "WATSON_AREAS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "왓슨에는 리틀 차이나·가부키·노스사이드·아라사카 워터프런트가 있다",
+    "source": {
+      "source_id": "WIKI_WATSON",
+      "url": "https://cyberpunk.fandom.com/wiki/Watson_%282077%29",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "왓슨에는 리틀 차이나·가부키·노스사이드·아라사카 워터프런트가 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "watson"
+    ],
+    "trigger_terms": [
+      "왓슨",
+      "가부키",
+      "리틀 차이나",
+      "노스사이드"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "KABUKI_MARKET",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "가부키는 시장과 암시장 거래가 두드러지는 지역이다",
+    "source": {
+      "source_id": "WIKI_WATSON",
+      "url": "https://cyberpunk.fandom.com/wiki/Watson_%282077%29",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "가부키는 시장과 암시장 거래가 두드러지는 지역이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "watson",
+      "trade"
+    ],
+    "trigger_terms": [
+      "가부키",
+      "시장"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HEYWOOD_HOME",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "헤이우드는 다양한 주거 형태와 상점이 있는 주거 지역이다",
+    "source": {
+      "source_id": "WIKI_HEYWOOD",
+      "url": "https://cyberpunk.fandom.com/wiki/Heywood_%282077%29",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "헤이우드는 다양한 주거 형태와 상점이 있는 주거 지역이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "heywood"
+    ],
+    "trigger_terms": [
+      "헤이우드",
+      "집"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JIGJIG",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "지그지그 스트리트는 웨스트브룩의 재팬타운에 있다",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "2024-03-29, 장소별 항목",
+      "support_summary": "지그지그 스트리트는 웨스트브룩의 재팬타운에 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "westbrook"
+    ],
+    "trigger_terms": [
+      "지그지그",
+      "재팬타운"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "RANCHO_HOUSING",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "란초 코로나도는 산토 도밍고의 주거 지역이다",
+    "source": {
+      "source_id": "WIKI_RANCHO",
+      "url": "https://cyberpunk.fandom.com/wiki/Rancho_Coronado_%282077%29",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "란초 코로나도는 산토 도밍고의 주거 지역이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "santo_domingo"
+    ],
+    "trigger_terms": [
+      "란초 코로나도",
+      "산토 도밍고"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ARROYO_WORK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "아로요의 공장들은 란초 코로나도 주민들의 주요 일터다",
+    "source": {
+      "source_id": "WIKI_RANCHO",
+      "url": "https://cyberpunk.fandom.com/wiki/Rancho_Coronado_%282077%29",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "아로요의 공장들은 란초 코로나도 주민들의 주요 일터다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "santo_domingo",
+      "work"
+    ],
+    "trigger_terms": [
+      "아로요",
+      "공장"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PACIFICA_ABANDONED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "퍼시피카는 개발 투자가 중단되어 방치된 지역이다",
+    "source": {
+      "source_id": "WIKI_PACIFICA",
+      "url": "https://cyberpunk.fandom.com/wiki/Pacifica_%282077%29",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "퍼시피카는 개발 투자가 중단되어 방치된 지역이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "pacifica"
+    ],
+    "trigger_terms": [
+      "퍼시피카",
+      "개발"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "BADLANDS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "배드랜드에는 사막과 도시 외곽의 넓은 황무지가 있다",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "2024-03-29, 장소별 항목",
+      "support_summary": "배드랜드에는 사막과 도시 외곽의 넓은 황무지가 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "badlands"
+    ],
+    "trigger_terms": [
+      "배드랜드",
+      "사막"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ROCKY_RIDGE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "로키 리지는 배드랜드의 버려진 마을이다",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "2024-03-29, 장소별 항목",
+      "support_summary": "로키 리지는 배드랜드의 버려진 마을이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "badlands"
+    ],
+    "trigger_terms": [
+      "로키 리지"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "DOGTOWN",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "도그타운은 퍼시피카에서 분리된 장벽 안의 지역이며 민병대가 지배한다",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "2024-03-29, 장소별 항목",
+      "support_summary": "도그타운은 퍼시피카에서 분리된 장벽 안의 지역이며 민병대가 지배한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "dogtown"
+    ],
+    "trigger_terms": [
+      "도그타운"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "DOGTOWN_MARKET",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "도그타운 스타디움에는 암시장이 있다",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "2024-03-29, 장소별 항목",
+      "support_summary": "도그타운 스타디움에는 암시장이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "dogtown",
+      "trade"
+    ],
+    "trigger_terms": [
+      "스타디움",
+      "암시장"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MOX",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "목스는 성노동자 등 소외된 사람들의 보호를 표방하는 집단이다",
+    "source": {
+      "source_id": "WIKI_MOX",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Mox",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "목스는 성노동자 등 소외된 사람들의 보호를 표방하는 집단이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "optional",
+    "topic_tags": [
+      "mox"
+    ],
+    "trigger_terms": [
+      "목스"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "LIZZIES",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리즈 바는 목스의 거점이자 BD 클럽이다",
+    "source": {
+      "source_id": "WIKI_MOX",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Mox",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "리즈 바는 목스의 거점이자 BD 클럽이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "watson",
+      "mox",
+      "bd"
+    ],
+    "trigger_terms": [
+      "리즈",
+      "리즈 바"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TIGER_JAPANTOWN",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "타이거 클로는 재팬타운을 중심으로 활동한다",
+    "source": {
+      "source_id": "WIKI_TIGER",
+      "url": "https://cyberpunk.fandom.com/wiki/Tyger_Claws",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "타이거 클로는 재팬타운을 중심으로 활동한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "westbrook",
+      "gang"
+    ],
+    "trigger_terms": [
+      "타이거 클로",
+      "재팬타운"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MAELSTROM_WATSON",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "멜스트롬은 왓슨의 산업 지역에서 활동하며 극단적인 신체 개조로 알려져 있다",
+    "source": {
+      "source_id": "WIKI_MAELSTROM",
+      "url": "https://cyberpunk.fandom.com/wiki/Maelstrom",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "멜스트롬은 왓슨의 산업 지역에서 활동하며 극단적인 신체 개조로 알려져 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "watson",
+      "gang"
+    ],
+    "trigger_terms": [
+      "멜스트롬",
+      "노스사이드"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "VALENTINOS_HEYWOOD",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "발렌티노는 헤이우드를 주요 활동 지역으로 삼는다",
+    "source": {
+      "source_id": "WIKI_VALENTINOS",
+      "url": "https://cyberpunk.fandom.com/wiki/Valentinos",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "발렌티노는 헤이우드를 주요 활동 지역으로 삼는다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "heywood",
+      "gang"
+    ],
+    "trigger_terms": [
+      "발렌티노",
+      "헤이우드"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SIXTH_SANTO",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "식스 스트리트는 산토 도밍고에서 영향력이 있는 갱이다",
+    "source": {
+      "source_id": "WIKI_SIXTH",
+      "url": "https://cyberpunk.fandom.com/wiki/6th_Street",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "식스 스트리트는 산토 도밍고에서 영향력이 있는 갱이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "santo_domingo",
+      "gang"
+    ],
+    "trigger_terms": [
+      "식스 스트리트",
+      "산토 도밍고"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "VOODOO_PACIFICA",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "부두 보이즈는 퍼시피카와 연결된 넷러너 집단이다",
+    "source": {
+      "source_id": "WIKI_VOODOO",
+      "url": "https://cyberpunk.fandom.com/wiki/Voodoo_Boys",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "부두 보이즈는 퍼시피카와 연결된 넷러너 집단이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "pacifica",
+      "net"
+    ],
+    "trigger_terms": [
+      "부두 보이즈",
+      "퍼시피카"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ANIMALS_WORK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "애니멀은 육체적 힘을 중시하며 경호·문지기 일을 맡기도 한다",
+    "source": {
+      "source_id": "WIKI_ANIMALS",
+      "url": "https://cyberpunk.fandom.com/wiki/Animals",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "애니멀은 육체적 힘을 중시하며 경호·문지기 일을 맡기도 한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "optional",
+    "topic_tags": [
+      "gang",
+      "work"
+    ],
+    "trigger_terms": [
+      "애니멀",
+      "경호"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SCAVS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "스캐빈저는 사람을 납치하고 사이버웨어를 강탈하는 집단들로 알려져 있다",
+    "source": {
+      "source_id": "WIKI_SCAVS",
+      "url": "https://cyberpunk.fandom.com/wiki/Scavengers",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "스캐빈저는 사람을 납치하고 사이버웨어를 강탈하는 집단들로 알려져 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "optional",
+    "topic_tags": [
+      "gang",
+      "risk"
+    ],
+    "trigger_terms": [
+      "스캐빈저",
+      "스캐브"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ALDECALDOS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "알데칼도는 가족·공동체를 이루는 노마드 집단이다",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "알데칼도는 가족·공동체를 이루는 노마드 집단이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "optional",
+    "topic_tags": [
+      "nomad",
+      "family"
+    ],
+    "trigger_terms": [
+      "알데칼도",
+      "노마드"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "AFTERLIFE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "애프터라이프는 왓슨 리틀 차이나에 있는 클럽이다",
+    "source": {
+      "source_id": "WIKI_AFTERLIFE",
+      "url": "https://cyberpunk.fandom.com/wiki/Afterlife",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "애프터라이프는 왓슨 리틀 차이나에 있는 클럽이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "watson",
+      "mercenary"
+    ],
+    "trigger_terms": [
+      "애프터라이프"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SAMURAI_JOHNNY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "조니 실버핸드는 SAMURAI의 프런트맨으로 알려진 반기업 로커보이다",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "조니 실버핸드는 SAMURAI의 프런트맨으로 알려진 반기업 로커보이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "optional",
+    "topic_tags": [
+      "music"
+    ],
+    "trigger_terms": [
+      "조니",
+      "SAMURAI",
+      "사무라이"
+    ],
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "RELIC_V",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V에게 삽입된 실험용 칩은 조니의 인격으로 V의 인격을 덮어쓰는 문제를 일으킨다",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "V에게 삽입된 실험용 칩은 조니의 인격으로 V의 인격을 덮어쓰는 문제를 일으킨다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "main_act2",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "relic"
+    ],
+    "trigger_terms": [
+      "렐릭",
+      "칩",
+      "조니"
+    ],
+    "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JUDY_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리즈 바를 기반으로 활동하는 BD 기술자다",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "리즈 바를 기반으로 활동하는 BD 기술자다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "judy"
+    ],
+    "trigger_terms": [
+      "주디 알바레스"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PANAM_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "알데칼도와 가족 유대를 가진 노마드이며 첫 만남 무렵에는 독립 용병 일을 한다",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "알데칼도와 가족 유대를 가진 노마드이며 첫 만남 무렵에는 독립 용병 일을 한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "panam"
+    ],
+    "trigger_terms": [
+      "팬앰 팔머"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JACKIE_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "헤이우드 출신으로 큰 무대에 오르기를 꿈꾸는 용병이다",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "헤이우드 출신으로 큰 무대에 오르기를 꿈꾸는 용병이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "jackie"
+    ],
+    "trigger_terms": [
+      "재키 웰스"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "VIKTOR_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "왓슨 리틀 차이나에서 진료하는 리퍼닥이며 복싱 경력이 있다",
+    "source": {
+      "source_id": "WIKI_VIKTOR",
+      "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "왓슨 리틀 차이나에서 진료하는 리퍼닥이며 복싱 경력이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "viktor"
+    ],
+    "trigger_terms": [
+      "빅터 벡터"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MISTY_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "미스티의 에소테리카를 운영하며 타로를 읽고 재키·빅터와 가깝다",
+    "source": {
+      "source_id": "WIKI_MISTY",
+      "url": "https://cyberpunk.fandom.com/wiki/Misty_Olszewski",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "미스티의 에소테리카를 운영하며 타로를 읽고 재키·빅터와 가깝다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "misty"
+    ],
+    "trigger_terms": [
+      "미스티 올셰프스키"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ROGUE_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "용병 경력을 가진 픽서이며 애프터라이프를 운영한다",
+    "source": {
+      "source_id": "WIKI_ROGUE",
+      "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "용병 경력을 가진 픽서이며 애프터라이프를 운영한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "rogue"
+    ],
+    "trigger_terms": [
+      "로그 아멘디아레스"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "GORO_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "아라사카에서 사부로의 경호를 맡았던 경력이 있다",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "아라사카에서 사부로의 경호를 맡았던 경력이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "goro"
+    ],
+    "trigger_terms": [
+      "고로 타케무라"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "KERRY_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "SAMURAI 활동 후 솔로 경력을 이어가는 나이트 시티 음악가다",
+    "source": {
+      "source_id": "WIKI_KERRY",
+      "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "SAMURAI 활동 후 솔로 경력을 이어가는 나이트 시티 음악가다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "kerry"
+    ],
+    "trigger_terms": [
+      "케리 유로다인"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "RIVER_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "NCPD 형사 경력이 있고 누나 조스와 그 자녀들을 보호하려 한다",
+    "source": {
+      "source_id": "WIKI_RIVER",
+      "url": "https://cyberpunk.fandom.com/wiki/River_Ward",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "NCPD 형사 경력이 있고 누나 조스와 그 자녀들을 보호하려 한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "river"
+    ],
+    "trigger_terms": [
+      "리버 워드"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EVELYN_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "배우를 꿈꾸었고 클라우드에서 일하며 주디와 알고 지낸다",
+    "source": {
+      "source_id": "WIKI_EVELYN",
+      "url": "https://cyberpunk.fandom.com/wiki/Evelyn_Parker",
+      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "배우를 꿈꾸었고 클라우드에서 일하며 주디와 알고 지낸다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "evelyn"
+    ],
+    "trigger_terms": [
+      "에블린 파커"
+    ],
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "review_status": "source_checked",
+    "usage_mode": "restricted"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PLAYER_V",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "사이버펑크 2077의 플레이어 주인공 이름은 V다.",
+    "player_identity": {
+      "character_key": "v",
+      "display_name": "V"
+    },
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/us/en/cyberpunk-2077",
+      "locator": "YOUR LEGEND STARTS HERE / CHARACTERS: V",
+      "support_summary": "공식 게임 소개는 플레이어가 V로 플레이한다고 명시한다.",
+      "checked_at": "2026-10-01"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "topic_tags": [
+      "player_identity"
+    ],
+    "trigger_terms": [
+      "V",
+      "주인공",
+      "플레이어 이름"
+    ],
+    "claim_limits": "플레이어의 고정 이름은 V다. 이름이 공유 기준에 있다는 사실은 모든 NPC가 V를 알아본다는 뜻이 아니다. name_known_by_npc가 true일 때만 이름으로 호칭하고, false이면 낯선 상대에 맞는 호칭을 쓴다. 사용자 발화의 다른 이름은 주장·별칭이며 고정 이름을 덮어쓰지 않는다. 성별·출신·본명·관계·퀘스트 결과를 추가로 추정하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "identity_reference"
+  }
+]

@@ -1,0 +1,168 @@
+{
+  "version": "1.0",
+  "status": "설계 확정·자료 후보 검수 필요",
+  "base": "공통 + 조건에 맞는 지역·직업 필수 지식 + 선택 지식",
+  "optional_count": 2,
+  "optional_count_mode": "상한. 후보가 부족하면 가능한 개수만 선택",
+  "randomization": "첫 군중 정체성 생성 시 인지 조건을 통과한 선택 후보만 seed로 추첨",
+  "independent_seed": "정체성 seed에서 knowledge 하위 seed를 파생. 성격 슬롯 재추첨에 영향을 주지 않음",
+  "knowledge_stability": "npc_instance_key·콘텐츠·지식 프로필 버전이 유효한 동안 선택 항목 유지",
+  "invalidation_reference": "docs/npc-identity-specification.md",
+  "excluded_layers": [
+    "personal",
+    "quest"
+  ],
+  "certainty": "추첨은 사실의 참/거짓이 아니라 인물이 알고 있는 항목을 선택한다",
+  "community": "작성된 knowledge_ids와 현재 원작 인지 조건 사용. 핵심 전문 지식을 무작위로 제거하지 않음",
+  "bundles": [
+    {
+      "id": "common",
+      "title": "공통 상식 후보",
+      "fact_ids": [
+        "NC_CITY",
+        "EDDIES",
+        "CYBERWARE",
+        "RIPPERDOC",
+        "FIXER",
+        "BD_EXPERIENCE",
+        "NETRUNNER",
+        "ARASAKA_SECURITY",
+        "MILITECH_ARMS",
+        "TT_SERVICE",
+        "NCPD"
+      ],
+      "eligibility": "항상 제공하되 외부인·인지 예외는 승인 프로필에서 제외",
+      "review_status": "draft"
+    },
+    {
+      "id": "watson",
+      "title": "왓슨 생활 지식",
+      "fact_ids": [
+        "WATSON_AREAS",
+        "KABUKI_MARKET",
+        "LIZZIES",
+        "MAELSTROM_WATSON",
+        "AFTERLIFE"
+      ],
+      "eligibility": "거주·직업 활동 근거 필요. 현재 위치만으로 거주자로 간주하지 않음",
+      "review_status": "draft"
+    },
+    {
+      "id": "heywood",
+      "title": "헤이우드 생활 지식",
+      "fact_ids": [
+        "HEYWOOD_HOME",
+        "VALENTINOS_HEYWOOD"
+      ],
+      "eligibility": "거주·직업 활동 근거 필요",
+      "review_status": "draft"
+    },
+    {
+      "id": "westbrook",
+      "title": "웨스트브룩 생활 지식",
+      "fact_ids": [
+        "JIGJIG",
+        "TIGER_JAPANTOWN"
+      ],
+      "eligibility": "거주·직업 활동 근거 필요",
+      "review_status": "draft"
+    },
+    {
+      "id": "santo_domingo",
+      "title": "산토 도밍고 생활 지식",
+      "fact_ids": [
+        "RANCHO_HOUSING",
+        "ARROYO_WORK",
+        "SIXTH_SANTO"
+      ],
+      "eligibility": "거주·직업 활동 근거 필요",
+      "review_status": "draft"
+    },
+    {
+      "id": "pacifica",
+      "title": "퍼시피카 생활 지식",
+      "fact_ids": [
+        "PACIFICA_ABANDONED",
+        "VOODOO_PACIFICA"
+      ],
+      "eligibility": "거주·직업 활동 근거 필요",
+      "review_status": "draft"
+    },
+    {
+      "id": "badlands",
+      "title": "배드랜드 생활 지식",
+      "fact_ids": [
+        "BADLANDS",
+        "ROCKY_RIDGE",
+        "ALDECALDOS"
+      ],
+      "eligibility": "승인된 외곽 생활·물류·노마드 배경 필요",
+      "review_status": "draft"
+    },
+    {
+      "id": "dogtown",
+      "title": "도그타운 생활 지식",
+      "fact_ids": [
+        "DOGTOWN",
+        "DOGTOWN_MARKET"
+      ],
+      "eligibility": "확장 지역 생활·활동이 확인된 프로필 필요",
+      "review_status": "draft"
+    },
+    {
+      "id": "bd_worker",
+      "title": "BD 업무 지식",
+      "fact_ids": [
+        "BD_EDITING",
+        "BD_RISK"
+      ],
+      "eligibility": "승인된 BD 업무 배경에만 부여",
+      "review_status": "draft"
+    },
+    {
+      "id": "medical_worker",
+      "title": "의료·시술 업무 지식",
+      "fact_ids": [
+        "TT_COVERAGE",
+        "RIPPERDOC",
+        "CYBERWARE"
+      ],
+      "eligibility": "승인된 의료·시술 업무 배경에만 부여",
+      "review_status": "draft"
+    },
+    {
+      "id": "net_worker",
+      "title": "넷 업무 지식",
+      "fact_ids": [
+        "NET_CORP_DEFENSE",
+        "NET_BLACKWALL"
+      ],
+      "eligibility": "승인된 넷 업무 배경에만 부여",
+      "review_status": "draft"
+    },
+    {
+      "id": "security_worker",
+      "title": "경비 업무 지식",
+      "fact_ids": [
+        "NCPD",
+        "MAXTAC",
+        "MILITECH_ARMS"
+      ],
+      "eligibility": "승인된 경비·치안 업무 배경에만 부여",
+      "review_status": "draft"
+    },
+    {
+      "id": "optional",
+      "title": "선택 관심 지식",
+      "fact_ids": [
+        "SAMURAI_JOHNNY",
+        "ANIMALS_WORK",
+        "SCAVS",
+        "MAXTAC",
+        "MOX"
+      ],
+      "eligibility": "허용 후보에서 최대 2개 추첨. 사실 오류·직접 목격 경험을 생성하지 않음",
+      "review_status": "draft"
+    }
+  ]
+}

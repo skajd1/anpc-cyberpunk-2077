@@ -1,0 +1,5427 @@
+[
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_BD_EDITING",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EDITING",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.BD_EDITING",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_BD_RISK",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_RISK",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.BD_RISK",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_LIZZIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "LIZZIES",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.LIZZIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mox_local",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_MOX",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MOX",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.MOX",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mox_local",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_TIGER_JAPANTOWN",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TIGER_JAPANTOWN",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.TIGER_JAPANTOWN",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "westbrook",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_JUDY_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "JUDY_BACKGROUND",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.JUDY_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "독립성을 지키며 불의에 맞선다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_RELIC_V",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RELIC_V",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.RELIC_V",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.player_disclosure.relic",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "승인된 관계에서 V가 공개한 범위만 언급한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
+    "domain_id": "relic",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_ALDECALDOS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ALDECALDOS",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.ALDECALDOS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "nomad_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_BADLANDS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BADLANDS",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.BADLANDS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "badlands",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_ROCKY_RIDGE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ROCKY_RIDGE",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.ROCKY_RIDGE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "badlands",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_PANAM_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "PANAM_BACKGROUND",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.PANAM_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자유와 오랜 가족 유대를 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_RELIC_V",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RELIC_V",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.RELIC_V",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.player_disclosure.relic",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "승인된 관계에서 V가 공개한 범위만 언급한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
+    "domain_id": "relic",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_HEYWOOD_HOME",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "HEYWOOD_HOME",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.HEYWOOD_HOME",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "heywood",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_VALENTINOS_HEYWOOD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "VALENTINOS_HEYWOOD",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.VALENTINOS_HEYWOOD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "heywood",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_AFTERLIFE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "AFTERLIFE",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.AFTERLIFE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_MAXTAC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MAXTAC",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.MAXTAC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_JACKIE_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "JACKIE_BACKGROUND",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.JACKIE_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "친구에 대한 신뢰와 충성심이 강하다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_TT_COVERAGE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_COVERAGE",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.TT_COVERAGE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_SCAVS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "SCAVS",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.SCAVS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "street_risk",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_VIKTOR_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "VIKTOR_BACKGROUND",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.VIKTOR_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "원칙·전문성·가까운 사람에 대한 돌봄을 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_VIKTOR_RELIC_V",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RELIC_V",
+    "owner_key": "viktor",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.grants.RELIC_V",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.player_disclosure.relic",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "승인된 관계에서 V가 공개한 범위만 언급한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
+    "domain_id": "relic",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_WATSON_AREAS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "WATSON_AREAS",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.WATSON_AREAS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "watson",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_MISTY_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MISTY_BACKGROUND",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.MISTY_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "변화와 불확실성 속에서 자신을 이해하는 일을 돕는다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_MISTY_RELIC_V",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RELIC_V",
+    "owner_key": "misty",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.grants.RELIC_V",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.player_disclosure.relic",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "승인된 관계에서 V가 공개한 범위만 언급한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
+    "domain_id": "relic",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_AFTERLIFE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "AFTERLIFE",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.AFTERLIFE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_NET_CORP_DEFENSE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NET_CORP_DEFENSE",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.NET_CORP_DEFENSE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_ROGUE_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ROGUE_BACKGROUND",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.ROGUE_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "일의 신뢰도와 조건을 먼저 따진다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_ROGUE_RELIC_V",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RELIC_V",
+    "owner_key": "rogue",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.grants.RELIC_V",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.player_disclosure.relic",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "승인된 관계에서 V가 공개한 범위만 언급한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
+    "domain_id": "relic",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_NET_CORP_DEFENSE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NET_CORP_DEFENSE",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.NET_CORP_DEFENSE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_GORO_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "GORO_BACKGROUND",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.GORO_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "사부로·아라사카에 대한 충성심과 전통적 가치를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_GORO_RELIC_V",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RELIC_V",
+    "owner_key": "goro",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.grants.RELIC_V",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.player_disclosure.relic",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "승인된 관계에서 V가 공개한 범위만 언급한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
+    "domain_id": "relic",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_SAMURAI_JOHNNY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "SAMURAI_JOHNNY",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.SAMURAI_JOHNNY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "music",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_NET_CORP_DEFENSE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NET_CORP_DEFENSE",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.NET_CORP_DEFENSE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_KERRY_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "KERRY_BACKGROUND",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.KERRY_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "자기 음악과 독자적인 정체성을 중요하게 여긴다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_KERRY_RELIC_V",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RELIC_V",
+    "owner_key": "kerry",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.grants.RELIC_V",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.player_disclosure.relic",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "승인된 관계에서 V가 공개한 범위만 언급한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
+    "domain_id": "relic",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_MAXTAC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MAXTAC",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.MAXTAC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_BD_EDITING",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EDITING",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.BD_EDITING",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_SCAVS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "SCAVS",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.SCAVS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "street_risk",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_RANCHO_HOUSING",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RANCHO_HOUSING",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.RANCHO_HOUSING",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "santodomingo",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_RIVER_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIVER_BACKGROUND",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.RIVER_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "옳은 일을 하려는 의지와 가족 보호를 중시한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "mercenary",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "corporations",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_TT_SERVICE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_SERVICE",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.TT_SERVICE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "medicine",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "police",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_BD_EDITING",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EDITING",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.BD_EDITING",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "braindance",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_TIGER_JAPANTOWN",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TIGER_JAPANTOWN",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.TIGER_JAPANTOWN",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "westbrook",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_JIGJIG",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "JIGJIG",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.JIGJIG",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "westbrook",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_EVELYN_BACKGROUND",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EVELYN_BACKGROUND",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.EVELYN_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "더 나은 삶을 원하며 일과 거래를 합리적으로 판단한다 현재 입력과 관련된 경우에만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  }
+]

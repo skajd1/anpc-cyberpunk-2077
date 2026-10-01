@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ANPC · 대화 시제품</title><link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script></head>
+<body>
+  <header><div><span class="brand">ANPC</span><span class="edition">대화 시제품 / 0.1</span></div><span class="stage">게임 없이 실행 · 모든 행동은 가상</span></header>
+  <main>
+    <aside>
+      <h1>누구와 이야기할까요?</h1>
+      <p><a href="/compare">인물 설정·대화 테스트 열기</a></p>
+      <label for="npc">인물</label><select id="npc"></select>
+      <p id="persona-summary"></p>
+      <dl><dt>현재 목적</dt><dd id="goal"></dd><dt>성격·관심사</dt><dd id="traits"></dd></dl>
+      <div class="buttons"><button id="start" class="primary">대화 시작</button><button id="end" disabled>대화 종료</button></div>
+      <section><h2>가상 게임 상태</h2>
+        <label for="equipment">보이는 장비</label><select id="equipment"><option>평범한 외투</option>방탄 조끼</option>기업 정장</option>배달 작업복</option></select>
+        <label class="check"><input type="checkbox" id="weapon">무기를 꺼낸 상태</label>
+        <div class="pair"><label>레벨<input id="level" type="number" min="1" max="60" value="10"></label><label>길거리 평판<input id="cred" type="number" min="0" max="50" value="10"></label></div>
+        <p class="hint">수치의 인지 규칙이 없어 원시 레벨·평판은 모델에 전달하지 않습니다.</p>
+        <label for="quest">퀘스트 단계</label><select id="quest"><option value="unknown">알 수 없음</option><option value="before">가상 사건 이전</option><option value="after">가상 사건 이후</option></select>
+        <label for="distance">거리 <output id="distance-value">2m</output></label><input id="distance" type="range" min="1" max="12" value="2">
+        <label class="check"><input type="checkbox" id="combat">전투 중</label><label class="check"><input type="checkbox" id="scene">원작 연출 중</label>
+        <label for="save">저장 범위</label><select id="save"><option value="save-a">저장 A</option><option value="save-b">저장 B</option></select>
+        <div class="buttons"><button id="respawn">NPC 재생성</button><button id="reload">저장 로드</button></div>
+      </section>
+    </aside>
+    <article class="chat">
+      <div class="chat-heading"><div><h2 id="chat-title">대화를 시작하세요</h2><p id="status" role="status">대기 중</p></div><button id="clear">기억 삭제</button></div>
+      <div id="messages" aria-live="polite"><div class="empty">거리를 걷는 인물에게 말을 걸어보세요.<small>먼저 모의 응답으로 실행하거나 개인 API 키로 실제 대화를 연결할 수 있습니다.</small></div></div>
+      <div id="error" role="alert" hidden></div>
+      <form id="chat-form"><label for="input" class="sr-only">플레이어 대사</label><textarea id="input" maxlength="1000" rows="2" placeholder="안녕, 지금 뭐 하고 있어?" disabled></textarea><div class="compose-footer"><span>Enter 전송 · Shift+Enter 줄바꿈</span><div><button id="cancel" type="button" hidden>응답 취소</button><button id="send" type="submit" class="primary" disabled>보내기</button></div></div></form>
+    </article>
+    <aside class="inspector">
+      <h2>응답 연결</h2><label for="mode">실행 모드</label><select id="mode"><option value="mock">모의 응답 · API 호출 없음</option><option value="openai">OpenAI · 개인 API 키</option><option value="codex">Codex · 로컬 로그인</option></select>
+      <div id="codex-settings" hidden><p id="codex-status" role="status">로그인 상태 확인 전</p><button id="check-codex">로그인·모델 목록 새로고침</button><p class="hint">Codex 로그인 목록에 없는 GPT-4o mini는 개인 API 키 모드에서 선택하세요.</p></div>
+      <div id="api-settings" hidden><label for="model">모델</label><select id="model"></select><p id="model-help" class="hint"></p><div id="custom-model-settings" hidden><label for="custom-model">직접 입력할 모델 ID</label><input id="custom-model" placeholder="모델 ID 입력" autocomplete="off"></div><label for="api-key">API 키</label><input id="api-key" type="password" autocomplete="off" placeholder="실행 중에만 사용"><button id="forget-key">키 지우기</button><p id="key-help" class="hint">키는 파일이나 브라우저 저장소에 저장하지 않습니다.</p></div>
+      <p id="mode-help" class="hint">모의 응답은 규칙 기반 예시입니다. AI 품질 평가 결과가 아닙니다.</p>
+      <section><h2>현재 동작</h2><dl><dt>NPC 제어</dt><dd id="control">해제됨</dd><dt>재접촉 기억</dt><dd id="memory">없음</dd><dt>응답 정보</dt><dd id="reply-info">없음</dd></dl><ol id="events"></ol></section>
+      <details><summary>조립된 프롬프트</summary><pre id="prompt-view">입력 전송 후 표시됩니다. API 키는 포함되지 않습니다.</pre></details>
+      <details><summary>검사된 JSON 응답</summary><pre id="reply-view">응답 대기</pre></details>
+      <details><summary>캐릭터 카드 교체</summary><label for="card">선택 인물의 JSON 카드</label><textarea id="card" rows="12" spellcheck="false"></textarea><button id="apply-card">카드 적용</button><p class="hint">적용하면 대화와 기억을 초기화합니다. 원작 캐릭터 카드가 아닌 창작 예시입니다.</p></details>
+    </aside>
+  </main>
+  <footer>시제품의 채팅·프롬프트·기억은 실제 코드입니다. NPC와 게임 상태·행동 실행은 시뮬레이션입니다.</footer>
+</body></html>

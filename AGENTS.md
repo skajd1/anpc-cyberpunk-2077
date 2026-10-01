@@ -5,7 +5,10 @@ ANPC는 플레이어가 먼저 시작하는 텍스트 대화와 상황에 따른
 ## 주요 디렉터리
 
 - `docs/`: 설계, 제품 요구사항, 구현 가능성 분석 문서.
-- `sources/`: ChatGPT 프로젝트에서 동기화한 읽기 전용 참고 자료. 동기화 과정에서 교체될 수 있으므로 수정·이름 변경·이동·삭제하지 않는다.
+- `prototype/`: 게임 없이 실행하는 Node.js 대화 시제품, 화면·인물 카드·자동 검사.
+- `content/`: 원작 출처·세계관 사실·대표 인물 카드·지식·예시의 조사 묶음. 승인 상태와 실행 활성 상태를 확인한다.
+- `scripts/`: 콘텐츠 자료의 참조·조건·배분 검사 도구.
+- 이전 Codex 프로젝트의 `sources/` 참고 자료는 이 작업 폴더로 복사하지 않았다. 원본은 읽기 전용으로 보존한다.
 
 ## 공통 제약
 
@@ -23,9 +26,17 @@ ANPC는 플레이어가 먼저 시작하는 텍스트 대화와 상황에 따른
 - [전체 제품 명세](docs/full-specification.md): 제품 요구사항과 분야별 기준 문서 안내.
 - [기술 구조 및 AI 통신 규격](docs/runtime-specification.md): 실행 모듈, 세션, 키 관리, 요청·응답과 오류 계약.
 - [NPC 식별 및 대화 허용 규격](docs/npc-identity-specification.md): NPC 키, 대화 조건, 재접촉 기억과 무효화.
+- [NPC 단기·장기 기억 및 비동기 정리 규격](docs/memory-specification.md): 기억 영역·출처·조회·용량·요약 큐·원자적 반영·저장 시점·재사용 인터페이스.
 - [게임 정보 수집 및 NPC 인지 규격](docs/game-context-specification.md): 관찰 필드, 상태·출처, 인물에게 공개할 정보와 갱신.
-- [콘텐츠 데이터 규격](docs/content-specification.md): 캐릭터 카드, 군중 원형, 사실·지식·반응 규칙과 기억 작성.
+- [콘텐츠 데이터 규격](docs/content-specification.md): 확정된 정체성 구조 1.0, 커뮤니티 고정 카드·군중 3개 슬롯 조합·유지, 플레이어 고정 신원, 분야 깊이·근거, 사실·지식·반응 규칙과 기억 작성.
+- [NPC 세계관 지식 부여 규격](docs/npc-knowledge-specification.md): 저장 위치, 공통·지역·직업·선택·개인·퀘스트 지식, 출신·경험별 분야 깊이, 군중 추첨과 인지 조건.
+- [대표 인물 10명 및 세계관 조사](docs/community-npc-catalog.md): 인물별 정체성·지식 방향, 출처 접근 방식·충돌·미검수 항목과 군중 확장 순서.
+- [콘텐츠 자료 안내](content/README.md): JSON 묶음, 승인 상태, 시제품 연결 상태와 기준 문서.
 - [NPC 대사·행동 생성 프롬프트 명세](docs/prompt-specification.md): 고정 베이스, 교체 가능한 인물 주입 구조, 상황 블록, 생성·예외 규칙과 예시.
+- [API 비용 및 응답 효율 규격](docs/api-cost-specification.md): 토큰 예산·문맥 선별·캐시·중복 요청·재시도·개인 사용 한도와 비용 원장.
 - [NPC 행동 범위 명세](docs/npc-action-scope.md): 행동 ID, 인수, 실행 한도, 결과와 중단·복구.
 - [벤치마크 및 구현 가능성 분석](docs/benchmark-analysis.md): 공개 모드·도구의 구현 근거와 미확인 사항.
+- [캐릭터 정체성 벤치마킹 및 적용 분석](docs/character-identity-benchmark.md): Character.AI·Chub·SillyTavern의 공개 설계·코드, 역할 학습 연구, 주디·팬앰 자료 작성과 적용 한계.
+- [NPC 대화 정체성 평가 규격](docs/dialogue-evaluation-specification.md): 원작·작성·군중 근거 구분, 중대 위반, 7개 품질 축·채점 앵커, 평가 데이터와 AI·사람 판정 계약.
 - [개발 및 검증 계획](docs/development-validation.md): 구현 순서, 모의·게임 시험, 출시 판정과 검증 상태.
+- [대화 시제품 사용 및 구현 안내](docs/dialogue-prototype.md): 로컬 실행, 답변 영역의 10명 인물 선택·3열 설정/채팅/특성 슬롯·단독/비교 테스트·질문 프리셋·요청 상태/사용량·화면 확장, API·Codex 연결과 게임판의 차이.
