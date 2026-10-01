@@ -60,5 +60,11 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var
 .knowledge-slots{grid-template-columns:minmax(0,1fr) auto;margin-top:10px;gap:5px 10px}
 .knowledge-slots dd{font-size:11px;color:var(--muted)}
 @media(min-width:1400px){.compare-page .comparison-layout{grid-template-columns:250px minmax(320px,1fr) 310px}.compare-page aside{padding:24px}.compare-page .comparison-workspace{padding:24px 32px}}
-@media(max-width:900px){.compare-page{height:auto;min-height:100dvh;overflow:visible}.compare-page .comparison-layout{display:grid;grid-template-columns:200px minmax(0,1fr)}.compare-page .comparison-workspace{min-height:650px}.compare-page .comparison-results{max-height:550px}.compare-page .character-rail{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}.compare-page #character-profile{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.compare-page .slot-profile{margin:0;padding:0;border:0}}
+@media(min-width:741px) and (max-width:1050px){.compare-page .comparison-layout{grid-template-columns:180px minmax(280px,1fr) 230px}.compare-page aside{padding:18px 16px}.compare-page .comparison-workspace{padding:18px 16px}.entry-row{gap:8px}.entry-row .hint{flex-basis:100%}}
+@media(max-width:740px){.compare-page{height:auto;min-height:100dvh;overflow:visible}.compare-page .comparison-layout{display:grid;grid-template-columns:180px minmax(0,1fr)}.compare-page .comparison-workspace{min-height:650px}.compare-page .comparison-results{max-height:550px}.compare-page .character-rail{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}.compare-page #character-profile{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.compare-page .slot-profile{margin:0;padding:0;border:0}}
 @media(max-width:600px){.compare-page .comparison-layout{display:block}.compare-page header{padding:0 16px}.compare-page .comparison-workspace{padding:20px 18px;min-height:550px}.compare-page .settings-rail{border-right:0;border-bottom:1px solid var(--line)}.compare-page #character-profile{grid-template-columns:1fr}.compare-page footer{padding:8px 18px}}
+/* 시나리오 입력은 왼쪽 접힌 설정 안에 두고 채팅 중심 배치를 유지한다. */
+.entry-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 12px; }
+.entry-row .hint { flex: 1; margin: 0; }
+.scenario-buttons { display: flex; gap: 8px; margin-top: 8px; }
+.action-selection { font-size: 13px; color: #e8c465; margin: 8px 0; }

@@ -11,6 +11,8 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const json = (res, status, value) => { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(value)); };
 const routes = { '/': ['index.html', 'text/html'], '/compare': ['compare.html', 'text/html'], '/compare.js': ['compare.js', 'text/javascript'], '/test-tools.js': ['test-tools.js', 'text/javascript'], '/profile.js': ['profile.js', 'text/javascript'], '/profile-view.js': ['profile-view.js', 'text/javascript'], '/research.js': ['research.js', 'text/javascript'], '/app.js': ['app.js', 'text/javascript'], '/core.js': ['core.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'] };
 
+routes['/scenario.js'] = ['scenario.js', 'text/javascript'];
+
 export async function createPrototypeServer({ apiKey = process.env.OPENAI_API_KEY, generate = generateOpenAI, generateLocal, statusLocal = codexStatus, modelsLocal } = {}) {
   const codex = new CodexConnection();
   generateLocal ??= args => codex.generate(args);

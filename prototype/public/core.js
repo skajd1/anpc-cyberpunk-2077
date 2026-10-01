@@ -5,6 +5,14 @@ export const ACTIONS = [
   { action_id: 'resume_walk', description: 'ANPC 제어 해제 (가상 실행)', args: {} },
   { action_id: 'end_conversation', description: '대화 종료', args: {} }
 ];
+// 개발용 의미 참조다. 실제 모드 자산 또는 실행 권한을 나타내지 않는다.
+export const GESTURE_CANDIDATES = [
+  { ref: 'test_nod', meaning: '가볍게 고개를 끄덕임' },
+  { ref: 'test_shrug', meaning: '어깨를 으쓱함' },
+  { ref: 'test_wave', meaning: '짧게 손을 흔듦' }
+];
+export const SELECTION_ACTIONS = [{ action_id: 'play_gesture', description: '대사에 맞는 제스처 선택 · 실행 안 함',
+  execution_mode: 'selection_only', args: { gesture_ref: { values: GESTURE_CANDIDATES.map(g => g.ref) } }, candidates: GESTURE_CANDIDATES }];
 const clone = value => structuredClone(value);
 const id = () => crypto.randomUUID();
 const exact = (obj, keys) => obj && typeof obj === 'object' && !Array.isArray(obj) && Object.keys(obj).sort().join() === [...keys].sort().join();
@@ -21,12 +29,13 @@ export function validatePersona(p) {
 }
 
 export function responseSchema() {
-  const actionOptions = ACTIONS.map(a => ({
+  const actionOptions = [...ACTIONS, ...SELECTION_ACTIONS].map(a => ({
     type: 'object', additionalProperties: false, required: ['action_id', 'args'],
     properties: { action_id: { type: 'string', enum: [a.action_id] }, args: {
       type: 'object', additionalProperties: false,
-      properties: a.action_id === 'face_player' ? { duration_s: { type: 'number', minimum: 1, maximum: 10 } } : {},
-      required: a.action_id === 'face_player' ? ['duration_s'] : []
+      properties: Object.fromEntries(Object.entries(a.args).map(([key, spec]) => [key, spec.values
+        ? { type: 'string', enum: spec.values } : { type: 'number', minimum: spec.min, maximum: spec.max }])),
+      required: Object.keys(a.args)
     } }
   }));
   return { type: 'object', additionalProperties: false, required: ['dialogue', 'intent', 'emotion', 'action', 'follow_up'], properties: {
@@ -41,9 +50,10 @@ export function validateReply(reply, allowed, persona) {
   let actionValid = reply.action === null;
   if (exact(reply.action, ['action_id', 'args']) && allowed.some(a => a.action_id === reply.action.action_id)) {
     const a = reply.action;
-    actionValid = a.action_id === 'face_player'
-      ? exact(a.args, ['duration_s']) && typeof a.args.duration_s === 'number' && Number.isFinite(a.args.duration_s) && a.args.duration_s >= 1 && a.args.duration_s <= 10
-      : exact(a.args, []);
+    const spec = [...ACTIONS, ...SELECTION_ACTIONS].find(candidate => candidate.action_id === a.action_id);
+    actionValid = Boolean(spec) && exact(a.args, Object.keys(spec.args)) && Object.entries(spec.args).every(([key, rule]) => rule.values
+      ? rule.values.includes(a.args[key])
+      : typeof a.args[key] === 'number' && Number.isFinite(a.args[key]) && a.args[key] >= rule.min && a.args[key] <= rule.max);
   }
   if (reply.intent === 'farewell' && (reply.follow_up !== null || (reply.action && reply.action.action_id !== 'end_conversation'))) actionValid = false;
   if (!actionValid) return { reply: { dialogue: persona.fallback_lines.unavailable_action, intent: 'refuse', emotion: 'neutral', action: null, follow_up: null }, warning: '허용되지 않은 행동·인수: 원문 대신 인물의 안전 대사를 표시했습니다.' };
@@ -154,7 +164,7 @@ export class DialogueEngine {
     const context = prepared?.context ?? this.context();
     const persona = prepared?.persona ?? s.persona;
     this.lastSelection = prepared?.diagnostics ?? null;
-    this.lastRawReply = null; this.lastReply = null;
+    this.lastRawReply = null; this.lastReply = null; this.lastActionSelection = null;
     s.sequence++; s.pending = requestId; s.controller = new AbortController(); this.state = 'waiting'; this.touch();
     const prompt = assemblePrompt(this.base, persona, context, playerText, prepared);
     this.lastPrompt = { prompt_version: '0.1', content_version: this.lastSelection?.content_version ?? '0.1', ...prompt }; this.emit();
@@ -162,18 +172,26 @@ export class DialogueEngine {
       const generated = await generate({ prompt, persona, context, playerText, signal: s.controller.signal });
       if (this.session !== s || s.pending !== requestId || !this.safe()) return { stale: true };
       this.lastRawReply = clone(generated.reply);
-      const checked = validateReply(generated.reply, this.allowed(), persona); const reply = checked.reply;
+      const currentAllowed = this.allowed();
+      const checked = validateReply(generated.reply, context.allowed_actions.filter(a => currentAllowed.some(c => c.action_id === a.action_id)), persona); const reply = checked.reply;
       s.turns.push({ role: 'player', text: playerText }, { role: 'npc', text: [reply.dialogue, reply.follow_up].filter(Boolean).join('\n') });
       s.turns = s.turns.slice(-24); this.lastReply = { ...reply, usage: generated.usage ?? null, warning: checked.warning, mode: generated.mode };
       this.state = 'active'; s.pending = null; s.controller = null; s.touched = this.clock();
       if (checked.warning) this.log(checked.warning);
       if (reply.action) {
         const actionId = reply.action.action_id;
+        const actionSpec = currentAllowed.find(a => a.action_id === actionId);
+        if (actionSpec.execution_mode === 'selection_only') {
+          this.lastActionSelection = { ...clone(reply.action), selection_state: 'selected', execution_state: 'not_executed' };
+          this.log(`행동 ${actionId} · 선택만 완료 · 실행 안 함`);
+        } else {
         if (actionId === 'face_player') s.gazeUntil = this.clock() + reply.action.args.duration_s * 1000;
         if (actionId === 'resume_walk') { s.held = false; s.gazeUntil = null; }
         s.lastAction = { action_id: actionId, status: 'succeeded', observed_effect: '가상 실행 완료' };
         this.log(`행동 ${actionId} · 가상 실행 완료`);
+        }
       }
+      this.onAccepted?.({ playerText, reply, context, persona });
       if (reply.intent === 'farewell' || reply.action?.action_id === 'end_conversation') this.end(true, 'NPC 종료 의사');
       this.emit(); return { stale: false, reply };
     } catch (err) {

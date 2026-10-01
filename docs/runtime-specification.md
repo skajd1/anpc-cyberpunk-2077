@@ -1,6 +1,6 @@
 # 기술 구조 및 AI 통신 규격
 
-규격 버전: 0.2 (2026-10-01). 이 문서는 목표 구현 계약이다. 실제 API 연결 가능성·버전 호환성은 [참고 분석](benchmark-analysis.md), 시험 절차는 [개발·검증 계획](development-validation.md)에 기록한다.
+규격 버전: 0.4 (2026-10-01). 이 문서는 목표 구현 계약이다. 실제 API 연결 가능성·버전 호환성은 [참고 분석](benchmark-analysis.md), 시험 절차는 [개발·검증 계획](development-validation.md)에 기록한다.
 
 ## 1. 실행 구조
 
@@ -14,7 +14,7 @@
 
 | 모듈 | 입력 | 출력·책임 |
 | --- | --- | --- |
-| 대상 선택 | 조준 대상·플레이어 위치 | NPC 식별자·대화 허용 판정 |
+| 대상 선택·진입 | 상호작용 대상·원작/군중 반응·추가 선택지 | NPC 식별·진입 토큰·제어 전환·대화 허용 판정 |
 | 세션 관리자 | 시작·입력·취소·게임 중단 이벤트 | 세션 상태·요청 수명·정리 |
 | 상태 수집 | NPC·현재 저장 범위 | 필드별 출처가 있는 상태 스냅샷 |
 | 콘텐츠·기억 | NPC 키·상태·대화 | 인물 카드·허용 지식·대화 기억 |
@@ -22,13 +22,14 @@
 | 프롬프트 조립 | 콘텐츠·상태·허용 행동·입력 | 제공자에 전달할 모델 입력 |
 | 통신 어댑터 | 연결 설정·입력·취소 토큰 | 응답·사용량·표준 오류 |
 | 응답 검사 | 원문 응답·요청 계약 | 정규화된 대사·행동 제안 |
-| 행동 실행 | 승인된 제안 | 행동 상태·결과·제어 해제 |
+| 행동 제안·실행 | 승인된 제안·배포 모드 | 선택 결과 표시 또는 등록된 실행기/기존 모드 어댑터 실행·결과·제어 해제 |
+| 자막 표시 | 수용된 대사·후속 질문·세션 | 화자·순서·표시 수명·게임 진행 유지. 오류는 별도 UI |
 
 ## 3. 세션과 동시성
 
-상태는 idle, targeting, active, waiting, closing이다. 대화는 한 번에 NPC 한 명, 전경 대사 모델 요청은 한 번에 하나만 허용한다. waiting에서는 새 입력 전송을 비활성화하고 취소·종료를 제공한다. 요청 취소는 active로, 세션 종료는 closing을 거쳐 idle로 이동한다. 후속 기억 정리 요청은 별도 작업이며 동시성·대사 우선·취소·늦은 반영은 [기억 규격](memory-specification.md)을 따른다. 정리 완료를 기다리느라 waiting으로 전환하지 않는다.
+상태는 idle, targeting, entry_pending, handoff, active, waiting, closing이다. entry_pending은 진입 선택지를 제공한 상태이고 handoff는 선택 후 원작 제어 반환과 재판정을 기다리는 상태다. 두 상태에서 AI 요청·NPC 제어를 시작하지 않으며 [진입 계약](npc-identity-specification.md#21-ai-대화-진입과-원작-제어-전환)을 따른다. 대화는 한 번에 NPC 한 명, 전경 대사 모델 요청은 한 번에 하나만 허용한다. waiting에서는 새 입력 전송을 비활성화하고 취소·종료를 제공한다. 요청 취소는 active로, 세션 종료는 closing을 거쳐 idle로 이동한다. 기억 정리 요청은 별도 작업이며 동시성·대사 우선·취소·늦은 반영은 [기억 규격](memory-specification.md)을 따른다. 정리 완료를 기다리느라 waiting으로 전환하지 않는다.
 
-세션에는 session_id, save_scope, world_epoch, npc_instance_key, request_sequence를 둔다. 요청마다 새 request_id를 생성한다. 응답은 이 값들과 현재 대기 요청이 모두 일치할 때만 수용한다. 대상 소멸·퀘스트 제어 진입·전투는 세션을 닫는다. 저장 로드·빠른 이동·세계 전환은 세션을 닫고 world_epoch도 갱신한다. 통신 자체를 취소할 수 없어도 늦은 응답은 폐기한다.
+세션에는 session_id, save_scope, world_epoch, npc_instance_key, request_sequence, dialogue_context_revision을 둔다. 요청마다 새 request_id를 생성한다. 응답은 이 값들과 현재 대기 요청이 모두 일치하고 [게임 정보 규격의 표시 전 검사](game-context-specification.md#4-갱신과-무효화)를 통과할 때만 수용한다. 대상 소멸·퀘스트 제어 진입·전투는 세션을 닫는다. 저장 로드·빠른 이동·세계 전환은 세션을 닫고 world_epoch도 갱신한다. 통신 자체를 취소할 수 없어도 늦은 응답은 폐기한다. 게임 저장 로드의 기억 복원은 [기억 규격](memory-specification.md#31-게임-저장과-기억-묶음의-연결)을 따른다.
 
 active 상태에서 입력·UI 조작이 없는 시간이 60초를 넘으면 세션을 종료한다. waiting 시간은 이 유휴 시간에 포함하지 않고 요청 제한 시간을 적용한다. NPC 위치 유지도 세션 종료와 함께 해제한다.
 
@@ -51,7 +52,7 @@ active 상태에서 입력·UI 조작이 없는 시간이 60초를 넘으면 세
 
 ## 5. 요청·응답 계약
 
-내부 요청의 필수 필드는 schema_version, request_id, session_id, request_sequence, save_scope, world_epoch, npc_instance_key, snapshot_id, prompt_version, content_version, persona, knowledge, memory, allowed_actions, player_text다. 프롬프트 조립기는 [프롬프트 명세](prompt-specification.md)에 따라 요청과 현재 대화 기록을 persona·context·현재 입력으로 변환한다. 로컬 식별자는 어댑터가 필요 없는 경우 외부 제공자에 보내지 않는다. player_text는 최대 1000자로 제한한다.
+내부 요청의 필수 필드는 schema_version, request_id, session_id, request_sequence, save_scope, world_epoch, npc_instance_key, snapshot_id, dialogue_context_revision, prompt_version, content_version, persona, canon_context, knowledge, memory, allowed_actions, player_text다. canon_context는 게임 정보 규격의 진행도별 승인 원작 맥락이고 memory는 ANPC 경험이다. 프롬프트 조립기는 [프롬프트 명세](prompt-specification.md)에 따라 요청과 현재 대화 기록을 persona·context·현재 입력으로 변환한다. 로컬 식별자·dialogue_context_revision은 어댑터가 필요 없는 경우 외부 제공자에 보내지 않고 모델 출력으로 덮어쓰지 않는다. player_text는 최대 1000자로 제한한다.
 
 memory의 목표 형식은 [기억 규격의 대사 입력 뷰](memory-specification.md#9-대사-프롬프트용-기억-뷰)다. 별도 요약 요청은 NPC 응답 객체를 사용하지 않고 기억 후보 계약을 사용한다. 응답 검사·실제 표시 후 확정 사건을 기록하고 행동 결과는 실행기가 확인할 때 추가한다. 저장소·작업 정보는 모델이 생성하거나 덮어쓰지 않는다.
 
@@ -62,17 +63,29 @@ memory의 목표 형식은 [기억 규격의 대사 입력 뷰](memory-specifica
 | dialogue | 문자열 | 필수, 1~600자. 플레이어에게 표시할 대사 |
 | intent | 열거형 | answer, ask, refuse, warn, farewell |
 | emotion | 열거형 | neutral, friendly, wary, annoyed, afraid, curious |
-| action | 객체 또는 null | action_id와 args만 포함. 응답당 최대 한 개 |
+| action | 객체 또는 null | action_id와 args만 포함. 응답당 최대 한 개. 제안이며 실행 완료를 뜻하지 않음 |
 | follow_up | 문자열 또는 null | 최대 150자. 대사 뒤 이어질 질문 |
 
 빈 문자열, 알 수 없는 필드·열거값, 허용되지 않은 행동·인수를 거부한다. 잘못된 행동은 제거한다. 대사가 제거된 행동과 의미상 독립적임을 확인할 수 있을 때만 대사를 사용하고, 그렇지 않으면 인물 카드의 안전 대체 대사로 처리한다. 콘텐츠 금기 위반이나 잘못된 대사 형식은 전체 응답을 거부한다. 동적 사실·인물 일관성 검사는 완전한 판별을 보장하지 않으며 정적 금기 규칙과 지원 모델 프로필을 함께 적용한다.
+
+로컬 요청 메타데이터에 action_mode(selection_only 또는 execute),action_catalog_version과 실행 시 adapter_id/version을 둔다. 값·지원 목록·선택과 실행 상태의 기준은 [행동 명세](npc-action-scope.md#11-행동-선택과-실행-모드)다. 모델이 모드를 바꾸거나 어댑터·자산 경로를 지정할 수 없다. 일상 창작은 [콘텐츠 정책](content-specification.md#91-사소한-일상-창작-정책)의 허용 범위만 persona에 제공하며 출력 필드를 늘리거나 매 턴 별도 평가 모델을 호출하지 않는다.
 
 ## 6. 오류와 재시도
 
 오류 코드는 auth_failed, rate_limited, timeout, network_error, invalid_response, stale_response, context_unavailable다. 요청 전 비용 예약 한도를 넘으면 budget_exceeded를 반환한다. 재시도 기본값·예외 한도는 [비용 규격](api-cost-specification.md)을 따른다. 이미 행동이 실행된 요청은 재시도하지 않는다.
 
-후속 기억 기능에서 원문·보호 기억을 안전하게 보존할 수 없으면 입력 수용 전에 memory_capacity_exceeded를 반환한다. 기억 정리 작업의 오류는 [기억 규격](memory-specification.md)의 별도 진단이며 대사 요청의 오류 코드로 전파하지 않는다.
+기억 기능에서 원문·보호 기억을 안전하게 보존할 수 없으면 입력 수용 전에 memory_capacity_exceeded를 반환한다. 기억 정리 작업의 오류는 [기억 규격](memory-specification.md)의 별도 진단이며 대사 요청의 오류 코드로 전파하지 않는다.
 
 실패 시 기존 대화를 유지하고 한국어 오류 안내와 재전송·종료를 제공한다. NPC가 서비스 오류를 세계관 속 사건으로 설명하게 하지 않는다. 비용·사용량은 제공자가 실제 반환한 값만 표시하고 미제공 값은 알 수 없음으로 표시한다.
 
 진단에는 요청 ID, 어댑터·모델 ID, 지연, 오류 코드, 행동 ID·결과만 기본 기록한다. 대화 전문과 상태 원문 기록은 기본 비활성화한다.
+
+## 7. 대사 자막과 게임 진행
+
+게임판 UI는 V의 텍스트 입력·기록과 NPC의 대사 자막을 제공한다. 현재 시제품의 채팅 텍스트는 자막 대사 시험용이며 실제 게임 자막 렌더러와 다르다. 초기에는 NPC 음성 없이 표시하고 향후 같은 확정 대사를 음성과 함께 재생한다. 원작 대사 문자열을 대체하거나 퀘스트 선택지의 결과를 바꾸지 않는다.
+
+자막 항목은 session_id, request_id, subtitle_id, speaker_key, display_name, text, sequence를 가진다. text는 검사·현재 조건 확인을 통과한 dialogue와 중복되지 않는 follow_up에서 만든다. 잘못된 응답·폐기된 요청·선택만 한 행동 설명·서비스 오류를 NPC 자막으로 표시하지 않는다. 행동 선택 결과는 개발용 별도 표시다. 화자·요청별 중복 표시를 차단한다.
+
+자막은 기본적으로 다음 수용 대사·세션 종료까지 유지하며 채팅 기록은 활성 세션에서 열람할 수 있다. 긴 대사는 한 발화의 순서를 유지해 나누고 V 입력이나 다른 화자의 응답으로 섞지 않는다. 후속 음성에서는 같은 subtitle_id에 재생을 연결하고 재생 중에는 해당 자막을 유지한다. 음성 실패 시 텍스트는 남기고 종료·전투·대상 변경 시 음성을 중단한다.
+
+입력창 포커스는 게임 조작 키의 중복 처리를 막지만 세계 시간을 정지시키지 않는다. 채팅·네트워크 대기 동안 게임이 계속 진행하며 전투·위험·원작 강제 제어·소멸은 세션 종료와 자막/행동 제어 정리 사유다. 멈춤·V 시선은 세션 관리자의 기본 제어이고 추가 이동·제스처의 선택 전용 모드와 별개다.

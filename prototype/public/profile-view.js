@@ -15,6 +15,7 @@ export function renderCharacterProfiles(container, profiles) {
       slots.append(el('dt', group.label), value);
     }
     panel.append(slots);
+    if (card.npc_type === 'crowd') panel.append(el('p', `인스턴스 관심사: ${Object.values(profile.instanceTraits ?? {}).join(' · ') || '진입 시 추첨'} · 기존 풀 예시`, 'hint'));
     const knowledge = el('div', null, 'compact-knowledge');
     knowledge.append(el('h4', '지식 슬롯'));
     const primary = domains.filter(d => d.level >= 3 && d.domain_id !== 'self_background');

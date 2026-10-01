@@ -18,12 +18,27 @@
 <label class="check"><input id="basic-knowledge" type="checkbox" checked>지식 프로필 적용</label>
 <label class="check"><input id="relic-known" type="checkbox">렐릭 인지</label>
 <label class="check"><input id="relic-disclosed" type="checkbox">렐릭 공개 허용</label>
-<p class="hint">게임과 연결되지 않은 가상 조건입니다.</p></details>
-<p class="hint">인물·조건 변경 시 대화가 초기화됩니다.</p></aside>
+<p class="hint">현재 관계는 원작 기준의 모의 입력입니다. 반복 대화로 친밀도를 올리지 않습니다.</p></details>
+<details class="settings-advanced"><summary>상황 테스트</summary>
+<label for="outfit">현재 표시 복장</label><select id="outfit"></select>
+<div id="custom-outfit" hidden><label for="outfit-name">복장 이름</label><input id="outfit-name" maxlength="150" value="화려한 파란 재킷"><label for="outfit-description">외형 설명 텍스트</label><textarea id="outfit-description" rows="2" maxlength="500">밝은 파란색과 금속 장식이 돋보이는 재킷</textarea></div>
+<label class="check"><input id="outfit-visible" type="checkbox" checked>NPC가 현재 복장을 볼 수 있음</label>
+<label class="check"><input id="public-recognition" type="checkbox">공개 평판으로 V의 이름 인지 (모의)</label>
+<label class="check"><input id="minor-fiction" type="checkbox" checked>배경 안의 사소한 일상 자기보고 허용</label>
+<label class="check"><input id="select-actions" type="checkbox" checked>추가 제스처 선택 허용 · 실행 안 함</label>
+<button id="danger" type="button">전투 발생 · 대화 중단</button>
+<button id="safe-world" type="button">안전 상태로 복귀</button>
+<p class="hint">표시 복장 텍스트만 전달합니다. 게임 시간은 멈추지 않는 전제입니다.</p></details>
+<details class="settings-advanced"><summary>모의 저장·로드</summary>
+<label for="save-slot">저장 슬롯</label><select id="save-slot"><option value="a">슬롯 A</option><option value="b">슬롯 B</option></select>
+<div class="scenario-buttons"><button id="save-test" type="button">저장</button><button id="load-test" type="button">로드</button></div>
+<p id="save-hint" class="hint" role="status">페이지 메모리에만 저장 · 새로고침 시 삭제</p></details>
+<p class="hint">상황 변경은 기억을 유지합니다. 초기화는 모든 시험 기억·저장을 지웁니다.</p></aside>
 <article class="comparison-workspace" id="dialogue-test"><div class="chat-toolbar"><h2>채팅</h2><div><button id="recontact" type="button">종료</button><button id="reset" type="button">초기화</button></div></div>
 <p id="status" class="hint" role="status">조사 초안 사용을 켜고 대화를 시작하세요.</p>
+<div class="entry-row"><button id="enter-ai" type="button">더 깊은 대화를 해볼까?</button><span id="entry-hint" class="hint">기존 대화 종료 후 진입을 모의합니다.</span></div>
 <div id="comparison-results" class="comparison-results" aria-label="대화 내용"></div>
 <div id="error" role="alert" hidden></div>
 <form id="compare-form"><div class="preset-row"><label for="question-preset">질문 프리셋</label><select id="question-preset"><option value="">질문 선택…</option></select></div><p id="preset-hint" class="hint" hidden></p><label for="input" class="sr-only">선택한 인물에게 보낼 질문</label><textarea id="input" maxlength="1000" rows="2" placeholder="메시지를 입력하세요"></textarea><div class="compose-footer"><span id="request-count"></span><div><button id="cancel" type="button" hidden>취소</button><button id="send" type="submit" class="primary">보내기</button></div></div></form></article>
-<aside class="character-rail" id="profile-inspector"><h2>인물 특성</h2><p class="hint">고정 정체성 · 조사 초안</p><div id="character-profile"></div></aside>
+<aside class="character-rail" id="profile-inspector"><h2>인물 특성</h2><p class="hint">원작 인물은 고정 · 군중은 창작 예시</p><p id="scenario-summary" class="hint" aria-live="polite"></p><div id="character-profile"></div></aside>
 </main><footer>게임 미연결 · 모의 응답은 품질 평가용이 아닙니다 · 새로고침하면 대화가 초기화됩니다</footer></body></html>

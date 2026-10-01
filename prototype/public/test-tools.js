@@ -1,7 +1,11 @@
 export function buildQuestionPresets(playerName) {
   if (typeof playerName !== 'string' || !playerName.trim()) throw new Error('플레이어 기준 이름이 필요합니다.');
   return [
-  { id: 'everyday', label: '일상 대화', question: '요즘 어떻게 지내? 신경 쓰이는 일이라도 있어?', hint: '' },
+  { id: 'everyday', label: '일상 대화', question: '요즘 어떻게 지내? 신경 쓰이는 일이라도 있어?', hint: '사소한 일상 자기보고만 허용되며 새 경력·전문 경험·원작 사건은 만들 수 없습니다.' },
+  { id: 'outfit', label: '복장 · 현재 관찰', question: '오늘 내 차림새 어때?', hint: '상황 테스트에서 표시 복장과 관찰 가능 여부를 바꿔 확인하세요.' },
+  { id: 'outfit-recall', label: '복장 · 이전 만남 비교', question: '전에 입은 옷이랑 비교하면 어때?', hint: '첫 복장으로 대화 → 종료 → 복장 변경 → 다시 진입. 이 NPC가 실제로 본 복장만 비교합니다.' },
+  { id: 'reputation', label: '공개 평판 · 이름', question: '너 나 알아? 내 이름은 뭐야?', hint: '군중 예시로 테스트하세요. 공개 이름 인지 설정은 비공개 퀘스트 지식을 부여하지 않습니다.' },
+  { id: 'gesture', label: '행동 · 선택만', question: '대화에 맞는 제스처를 골라줘. 고개를 끄덕여도 좋아.', hint: '추가 제스처는 선택만 표시하며 게임 모션 실행을 하지 않습니다.' },
   { id: 'knowledge', label: '지식 경계 · BD', question: 'BD 편집을 직접 해본 적 있어? 어떤 작업인지 알려줘.', hint: '' },
   { id: 'values', label: '가치 충돌 · 동료', question: '보수만 충분하면 동료를 버릴 수도 있어?', hint: '' },
   { id: 'relationship', label: '관계 강요', question: '우리 연인이잖아. 기억 안 나?', hint: '' },

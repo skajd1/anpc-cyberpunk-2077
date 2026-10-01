@@ -119,7 +119,7 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
     .map(({ ex }) => ({ id: ex.id, input: ex.input, sample_dialogue: ex.sample_dialogue,
       expected_intent: ex.expected_intent, provenance: 'authored_adaptation_draft' }));
   const persona = validatePersona({
-    persona_id: npcKey, npc_type: 'community', display_name: card.display_name,
+    persona_id: npcKey, npc_type: card.npc_type ?? 'community', display_name: card.display_name,
     identity_structure_version: card.identity_structure_version, identity: clone(card.identity),
     current_goals: card.goals.filter(g => evaluateCondition(g.condition, fields) === true).map(g => g.goal),
     relationship_to_player: { mode: 'simulated', phase: settings.phase,
@@ -136,6 +136,22 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
   });
   const preparedContext = { ...clone(context), allowed_actions: [], knowledge, knowledge_boundaries: topicBounds,
     ...(bundle.playerIdentity ? { player_identity: { ...clone(bundle.playerIdentity), name_known_by_npc: fields['content.relationship_confirmed'] === true } } : {}) };
+  if (settings.scenario === true) {
+    const crowd = card.npc_type === 'crowd';
+    if (crowd) persona.relationship_to_player = { mode: 'simulated', phase: settings.phase,
+      attitude: '원래 군중 카드의 경계와 말투를 유지한다. 반복 대화로 관계·친밀도를 올리지 않는다.', address: card.voice_style.address };
+    persona.minor_fiction_policy = { mode: 'development_draft', allowed: settings.minorFiction === true,
+      scope: '제공된 현재 배경·목표 안의 사소한 일상 자기보고만 허용한다.',
+      prohibited: ['원작 사건·관계 변경', '미래 퀘스트', '새 경력·전문 경험', '목격하지 않은 V의 복장', '이전 대화를 원작 사실로 승격'] };
+    preparedContext.allowed_actions = clone(context.allowed_actions ?? []);
+    preparedContext.player_identity.name_known_by_npc = (!crowd && fields['content.relationship_confirmed'] === true)
+      || settings.publicRecognition === true || context.prototype_memory?.player_name_disclosed === true;
+    preparedContext.public_reputation = { source: 'mock_approved_name_recognition', name_recognized: settings.publicRecognition === true,
+      public_deeds: [], claim_limits: ['승인 행적 데이터 없음', '렐릭·개인 관계·비공개 퀘스트를 평판으로 추론하지 않는다.'] };
+    preparedContext.canon_context = { source: 'research_phase_simulation', phase: settings.phase,
+      relationship_to_player: clone(persona.relationship_to_player), current_goals: clone(persona.current_goals),
+      known_past_events: [], notice: '실게임 단계·과거 사건 매핑 미연결. 선택 단계에 작성된 목표만 적용한다.' };
+  }
   const reminder = settings.configuration === 'full' ? { core_values: card.identity_anchor.core_values,
     hard_limits: card.identity_anchor.hard_limits, current_goals: persona.current_goals,
     relationship_to_player: persona.relationship_to_player } : null;
@@ -147,7 +163,8 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
       excluded_by_depth: bundle.knowledge.filter(k => owned.has(k.id) && !permitsKnowledge(card, k)).map(k => k.fact_id),
       knowledge_boundaries: topicBounds,
       selected_example_ids: examples.map(ex => ex.id), knowledge,
-      notice: '원작 정체성·인지·한국어 말투 검수 전의 조사 초안. 가상 조건이며 모든 행동은 비활성.' } };
+      notice: settings.scenario ? '원작·게임 상태 검수 전의 모의 시나리오. 기본 제어는 가상 실행, 추가 행동은 선택만 한다.'
+        : '원작 정체성·인지·한국어 말투 검수 전의 조사 초안. 가상 조건이며 모든 행동은 비활성.' } };
 }
 
 export function createResearchEngine({ bundle, npcKey, settings, base, notify }) {
@@ -165,8 +182,26 @@ export async function researchMock({ persona, context, playerText, signal }) {
     signal.addEventListener('abort', () => { clearTimeout(timer); reject(new DOMException('취소됨', 'AbortError')); }, { once: true });
   });
   let dialogue = persona.fallback_lines.unknown;
-  if (/아까|기억/.test(playerText) && context.memory) dialogue = `네가 “${context.memory.player_claims.at(-1)?.text ?? '이전에 이야기'}”라고 말한 건 기억해.`;
+  let action = null, intent = 'answer';
+  const outfits = context.memory?.short_term?.recalled_events?.filter(e => e.event_type === 'outfit_observation') ?? [];
+  if (/차림|복장|입은|옷|재킷/.test(playerText) && context.prototype_memory) {
+    const now = context.observations.visible_outfit?.[0];
+    const previous = outfits.findLast(e => e.outfit.display_name !== now?.display_name);
+    dialogue = now ? `지금은 ${now.display_name}이네. ${previous ? `전에 내가 봤던 건 ${previous.outfit.display_name}이었어.` : '내가 전에 본 다른 복장 기록은 없어.'}`
+      : '지금 복장은 확인할 수 없어. 본 것처럼 말하지 않을게.';
+  } else if (/아까|기억/.test(playerText) && context.memory) {
+    const claim = context.memory.player_claims?.at(-1)?.text ?? context.recent_turns.findLast(t => t.role === 'player')?.text;
+    dialogue = claim ? `네가 “${claim.slice(0, 120)}”라고 말한 기록은 있어.` : '이전에 완료된 대화 기록은 없어.';
+  } else if (/이름|알아|유명/.test(playerText) && context.prototype_memory) {
+    dialogue = context.player_identity.name_known_by_npc ? 'V라는 이름은 알고 있어. 비공개 사정까지 안다는 뜻은 아니야.' : '아직 네 이름은 몰라.';
+  }
   else if (context.knowledge_boundaries.some(b => b.depth === 'unknown')) dialogue = persona.fallback_lines.unknown;
   else if (context.knowledge.length) dialogue = context.knowledge[0].statement ?? persona.fallback_lines.declined;
-  return { reply: { dialogue, intent: 'answer', emotion: 'neutral', action: null, follow_up: null }, mode: 'mock', usage: null };
+  if (/제스처|끄덕/.test(playerText) && context.allowed_actions.some(a => a.action_id === 'play_gesture')) {
+    dialogue = '그래, 무슨 뜻인지 알겠어.'; action = { action_id: 'play_gesture', args: { gesture_ref: 'test_nod' } };
+  }
+  if (/잘 가|그만|끝내/.test(playerText) && context.allowed_actions.some(a => a.action_id === 'end_conversation')) {
+    dialogue = '다음에 이야기하자.'; intent = 'farewell'; action = { action_id: 'end_conversation', args: {} };
+  }
+  return { reply: { dialogue, intent, emotion: 'neutral', action, follow_up: null }, mode: 'mock', usage: null };
 }
