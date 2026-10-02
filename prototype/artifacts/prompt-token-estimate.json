@@ -1,0 +1,526 @@
+{
+  "model": "gpt-4.1-mini",
+  "encoding": "o200k_base",
+  "prompt_version": "0.13",
+  "cases": 36,
+  "method": "Local tokenizer sum of instructions, message content and output format JSON; internal API framing excluded; not observed API usage",
+  "external_model_calls": 0,
+  "mean_tokens": 4011.8,
+  "min_tokens": 3486,
+  "max_tokens": 4357,
+  "mean_components": {
+    "instructions": 1749,
+    "persona": 718.4,
+    "context": 1099.1,
+    "style_examples": 6.9,
+    "identity_reminder": 39.1,
+    "player_input": 7.3,
+    "output_schema": 392
+  },
+  "records": [
+    {
+      "npc": "judy",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4143,
+      "components": {
+        "instructions": 1749,
+        "persona": 773,
+        "context": 1182,
+        "style_examples": 0,
+        "identity_reminder": 44,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "judy",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4309,
+      "components": {
+        "instructions": 1749,
+        "persona": 773,
+        "context": 1340,
+        "style_examples": 0,
+        "identity_reminder": 44,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "judy",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 3991,
+      "components": {
+        "instructions": 1749,
+        "persona": 773,
+        "context": 1025,
+        "style_examples": 0,
+        "identity_reminder": 44,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "panam",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4352,
+      "components": {
+        "instructions": 1749,
+        "persona": 804,
+        "context": 1282,
+        "style_examples": 89,
+        "identity_reminder": 33,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "panam",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4035,
+      "components": {
+        "instructions": 1749,
+        "persona": 804,
+        "context": 1046,
+        "style_examples": 0,
+        "identity_reminder": 33,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "panam",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 4008,
+      "components": {
+        "instructions": 1749,
+        "persona": 804,
+        "context": 1022,
+        "style_examples": 0,
+        "identity_reminder": 33,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "jackie",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4179,
+      "components": {
+        "instructions": 1749,
+        "persona": 800,
+        "context": 1195,
+        "style_examples": 0,
+        "identity_reminder": 40,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "jackie",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4138,
+      "components": {
+        "instructions": 1749,
+        "persona": 800,
+        "context": 1062,
+        "style_examples": 84,
+        "identity_reminder": 40,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "jackie",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 4027,
+      "components": {
+        "instructions": 1749,
+        "persona": 800,
+        "context": 1038,
+        "style_examples": 0,
+        "identity_reminder": 40,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "viktor",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4139,
+      "components": {
+        "instructions": 1749,
+        "persona": 766,
+        "context": 1191,
+        "style_examples": 0,
+        "identity_reminder": 38,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "viktor",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4014,
+      "components": {
+        "instructions": 1749,
+        "persona": 766,
+        "context": 1058,
+        "style_examples": 0,
+        "identity_reminder": 38,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "viktor",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 3987,
+      "components": {
+        "instructions": 1749,
+        "persona": 766,
+        "context": 1034,
+        "style_examples": 0,
+        "identity_reminder": 38,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "misty",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4179,
+      "components": {
+        "instructions": 1749,
+        "persona": 815,
+        "context": 1176,
+        "style_examples": 0,
+        "identity_reminder": 44,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "misty",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4054,
+      "components": {
+        "instructions": 1749,
+        "persona": 815,
+        "context": 1043,
+        "style_examples": 0,
+        "identity_reminder": 44,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "misty",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 4027,
+      "components": {
+        "instructions": 1749,
+        "persona": 815,
+        "context": 1019,
+        "style_examples": 0,
+        "identity_reminder": 44,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "rogue",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4208,
+      "components": {
+        "instructions": 1749,
+        "persona": 768,
+        "context": 1179,
+        "style_examples": 75,
+        "identity_reminder": 42,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "rogue",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4008,
+      "components": {
+        "instructions": 1749,
+        "persona": 768,
+        "context": 1046,
+        "style_examples": 0,
+        "identity_reminder": 42,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "rogue",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 3981,
+      "components": {
+        "instructions": 1749,
+        "persona": 768,
+        "context": 1022,
+        "style_examples": 0,
+        "identity_reminder": 42,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "goro",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4193,
+      "components": {
+        "instructions": 1749,
+        "persona": 812,
+        "context": 1196,
+        "style_examples": 0,
+        "identity_reminder": 41,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "goro",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4068,
+      "components": {
+        "instructions": 1749,
+        "persona": 812,
+        "context": 1063,
+        "style_examples": 0,
+        "identity_reminder": 41,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "goro",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 4041,
+      "components": {
+        "instructions": 1749,
+        "persona": 812,
+        "context": 1039,
+        "style_examples": 0,
+        "identity_reminder": 41,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "kerry",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4175,
+      "components": {
+        "instructions": 1749,
+        "persona": 802,
+        "context": 1187,
+        "style_examples": 0,
+        "identity_reminder": 42,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "kerry",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4050,
+      "components": {
+        "instructions": 1749,
+        "persona": 802,
+        "context": 1054,
+        "style_examples": 0,
+        "identity_reminder": 42,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "kerry",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 4023,
+      "components": {
+        "instructions": 1749,
+        "persona": 802,
+        "context": 1030,
+        "style_examples": 0,
+        "identity_reminder": 42,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "river",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4116,
+      "components": {
+        "instructions": 1749,
+        "persona": 770,
+        "context": 1161,
+        "style_examples": 0,
+        "identity_reminder": 41,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "river",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 3991,
+      "components": {
+        "instructions": 1749,
+        "persona": 770,
+        "context": 1028,
+        "style_examples": 0,
+        "identity_reminder": 41,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "river",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 3964,
+      "components": {
+        "instructions": 1749,
+        "persona": 770,
+        "context": 1004,
+        "style_examples": 0,
+        "identity_reminder": 41,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "evelyn",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 4190,
+      "components": {
+        "instructions": 1749,
+        "persona": 819,
+        "context": 1187,
+        "style_examples": 0,
+        "identity_reminder": 40,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "evelyn",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 4357,
+      "components": {
+        "instructions": 1749,
+        "persona": 819,
+        "context": 1346,
+        "style_examples": 0,
+        "identity_reminder": 40,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "evelyn",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 4038,
+      "components": {
+        "instructions": 1749,
+        "persona": 819,
+        "context": 1030,
+        "style_examples": 0,
+        "identity_reminder": 40,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "courier",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 3637,
+      "components": {
+        "instructions": 1749,
+        "persona": 342,
+        "context": 1118,
+        "style_examples": 0,
+        "identity_reminder": 33,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "courier",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 3593,
+      "components": {
+        "instructions": 1749,
+        "persona": 342,
+        "context": 1066,
+        "style_examples": 0,
+        "identity_reminder": 33,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "courier",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 3486,
+      "components": {
+        "instructions": 1749,
+        "persona": 342,
+        "context": 962,
+        "style_examples": 0,
+        "identity_reminder": 33,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "resident",
+      "input": "로그 알아?",
+      "text_and_schema_tokens": 3640,
+      "components": {
+        "instructions": 1749,
+        "persona": 350,
+        "context": 1115,
+        "style_examples": 0,
+        "identity_reminder": 31,
+        "player_input": 3,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "resident",
+      "input": "브레인댄스 해보고 싶어.",
+      "text_and_schema_tokens": 3596,
+      "components": {
+        "instructions": 1749,
+        "persona": 350,
+        "context": 1063,
+        "style_examples": 0,
+        "identity_reminder": 31,
+        "player_input": 11,
+        "output_schema": 392
+      }
+    },
+    {
+      "npc": "resident",
+      "input": "전에 입은 옷 기억해?",
+      "text_and_schema_tokens": 3489,
+      "components": {
+        "instructions": 1749,
+        "persona": 350,
+        "context": 959,
+        "style_examples": 0,
+        "identity_reminder": 31,
+        "player_input": 8,
+        "output_schema": 392
+      }
+    }
+  ]
+}

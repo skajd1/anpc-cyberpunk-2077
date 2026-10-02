@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-30",
+  "checked_at": "2026-10-03",
   "sources": [
     {
       "id": "CDPR_GAME",
@@ -35,7 +35,7 @@
       "tier": "secondary",
       "access_method": "search_extract",
       "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-10-02"
     },
     {
       "id": "WIKI_MISTY",
@@ -44,7 +44,7 @@
       "tier": "secondary",
       "access_method": "search_extract",
       "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-10-02"
     },
     {
       "id": "WIKI_ROGUE",
@@ -53,7 +53,7 @@
       "tier": "secondary",
       "access_method": "search_extract",
       "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-10-03"
     },
     {
       "id": "WIKI_GORO",
@@ -62,7 +62,7 @@
       "tier": "secondary",
       "access_method": "search_extract",
       "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-10-02"
     },
     {
       "id": "WIKI_KERRY",
@@ -71,7 +71,7 @@
       "tier": "secondary",
       "access_method": "search_extract",
       "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-10-03"
     },
     {
       "id": "WIKI_RIVER",
@@ -80,7 +80,7 @@
       "tier": "secondary",
       "access_method": "search_extract",
       "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-10-02"
     },
     {
       "id": "WIKI_EVELYN",
@@ -89,7 +89,7 @@
       "tier": "secondary",
       "access_method": "search_extract",
       "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-10-02"
     },
     {
       "id": "WIKI_MONEY",
@@ -315,6 +315,465 @@
       "access_method": "search_extract",
       "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
       "checked_at": "2026-09-30"
+    },
+    {
+      "id": "WIKI_JUDY",
+      "title": "Cyberpunk Wiki: Judy Álvarez",
+      "url": "https://cyberpunk.fandom.com/wiki/Judy_%C3%81lvarez",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_PANAM",
+      "title": "Cyberpunk Wiki: Panam Palmer",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "WIKI_JACKIE",
+      "title": "Cyberpunk Wiki: Jackie Welles",
+      "url": "https://cyberpunk.fandom.com/wiki/Jackie_Welles",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_INFORMATION",
+      "title": "Cyberpunk Wiki: The Information · BD 튜토리얼",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Information",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_TAROT",
+      "title": "Cyberpunk Wiki: Tarot Cards · 게임 카드 해설",
+      "url": "https://cyberpunk.fandom.com/wiki/Tarot_Cards",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_FOOL_HILL",
+      "title": "Cyberpunk Wiki: Fool on the Hill · 미스티의 설명",
+      "url": "https://cyberpunk.fandom.com/wiki/Fool_on_the_Hill",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_SAMURAI",
+      "title": "Cyberpunk Wiki: Samurai · 밴드 이력",
+      "url": "https://cyberpunk.fandom.com/wiki/Samurai",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_MSM",
+      "title": "Cyberpunk Wiki: MSM Records · 음반사",
+      "url": "https://cyberpunk.fandom.com/wiki/MSM_Records",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_PISCES",
+      "title": "Cyberpunk Wiki: Pisces 선택 결과",
+      "url": "https://cyberpunk.fandom.com/wiki/Pisces",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "퀘스트 순서·선택 결과. 본문 접근 제한 시 검색에 반환된 발췌 사용",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_DOUBLE_LIFE",
+      "title": "Cyberpunk Wiki: Double Life",
+      "url": "https://cyberpunk.fandom.com/wiki/Double_Life",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "퀘스트 순서·선택 결과. 본문 접근 제한 시 검색에 반환된 발췌 사용",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_PANAM_FRIENDS",
+      "title": "Cyberpunk Wiki: With a Little Help from My Friends",
+      "url": "https://cyberpunk.fandom.com/wiki/With_a_Little_Help_from_My_Friends",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "퀘스트 순서·선택 결과. 본문 접근 제한 시 검색에 반환된 발췌 사용",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_HUNT",
+      "title": "Cyberpunk Wiki: The Hunt",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Hunt",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "퀘스트 순서·선택 결과. 본문 접근 제한 시 검색에 반환된 발췌 사용",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "WIKI_NOCTURNE",
+      "title": "Cyberpunk Wiki: Nocturne Op55N1",
+      "url": "https://cyberpunk.fandom.com/wiki/Nocturne_Op55N1",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "퀘스트 순서·선택 결과. 본문 접근 제한 시 검색에 반환된 발췌 사용",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "GUIDE_BLISTERING",
+      "title": "Gamer Guides: Blistering Love",
+      "url": "https://www.gamerguides.com/cyberpunk-2077/guide/side-jobs/watson/blistering-love",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "퀘스트 순서·선택 결과. 본문 접근 제한 시 검색에 반환된 발췌 사용",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "GUIDE_RIVER",
+      "title": "PC Gamer: 리버 관계 분기",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-river-ward-romance-the-hunt/",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "퀘스트 순서·선택 결과. 본문 접근 제한 시 검색에 반환된 발췌 사용",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "GUIDE_ROMANCE",
+      "title": "PC Gamer: 인물별 연애 조건·분기",
+      "url": "https://www.pcgamer.com/all-cyberpunk-2077-romance-options-nudity/",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인물별 체형·목소리와 마지막 상호 관계 선택. Pisces는 위키의 보수 수락 여부로 교차 확인",
+      "checked_at": "2026-10-02"
+    },
+    {
+      "id": "LORE_JOHNNY",
+      "title": "Cyberpunk Wiki: Johnny_Silverhand",
+      "url": "https://cyberpunk.fandom.com/wiki/Johnny_Silverhand",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, 2013/2023 회고·2077 캠페인, Alt의 주관적 기억 설명",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_TAPEWORM",
+      "title": "Cyberpunk Wiki: Tapeworm",
+      "url": "https://cyberpunk.fandom.com/wiki/Tapeworm",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 퀘스트·Journal Entry, 공동 생존과 관계 변화",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_CHIPPIN",
+      "title": "Cyberpunk Wiki: Chippin'_In_(quest)",
+      "url": "https://cyberpunk.fandom.com/wiki/Chippin%27_In_%28quest%29",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 퀘스트, 유전지대 대화와 두 번째 기회 분기",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_METAL_FIRE",
+      "title": "Cyberpunk Wiki: A_Cool_Metal_Fire",
+      "url": "https://cyberpunk.fandom.com/wiki/A_Cool_Metal_Fire",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 퀘스트, V의 몸을 빌린 행동",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_ALT",
+      "title": "Cyberpunk Wiki: Alt_Cunningham",
+      "url": "https://cyberpunk.fandom.com/wiki/Alt_Cunningham",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, Soulkiller·Blackwall",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_SAMURAI",
+      "title": "Cyberpunk Wiki: Samurai",
+      "url": "https://cyberpunk.fandom.com/wiki/Samurai",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "밴드 멤버·악기, 2077 재결합",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_ROCKER",
+      "title": "Cyberpunk Wiki: Rocker",
+      "url": "https://cyberpunk.fandom.com/wiki/Rocker",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "Rockerboy 직업 개요",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_MERCS",
+      "title": "Cyberpunk Wiki: Mercenary",
+      "url": "https://cyberpunk.fandom.com/wiki/Mercenary",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, 픽서·팀 전문 역할",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_ARASAKA",
+      "title": "Cyberpunk Wiki: Arasaka",
+      "url": "https://cyberpunk.fandom.com/wiki/Arasaka",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database/Netpage, 보안·금융·제조",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_MILITECH",
+      "title": "Cyberpunk Wiki: Militech",
+      "url": "https://cyberpunk.fandom.com/wiki/Militech",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, NUSA 계약·민간 보안",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_KANG_TAO",
+      "title": "Cyberpunk Wiki: Kang_Tao",
+      "url": "https://cyberpunk.fandom.com/wiki/Kang_Tao",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, 스마트 무기",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_KIROSHI",
+      "title": "Cyberpunk Wiki: Kiroshi",
+      "url": "https://cyberpunk.fandom.com/wiki/Kiroshi",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "2077 제품 목록, 광학 임플란트",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_TT",
+      "title": "Cyberpunk Wiki: Trauma_Team",
+      "url": "https://cyberpunk.fandom.com/wiki/Trauma_Team",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "2077 Business Model·Premium Packages",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_BIOTECHNICA",
+      "title": "Cyberpunk Wiki: Biotechnica",
+      "url": "https://cyberpunk.fandom.com/wiki/Biotechnica",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, 유전공학·CHOOH2·식량",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_NIGHT_CORP",
+      "title": "Cyberpunk Wiki: Night_Corp",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_Corp",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "공공 사업·도로·철도·상하수도",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_DELAMAIN",
+      "title": "Cyberpunk Wiki: Delamain_Corporation",
+      "url": "https://cyberpunk.fandom.com/wiki/Delamain_Corporation",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry·차량·교통 서비스",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_BLACKWALL",
+      "title": "Cyberpunk Wiki: Blackwall",
+      "url": "https://cyberpunk.fandom.com/wiki/Blackwall",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, 격리 장벽의 공적 설명",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_BARTMOSS",
+      "title": "Cyberpunk Wiki: Rache_Bartmoss",
+      "url": "https://cyberpunk.fandom.com/wiki/Rache_Bartmoss",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "DataKrash·R.A.B.I.D.S., 인게임 샤드 근거",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_UNIFICATION",
+      "title": "Cyberpunk Wiki: Unification_War",
+      "url": "https://cyberpunk.fandom.com/wiki/Unification_War",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, 2069~2070·자치",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_BOMBING",
+      "title": "Cyberpunk Wiki: Night_City_Holocaust",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City_Holocaust",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 Database Entry, 2023-08-20·책임 소재 불확실",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_RED",
+      "title": "Cyberpunk Wiki: Time_of_the_Red",
+      "url": "https://cyberpunk.fandom.com/wiki/Time_of_the_Red",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "Cyberpunk RED의 역사 시대 설명",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_MORRO",
+      "title": "Cyberpunk Wiki: Morro_Bay,_California",
+      "url": "https://cyberpunk.fandom.com/wiki/Morro_Bay%2C_California",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "1994 Coronado City·1998 이름 변경, 2077 이전 역사",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_FOOD",
+      "title": "Cyberpunk Wiki: Food",
+      "url": "https://cyberpunk.fandom.com/wiki/Food",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "Cyberpunk 2077 Food, 합성육·SCOP",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_KITSCH",
+      "title": "Cyberpunk Wiki: Kitsch",
+      "url": "https://cyberpunk.fandom.com/wiki/Kitsch",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 2077 in Style·공식 아트북 인용",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_NEOKITSCH",
+      "title": "Cyberpunk Wiki: Neokitsch",
+      "url": "https://cyberpunk.fandom.com/wiki/Neokitsch",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 2077 in Style·공식 아트북 인용",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_NEOMILITARISM",
+      "title": "Cyberpunk Wiki: Neomilitarism",
+      "url": "https://cyberpunk.fandom.com/wiki/Neomilitarism",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 2077 in Style·공식 아트북 인용",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_ENTROPISM",
+      "title": "Cyberpunk Wiki: Entropism",
+      "url": "https://cyberpunk.fandom.com/wiki/Entropism",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "인게임 2077 in Style, 실용·빈곤 미학",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_NCART",
+      "title": "Cyberpunk Wiki: Night_City_Area_Rapid_Transit",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City_Area_Rapid_Transit",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "2077 대중교통·Night Corp",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_MEGABUILDING",
+      "title": "Cyberpunk Wiki: Megabuilding",
+      "url": "https://cyberpunk.fandom.com/wiki/Megabuilding",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "2077 건물 목록·주거 시설",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_AFTERLIFE",
+      "title": "Cyberpunk Wiki: Afterlife_(Central_Night_City)",
+      "url": "https://cyberpunk.fandom.com/wiki/Afterlife_%28Central_Night_City%29",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "용병 모임·기념 칵테일 전통, 시대별 구분",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_WEAPONS",
+      "title": "Cyberpunk Wiki: Cyberpunk_2077_Weapons",
+      "url": "https://cyberpunk.fandom.com/wiki/Cyberpunk_2077_Weapons",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "2077 무기 기술 유형",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_STREETSLANG",
+      "title": "Cyberpunk Wiki: Streetslang",
+      "url": "https://cyberpunk.fandom.com/wiki/Streetslang",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "세계관 속 거리 속어",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_CHOOH2",
+      "title": "Cyberpunk Wiki: CHOOH2",
+      "url": "https://cyberpunk.fandom.com/wiki/CHOOH2",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "바이오테크니카 특허·연료 공급",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_BD",
+      "title": "Cyberpunk Wiki: Braindance",
+      "url": "https://cyberpunk.fandom.com/wiki/Braindance",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "Mechanism / Recording / Viewing",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "LORE_DIAN",
+      "title": "Cyberpunk Wiki: G-58 Dian",
+      "url": "https://cyberpunk.fandom.com/wiki/Kang_Tao_G-58_Dian",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "2077 무기 설명: Smart Link 요구",
+      "checked_at": "2026-10-03"
     }
   ]
 }

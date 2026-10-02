@@ -1,0 +1,259 @@
+{
+  "contract_version": "1.0",
+  "schema": "module-contracts.schema.json",
+  "contracts": {
+    "session.target-request": "TargetRequest",
+    "session.target": "TargetResolution",
+    "identity.profile": "IdentityProfile",
+    "identity.view": "PersonaView",
+    "state.snapshot": "StateSnapshot",
+    "state.canon": "CanonView",
+    "knowledge.view": "KnowledgeView",
+    "selection.query": "SelectionQuery",
+    "memory.events": "EventBatch",
+    "memory.record": "MemoryRecord",
+    "memory.snapshot": "MemorySnapshot",
+    "memory.view": "MemoryView",
+    "memory.summary-input": "SummaryInput",
+    "memory.summary-candidates": "SummaryCandidates",
+    "memory.save-bundle": "SaveBundle",
+    "action.catalog": "ActionCatalog",
+    "action.request": "ActionRequest",
+    "action.control": "ActionControl",
+    "action.result": "ActionOutcome",
+    "prompt.assembly": "PromptAssembly",
+    "prompt.model-input": "ModelInput",
+    "dialogue.reply": "DialogueReply",
+    "provider.result": "ProviderResult",
+    "action.options": "ActionOptions",
+    "memory.control": "MemoryControl",
+    "memory.save-request": "SaveRequest"
+  },
+  "ports": {
+    "TargetResolver.resolve": {
+      "inputs": [
+        "session.target-request"
+      ],
+      "outputs": [
+        "session.target"
+      ],
+      "requires_fence": false
+    },
+    "StateCollector.collect": {
+      "inputs": [
+        "session.target"
+      ],
+      "outputs": [
+        "state.snapshot"
+      ],
+      "requires_fence": true
+    },
+    "IdentityResolver.resolve": {
+      "inputs": [
+        "session.target",
+        "state.snapshot"
+      ],
+      "outputs": [
+        "identity.profile"
+      ],
+      "requires_fence": true
+    },
+    "PersonaProjector.project": {
+      "inputs": [
+        "identity.profile",
+        "state.snapshot"
+      ],
+      "outputs": [
+        "identity.view",
+        "state.canon"
+      ],
+      "requires_fence": true
+    },
+    "KnowledgeSelector.select": {
+      "inputs": [
+        "identity.profile",
+        "state.snapshot",
+        "selection.query"
+      ],
+      "outputs": [
+        "knowledge.view"
+      ],
+      "requires_fence": true
+    },
+    "MemoryStore.appendEvents": {
+      "inputs": [
+        "memory.events"
+      ],
+      "outputs": [
+        "memory.snapshot"
+      ],
+      "requires_fence": true
+    },
+    "MemoryStore.readSnapshot": {
+      "inputs": [
+        "session.target"
+      ],
+      "outputs": [
+        "memory.snapshot"
+      ],
+      "requires_fence": false
+    },
+    "MemorySelector.select": {
+      "inputs": [
+        "memory.snapshot",
+        "state.snapshot",
+        "selection.query"
+      ],
+      "outputs": [
+        "memory.view"
+      ],
+      "requires_fence": true
+    },
+    "MemoryConsolidator.propose": {
+      "inputs": [
+        "memory.summary-input"
+      ],
+      "outputs": [
+        "memory.summary-candidates"
+      ],
+      "requires_fence": true
+    },
+    "MemoryStore.commit": {
+      "inputs": [
+        "memory.summary-input",
+        "memory.summary-candidates"
+      ],
+      "outputs": [
+        "memory.snapshot"
+      ],
+      "requires_fence": true
+    },
+    "MemoryStore.captureSaveBundle": {
+      "inputs": [
+        "memory.save-request",
+        "memory.snapshot"
+      ],
+      "outputs": [
+        "memory.save-bundle"
+      ],
+      "repeat_input": "memory.snapshot",
+      "requires_fence": true
+    },
+    "MemoryStore.restoreSaveBundle": {
+      "inputs": [
+        "memory.save-bundle",
+        "session.target"
+      ],
+      "outputs": [
+        "memory.snapshot"
+      ],
+      "requires_fence": true
+    },
+    "ActionCatalog.describe": {
+      "inputs": [
+        "session.target",
+        "state.snapshot"
+      ],
+      "outputs": [
+        "action.catalog"
+      ],
+      "requires_fence": false
+    },
+    "PromptAssembler.assemble": {
+      "inputs": [
+        "prompt.assembly"
+      ],
+      "outputs": [
+        "prompt.model-input"
+      ],
+      "requires_fence": true
+    },
+    "Provider.generate": {
+      "inputs": [
+        "prompt.model-input"
+      ],
+      "outputs": [
+        "provider.result"
+      ],
+      "requires_fence": true
+    },
+    "ReplyValidator.validate": {
+      "inputs": [
+        "provider.result",
+        "prompt.assembly"
+      ],
+      "outputs": [
+        "dialogue.reply"
+      ],
+      "requires_fence": true
+    },
+    "ActionAdapter.execute": {
+      "inputs": [
+        "action.request"
+      ],
+      "outputs": [
+        "action.result"
+      ],
+      "requires_fence": true
+    },
+    "ActionAdapter.cancel": {
+      "inputs": [
+        "action.control"
+      ],
+      "outputs": [
+        "action.result"
+      ],
+      "requires_fence": true
+    },
+    "ActionAdapter.release": {
+      "inputs": [
+        "action.control"
+      ],
+      "outputs": [
+        "action.result"
+      ],
+      "requires_fence": true
+    },
+    "MemoryStore.invalidate": {
+      "inputs": [
+        "memory.control"
+      ],
+      "outputs": [
+        "memory.snapshot"
+      ],
+      "requires_fence": true
+    },
+    "MemoryStore.delete": {
+      "inputs": [
+        "memory.control"
+      ],
+      "outputs": [
+        "memory.snapshot"
+      ],
+      "requires_fence": true
+    },
+    "ActionSelector.select": {
+      "inputs": [
+        "action.catalog",
+        "identity.profile",
+        "state.snapshot"
+      ],
+      "outputs": [
+        "action.options"
+      ],
+      "requires_fence": true
+    },
+    "ActionAdapter.validate": {
+      "inputs": [
+        "action.request",
+        "action.catalog",
+        "identity.profile",
+        "state.snapshot"
+      ],
+      "outputs": [
+        "action.request"
+      ],
+      "requires_fence": true
+    }
+  }
+}

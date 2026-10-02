@@ -34,6 +34,8 @@
 
 ## 행동 구현 참고 자료
 
+2026-10-02의 [외부 모드 제스처·애니메이션 조사](external-animation-research.md)에서 AMM 배포 미러의 NPC 재생·중단·보조 엔티티 정리와 CyberScript 제작자 연결 저장소의 동작 실행기를 추가 확인했다. 실제 자원 이름 15개와 골격·자세 조건도 기록했다. 아래의 이전 조사 범위를 보완하는 코드 근거이며 외부 호출 API의 안정성·게임 호환·ANPC 연동 검증은 남아 있다.
+
 | 자료 | 확인 범위와 제한 |
 | --- | --- |
 | [Real Talk 행동 코드](https://github.com/swillunderscore/realtalk/blob/main/r6/scripts/RealTalk/RealTalkActions.reds) | 위치 유지, 시선, 이동·동행, 차량과 상태별 명령 중단. 시선과 즉시 방향 변경을 자연스러운 전신 회전으로 취급하지 않는다. 군중 재합류는 소멸로 이어질 수 있다. |

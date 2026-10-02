@@ -27,19 +27,21 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
     "id": "NC_DISTRICTS",
     "revision": 1,
     "kind": "world_fact",
-    "statement": "나이트 시티에는 여섯 주요 구역이 있다",
+    "statement": "나이트 시티의 주요 구역은 왓슨·웨스트브룩·시티 센터·헤이우드·산토 도밍고·퍼시피카다.",
     "source": {
       "source_id": "CDPR_TRAVEL",
       "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
       "locator": "2024-03-29, 장소별 항목",
-      "support_summary": "나이트 시티에는 여섯 주요 구역이 있다"
+      "support_summary": "나이트 시티의 주요 구역은 왓슨·웨스트브룩·시티 센터·헤이우드·산토 도밍고·퍼시피카다."
     },
     "validity_condition": {
       "field": "content.era",
@@ -57,7 +59,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -88,7 +92,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "economy",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -119,7 +125,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "technology",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -149,7 +157,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "occupations",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -180,7 +190,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "occupations",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -210,7 +222,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "technology",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -244,7 +258,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "technology",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -276,7 +292,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "technology",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -306,7 +324,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "occupations",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -338,7 +358,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "technology",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -369,7 +391,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "technology",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -399,7 +423,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "corporations",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -430,7 +456,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "corporations",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -460,7 +488,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "corporations",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -480,7 +510,7 @@
       "value": "2077"
     },
     "spoiler_scope": "none",
-    "knowledge_layer": "profession",
+    "knowledge_layer": "common",
     "topic_tags": [
       "medicine",
       "money"
@@ -492,7 +522,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "economy",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -522,7 +554,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "law_security",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -542,7 +576,7 @@
       "value": "2077"
     },
     "spoiler_scope": "none",
-    "knowledge_layer": "optional",
+    "knowledge_layer": "common",
     "topic_tags": [
       "police",
       "risk"
@@ -553,7 +587,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "law_security",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -585,7 +621,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -616,7 +654,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -646,7 +686,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -676,7 +718,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -706,7 +750,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -737,7 +783,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -767,7 +815,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -797,7 +847,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -826,7 +878,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -855,7 +909,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -886,7 +942,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -906,7 +964,7 @@
       "value": "2077"
     },
     "spoiler_scope": "none",
-    "knowledge_layer": "optional",
+    "knowledge_layer": "common",
     "topic_tags": [
       "mox"
     ],
@@ -915,7 +973,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "factions",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -947,7 +1007,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -978,7 +1040,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1009,7 +1073,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1040,7 +1106,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1071,7 +1139,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1102,7 +1172,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1133,7 +1205,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "factions",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1164,7 +1238,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "factions",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1184,7 +1260,7 @@
       "value": "2077"
     },
     "spoiler_scope": "none",
-    "knowledge_layer": "optional",
+    "knowledge_layer": "common",
     "topic_tags": [
       "nomad",
       "family"
@@ -1195,7 +1271,9 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "factions",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -1225,12 +1303,14 @@
     ],
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
     "id": "SAMURAI_JOHNNY",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "조니 실버핸드는 SAMURAI의 프런트맨으로 알려진 반기업 로커보이다",
     "source": {
@@ -1245,18 +1325,27 @@
       "value": "2077"
     },
     "spoiler_scope": "none",
-    "knowledge_layer": "optional",
+    "knowledge_layer": "common",
     "topic_tags": [
-      "music"
+      "music",
+      "public_figure"
     ],
     "trigger_terms": [
       "조니",
       "SAMURAI",
       "사무라이"
     ],
-    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "claim_limits": "공개 이름·직업·명성의 개요만. 직접 만남·친분·의뢰 경험·사생활·렐릭·현재 생존/위치·퀘스트 결과를 추론하지 않는다.",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "entity_aliases": [
+      "조니",
+      "조니 실버핸드",
+      "Johnny",
+      "Johnny Silverhand"
+    ],
+    "category_id": "people",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -1287,7 +1376,9 @@
     ],
     "claim_limits": "공개 소개에 나와도 군중 상식으로 취급하지 않는다. 인물 인지와 V의 공개 동의가 모두 필요하다",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1316,7 +1407,9 @@
     ],
     "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1345,7 +1438,9 @@
     ],
     "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1374,7 +1469,9 @@
     ],
     "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1403,7 +1500,9 @@
     ],
     "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1432,36 +1531,49 @@
     ],
     "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
     "id": "ROGUE_BACKGROUND",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
-    "statement": "용병 경력을 가진 픽서이며 애프터라이프를 운영한다",
+    "statement": "로그 아멘디아레스는 애프터라이프를 운영하는 유명 픽서이며, 나이트 시티에서 전설적인 솔로 출신이자 픽서들의 여왕으로 알려져 있다.",
     "source": {
       "source_id": "WIKI_ROGUE",
       "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
-      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "support_summary": "용병 경력을 가진 픽서이며 애프터라이프를 운영한다"
+      "locator": "검색 결과의 인물 공개 이력·명성 발췌. 본문 직접 접근 제한",
+      "support_summary": "로그 아멘디아레스는 애프터라이프를 운영하는 유명 픽서이며, 나이트 시티에서 전설적인 솔로 출신이자 픽서들의 여왕으로 알려져 있다."
     },
     "validity_condition": {
       "field": "content.era",
       "op": "eq",
       "value": "2077"
     },
-    "spoiler_scope": "personal_background",
-    "knowledge_layer": "personal",
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
     "topic_tags": [
-      "rogue"
+      "rogue",
+      "public_figure"
     ],
     "trigger_terms": [
-      "로그 아멘디아레스"
+      "로그 아멘디아레스",
+      "애프터라이프",
+      "픽서들의 여왕"
     ],
-    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "claim_limits": "공개 이름·직업·명성의 개요만. 직접 만남·친분·의뢰 경험·사생활·렐릭·현재 생존/위치·퀘스트 결과를 추론하지 않는다.",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "answer",
+    "entity_aliases": [
+      "로그",
+      "로그 아멘디아레스",
+      "Rogue",
+      "Rogue Amendiares"
+    ],
+    "category_id": "people",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -1490,36 +1602,47 @@
     ],
     "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
     "id": "KERRY_BACKGROUND",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
-    "statement": "SAMURAI 활동 후 솔로 경력을 이어가는 나이트 시티 음악가다",
+    "statement": "케리 유로다인은 SAMURAI 출신이며, 2077년에는 성공한 솔로 음악가로 널리 알려져 있다.",
     "source": {
       "source_id": "WIKI_KERRY",
       "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
-      "locator": "検索 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
-      "support_summary": "SAMURAI 활동 후 솔로 경력을 이어가는 나이트 시티 음악가다"
+      "locator": "검색 결과의 인물 공개 이력·명성 발췌. 본문 직접 접근 제한",
+      "support_summary": "케리 유로다인은 SAMURAI 출신이며, 2077년에는 성공한 솔로 음악가로 널리 알려져 있다."
     },
     "validity_condition": {
       "field": "content.era",
       "op": "eq",
       "value": "2077"
     },
-    "spoiler_scope": "personal_background",
-    "knowledge_layer": "personal",
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
     "topic_tags": [
-      "kerry"
+      "kerry",
+      "public_figure"
     ],
     "trigger_terms": [
       "케리 유로다인"
     ],
-    "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
+    "claim_limits": "공개 이름·직업·명성의 개요만. 직접 만남·친분·의뢰 경험·사생활·렐릭·현재 생존/위치·퀘스트 결과를 추론하지 않는다.",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "answer",
+    "entity_aliases": [
+      "케리",
+      "케리 유로다인",
+      "Kerry",
+      "Kerry Eurodyne"
+    ],
+    "category_id": "people",
+    "injection_mode": "baseline"
   },
   {
     "schema_version": "0.1",
@@ -1548,7 +1671,9 @@
     ],
     "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1577,7 +1702,9 @@
     ],
     "claim_limits": "본인의 소개 범위. V와의 관계·현재 활동·소속은 별도 상태 필요",
     "review_status": "source_checked",
-    "usage_mode": "restricted"
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
   },
   {
     "schema_version": "0.1",
@@ -1613,6 +1740,5153 @@
     ],
     "claim_limits": "플레이어의 고정 이름은 V다. 이름이 공유 기준에 있다는 사실은 모든 NPC가 V를 알아본다는 뜻이 아니다. name_known_by_npc가 true일 때만 이름으로 호칭하고, false이면 낯선 상대에 맞는 호칭을 쓴다. 사용자 발화의 다른 이름은 주장·별칭이며 고정 이름을 덮어쓰지 않는다. 성별·출신·본명·관계·퀘스트 결과를 추가로 추정하지 않는다.",
     "review_status": "source_checked",
-    "usage_mode": "identity_reference"
+    "usage_mode": "identity_reference",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JUDY_BD_LAYERS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "BD 분석에서는 재생·되감기·빨리 감기를 사용하고 시각·청각·열감지 레이어의 단서를 따로 살핀다",
+    "source": {
+      "source_id": "WIKI_INFORMATION",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Information",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "BD 분석에서는 재생·되감기·빨리 감기를 사용하고 시각·청각·열감지 레이어의 단서를 따로 살핀다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "braindance"
+    ],
+    "trigger_terms": [
+      "BD",
+      "브레인댄스",
+      "분석",
+      "레이어",
+      "열감지",
+      "청각",
+      "시각"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JUDY_BD_CALIBRATION",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "주디는 BD 체험 전 이용자의 감각 프로필을 보정하며 기록 분석을 안내한다",
+    "source": {
+      "source_id": "WIKI_INFORMATION",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Information",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "주디는 BD 체험 전 이용자의 감각 프로필을 보정하며 기록 분석을 안내한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "braindance"
+    ],
+    "trigger_terms": [
+      "BD",
+      "브레인댄스",
+      "보정",
+      "감각 프로필",
+      "튜토리얼"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JUDY_WORKSHOP",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "주디는 목스와 함께 일하며 리즈 바 지하에 BD 작업 장비를 두었다",
+    "source": {
+      "source_id": "WIKI_JUDY",
+      "url": "https://cyberpunk.fandom.com/wiki/Judy_%C3%81lvarez",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "주디는 목스와 함께 일하며 리즈 바 지하에 BD 작업 장비를 두었다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "mox_local"
+    ],
+    "trigger_terms": [
+      "목스",
+      "리즈",
+      "작업실",
+      "지하",
+      "Susie"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JUDY_GRANDPARENTS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "주디는 라구나 벤드에서 자랐고 조부모의 보살핌을 받았으며 기술자인 할아버지에게 기술을 배웠다",
+    "source": {
+      "source_id": "WIKI_JUDY",
+      "url": "https://cyberpunk.fandom.com/wiki/Judy_%C3%81lvarez",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "주디는 라구나 벤드에서 자랐고 조부모의 보살핌을 받았으며 기술자인 할아버지에게 기술을 배웠다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "인물 배경·해당 대화 단계",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "라구나",
+      "고향",
+      "조부모",
+      "할아버지",
+      "어릴"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PANAM_CLAN_FRIENDS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "미치 앤더슨과 스콜피온은 팬앰이 가까이 지내 온 알데칼도 동료들이다",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "미치 앤더슨과 스콜피온은 팬앰이 가까이 지내 온 알데칼도 동료들이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "nomad_life"
+    ],
+    "trigger_terms": [
+      "미치",
+      "스콜피온",
+      "알데칼도",
+      "동료"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PANAM_CORP_INDEPENDENCE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "팬앰은 알데칼도가 기업에 의존하는 데 반대하며 사울의 바이오테크니카 거래 방침과 의견이 달랐다",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "팬앰은 알데칼도가 기업에 의존하는 데 반대하며 사울의 바이오테크니카 거래 방침과 의견이 달랐다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "인물 배경·해당 대화 단계",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "nomad_life"
+    ],
+    "trigger_terms": [
+      "사울",
+      "바이오테크니카",
+      "독립",
+      "기업",
+      "알데칼도"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PANAM_CARGO_EXPERIENCE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "팬앰은 미치와 도시 사이의 화물을 운반한 경험이 있다",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "팬앰은 미치와 도시 사이의 화물을 운반한 경험이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "nomad_life"
+    ],
+    "trigger_terms": [
+      "미치",
+      "화물",
+      "운송",
+      "노마드"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JACKIE_VALENTINOS_PAST",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "재키는 젊었을 때 발렌티노스에 속했지만 용병으로 살기로 했으며 탈퇴 뒤에도 갱과 파드레와의 인연을 유지했다",
+    "source": {
+      "source_id": "WIKI_JACKIE",
+      "url": "https://cyberpunk.fandom.com/wiki/Jackie_Welles",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "재키는 젊었을 때 발렌티노스에 속했지만 용병으로 살기로 했으며 탈퇴 뒤에도 갱과 파드레와의 인연을 유지했다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "발렌티노스",
+      "파드레",
+      "갱",
+      "과거"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JACKIE_MAMA_BAR",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "마마 웰스는 재키의 어머니이며 헤이우드의 엘 코요테 코호를 운영한다",
+    "source": {
+      "source_id": "WIKI_JACKIE",
+      "url": "https://cyberpunk.fandom.com/wiki/Jackie_Welles",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "마마 웰스는 재키의 어머니이며 헤이우드의 엘 코요테 코호를 운영한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "heywood"
+    ],
+    "trigger_terms": [
+      "마마",
+      "엄마",
+      "어머니",
+      "코요테",
+      "헤이우드"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JACKIE_MOTORCYCLES",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "재키는 십대 때부터 오토바이를 타고 손보는 것을 좋아했으며 자신의 ARCH를 아낀다",
+    "source": {
+      "source_id": "WIKI_JACKIE",
+      "url": "https://cyberpunk.fandom.com/wiki/Jackie_Welles",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "재키는 십대 때부터 오토바이를 타고 손보는 것을 좋아했으며 자신의 ARCH를 아낀다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "오토바이",
+      "바이크",
+      "ARCH",
+      "아치",
+      "취미"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "VIKTOR_CLINIC_LOCATION",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "빅터의 진료소는 왓슨 리틀 차이나에 있는 미스티의 에소테리카 뒤편 지하에 있다",
+    "source": {
+      "source_id": "WIKI_VIKTOR",
+      "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "빅터의 진료소는 왓슨 리틀 차이나에 있는 미스티의 에소테리카 뒤편 지하에 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "watson"
+    ],
+    "trigger_terms": [
+      "진료소",
+      "미스티",
+      "리틀 차이나",
+      "왓슨",
+      "위치"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "VIKTOR_PATIENT_CREDIT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "빅터는 V에게 외상으로 사이버웨어 시술을 제공한 적이 있다",
+    "source": {
+      "source_id": "WIKI_VIKTOR",
+      "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "빅터는 V에게 외상으로 사이버웨어 시술을 제공한 적이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "인물 배경·해당 대화 단계",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "medicine"
+    ],
+    "trigger_terms": [
+      "외상",
+      "돈",
+      "시술",
+      "진료",
+      "V"
+    ],
+    "claim_limits": "과거 제공 경험이다. 오늘의 무료 치료·대출·가격·시술 실행을 약속하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "VIKTOR_BOXING_TEAM",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "빅터는 왓슨의 나이트 시티 데블스에서 헤비급 복서로 활동했으며 지금도 복싱에 관심이 있다",
+    "source": {
+      "source_id": "WIKI_VIKTOR",
+      "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "빅터는 왓슨의 나이트 시티 데블스에서 헤비급 복서로 활동했으며 지금도 복싱에 관심이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "boxing"
+    ],
+    "trigger_terms": [
+      "복싱",
+      "복서",
+      "헤비급",
+      "데블스",
+      "취미"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MISTY_TAROT_PRACTICE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "미스티는 타로 카드와 오라 읽기를 사용해 상담한다",
+    "source": {
+      "source_id": "WIKI_MISTY",
+      "url": "https://cyberpunk.fandom.com/wiki/Misty_Olszewski",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "미스티는 타로 카드와 오라 읽기를 사용해 상담한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "tarot"
+    ],
+    "trigger_terms": [
+      "타로",
+      "카드",
+      "오라",
+      "상담"
+    ],
+    "claim_limits": "상징·성찰의 해석이다. 실제 운명·엔딩·치료 결과를 확정하거나 보이지 않는 카드를 뽑은 척하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MISTY_FOOL_SYMBOL",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "타로의 광대는 세상에 호기심을 가진 순수함과 무모함을 함께 나타내는 상징으로 해석된다",
+    "source": {
+      "source_id": "WIKI_TAROT",
+      "url": "https://cyberpunk.fandom.com/wiki/Tarot_Cards",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "타로의 광대는 세상에 호기심을 가진 순수함과 무모함을 함께 나타내는 상징으로 해석된다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "tarot"
+    ],
+    "trigger_terms": [
+      "타로",
+      "광대",
+      "The Fool",
+      "호기심"
+    ],
+    "claim_limits": "상징·성찰의 해석이다. 실제 운명·엔딩·치료 결과를 확정하거나 보이지 않는 카드를 뽑은 척하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MISTY_FOOL_JOURNEY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "미스티는 광대의 여정이 세계에 이르는 과정으로 타로를 설명한다",
+    "source": {
+      "source_id": "WIKI_FOOL_HILL",
+      "url": "https://cyberpunk.fandom.com/wiki/Fool_on_the_Hill",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "미스티는 광대의 여정이 세계에 이르는 과정으로 타로를 설명한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "tarot"
+    ],
+    "trigger_terms": [
+      "타로",
+      "광대",
+      "여정",
+      "세계",
+      "The World"
+    ],
+    "claim_limits": "상징·성찰의 해석이다. 실제 운명·엔딩·치료 결과를 확정하거나 보이지 않는 카드를 뽑은 척하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "MISTY_SHOP_STOCK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "에소테리카에는 향과 행운을 기원하는 펜던트 같은 영적 상담용 물품이 있다",
+    "source": {
+      "source_id": "WIKI_MISTY",
+      "url": "https://cyberpunk.fandom.com/wiki/Misty_Olszewski",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "에소테리카에는 향과 행운을 기원하는 펜던트 같은 영적 상담용 물품이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "가게",
+      "에소테리카",
+      "향",
+      "펜던트",
+      "물건"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ROGUE_AFTERLIFE_STAFF",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "애프터라이프에서는 에머릭 브론슨이 출입을 관리하고 클레어 러셀이 바텐더로 일한다",
+    "source": {
+      "source_id": "WIKI_ROGUE",
+      "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "애프터라이프에서는 에머릭 브론슨이 출입을 관리하고 클레어 러셀이 바텐더로 일한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "mercenary"
+    ],
+    "trigger_terms": [
+      "애프터라이프",
+      "에머릭",
+      "클레어",
+      "바텐더",
+      "출입"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ROGUE_EXPERT_NETWORK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "로그는 애프터라이프의 넷러너 닉스와 솔로 겸 경호원 크리스핀 웨이랜드 같은 전문가들과 일을 한다",
+    "source": {
+      "source_id": "WIKI_ROGUE",
+      "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "로그는 애프터라이프의 넷러너 닉스와 솔로 겸 경호원 크리스핀 웨이랜드 같은 전문가들과 일을 한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "mercenary"
+    ],
+    "trigger_terms": [
+      "닉스",
+      "웨이랜드",
+      "넷러너",
+      "경호원",
+      "인맥"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ROGUE_SOLO_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "로그는 픽서가 되기 전에 나이트 시티에서 이름난 솔로로 활동했다",
+    "source": {
+      "source_id": "WIKI_ROGUE",
+      "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "로그는 픽서가 되기 전에 나이트 시티에서 이름난 솔로로 활동했다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "솔로",
+      "용병",
+      "과거",
+      "경력"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "GORO_ARASAKA_LOYALTY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "타케무라는 사부로 아라사카에게 충성하며 아라사카에서의 복무를 중요하게 여긴다",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "타케무라는 사부로 아라사카에게 충성하며 아라사카에서의 복무를 중요하게 여긴다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "사부로",
+      "충성",
+      "복무",
+      "아라사카"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "GORO_ODA_CONTACT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "산다유 오다는 하나코 아라사카의 경호원이며 타케무라와 알고 지낸다",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "산다유 오다는 하나코 아라사카의 경호원이며 타케무라와 알고 지낸다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "인물 배경·해당 대화 단계",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "physical_security"
+    ],
+    "trigger_terms": [
+      "오다",
+      "하나코",
+      "경호원"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "GORO_FOOD_PREFERENCE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "타케무라는 나이트 시티의 테이크아웃 음식에 불만을 드러내며 일본의 제대로 된 음식을 그리워한다",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "타케무라는 나이트 시티의 테이크아웃 음식에 불만을 드러내며 일본의 제대로 된 음식을 그리워한다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "인물 배경·해당 대화 단계",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "음식",
+      "테이크아웃",
+      "일본",
+      "먹을"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "KERRY_SAMURAI_MEMBERS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "SAMURAI에는 케리와 조니 실버핸드 외에 낸시 하틀리, 데니, 헨리가 참여했다",
+    "source": {
+      "source_id": "WIKI_SAMURAI",
+      "url": "https://cyberpunk.fandom.com/wiki/Samurai",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "SAMURAI에는 케리와 조니 실버핸드 외에 낸시 하틀리, 데니, 헨리가 참여했다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "music"
+    ],
+    "trigger_terms": [
+      "SAMURAI",
+      "사무라이",
+      "조니",
+      "낸시",
+      "데니",
+      "헨리",
+      "밴드"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "KERRY_RECORD_LABEL",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "케리는 MSM 레코드와 계약한 솔로 음악가다",
+    "source": {
+      "source_id": "WIKI_MSM",
+      "url": "https://cyberpunk.fandom.com/wiki/MSM_Records",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "케리는 MSM 레코드와 계약한 솔로 음악가다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "music"
+    ],
+    "trigger_terms": [
+      "MSM",
+      "음반사",
+      "레이블",
+      "계약",
+      "솔로"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "KERRY_SOLO_SONGS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "케리의 솔로 곡에는 Holdin’ On과 User Friendly가 있다",
+    "source": {
+      "source_id": "WIKI_KERRY",
+      "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "케리의 솔로 곡에는 Holdin’ On과 User Friendly가 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "music"
+    ],
+    "trigger_terms": [
+      "노래",
+      "곡",
+      "Holdin",
+      "User Friendly",
+      "솔로"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "RIVER_HAN_PARTNER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리버는 NCPD 형사로 일할 때 해럴드 한과 함께 수사했다",
+    "source": {
+      "source_id": "WIKI_RIVER",
+      "url": "https://cyberpunk.fandom.com/wiki/River_Ward",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "리버는 NCPD 형사로 일할 때 해럴드 한과 함께 수사했다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "police"
+    ],
+    "trigger_terms": [
+      "해럴드",
+      "해럴드 한",
+      "Harold Han",
+      "파트너",
+      "형사",
+      "수사"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "RIVER_JOSS_CHILDREN",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리버의 누나 조스에게는 랜디, 도리안, 모니크라는 세 자녀가 있다",
+    "source": {
+      "source_id": "WIKI_RIVER",
+      "url": "https://cyberpunk.fandom.com/wiki/River_Ward",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "리버의 누나 조스에게는 랜디, 도리안, 모니크라는 세 자녀가 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "인물 배경·해당 대화 단계",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "누나",
+      "조스",
+      "랜디",
+      "도리안",
+      "모니크",
+      "가족"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "RIVER_FAMILY_SUPPORT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리버는 조스와 아이들의 생활을 도와주려고 주거와 돌봄을 지원한 경험이 있다",
+    "source": {
+      "source_id": "WIKI_RIVER",
+      "url": "https://cyberpunk.fandom.com/wiki/River_Ward",
+      "locator": "검색 결과에서 열람한 설명·Database Entry 발췌. 본문 직접 접근 제한",
+      "support_summary": "리버는 조스와 아이들의 생활을 도와주려고 주거와 돌봄을 지원한 경험이 있다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "인물 배경·해당 대화 단계",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "조스",
+      "아이",
+      "가족",
+      "트레일러"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EVELYN_BD_RECORDING",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "에블린은 자신의 시점에서 BD를 기록한 경험이 있으며 그 기록을 의뢰 준비에 사용했다",
+    "source": {
+      "source_id": "WIKI_INFORMATION",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Information",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "에블린은 자신의 시점에서 BD를 기록한 경험이 있으며 그 기록을 의뢰 준비에 사용했다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "braindance"
+    ],
+    "trigger_terms": [
+      "BD",
+      "브레인댄스",
+      "기록",
+      "녹화",
+      "직접"
+    ],
+    "claim_limits": "개인 기록·의뢰 경험만 제공한다. 전문 편집·넷러닝·렐릭 기술·비밀 의뢰인·V의 미래를 아는 것으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "technology",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EVELYN_JUDY_BD_COLLAB",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "에블린이 제공한 BD의 보정·편집과 분석 안내는 주디가 맡았다",
+    "source": {
+      "source_id": "WIKI_INFORMATION",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Information",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "에블린이 제공한 BD의 보정·편집과 분석 안내는 주디가 맡았다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "profession",
+    "topic_tags": [
+      "braindance"
+    ],
+    "trigger_terms": [
+      "BD",
+      "브레인댄스",
+      "주디",
+      "편집",
+      "보정"
+    ],
+    "claim_limits": "개인 기록·의뢰 경험만 제공한다. 전문 편집·넷러닝·렐릭 기술·비밀 의뢰인·V의 미래를 아는 것으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "technology",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EVELYN_CLOUDS_CONNECTION",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "에블린과 주디는 클라우드에서 일하던 시절부터 서로 알고 지냈다",
+    "source": {
+      "source_id": "WIKI_JUDY",
+      "url": "https://cyberpunk.fandom.com/wiki/Judy_%C3%81lvarez",
+      "locator": "검색으로 열람한 인물 이력·게임 Database Entry·퀘스트 목표 발췌. 본문 직접 접근 제한",
+      "support_summary": "에블린과 주디는 클라우드에서 일하던 시절부터 서로 알고 지냈다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "self_background"
+    ],
+    "trigger_terms": [
+      "클라우드",
+      "주디",
+      "인연",
+      "어떻게"
+    ],
+    "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JUDY_FIRST",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "에블린의 소개로 V를 만나 습격 준비용 BD 분석을 도왔다.",
+    "source": {
+      "source_id": "WIKI_INFORMATION",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Information",
+      "locator": "The Information에서 에블린의 소개로 만남",
+      "support_summary": "에블린의 소개로 V를 만나 습격 준비용 BD 분석을 도왔다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "first"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "judy",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JUDY_RESCUE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 에블린을 구출하고 자기 집에서 돌보며 관련 BD를 분석했다.",
+    "source": {
+      "source_id": "WIKI_DOUBLE_LIFE",
+      "url": "https://cyberpunk.fandom.com/wiki/Double_Life",
+      "locator": "Double Life에서 에블린 구출 완료",
+      "support_summary": "V와 에블린을 구출하고 자기 집에서 돌보며 관련 BD를 분석했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "rescue"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "judy",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JUDY_CLOUDS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "에블린이 세상을 떠난 뒤 V가 곁에 와 주었고, 클라우드의 인형들을 돕는 계획에 동의했다.",
+    "source": {
+      "source_id": "WIKI_JUDY",
+      "url": "https://cyberpunk.fandom.com/wiki/Judy_%C3%81lvarez",
+      "locator": "Both Sides, Now 이후 Talkin’ ’Bout a Revolution에서 도움에 동의",
+      "support_summary": "에블린이 세상을 떠난 뒤 V가 곁에 와 주었고, 클라우드의 인형들을 돕는 계획에 동의했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "clouds"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "judy",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JUDY_MAIKO_NO_PAY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 클라우드를 마이코에게 맡기는 안을 선택했지만 마이코의 돈은 받지 않았다.",
+    "source": {
+      "source_id": "WIKI_PISCES",
+      "url": "https://cyberpunk.fandom.com/wiki/Pisces",
+      "locator": "Pisces에서 마이코의 운영안을 받아들이고 보수는 거절",
+      "support_summary": "V가 클라우드를 마이코에게 맡기는 안을 선택했지만 마이코의 돈은 받지 않았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "maiko_no_pay"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "judy",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JUDY_MAIKO_KILLED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 클라우드에서 마이코를 죽였고, 그 결과에 충격을 받았다.",
+    "source": {
+      "source_id": "WIKI_PISCES",
+      "url": "https://cyberpunk.fandom.com/wiki/Pisces",
+      "locator": "Pisces에서 마이코 사망",
+      "support_summary": "V가 클라우드에서 마이코를 죽였고, 그 결과에 충격을 받았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "maiko_killed"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "judy",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JUDY_FRIEND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 라구나 벤드에서 함께 잠수했고 개인적인 추억을 나눴다. 연인 관계는 시작하지 않았다.",
+    "source": {
+      "source_id": "WIKI_JUDY",
+      "url": "https://cyberpunk.fandom.com/wiki/Judy_%C3%81lvarez",
+      "locator": "Pyramid Song 완료, 연인 관계를 시작하지 않은 친구 분기",
+      "support_summary": "V와 라구나 벤드에서 함께 잠수했고 개인적인 추억을 나눴다. 연인 관계는 시작하지 않았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "friend"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "judy",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JUDY_PARTNER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "라구나 벤드에서 함께 잠수했고 그 뒤 서로 연인 관계를 시작하기로 했다.",
+    "source": {
+      "source_id": "WIKI_JUDY",
+      "url": "https://cyberpunk.fandom.com/wiki/Judy_%C3%81lvarez",
+      "locator": "여성 체형·여성 목소리의 V, Pyramid Song에서 친밀한 만남 후 지속적인 관계 선택",
+      "support_summary": "라구나 벤드에서 함께 잠수했고 그 뒤 서로 연인 관계를 시작하기로 했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "partner"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "judy",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JUDY_CUT_OFF",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 마이코의 안과 보수를 받아들여 주디가 V와의 연락을 끊었다.",
+    "source": {
+      "source_id": "WIKI_PISCES",
+      "url": "https://cyberpunk.fandom.com/wiki/Pisces",
+      "locator": "Pisces에서 마이코의 운영안과 보수를 모두 수락",
+      "support_summary": "V가 마이코의 안과 보수를 받아들여 주디가 V와의 연락을 끊었다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "cut_off"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "judy",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_PANAM_FIRST",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "로그의 소개로 V를 만나 차와 화물을 되찾는 일에 협력하기로 했다.",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "Ghost Town에서 로그의 소개로 만남",
+      "support_summary": "로그의 소개로 V를 만나 차와 화물을 되찾는 일에 협력하기로 했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "first"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "panam",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_PANAM_HELLMAN",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 헬맨을 확보하는 작전에 참여했고 스콜피온을 잃었다.",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "Life During Wartime 완료",
+      "support_summary": "V와 헬맨을 확보하는 작전에 참여했고 스콜피온을 잃었다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "hellman"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "panam",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_PANAM_SAUL_SAVED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 레이스에게 잡힌 사울을 구출했다.",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "Riders on the Storm에서 사울 구출 성공",
+      "support_summary": "V와 레이스에게 잡힌 사울을 구출했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "saul_saved"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "panam",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_PANAM_FRIEND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 바실리스크 작전을 진행하고 레이스의 공격에서 클랜을 지켰다.",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "Queen of the Highway 완료, 연애를 시작하지 않은 분기",
+      "support_summary": "V와 바실리스크 작전을 진행하고 레이스의 공격에서 클랜을 지켰다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "friend"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "panam",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_PANAM_PARTNER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "바실리스크 작전과 클랜 방어를 함께했고 서로 연인 관계를 시작했다.",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "남성 체형의 V, With a Little Help from My Friends에서 돈 때문에 돕는다고 하지 않음, Queen of the Highway에서 상호 연애 선택",
+      "support_summary": "바실리스크 작전과 클랜 방어를 함께했고 서로 연인 관계를 시작했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "partner"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "panam",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_PANAM_BETRAYED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 바실리스크 계획을 사울에게 알렸고 팬앰은 V와의 관계를 끊었다.",
+    "source": {
+      "source_id": "WIKI_PANAM_FRIENDS",
+      "url": "https://cyberpunk.fandom.com/wiki/With_a_Little_Help_from_My_Friends",
+      "locator": "With a Little Help from My Friends에서 사울에게 팬앰의 계획 누설",
+      "support_summary": "V가 바실리스크 계획을 사울에게 알렸고 팬앰은 V와의 관계를 끊었다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "betrayed"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "panam",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JACKIE_PARTNER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 반년 동안 함께 용병 일을 하며 가까운 친구가 됐다. 미스티와 교제 중이다.",
+    "source": {
+      "source_id": "WIKI_JACKIE",
+      "url": "https://cyberpunk.fandom.com/wiki/Jackie_Welles",
+      "locator": "출신 도입부와 반년의 공동 생활 이후, The Heist 이전",
+      "support_summary": "V와 반년 동안 함께 용병 일을 하며 가까운 친구가 됐다. 미스티와 교제 중이다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "partner"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "jackie",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JACKIE_DEAD",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "콘페키 플라자에서 탈출한 뒤 부상으로 사망했다.",
+    "source": {
+      "source_id": "WIKI_JACKIE",
+      "url": "https://cyberpunk.fandom.com/wiki/Jackie_Welles",
+      "locator": "The Heist에서 재키 사망",
+      "support_summary": "콘페키 플라자에서 탈출한 뒤 부상으로 사망했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "dead"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "jackie",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_VIKTOR_FRIEND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V를 오래 진료해 온 친구이며 습격 준비용 임플란트를 외상으로 제공했다.",
+    "source": {
+      "source_id": "WIKI_VIKTOR",
+      "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
+      "locator": "The Ripperdoc 이후, Playing for Time 이전",
+      "support_summary": "V를 오래 진료해 온 친구이며 습격 준비용 임플란트를 외상으로 제공했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "friend"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "viktor",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_VIKTOR_RELIC",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "습격 뒤 V를 치료했고 렐릭이 V의 정신을 조니의 엔그램으로 덮어쓰는 상태임을 진단했다.",
+    "source": {
+      "source_id": "WIKI_VIKTOR",
+      "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
+      "locator": "Playing for Time에서 렐릭 진단을 듣고 회복한 뒤",
+      "support_summary": "습격 뒤 V를 치료했고 렐릭이 V의 정신을 조니의 엔그램으로 덮어쓰는 상태임을 진단했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "relic"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "viktor",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_VIKTOR_PAID",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 렐릭 진단을 받았고 외상 진료비 21,000에디를 갚았다.",
+    "source": {
+      "source_id": "WIKI_VIKTOR",
+      "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
+      "locator": "Paid in Full에서 외상 진료비 상환, 렐릭 진단 이후를 가정",
+      "support_summary": "V가 렐릭 진단을 받았고 외상 진료비 21,000에디를 갚았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "viktor"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "paid"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "viktor",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_MISTY_FRIEND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "재키와 교제 중이며 그의 친구 V를 알고 지낸다.",
+    "source": {
+      "source_id": "WIKI_MISTY",
+      "url": "https://cyberpunk.fandom.com/wiki/Misty_Olszewski",
+      "locator": "The Heist 이전, V가 재키와 함께 가게를 드나드는 시점",
+      "support_summary": "재키와 교제 중이며 그의 친구 V를 알고 지낸다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "friend"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "misty",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_MISTY_LOSS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "재키가 세상을 떠났고 빅터의 진료소에서 V의 회복을 도왔다.",
+    "source": {
+      "source_id": "WIKI_MISTY",
+      "url": "https://cyberpunk.fandom.com/wiki/Misty_Olszewski",
+      "locator": "Playing for Time 이후, 재키 사망과 V의 회복을 아는 시점",
+      "support_summary": "재키가 세상을 떠났고 빅터의 진료소에서 V의 회복을 도왔다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "loss"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "misty",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_MISTY_ROOFTOP",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "결정을 앞둔 V를 재키와 함께 시간을 보내던 옥상으로 안내했다.",
+    "source": {
+      "source_id": "WIKI_NOCTURNE",
+      "url": "https://cyberpunk.fandom.com/wiki/Nocturne_Op55N1",
+      "locator": "Nocturne Op55N1에서 옥상으로 안내한 뒤, 최종 선택 전",
+      "support_summary": "결정을 앞둔 V를 재키와 함께 시간을 보내던 옥상으로 안내했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "rooftop"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "misty",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_MISTY_ARASAKA",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 아라사카와 협력하기로 했다는 말을 듣고 재키의 죽음을 떠올리며 상처받았다.",
+    "source": {
+      "source_id": "WIKI_NOCTURNE",
+      "url": "https://cyberpunk.fandom.com/wiki/Nocturne_Op55N1",
+      "locator": "Nocturne Op55N1에서 아라사카의 도움을 선택했고 그 사실을 미스티가 알게 됨",
+      "support_summary": "V가 아라사카와 협력하기로 했다는 말을 듣고 재키의 죽음을 떠올리며 상처받았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "misty"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "arasaka"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "misty",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_ROGUE_CLIENT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 애프터라이프에 찾아와 헬맨을 찾는 정보를 의뢰했다.",
+    "source": {
+      "source_id": "WIKI_ROGUE",
+      "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
+      "locator": "Ghost Town에서 처음 계약하는 시점",
+      "support_summary": "V가 애프터라이프에 찾아와 헬맨을 찾는 정보를 의뢰했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "client"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "rogue",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_ROGUE_WORK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V에게 헬맨 추적 정보와 팬앰의 연락처를 제공했다.",
+    "source": {
+      "source_id": "WIKI_ROGUE",
+      "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
+      "locator": "Ghost Town에서 정보를 거래하고 팬앰을 소개받음",
+      "support_summary": "V에게 헬맨 추적 정보와 팬앰의 연락처를 제공했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "work"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "rogue",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_ROGUE_JOHNNY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V의 몸을 통한 조니의 복귀를 알게 되었고 에부니케에서 스매셔의 흔적을 함께 조사했다.",
+    "source": {
+      "source_id": "WIKI_ROGUE",
+      "url": "https://cyberpunk.fandom.com/wiki/Rogue_Amendiares",
+      "locator": "Chippin’ In에서 조니의 복귀를 알고 에부니케 조사에 협력",
+      "support_summary": "V의 몸을 통한 조니의 복귀를 알게 되었고 에부니케에서 스매셔의 흔적을 함께 조사했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "johnny"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "rogue",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_ROGUE_AFTER_DATE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V의 몸을 통제한 조니와 자동차 극장에 갔지만 관계를 다시 시작하지 않았다.",
+    "source": {
+      "source_id": "GUIDE_BLISTERING",
+      "url": "https://www.gamerguides.com/cyberpunk-2077/guide/side-jobs/watson/blistering-love",
+      "locator": "Blistering Love 완료, 대화 상대는 몸의 통제권을 되찾은 V",
+      "support_summary": "V의 몸을 통제한 조니와 자동차 극장에 갔지만 관계를 다시 시작하지 않았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "rogue"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "after_date"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "rogue",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_GORO_WITNESS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "쓰레기장에서 V를 구해 빅터에게 데려갔고 사부로 살해에 대한 증언이 필요하다.",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "Playing for Time 이후 톰스 다이너에서 협력을 논의한 뒤",
+      "support_summary": "쓰레기장에서 V를 구해 빅터에게 데려갔고 사부로 살해에 대한 증언이 필요하다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "witness"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "goro",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_GORO_INVESTIGATION",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 오다를 접촉하고 와카코에게 퍼레이드 관련 도움을 구했다.",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "Down on the Street에서 오다와 와카코를 만난 뒤",
+      "support_summary": "V와 오다를 접촉하고 와카코에게 퍼레이드 관련 도움을 구했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "investigation"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "goro",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_GORO_PARADE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 아라사카 시설을 정찰하고 하나코에게 접근할 퍼레이드 계획을 준비했다.",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "Gimme Danger에서 정찰·준비에 함께한 뒤, Play It Safe 전",
+      "support_summary": "V와 아라사카 시설을 정찰하고 하나코에게 접근할 퍼레이드 계획을 준비했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "parade"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "goro",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_GORO_SAVED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "하나코에게 증언을 전한 뒤 습격받았고 V가 돌아와 자신을 구출했다.",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "Search and Destroy에서 타케무라를 실제로 구출",
+      "support_summary": "하나코에게 증언을 전한 뒤 습격받았고 V가 돌아와 자신을 구출했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "saved"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "goro",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_GORO_ABANDONED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 습격당한 은신처에서 타케무라를 구출하지 않았다.",
+    "source": {
+      "source_id": "WIKI_GORO",
+      "url": "https://cyberpunk.fandom.com/wiki/Goro_Takemura",
+      "locator": "Search and Destroy에서 타케무라를 구출하지 않음",
+      "support_summary": "V가 습격당한 은신처에서 타케무라를 구출하지 않았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "goro"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "abandoned"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "goro",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_KERRY_FIRST",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V의 몸을 통한 조니의 복귀를 알게 되었다.",
+    "source": {
+      "source_id": "WIKI_KERRY",
+      "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
+      "locator": "Holdin’ On 이후, V가 몸의 통제권을 되찾은 시점",
+      "support_summary": "V의 몸을 통한 조니의 복귀를 알게 되었다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "first"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "kerry",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_KERRY_MUSIC",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 SAMURAI 재결합 공연을 준비했고, 공연에서는 V의 몸을 통제한 조니와 함께 연주했다.",
+    "source": {
+      "source_id": "WIKI_KERRY",
+      "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
+      "locator": "Second Conflict와 A Like Supreme 완료",
+      "support_summary": "V와 SAMURAI 재결합 공연을 준비했고, 공연에서는 V의 몸을 통제한 조니와 함께 연주했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "music"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "kerry",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_KERRY_US_CRACKS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 자신의 음악을 둘러싼 일을 처리했고 US Cracks와 직접 이야기했다.",
+    "source": {
+      "source_id": "WIKI_KERRY",
+      "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
+      "locator": "Rebel! Rebel!와 I Don’t Wanna Hear It 이후",
+      "support_summary": "V와 자신의 음악을 둘러싼 일을 처리했고 US Cracks와 직접 이야기했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "us_cracks"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "kerry",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_KERRY_FRIEND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 요트에서 시간을 보냈지만 연인 관계는 시작하지 않았다.",
+    "source": {
+      "source_id": "WIKI_KERRY",
+      "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
+      "locator": "Boat Drinks 완료, 지속적인 연인 관계를 선택하지 않음",
+      "support_summary": "V와 요트에서 시간을 보냈지만 연인 관계는 시작하지 않았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "friend"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "kerry",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_KERRY_PARTNER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 요트에서 개인적인 시간을 보낸 뒤 서로 연인 관계를 시작하기로 했다.",
+    "source": {
+      "source_id": "WIKI_KERRY",
+      "url": "https://cyberpunk.fandom.com/wiki/Kerry_Eurodyne",
+      "locator": "남성 체형·남성 목소리의 V, Boat Drinks에서 상호 친밀한 만남 후 해변에서 지속적인 관계 선택",
+      "support_summary": "V와 요트에서 개인적인 시간을 보낸 뒤 서로 연인 관계를 시작하기로 했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "kerry"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "partner"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "kerry",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_RIVER_CASE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 라인 시장의 죽음에 얽힌 사건을 수사했다.",
+    "source": {
+      "source_id": "WIKI_RIVER",
+      "url": "https://cyberpunk.fandom.com/wiki/River_Ward",
+      "locator": "I Fought the Law 수사에 함께한 시점",
+      "support_summary": "V와 라인 시장의 죽음에 얽힌 사건을 수사했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "case"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "river",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_RIVER_RANDY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "조카 랜디가 실종되었고 V에게 함께 찾아 달라고 요청했다.",
+    "source": {
+      "source_id": "WIKI_HUNT",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Hunt",
+      "locator": "The Hunt에서 랜디가 실종되었다고 V에게 공개한 뒤, 구조 전",
+      "support_summary": "조카 랜디가 실종되었고 V에게 함께 찾아 달라고 요청했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "randy"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "river",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_RIVER_SAVED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 에지우드 농장에서 랜디를 구출했다.",
+    "source": {
+      "source_id": "WIKI_HUNT",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Hunt",
+      "locator": "The Hunt에서 올바른 농장을 찾아 랜디 구출 성공",
+      "support_summary": "V와 에지우드 농장에서 랜디를 구출했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "saved"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "river",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_RIVER_FRIEND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "랜디를 구출한 뒤 V를 가족 식사에 초대했다. 연인 관계는 시작하지 않았다.",
+    "source": {
+      "source_id": "WIKI_RIVER",
+      "url": "https://cyberpunk.fandom.com/wiki/River_Ward",
+      "locator": "Following the River 완료, 지속적인 연인 관계를 시작하지 않음",
+      "support_summary": "랜디를 구출한 뒤 V를 가족 식사에 초대했다. 연인 관계는 시작하지 않았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "friend"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "river",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_RIVER_PARTNER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "랜디 구출과 가족 식사 이후 V와 서로 연인 관계를 시작하기로 했다.",
+    "source": {
+      "source_id": "WIKI_RIVER",
+      "url": "https://cyberpunk.fandom.com/wiki/River_Ward",
+      "locator": "여성 체형의 V, Following the River에서 상호 친밀한 만남 후 지속적인 관계 선택",
+      "support_summary": "랜디 구출과 가족 식사 이후 V와 서로 연인 관계를 시작하기로 했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "partner"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "river",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_RIVER_FAILED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "랜디 구출에 실패해 Following the River와 연인 관계로 이어지는 경로가 열리지 않았다.",
+    "source": {
+      "source_id": "GUIDE_RIVER",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-river-ward-romance-the-hunt/",
+      "locator": "The Hunt 실패: 잘못된 농장 선택 또는 수색 중 이탈",
+      "support_summary": "랜디 구출에 실패해 Following the River와 연인 관계로 이어지는 경로가 열리지 않았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "failed"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "river",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_EVELYN_CLIENT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V에게 콘페키 플라자의 렐릭을 훔치는 의뢰와 직접 기록한 BD를 제공했다.",
+    "source": {
+      "source_id": "WIKI_INFORMATION",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Information",
+      "locator": "The Information에서 의뢰와 BD를 설명하는 시점",
+      "support_summary": "V에게 콘페키 플라자의 렐릭을 훔치는 의뢰와 직접 기록한 BD를 제공했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "client"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "evelyn",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_EVELYN_DEX_OFFER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V에게 덱스터 드숀을 제외하고 자신과 직접 거래하자는 제안을 했다.",
+    "source": {
+      "source_id": "WIKI_INFORMATION",
+      "url": "https://cyberpunk.fandom.com/wiki/The_Information",
+      "locator": "The Information에서 덱스를 제외하자는 제안을 듣고 결정하지 않은 시점",
+      "support_summary": "V에게 덱스터 드숀을 제외하고 자신과 직접 거래하자는 제안을 했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "dex_offer"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "evelyn",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_EVELYN_RECOVERED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 주디에게 구출되었지만 정상적인 대화를 할 수 없는 상태다.",
+    "source": {
+      "source_id": "WIKI_DOUBLE_LIFE",
+      "url": "https://cyberpunk.fandom.com/wiki/Double_Life",
+      "locator": "Double Life에서 구출되어 주디의 집에 있는 시점",
+      "support_summary": "V와 주디에게 구출되었지만 정상적인 대화를 할 수 없는 상태다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "recovered"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "evelyn",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_EVELYN_DEAD",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "주디의 집에서 회복하던 중 세상을 떠났다.",
+    "source": {
+      "source_id": "WIKI_EVELYN",
+      "url": "https://cyberpunk.fandom.com/wiki/Evelyn_Parker",
+      "locator": "Both Sides, Now에서 에블린 사망이 확인된 뒤",
+      "support_summary": "주디의 집에서 회복하던 중 세상을 떠났다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "dead"
+        }
+      ]
+    },
+    "spoiler_scope": "selected_story_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "evelyn",
+      "relationship"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 모의 단계에서만 알려진 사건이다. 다른 분기·미래·실게임 상태·ANPC 대화 기억으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PANAM_ROGUE_WORK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "팬앰은 나이트 시티에서 용병으로 일하며 픽서 로그의 의뢰를 맡았던 경험이 있다.",
+    "source": {
+      "source_id": "WIKI_PANAM",
+      "url": "https://cyberpunk.fandom.com/wiki/Panam_Palmer",
+      "locator": "검색 결과의 Working as a mercenary under the fixer Rogue 이력 발췌",
+      "support_summary": "팬앰은 픽서 로그 아래에서 용병 의뢰를 맡았다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "personal_background",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "panam",
+      "rogue",
+      "mercenary"
+    ],
+    "trigger_terms": [
+      "로그",
+      "Rogue"
+    ],
+    "entity_aliases": [
+      "로그",
+      "로그 아멘디아레스",
+      "Rogue",
+      "Rogue Amendiares"
+    ],
+    "claim_limits": "팬앰의 직접 업무 경험만. 현재 관계의 호감·갈등·구체 의뢰 내용·결과는 제공된 원작 단계에 따른다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PUBLIC_SMASHER",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "아담 스매셔는 아라사카에 고용된 전신 개조 용병으로 악명 높다.",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "CDPR 공식 게임 소개 / Adam Smasher",
+      "support_summary": "아담 스매셔는 아라사카에 고용된 전신 개조 용병으로 악명 높다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "people",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "people",
+      "public_figure"
+    ],
+    "trigger_terms": [
+      "스매셔",
+      "아담",
+      "Smasher"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "entity_aliases": [
+      "아담 스매셔",
+      "스매셔",
+      "Adam Smasher",
+      "Smasher"
+    ]
+  },
+  {
+    "schema_version": "0.1",
+    "id": "PUBLIC_BARTMOSS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "레이치 바트모스는 데이터크래시와 연결된 전설적인 넷러너다.",
+    "source": {
+      "source_id": "LORE_BARTMOSS",
+      "url": "https://cyberpunk.fandom.com/wiki/Rache_Bartmoss",
+      "locator": "DataKrash·R.A.B.I.D.S., 인게임 샤드 근거",
+      "support_summary": "레이치 바트모스는 데이터크래시와 연결된 전설적인 넷러너다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [
+      "바트모스",
+      "Bartmoss",
+      "데이터크래시"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "entity_aliases": [
+      "레이치 바트모스",
+      "바트모스",
+      "Rache Bartmoss"
+    ]
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOB_ROCKERBOY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "로커보이는 음악·공연과 선동으로 권력에 맞서는 반항적 예술가다.",
+    "source": {
+      "source_id": "LORE_ROCKER",
+      "url": "https://cyberpunk.fandom.com/wiki/Rocker",
+      "locator": "Rockerboy 직업 개요",
+      "support_summary": "로커보이는 음악·공연과 선동으로 권력에 맞서는 반항적 예술가다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "occupations",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "occupations"
+    ],
+    "trigger_terms": [
+      "로커보이",
+      "로커",
+      "rockerboy"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOB_MERC_TEAM",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "용병 팀은 픽서의 중개 아래 넷러너·테키·의료 담당·전투 담당이 역할을 나눌 수 있다.",
+    "source": {
+      "source_id": "LORE_MERCS",
+      "url": "https://cyberpunk.fandom.com/wiki/Mercenary",
+      "locator": "인게임 Database Entry, 픽서·팀 전문 역할",
+      "support_summary": "용병 팀은 픽서의 중개 아래 넷러너·테키·의료 담당·전투 담당이 역할을 나눌 수 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "occupations",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "occupations"
+    ],
+    "trigger_terms": [
+      "용병 팀",
+      "테키",
+      "메드테크",
+      "팀 구성"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOB_SOLO",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "솔로는 전투·경호 같은 위험한 일을 맡는 전문 용병을 가리킨다.",
+    "source": {
+      "source_id": "LORE_MERCS",
+      "url": "https://cyberpunk.fandom.com/wiki/Mercenary",
+      "locator": "인게임 Database Entry, 픽서·팀 전문 역할",
+      "support_summary": "솔로는 전투·경호 같은 위험한 일을 맡는 전문 용병을 가리킨다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "occupations",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "occupations"
+    ],
+    "trigger_terms": [
+      "솔로",
+      "경호",
+      "solo"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOB_TECHIE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "테키는 장비·무기의 기술 작업을 맡으며 용병 팀의 기술 역할을 담당할 수 있다.",
+    "source": {
+      "source_id": "LORE_MERCS",
+      "url": "https://cyberpunk.fandom.com/wiki/Mercenary",
+      "locator": "인게임 Database Entry, 픽서·팀 전문 역할",
+      "support_summary": "테키는 장비·무기의 기술 작업을 맡으며 용병 팀의 기술 역할을 담당할 수 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "occupations",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "occupations"
+    ],
+    "trigger_terms": [
+      "테키",
+      "techie",
+      "장비 수리"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOB_MEDTECH",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "용병 팀의 의료 담당은 부상과 사이버웨어 문제에 대응한다.",
+    "source": {
+      "source_id": "LORE_MERCS",
+      "url": "https://cyberpunk.fandom.com/wiki/Mercenary",
+      "locator": "인게임 Database Entry, 픽서·팀 전문 역할",
+      "support_summary": "용병 팀의 의료 담당은 부상과 사이버웨어 문제에 대응한다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "occupations",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "occupations"
+    ],
+    "trigger_terms": [
+      "메드테크",
+      "medtech",
+      "의료 담당"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CORP_ARASAKA_BRANCHES",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "아라사카는 보안뿐 아니라 금융과 무기 제조에도 사업을 펼친다.",
+    "source": {
+      "source_id": "LORE_ARASAKA",
+      "url": "https://cyberpunk.fandom.com/wiki/Arasaka",
+      "locator": "인게임 Database/Netpage, 보안·금융·제조",
+      "support_summary": "아라사카는 보안뿐 아니라 금융과 무기 제조에도 사업을 펼친다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "corporations",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "corporations"
+    ],
+    "trigger_terms": [
+      "아라사카 사업",
+      "아라사카 은행",
+      "Arasaka"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CORP_MILITECH_NUSA",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "밀리테크는 NUSA 정부에 병력·무기·군사 장비를 공급하며 민간 보안·전투 계약도 맡는다.",
+    "source": {
+      "source_id": "LORE_MILITECH",
+      "url": "https://cyberpunk.fandom.com/wiki/Militech",
+      "locator": "인게임 Database Entry, NUSA 계약·민간 보안",
+      "support_summary": "밀리테크는 NUSA 정부에 병력·무기·군사 장비를 공급하며 민간 보안·전투 계약도 맡는다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "corporations",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "corporations"
+    ],
+    "trigger_terms": [
+      "밀리테크",
+      "NUSA",
+      "군사 계약"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CORP_KANG_TAO",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "캉 타오는 스마트 무기와 관련 무기 시스템으로 알려진 기업이다.",
+    "source": {
+      "source_id": "LORE_KANG_TAO",
+      "url": "https://cyberpunk.fandom.com/wiki/Kang_Tao",
+      "locator": "인게임 Database Entry, 스마트 무기",
+      "support_summary": "캉 타오는 스마트 무기와 관련 무기 시스템으로 알려진 기업이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "corporations",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "corporations"
+    ],
+    "trigger_terms": [
+      "캉 타오",
+      "캉타오",
+      "Kang Tao"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CORP_KANG_TAO_PRODUCTS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "캉 타오의 스마트 무기에는 A-22B 차오, G-58 디안, L-69 주오가 있다.",
+    "source": {
+      "source_id": "LORE_KANG_TAO",
+      "url": "https://cyberpunk.fandom.com/wiki/Kang_Tao",
+      "locator": "인게임 Database Entry, 스마트 무기",
+      "support_summary": "캉 타오의 스마트 무기에는 A-22B 차오, G-58 디안, L-69 주오가 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "corporations",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "corporations"
+    ],
+    "trigger_terms": [
+      "차오",
+      "디안",
+      "주오",
+      "캉 타오 무기"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CORP_KIROSHI",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "키로시는 광학 임플란트 제품으로 알려져 있다.",
+    "source": {
+      "source_id": "LORE_KIROSHI",
+      "url": "https://cyberpunk.fandom.com/wiki/Kiroshi",
+      "locator": "2077 제품 목록, 광학 임플란트",
+      "support_summary": "키로시는 광학 임플란트 제품으로 알려져 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "corporations",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "corporations"
+    ],
+    "trigger_terms": [
+      "키로시",
+      "Kiroshi",
+      "광학"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CORP_KIROSHI_OPTICS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "2077년 키로시 광학 제품에는 기본형과 클레어보이언트·콕커트리스·오라클 등의 제품이 있다.",
+    "source": {
+      "source_id": "LORE_KIROSHI",
+      "url": "https://cyberpunk.fandom.com/wiki/Kiroshi",
+      "locator": "2077 제품 목록, 광학 임플란트",
+      "support_summary": "2077년 키로시 광학 제품에는 기본형과 클레어보이언트·콕커트리스·오라클 등의 제품이 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "corporations",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "corporations"
+    ],
+    "trigger_terms": [
+      "키로시 제품",
+      "오라클",
+      "클레어보이언트"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CORP_BIOTECHNICA",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "바이오테크니카는 유전공학·생명공학과 식량·연료 관련 사업을 하는 기업이다.",
+    "source": {
+      "source_id": "LORE_BIOTECHNICA",
+      "url": "https://cyberpunk.fandom.com/wiki/Biotechnica",
+      "locator": "인게임 Database Entry, 유전공학·CHOOH2·식량",
+      "support_summary": "바이오테크니카는 유전공학·생명공학과 식량·연료 관련 사업을 하는 기업이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "corporations",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "corporations"
+    ],
+    "trigger_terms": [
+      "바이오테크니카",
+      "Biotechnica",
+      "유전공학"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CORP_NIGHT_CORP",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "나이트 코프는 나이트 시티의 도로·철도·상하수도 같은 공공 기반시설 사업에 관여한다.",
+    "source": {
+      "source_id": "LORE_NIGHT_CORP",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_Corp",
+      "locator": "공공 사업·도로·철도·상하수도",
+      "support_summary": "나이트 코프는 나이트 시티의 도로·철도·상하수도 같은 공공 기반시설 사업에 관여한다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "corporations",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "corporations"
+    ],
+    "trigger_terms": [
+      "나이트 코프",
+      "나이트코프",
+      "Night Corp"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TT_AV_DISPATCH",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "트라우마 팀은 고객의 건강 악화 신호와 위치를 받아 무장 AV 구조팀을 출동시킨다.",
+    "source": {
+      "source_id": "LORE_TT",
+      "url": "https://cyberpunk.fandom.com/wiki/Trauma_Team",
+      "locator": "2077 Business Model·Premium Packages",
+      "support_summary": "트라우마 팀은 고객의 건강 악화 신호와 위치를 받아 무장 AV 구조팀을 출동시킨다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "law_security",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "law_security"
+    ],
+    "trigger_terms": [
+      "트라우마 팀 출동",
+      "응급 구조",
+      "AV 구조"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TT_PLANS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "트라우마 팀의 실버·골드·플래티넘 상품은 비용과 보장 내용이 다르다.",
+    "source": {
+      "source_id": "LORE_TT",
+      "url": "https://cyberpunk.fandom.com/wiki/Trauma_Team",
+      "locator": "2077 Business Model·Premium Packages",
+      "support_summary": "트라우마 팀의 실버·골드·플래티넘 상품은 비용과 보장 내용이 다르다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "economy",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "economy"
+    ],
+    "trigger_terms": [
+      "플래티넘",
+      "실버",
+      "골드",
+      "의료 보험"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TT_PLATINUM_DETAIL",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "플래티넘 상품에는 상시 모니터링·응급 이송·수술·재활과 빠른 대응이 포함되며 저렴한 상품은 혜택이 적다.",
+    "source": {
+      "source_id": "LORE_TT",
+      "url": "https://cyberpunk.fandom.com/wiki/Trauma_Team",
+      "locator": "2077 Business Model·Premium Packages",
+      "support_summary": "플래티넘 상품에는 상시 모니터링·응급 이송·수술·재활과 빠른 대응이 포함되며 저렴한 상품은 혜택이 적다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "economy",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "economy"
+    ],
+    "trigger_terms": [
+      "트라우마 플래티넘",
+      "재활",
+      "보험 차이"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TRANSIT_DELAMAIN",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "델라메인은 AI가 운영하는 택시 서비스이며 방탄·강화 차량으로 알려져 있다.",
+    "source": {
+      "source_id": "LORE_DELAMAIN",
+      "url": "https://cyberpunk.fandom.com/wiki/Delamain_Corporation",
+      "locator": "인게임 Database Entry·차량·교통 서비스",
+      "support_summary": "델라메인은 AI가 운영하는 택시 서비스이며 방탄·강화 차량으로 알려져 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "transport",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "transport"
+    ],
+    "trigger_terms": [
+      "델라메인",
+      "Delamain",
+      "택시"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "DELAMAIN_VEHICLES",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "델라메인 택시는 빌포르 코르테스를 바탕으로 하며 밀리테크와 협력해 방탄 유리와 차체를 강화했다.",
+    "source": {
+      "source_id": "LORE_DELAMAIN",
+      "url": "https://cyberpunk.fandom.com/wiki/Delamain_Corporation",
+      "locator": "인게임 Database Entry·차량·교통 서비스",
+      "support_summary": "델라메인 택시는 빌포르 코르테스를 바탕으로 하며 밀리테크와 협력해 방탄 유리와 차체를 강화했다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "transport",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "transport"
+    ],
+    "trigger_terms": [
+      "델라메인 차량",
+      "코르테스",
+      "택시 방탄"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TRANSIT_NCART",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "NCART는 나이트 코프 소유의 나이트 시티 대중교통망이다.",
+    "source": {
+      "source_id": "LORE_NCART",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City_Area_Rapid_Transit",
+      "locator": "2077 대중교통·Night Corp",
+      "support_summary": "NCART는 나이트 코프 소유의 나이트 시티 대중교통망이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "transport",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "transport"
+    ],
+    "trigger_terms": [
+      "NCART",
+      "엔카트",
+      "지하철",
+      "대중교통"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "NCART_DETAIL",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "NCART에는 도시 구역을 잇는 철도·트램 교통이 있으며 도시의 확장과 함께 노선 확장이 논의된다.",
+    "source": {
+      "source_id": "LORE_NCART",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City_Area_Rapid_Transit",
+      "locator": "2077 대중교통·Night Corp",
+      "support_summary": "NCART에는 도시 구역을 잇는 철도·트램 교통이 있으며 도시의 확장과 함께 노선 확장이 논의된다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "transport",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "transport"
+    ],
+    "trigger_terms": [
+      "노선",
+      "트램",
+      "철도"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CITY_MEGABUILDINGS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "메가빌딩은 많은 주민과 생활 시설을 모은 거대한 복합 주거 건물이다.",
+    "source": {
+      "source_id": "LORE_MEGABUILDING",
+      "url": "https://cyberpunk.fandom.com/wiki/Megabuilding",
+      "locator": "2077 건물 목록·주거 시설",
+      "support_summary": "메가빌딩은 많은 주민과 생활 시설을 모은 거대한 복합 주거 건물이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "night_city",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "night_city"
+    ],
+    "trigger_terms": [
+      "메가빌딩",
+      "메가 빌딩",
+      "megabuilding"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CITY_H10",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "메가빌딩 H10은 2077년 왓슨 리틀 차이나에 있다.",
+    "source": {
+      "source_id": "LORE_MEGABUILDING",
+      "url": "https://cyberpunk.fandom.com/wiki/Megabuilding",
+      "locator": "2077 건물 목록·주거 시설",
+      "support_summary": "메가빌딩 H10은 2077년 왓슨 리틀 차이나에 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "night_city",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "night_city"
+    ],
+    "trigger_terms": [
+      "H10",
+      "에이치텐"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CITY_H8",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "메가빌딩 H8은 2077년 웨스트브룩 재팬타운에 있다.",
+    "source": {
+      "source_id": "LORE_MEGABUILDING",
+      "url": "https://cyberpunk.fandom.com/wiki/Megabuilding",
+      "locator": "2077 건물 목록·주거 시설",
+      "support_summary": "메가빌딩 H8은 2077년 웨스트브룩 재팬타운에 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "night_city",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "night_city"
+    ],
+    "trigger_terms": [
+      "H8",
+      "에이치에이트"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HISTORY_FOUNDING",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "나이트 시티는 1994년 코로나다 시티로 건설되기 시작했고, 리처드 나이트가 죽은 뒤 1998년 이름을 바꿨다.",
+    "source": {
+      "source_id": "LORE_MORRO",
+      "url": "https://cyberpunk.fandom.com/wiki/Morro_Bay%2C_California",
+      "locator": "1994 Coronado City·1998 이름 변경, 2077 이전 역사",
+      "support_summary": "나이트 시티는 1994년 코로나다 시티로 건설되기 시작했고, 리처드 나이트가 죽은 뒤 1998년 이름을 바꿨다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "history",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "history"
+    ],
+    "trigger_terms": [
+      "도시 역사",
+      "코로나다",
+      "리처드 나이트",
+      "건설"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HISTORY_BOMBING",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "2023년 8월 20일 아라사카 타워에서 핵폭발이 일어나 도심이 파괴됐다. 책임 소재에 관한 공개 설명은 서로 다르다.",
+    "source": {
+      "source_id": "LORE_BOMBING",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City_Holocaust",
+      "locator": "인게임 Database Entry, 2023-08-20·책임 소재 불확실",
+      "support_summary": "2023년 8월 20일 아라사카 타워에서 핵폭발이 일어나 도심이 파괴됐다. 책임 소재에 관한 공개 설명은 서로 다르다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "history",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "history"
+    ],
+    "trigger_terms": [
+      "2023",
+      "핵폭발",
+      "핵 폭발",
+      "타워 폭파"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HISTORY_BOMBING_DISPUTE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "아라사카 본부 폭파에 관한 공개 기록은 책임자·피해 규모를 둘러싼 소문과 기업 홍보를 확정된 사실과 구별한다.",
+    "source": {
+      "source_id": "LORE_BOMBING",
+      "url": "https://cyberpunk.fandom.com/wiki/Night_City_Holocaust",
+      "locator": "인게임 Database Entry, 2023-08-20·책임 소재 불확실",
+      "support_summary": "아라사카 본부 폭파에 관한 공개 기록은 책임자·피해 규모를 둘러싼 소문과 기업 홍보를 확정된 사실과 구별한다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "history",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "history"
+    ],
+    "trigger_terms": [
+      "누가 핵",
+      "폭파 범인",
+      "핵 테러",
+      "폭파 진실"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HISTORY_RED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "붉은 시대는 제4차 기업 전쟁 뒤 대기 오염과 붉은 하늘, 파괴된 공급망을 겪던 역사적 시기다.",
+    "source": {
+      "source_id": "LORE_RED",
+      "url": "https://cyberpunk.fandom.com/wiki/Time_of_the_Red",
+      "locator": "Cyberpunk RED의 역사 시대 설명",
+      "support_summary": "붉은 시대는 제4차 기업 전쟁 뒤 대기 오염과 붉은 하늘, 파괴된 공급망을 겪던 역사적 시기다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "history",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "history"
+    ],
+    "trigger_terms": [
+      "붉은 시대",
+      "Time of the Red",
+      "레드 시대"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HISTORY_RED_DATES",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "붉은 시대는 2023년부터 2040년대 후반에 걸친 과거 시기이며 2077년 현재 제도와 같다고 볼 수 없다.",
+    "source": {
+      "source_id": "LORE_RED",
+      "url": "https://cyberpunk.fandom.com/wiki/Time_of_the_Red",
+      "locator": "Cyberpunk RED의 역사 시대 설명",
+      "support_summary": "붉은 시대는 2023년부터 2040년대 후반에 걸친 과거 시기이며 2077년 현재 제도와 같다고 볼 수 없다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "history",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "history"
+    ],
+    "trigger_terms": [
+      "붉은 시대 연도",
+      "2045",
+      "레드 연도"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HISTORY_UNIFICATION",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "통일 전쟁은 2069~2070년 NUSA와 자유주 사이의 전쟁이며 밀리테크·아라사카가 각각 관여했다.",
+    "source": {
+      "source_id": "LORE_UNIFICATION",
+      "url": "https://cyberpunk.fandom.com/wiki/Unification_War",
+      "locator": "인게임 Database Entry, 2069~2070·자치",
+      "support_summary": "통일 전쟁은 2069~2070년 NUSA와 자유주 사이의 전쟁이며 밀리테크·아라사카가 각각 관여했다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "history",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "history"
+    ],
+    "trigger_terms": [
+      "통일 전쟁",
+      "통일전쟁",
+      "메탈 전쟁",
+      "2069",
+      "2070"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HISTORY_NC_AUTONOMY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "통일 전쟁 이후 나이트 시티는 자치 도시로 남았으며 아라사카는 북미로 돌아와 본부를 세웠다.",
+    "source": {
+      "source_id": "LORE_UNIFICATION",
+      "url": "https://cyberpunk.fandom.com/wiki/Unification_War",
+      "locator": "인게임 Database Entry, 2069~2070·자치",
+      "support_summary": "통일 전쟁 이후 나이트 시티는 자치 도시로 남았으며 아라사카는 북미로 돌아와 본부를 세웠다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "history",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "history"
+    ],
+    "trigger_terms": [
+      "나이트 시티 독립",
+      "나이트시티 독립",
+      "자치",
+      "아라사카 귀환"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "NETWATCH_PUBLIC",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "넷워치는 블랙월과 넷의 안전을 지키며 위험한 AI의 침입과 장벽 훼손에 대응한다.",
+    "source": {
+      "source_id": "LORE_BLACKWALL",
+      "url": "https://cyberpunk.fandom.com/wiki/Blackwall",
+      "locator": "인게임 Database Entry, 격리 장벽의 공적 설명",
+      "support_summary": "넷워치는 블랙월과 넷의 안전을 지키며 위험한 AI의 침입과 장벽 훼손에 대응한다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "law_security",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "law_security"
+    ],
+    "trigger_terms": [
+      "넷워치",
+      "NetWatch"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "BLACKWALL_PUBLIC",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "블랙월은 안전하게 쓰는 넷과 위험한 AI가 돌아다니는 옛 넷을 격리하는 장벽으로 알려져 있다.",
+    "source": {
+      "source_id": "LORE_BLACKWALL",
+      "url": "https://cyberpunk.fandom.com/wiki/Blackwall",
+      "locator": "인게임 Database Entry, 격리 장벽의 공적 설명",
+      "support_summary": "블랙월은 안전하게 쓰는 넷과 위험한 AI가 돌아다니는 옛 넷을 격리하는 장벽으로 알려져 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "technology",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "technology"
+    ],
+    "trigger_terms": [
+      "블랙월",
+      "Blackwall",
+      "옛 넷"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "HISTORY_DATAKRASH",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "데이터크래시는 바트모스와 R.A.B.I.D.S.에 연결된 대규모 넷 붕괴 사건이다.",
+    "source": {
+      "source_id": "LORE_BARTMOSS",
+      "url": "https://cyberpunk.fandom.com/wiki/Rache_Bartmoss",
+      "locator": "DataKrash·R.A.B.I.D.S., 인게임 샤드 근거",
+      "support_summary": "데이터크래시는 바트모스와 R.A.B.I.D.S.에 연결된 대규모 넷 붕괴 사건이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "history",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "history"
+    ],
+    "trigger_terms": [
+      "데이터크래시",
+      "데이터 크래시",
+      "DataKrash",
+      "RABIDS"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CULTURE_KITSCH",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "키치는 강한 색·네온·화려한 개조로 외형을 과시하는 거리의 미학이다.",
+    "source": {
+      "source_id": "LORE_KITSCH",
+      "url": "https://cyberpunk.fandom.com/wiki/Kitsch",
+      "locator": "인게임 2077 in Style·공식 아트북 인용",
+      "support_summary": "키치는 강한 색·네온·화려한 개조로 외형을 과시하는 거리의 미학이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "키치",
+      "Kitsch",
+      "네온 패션"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CULTURE_ENTROPISM",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "엔트로피즘은 빈곤과 자원 부족 속에서 외형보다 실용을 우선하는 미학이다.",
+    "source": {
+      "source_id": "LORE_ENTROPISM",
+      "url": "https://cyberpunk.fandom.com/wiki/Entropism",
+      "locator": "인게임 2077 in Style, 실용·빈곤 미학",
+      "support_summary": "엔트로피즘은 빈곤과 자원 부족 속에서 외형보다 실용을 우선하는 미학이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "엔트로피즘",
+      "Entropism",
+      "실용 패션"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CULTURE_NEOMILITARISM",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "네오밀리터리즘은 기업·군사적 권위와 차갑고 정제된 고급 실용성을 드러낸다.",
+    "source": {
+      "source_id": "LORE_NEOMILITARISM",
+      "url": "https://cyberpunk.fandom.com/wiki/Neomilitarism",
+      "locator": "인게임 2077 in Style·공식 아트북 인용",
+      "support_summary": "네오밀리터리즘은 기업·군사적 권위와 차갑고 정제된 고급 실용성을 드러낸다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "네오밀리터리즘",
+      "Neomilitarism",
+      "기업 패션"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CULTURE_NEOKITSCH",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "네오키치는 극소수 부유층이 희귀한 천연 소재와 사치스러운 외형으로 부를 과시하는 미학이다.",
+    "source": {
+      "source_id": "LORE_NEOKITSCH",
+      "url": "https://cyberpunk.fandom.com/wiki/Neokitsch",
+      "locator": "인게임 2077 in Style·공식 아트북 인용",
+      "support_summary": "네오키치는 극소수 부유층이 희귀한 천연 소재와 사치스러운 외형으로 부를 과시하는 미학이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "네오키치",
+      "Neokitsch",
+      "천연 소재"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CULTURE_KITSCH_DIFFERENCE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "키치의 값싸고 접근하기 쉬운 화려함과 달리 네오키치는 진짜 목재·대리석·천연 직물 같은 희귀한 재료를 사용한다.",
+    "source": {
+      "source_id": "LORE_NEOKITSCH",
+      "url": "https://cyberpunk.fandom.com/wiki/Neokitsch",
+      "locator": "인게임 2077 in Style·공식 아트북 인용",
+      "support_summary": "키치의 값싸고 접근하기 쉬운 화려함과 달리 네오키치는 진짜 목재·대리석·천연 직물 같은 희귀한 재료를 사용한다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "키치 차이",
+      "네오키치 차이",
+      "진짜 목재"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "FOOD_SYNTHETIC",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "합성 식품은 일상적인 먹거리이며 진짜 신선한 식재료는 주로 고급 식당에서 접한다.",
+    "source": {
+      "source_id": "LORE_FOOD",
+      "url": "https://cyberpunk.fandom.com/wiki/Food",
+      "locator": "Cyberpunk 2077 Food, 합성육·SCOP",
+      "support_summary": "합성 식품은 일상적인 먹거리이며 진짜 신선한 식재료는 주로 고급 식당에서 접한다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "합성 식품",
+      "음식",
+      "먹거리",
+      "신선한"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "FOOD_SCOP",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "2077년 SCOP는 합성육과 관련 제품을 가리키며 저렴한 종류에는 단백질 농장에서 기른 벌레·곤충이 쓰인다.",
+    "source": {
+      "source_id": "LORE_FOOD",
+      "url": "https://cyberpunk.fandom.com/wiki/Food",
+      "locator": "Cyberpunk 2077 Food, 합성육·SCOP",
+      "support_summary": "2077년 SCOP는 합성육과 관련 제품을 가리키며 저렴한 종류에는 단백질 농장에서 기른 벌레·곤충이 쓰인다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "스콥",
+      "SCOP",
+      "합성육",
+      "곤충"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "FOOD_SCOP_PROCESS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "SCOP는 맛과 질감을 조절해 유기농 식품처럼 만들 수 있고 2077년에는 값싼 식품 선택지로 널리 쓰인다.",
+    "source": {
+      "source_id": "LORE_FOOD",
+      "url": "https://cyberpunk.fandom.com/wiki/Food",
+      "locator": "Cyberpunk 2077 Food, 합성육·SCOP",
+      "support_summary": "SCOP는 맛과 질감을 조절해 유기농 식품처럼 만들 수 있고 2077년에는 값싼 식품 선택지로 널리 쓰인다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "스콥 맛",
+      "합성육 맛",
+      "식품 질감"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CULTURE_AFTERLIFE_DRINKS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "애프터라이프에는 이름을 남긴 죽은 용병을 칵테일 이름으로 기리는 전통이 있다.",
+    "source": {
+      "source_id": "LORE_AFTERLIFE",
+      "url": "https://cyberpunk.fandom.com/wiki/Afterlife_%28Central_Night_City%29",
+      "locator": "용병 모임·기념 칵테일 전통, 시대별 구분",
+      "support_summary": "애프터라이프에는 이름을 남긴 죽은 용병을 칵테일 이름으로 기리는 전통이 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "society_culture",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "society_culture"
+    ],
+    "trigger_terms": [
+      "애프터라이프 칵테일",
+      "전설 칵테일",
+      "술 이름"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ENERGY_CHOOH2",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "CHOOH2는 바이오테크니카가 개발한 합성 알코올 기반 연료다.",
+    "source": {
+      "source_id": "LORE_CHOOH2",
+      "url": "https://cyberpunk.fandom.com/wiki/CHOOH2",
+      "locator": "바이오테크니카 특허·연료 공급",
+      "support_summary": "CHOOH2는 바이오테크니카가 개발한 합성 알코올 기반 연료다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "economy",
+    "injection_mode": "baseline",
+    "topic_tags": [
+      "economy"
+    ],
+    "trigger_terms": [
+      "CHOOH2",
+      "추투",
+      "연료"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "ENERGY_CHOOH2_LICENSE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "바이오테크니카의 CHOOH2 기술은 유전적으로 바꾼 작물을 이용하며 다른 생산 기업들이 라이선스를 받아 제조한다.",
+    "source": {
+      "source_id": "LORE_CHOOH2",
+      "url": "https://cyberpunk.fandom.com/wiki/CHOOH2",
+      "locator": "바이오테크니카 특허·연료 공급",
+      "support_summary": "바이오테크니카의 CHOOH2 기술은 유전적으로 바꾼 작물을 이용하며 다른 생산 기업들이 라이선스를 받아 제조한다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "economy",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "economy"
+    ],
+    "trigger_terms": [
+      "연료 특허",
+      "페트로켐",
+      "소브오일",
+      "라이선스"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TECH_SMART_WEAPONS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "스마트 무기는 유도 탄환을 사용하며 스마트 조준에는 호환되는 스마트 링크가 필요하다.",
+    "source": {
+      "source_id": "LORE_DIAN",
+      "url": "https://cyberpunk.fandom.com/wiki/Kang_Tao_G-58_Dian",
+      "locator": "2077 무기 설명: Smart Link 요구",
+      "support_summary": "스마트 무기는 유도 탄환을 사용하며 스마트 조준에는 호환되는 스마트 링크가 필요하다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "technology",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "technology"
+    ],
+    "trigger_terms": [
+      "스마트 무기",
+      "스마트 링크",
+      "유도 탄환"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "TECH_TECH_WEAPONS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "테크 무기는 전자기 가속을 사용해 탄환을 발사하는 무기 유형이다.",
+    "source": {
+      "source_id": "LORE_WEAPONS",
+      "url": "https://cyberpunk.fandom.com/wiki/Cyberpunk_2077_Weapons",
+      "locator": "2077 무기 기술 유형",
+      "support_summary": "테크 무기는 전자기 가속을 사용해 탄환을 발사하는 무기 유형이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "technology",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "technology"
+    ],
+    "trigger_terms": [
+      "테크 무기",
+      "전자기",
+      "레일건"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "BD_PLAYBACK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "BD 재생에는 전용 플레이어나 신경 인터페이스·헤드셋 같은 연결 장치가 사용된다.",
+    "source": {
+      "source_id": "LORE_BD",
+      "url": "https://cyberpunk.fandom.com/wiki/Braindance",
+      "locator": "Mechanism / Recording / Viewing",
+      "support_summary": "BD 재생에는 전용 플레이어나 신경 인터페이스·헤드셋 같은 연결 장치가 사용된다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "technology",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "technology"
+    ],
+    "trigger_terms": [
+      "BD 재생",
+      "브레인댄스 헤드셋",
+      "플레이어"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "BD_RECORDING_SENSORY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "BD는 기록자의 경험을 담으며 단순한 영상 파일과 같은 방식으로 체험하지 않는다.",
+    "source": {
+      "source_id": "LORE_BD",
+      "url": "https://cyberpunk.fandom.com/wiki/Braindance",
+      "locator": "Mechanism / Recording / Viewing",
+      "support_summary": "BD는 기록자의 경험을 담으며 단순한 영상 파일과 같은 방식으로 체험하지 않는다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "common",
+    "category_id": "technology",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "technology"
+    ],
+    "trigger_terms": [
+      "BD 기록",
+      "브레인댄스 영상",
+      "감각 기록"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOHNNY_RELIC_EXISTENCE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "2077년 조니는 렐릭에 보존된 인격 엔그램으로 V의 머릿속에 존재하며 독립된 육체를 가진 주민이 아니다.",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "2077년 조니는 렐릭에 보존된 인격 엔그램으로 V의 머릿속에 존재하며 독립된 육체를 가진 주민이 아니다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "personal",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [
+      "렐릭",
+      "몸",
+      "엔그램"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOHNNY_MEMORY_LIMIT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "알트는 조니가 보여준 과거 기억을 그의 주관적 시점이라고 설명한다. 이를 완전한 객관적 역사로 다루지 않는다.",
+    "source": {
+      "source_id": "LORE_JOHNNY",
+      "url": "https://cyberpunk.fandom.com/wiki/Johnny_Silverhand",
+      "locator": "인게임 Database Entry, 2013/2023 회고·2077 캠페인, Alt의 주관적 기억 설명",
+      "support_summary": "알트는 조니가 보여준 과거 기억을 그의 주관적 시점이라고 설명한다. 이를 완전한 객관적 역사로 다루지 않는다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "personal",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [
+      "과거 기억",
+      "기억 정확",
+      "알트"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOHNNY_OLD_FRIENDS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "조니는 생전에 로그와 알트, SAMURAI의 케리·낸시·데니·헨리와 인연이 있었다.",
+    "source": {
+      "source_id": "LORE_JOHNNY",
+      "url": "https://cyberpunk.fandom.com/wiki/Johnny_Silverhand",
+      "locator": "인물 관계·인게임 Database Entry",
+      "support_summary": "조니는 생전에 로그와 알트, SAMURAI의 케리·낸시·데니·헨리와 인연이 있었다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "personal",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [
+      "로그",
+      "알트",
+      "케리",
+      "낸시",
+      "데니",
+      "헨리"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOHNNY_POSSESSIONS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "조니의 생전 물건에는 말로리안 암즈 3516과 포르쉐 911 터보가 있었다. 현재 엔그램이 이를 소유·조작한다고 확정하지 않는다.",
+    "source": {
+      "source_id": "LORE_JOHNNY",
+      "url": "https://cyberpunk.fandom.com/wiki/Johnny_Silverhand",
+      "locator": "인게임 Database Entry, 2013/2023 회고·2077 캠페인, Alt의 주관적 기억 설명",
+      "support_summary": "조니의 생전 물건에는 말로리안 암즈 3516과 포르쉐 911 터보가 있었다. 현재 엔그램이 이를 소유·조작한다고 확정하지 않는다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "personal",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [
+      "말로리안",
+      "포르쉐",
+      "3516"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOHNNY_ALT_PAST",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "조니는 생전에 알트 커닝햄과 연인 관계였으며 아라사카에 납치된 알트를 되찾으려 했다.",
+    "source": {
+      "source_id": "LORE_ALT",
+      "url": "https://cyberpunk.fandom.com/wiki/Alt_Cunningham",
+      "locator": "인게임 Database Entry, Soulkiller·Blackwall",
+      "support_summary": "조니는 생전에 알트 커닝햄과 연인 관계였으며 아라사카에 납치된 알트를 되찾으려 했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "personal",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [
+      "알트",
+      "옛 연인",
+      "커닝햄"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "JOHNNY_MUSIC",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "조니는 SAMURAI에서 노래와 기타를 맡았으며 Chippin’ In과 Never Fade Away로 알려져 있다.",
+    "source": {
+      "source_id": "LORE_JOHNNY",
+      "url": "https://cyberpunk.fandom.com/wiki/Johnny_Silverhand",
+      "locator": "인물 관계·인게임 Database Entry",
+      "support_summary": "조니는 SAMURAI에서 노래와 기타를 맡았으며 Chippin’ In과 Never Fade Away로 알려져 있다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        }
+      ]
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [
+      "노래",
+      "음악",
+      "기타",
+      "Chippin",
+      "Never Fade Away"
+    ],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JOHNNY_FIRST",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V는 렐릭 각성 뒤 자신의 머릿속에 조니의 인격이 있다는 사실을 알게 됐다.",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "V는 렐릭 각성 뒤 자신의 머릿속에 조니의 인격이 있다는 사실을 알게 됐다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "first"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JOHNNY_COOPERATION",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 조니는 한 몸에 얽힌 생존 문제를 논의하고 협력할 필요를 인정했다.",
+    "source": {
+      "source_id": "LORE_TAPEWORM",
+      "url": "https://cyberpunk.fandom.com/wiki/Tapeworm",
+      "locator": "인게임 퀘스트·Journal Entry, 공동 생존과 관계 변화",
+      "support_summary": "V와 조니는 한 몸에 얽힌 생존 문제를 논의하고 협력할 필요를 인정했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "cooperation"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JOHNNY_SECOND_CHANCE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "유전지대에서 과거를 되짚은 뒤 V는 조니에게 두 번째 기회를 줬다.",
+    "source": {
+      "source_id": "LORE_CHIPPIN",
+      "url": "https://cyberpunk.fandom.com/wiki/Chippin%27_In_%28quest%29",
+      "locator": "인게임 퀘스트, 유전지대 대화와 두 번째 기회 분기",
+      "support_summary": "유전지대에서 과거를 되짚은 뒤 V는 조니에게 두 번째 기회를 줬다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "second_chance"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JOHNNY_REJECTED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "유전지대 대화 뒤 V는 조니에게 두 번째 기회를 주지 않았다.",
+    "source": {
+      "source_id": "LORE_CHIPPIN",
+      "url": "https://cyberpunk.fandom.com/wiki/Chippin%27_In_%28quest%29",
+      "locator": "인게임 퀘스트, 유전지대 대화와 두 번째 기회 분기",
+      "support_summary": "유전지대 대화 뒤 V는 조니에게 두 번째 기회를 주지 않았다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "rejected"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JOHNNY_FRIEND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V와 조니는 옛 SAMURAI 멤버들의 재결합 공연을 함께 겪었다.",
+    "source": {
+      "source_id": "LORE_SAMURAI",
+      "url": "https://cyberpunk.fandom.com/wiki/Samurai",
+      "locator": "밴드 멤버·악기, 2077 재결합",
+      "support_summary": "V와 조니는 옛 SAMURAI 멤버들의 재결합 공연을 함께 겪었다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "friend"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_JOHNNY_UNAVAILABLE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "현재 분기에서는 조니의 인격과 대화할 수 없다.",
+    "source": {
+      "source_id": "CDPR_GAME",
+      "url": "https://www.cyberpunk.net/en/cyberpunk-2077",
+      "locator": "Characters / Night City",
+      "support_summary": "현재 분기에서는 조니의 인격과 대화할 수 없다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "johnny"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "unavailable"
+        }
+      ]
+    },
+    "spoiler_scope": "main_story",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
   }
 ]

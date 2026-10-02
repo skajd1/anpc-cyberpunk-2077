@@ -1,5 +1,5 @@
 {
-  "content_version": "research-0.4",
+  "content_version": "research-1.0",
   "identity_structure_version": "1.0",
   "status": "조사·작성 후보. 출시 승인 전",
   "runtime_enabled": false,
@@ -18,16 +18,19 @@
     "characters/goro.json",
     "characters/kerry.json",
     "characters/river.json",
-    "characters/evelyn.json"
+    "characters/evelyn.json",
+    "characters/johnny.json",
+    "world-knowledge-policy.json"
   ],
   "counts": {
-    "characters": 10,
-    "world_facts": 53,
-    "knowledge_entries": 154,
-    "dialogue_examples": 20,
-    "knowledge_bundles": 13
+    "characters": 11,
+    "world_facts": 195,
+    "knowledge_entries": 834,
+    "dialogue_examples": 24,
+    "knowledge_bundles": 13,
+    "relationship_stages": 53
   },
-  "scope": "대표 인물 10명·기본 세계관·지식 배분. 전체 원작·모든 퀘스트·대사·샤드의 완전 수록은 아님",
+  "scope": "원작 인물 11명·분류된 공통 핵심 상식·공개 세부 지식·인물별 개인 지식. 전체 원작·모든 퀘스트·샤드의 완전 수록은 아님",
   "excluded_unverified": [
     "케리의 악기: 공식 안내서와 위키 표현 불일치",
     "실제 게임 내부 퀘스트·NPC 키",

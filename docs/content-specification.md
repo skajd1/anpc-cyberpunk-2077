@@ -1,10 +1,8 @@
 # 콘텐츠 데이터 규격
 
-규격 버전: 0.4 (2026-10-01). 콘텐츠 파일은 UTF-8 JSON으로 저장한다. 이 문서는 인물·세계관·반응 규칙의 기준이며 게임 상태는 [게임 정보 규격](game-context-specification.md), 응답 객체는 [통신 규격](runtime-specification.md)을 따른다.
+규격 버전: 0.5 (2026-10-02). 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
 
-핵심 성격의 개정 기준은 [NPC Big Five 핵심 성격 규격](personality-specification.md)이다. 새 핵심 성격 기록에는 다섯 축의 수준만 저장하고 수준의 공통 정량 해석은 해당 문서 한 곳에서 정의한다. 아래 정체성 구조 1.0의 기존 identity 및 군중 세 슬롯은 현재 자료·시제품의 전환 전 형식이다. 새 핵심 성격 축이나 수치 환산 기준으로 사용하지 않는다. 생활 배경·말투·지식·기억의 기존 계약은 유지하며 전체 인물 데이터와 코드의 전환은 별도 연결 작업이다.
-
-기존 정체성 구조 버전: 1.0 (2026-09-30). 아래 세 슬롯 조합은 현재 자료·시제품의 호환 계약으로 보존한다. 신규 개발의 핵심 성격 기준은 Big Five 규격이며 세 슬롯을 신규 핵심 성격과 동시에 적용하지 않는다. 구조 변경은 버전 변경과 이전 생성 데이터 처리 정책을 함께 명시한다. 콘텐츠 객체의 schema_version과 정체성 구조 버전은 별개다. 현재 시제품이 이 계약을 모두 구현했다는 의미는 아니다.
+신규 성격은 [Big Five 규격](personality-specification.md). 기존 identity/군중 세 슬롯은 호환 입력이며 신규 성격과 동시 적용·자동 환산 금지. 구현 상태: [개발·검증 계획](development-validation.md).
 
 ### 전환 전 정체성 구조 1.0의 구성
 
@@ -17,26 +15,34 @@
 | 현재 목표·상태 | 원작 단계·현재 관찰로 계산 | 원형의 승인 목표와 현재 관찰로 계산 | 현재 상황에 따라 갱신 |
 | 지식·관계·기억 | 원작 인지·관계 조건과 유효 대화 기억 | 승인 지식·플레이어 태도와 인스턴스 기억 | 인지·공개·기억 계약에 따라 갱신 |
 
-정체성은 위 구성 전체로 표현한다. 3개 슬롯은 군중의 성격을 조합하는 재료이며 배경·판단 규칙·말투를 대체하지 않는다. 커뮤니티 NPC에는 슬롯 수 제한과 무작위 추첨을 적용하지 않는다. 현재 감정·상황 반응·목표의 변화는 핵심 가치와 관계 단계 변경과 구별한다. 원작 관계를 가진 인물의 기본 태도는 현재 원작 관계를 기준으로 유지한다.
+identity_structure_version=1.0은 호환 형식에만 적용. schema_version과 분리. 슬롯은 배경·판단·말투를 대체하지 않으며 커뮤니티에 무작위 추첨을 적용하지 않는다.
 
 ## 1. 공통 데이터 계약
 
-모든 콘텐츠 객체에 schema_version, id, revision, kind를 필수로 둔다. schema_version은 현재 "0.1", id는 패키지 내 고유한 문자열, revision은 1 이상의 정수다. 다른 객체는 ID로 참조한다. 참조 누락·중복 ID·지원하지 않는 버전은 해당 패키지 로드를 거부한다. 자유 텍스트에는 코드 실행, 파일 경로 실행, 게임 명령 실행 권한이 없다.
+| 필드 | 값/검사 |
+| --- | --- |
+| schema_version | 작성 객체는 0.1. 공통 Envelope.contract_version과 분리 |
+| id | 패키지 내 고유 문자열 |
+| revision | 정수 ≥1 |
+| kind | character_card, crowd_archetype, world_fact, knowledge_entry, reaction_rule, dialogue_example |
 
-kind는 character_card, crowd_archetype, world_fact, knowledge_entry, reaction_rule, dialogue_example 중 하나다. 원작 사실은 출처가 있는 world_fact로만 등록한다. 창작 배경과 인물의 해석은 원작 사실과 별도로 저장한다.
+참조는 ID 사용. 누락/중복/미지원 버전은 패키지 로드 거부. 자유 텍스트에 코드/경로/게임 명령 실행 권한 없음. 원작 사실은 출처 있는 world_fact, 창작 배경/해석은 별도 저장.
 
-저장 위치·지식 층·인물별 배분은 [NPC 세계관 지식 부여 규격](npc-knowledge-specification.md)을 따른다. 현재 자료 묶음과 조사 상태는 [대표 인물 조사](community-npc-catalog.md)에 둔다. source_checked는 출처 진술을 확인한 상태이며 출시용 approved를 대신하지 않는다. 카드·규칙·예시·인지 조건이 draft이면 런타임에 제공하지 않는다.
+source_checked는 출처 확인만 의미한다. draft 카드/규칙/예시/인지 조건은 런타임 제외. 승인·배분: [NPC 지식 규격](npc-knowledge-specification.md).
 
 ## 2. 커뮤니티 캐릭터 카드
+
+아래 표는 작성 입력이다. 로더가 승인/조건 판정 후 공통 타입으로 변환한다.
 
 | 필드 | 형식 | 의미 |
 | --- | --- | --- |
 | character_key | 문자열 | NPC 식별 규격의 고유 인물 매핑 |
 | core_personality | 신규 필수 객체 | Big Five 규격의 작성된 고정 다섯 수준. 기존 카드에는 별도 전환 필요 |
-| identity | 객체 | 핵심 신념·욕구·두려움·금기·자기 인식. 필수 |
+| personal_principles | 문자열 목록 | 작성된 개인 원칙. core_personality와 분리하며 금지·지식·관계의 상한을 해제하지 않음 |
+| identity | 전환 전 객체 | 기존 신념·욕구·두려움·금기·자기 인식의 조사·호환 자료. 신규 요청의 핵심 성격으로 전송하지 않음 |
 | goals | 조건부 목표 목록 | 현재 단계에서 추구하는 목적과 우선순위 |
-| relationships | 관계 목록 | 대상 키, 인물의 태도, 적용 조건 |
-| voice_style | 객체 | 말 길이, 어휘, 호칭, 문체, 금지 표현 |
+| relationship_stages | 단계 목록 | 아래 2.1절. 인물별 원작 분기와 관계·사건·목표의 단일 기준 |
+| voice_style | 객체 | 말 길이, 어휘, 호칭, 문체, 금지 표현. direction에 인물별 말 리듬·조건부 멈춤/쿠션어 방향 포함 |
 | dialogue_conditions | 조건 객체 | 대화 가능한 퀘스트·활동 상태 |
 | knowledge_ids | ID 목록 | 인물이 접근할 지식 항목 |
 | forbidden_claims | 규칙 목록 | 원작 충돌·스포일러·인물이 할 수 없는 주장 |
@@ -50,65 +56,71 @@ kind는 character_card, crowd_archetype, world_fact, knowledge_entry, reaction_r
 | speech_rules | 선택 객체 | 직업 어휘·화제 전환·설명 수준·은어 밀도·유머/욕설 한도 |
 | identity_rules | 목록 | 상황 조건·가치 우선순위·금지 선택·원작 근거·승인 상태를 가진 판단 기준. 정체성 구조 1.0 출시 카드에 필수 |
 | identity_anchor | 선택 객체 | core_values, hard_limits의 짧은 작성 요약. 승인된 identity에서만 유도 |
-| presentation | 선택 객체 | 화면에서만 사용하는 인물 역할·정체성 슬롯 표시 요약 |
+| presentation | 선택 객체 | 화면에서만 사용하는 인물 역할 요약. 핵심 성격은 core_personality의 다섯 수준을 표시하며 임의 특성 태그로 대체하지 않음 |
 
-핵심 정체성은 모델이 수정하지 않는다. 목표·관계·지식은 작성된 상태 조건에 따라 변경한다. 카드가 금지한 행동은 모델의 의도나 플레이어 요청으로 해제하지 않는다. 행동 선호는 권한이 아니며 현재 허용 목록 안에서만 작동한다.
+- 정체성 모델 수정 금지. 목표·관계·지식은 승인 상태 조건으로 계산. 행동 선호는 권한 아님.
+- 호환 구조 1.0 출시 카드: 승인 배경·identity·identity_rules·voice_style·예시·목표/관계/지식 조건·대체 대사 필수. 누락 원작 정체성 무작위 보충 금지.
+- 선택 필드 누락은 창작 경험으로 보충하지 않는다. 창작은 provenance/허용 변경 범위 명시. speech_rules 중복은 voice_style로 통합.
+- 화면 presentation.role은 짧은 역할, identity_slots는 원본 identity 목록 키의 비어 있지 않은 짧은 문자열 목록. 누락 슬롯은 원문 표시. 새 특성/관계 추가 및 생성/승인 권한 변경 금지. 신규 성격은 다섯 수준 표시.
 
-정체성 구조 1.0을 적용하는 출시용 커뮤니티 카드에는 승인된 배경, identity, identity_rules, voice_style, example_ids, 목표·관계·지식 조건과 대체 대사가 준비되어야 한다. identity_rules와 예시의 승인·근거 조건은 5절을 따른다. 누락된 원작 정체성을 무작위 특성으로 보충하지 않는다. 주디·팬앰의 현재 작성 초안과 기존 시제품 카드가 출시용 계약을 충족한다고 간주하지 않는다.
+### 2.1. 원작 관계 단계
 
-확장 필드는 선택 사항이며 기존 카드도 유지한다. 누락된 lived_context를 유명 인물의 새 원작 과거로 채우지 않는다. 창작 생활 설정은 창작 표시·변경 가능 범위를 가지고 원작 증거로 사용되지 않는다. speech_rules와 voice_style의 공통 항목은 정규화 시 voice_style로 합쳐 중복 전송하지 않는다. 군중 원형에도 이 두 선택 필드를 둘 수 있다.
+| 필드 | 형식·조건 |
+| --- | --- |
+| id / phase / label | 인물 내 고유 분기 ID / 인지 조건용 의미 단계 / 화면 이름 |
+| available | boolean. false인 사망·발화 불가·연락 단절 분기는 모델 호출 전 차단 |
+| relationship | label·attitude·address 문자열. 태도·호칭은 원작 근거의 작성 해석 |
+| requirements | 선택·사건·연애 자격을 명시한 비어 있지 않은 문자열 목록 |
+| known_past_event_ids | world_fact ID 목록. usage_mode=canon_context, 인물·분기 조건과 출처 필수 |
+| current_goals | 해당 시점의 목표 문자열 목록 |
+| source_ids / review_status | 출처 ID 목록 / draft 또는 승인 상태 |
 
-
-presentation.role은 짧은 역할 문자열, presentation.identity_slots는 identity의 목록 키를 참조하는 객체다. 각 값은 비어 있지 않은 짧은 문자열 목록이며 원본 카드에 있는 정체성을 요약한다. 새 성격·경험·관계를 추가하지 않는다. 없는 슬롯은 identity 원문을 표시하고 새 identity 목록 키도 같은 방식으로 확장한다. presentation은 화면 전용이며 생성 프롬프트·판단 규칙·지식 권한·승인 상태를 바꾸지 않는다. 조사 초안의 표시 요약도 초안 상태를 유지한다.
+- 선택한 분기 하나를 CanonView로 변환한다. 관계·목표·알려진 과거 사건·적용 규칙만 전달하며 전체 단계·선택 조건·출처 전문은 보내지 않는다.
+- 실제 게임은 사건·선택·자격을 확인해 ID를 매핑한다. 미확인은 unknown. 테스트 웹은 명시적 선택으로 조건을 충족한 상황을 모의하며 source=simulation을 유지한다.
+- 친구와 연인은 별도 분기다. 조니의 관계를 V에게 이전하지 않는다. 대화 횟수·돈·기억·모델 응답으로 관계를 승격하지 않는다.
+- 다른 분기·미래 사건은 제공하지 않는다. 사건 참조·조건 누락은 로드/조립 거부. 선택한 원작 단계가 ANPC 대화 기억보다 관계의 기준이다.
 
 ### 플레이어 고정 신원
 
-주인공의 이름 기준은 world-facts.json의 PLAYER_V 한 곳에 저장한다. 이 world_fact의 player_identity는 character_key와 display_name을 포함하며 현재 값은 v와 V다. manifest.player_identity_fact_id로 참조한다. 이 값은 군중 추첨·인물 카드 교체·질문 프리셋·사용자 발화로 바꾸지 않는다. 테스트 입력·화면 호칭·생성 문맥은 같은 기준을 사용한다. 다른 이름을 말한 발화는 player_claim 또는 별칭으로만 남긴다.
+기준: world-facts.json의 PLAYER_V.player_identity(character_key=v, display_name=V). manifest.player_identity_fact_id로 참조. 화면·입력·문맥 모두 같은 기준 사용. 카드/추첨/사용자 발화로 변경 금지. 다른 이름 발화는 주장/별칭.
 
-NPC가 이름을 알고 있는지는 별도 name_known_by_npc로 명시한다. 고정 신원은 이름 인지·친밀 관계·본명·성별·출신·렐릭 인지의 근거가 아니다. 인지가 확인되지 않으면 이름 호칭을 사용하지 않는다. 이름 인지의 실게임 근거는 게임 정보 계층이 제공한다.
+name_known_by_npc는 별도 게임 인지 조건. true일 때만 이름 호칭. 고정 신원으로 친밀도·성별·출신·렐릭 인지 추정 금지.
 
 ## 3. 군중 원형과 생성 특성
 
-3.1~3.3절의 세 슬롯은 전환 전 구조 1.0의 호환 계약이다. 신규 핵심 성격 생성은 3.4절을 사용하며 생활 배경·판단·말투·지식·재접촉 계약은 공통으로 적용한다.
+crowd_archetype: 적용 지역/활동/관찰 소속 조건, weight, trait_pools, compatibility_rules, default_traits, background_bounds, voice_styles, identity_rules, example_ids, action_policy, knowledge_ids, fallback_lines.
 
-crowd_archetype에는 적용 지역·활동·관찰 소속 조건, 가중치, trait_pools, compatibility_rules, default_traits, background_bounds, voice_styles, identity_rules, example_ids, action_policy, knowledge_ids, fallback_lines를 둔다. 원형은 작성·승인된 콘텐츠이며 온라인 LLM이 매번 생성하지 않는다. fallback_lines는 커뮤니티 카드와 같은 필수 대체 대사 구조다. 적용 가능한 원형이 없으면 승인된 기본 시민 원형을 사용하고 관찰되지 않은 직업·소속은 부여하지 않는다.
+승인 원형만 사용. LLM 원형 생성 없음. 미일치 시 승인 기본 시민 원형. 관찰되지 않은 직업/소속 부여 금지. fallback_lines는 카드와 같은 필수 구조.
 
 ### 3.1. 전환 전 형식의 고정 특성 슬롯
 
-trait_pools는 다음 세 키만 갖는다. 각 후보는 trait_id, weight, identity_effects, rule_ids, voice_constraints를 포함한다. weight는 유한한 양수이고 참조는 유효해야 한다. 예시는 후보의 의미를 설명하며 확정된 전체 후보 목록이 아니다.
+trait_pools 키: temperament/core_value/social_attitude. 후보: trait_id, 양수 유한 weight, identity_effects, rule_ids, voice_constraints. 참조 유효성 필수.
 
-| 슬롯 키 | 의미 | 후보 예시 |
-| --- | --- | --- |
-| temperament | 기질과 반응 속도·강도 | 신중함, 다혈질, 느긋함 |
-| core_value | 주요 가치와 선택 동기 | 생계, 독립, 의리, 안정 |
-| social_attitude | 낯선 사람을 대하는 기본 태도 | 경계, 사교적, 무심함 |
-
-추첨 결과 traits는 세 키마다 trait_id 한 개를 저장한다. 한 슬롯에서 여러 개를 뽑거나 같은 ID를 슬롯 간 중복 적용하지 않는다. 직업·지역·현재 목표·관심사·숨은 원작 정보는 이 세 슬롯의 값으로 추첨하지 않는다. 원형에 승인된 배경·관심사를 별도로 둘 수 있다.
+traits는 슬롯별 ID 하나, 슬롯 간 중복 금지. 직업·지역·목표·관심·비밀은 슬롯 추첨 제외.
 
 ### 3.2. 조합과 생성 계약
 
-1. 첫 대화 준비 시 관찰 조건을 만족하는 원형을 가중치로 선택한다. 필수 관찰이 unknown이면 그 조건부 원형을 제외한다.
-2. 원형의 세 슬롯에서 각각 한 후보를 포함하는 조합을 만든다. compatibility_rules가 금지한 조합, 원형·관찰과 모순되는 조합, 필요한 판단 규칙·문체가 없는 조합을 제외한다.
-3. 유효 조합의 가중치는 세 후보 weight의 곱이다. 조합은 슬롯 키 순서와 trait_id 순서로 정렬한 뒤 seed 기반 추첨으로 하나를 선택한다. 임의 재추첨을 반복하거나 별도 LLM 호출로 모순을 고치지 않는다.
-4. 유효 조합이 없으면 같은 원형의 검수된 default_traits를 사용한다. default_traits도 같은 조건·정체성 검사를 통과해야 한다. 기본 조합마저 잘못된 원형은 로드를 거부하고 승인된 기본 시민 원형을 사용한다. 기본 시민 원형도 유효하지 않으면 대화를 시작하지 않는다.
-5. 승인된 원형과 선택 특성을 합쳐 identity·판단 규칙·말투·예시 후보를 로컬에서 정규화한다. 배경의 금기 → 원형의 금기 → 특성의 금지를 합쳐 적용하고 금지는 선호보다 우선한다. 나머지 규칙의 우선순위는 5절을 따른다. 문체 충돌은 compatibility_rules로 사전에 제외한다.
-6. persona_id, npc_instance_key, archetype_id와 revision, content_version, identity_structure_version, generator_version, seed, traits, background, identity, identity_rules, voice_style, example_ids를 저장한다. identity_structure_version은 "1.0"이다. 같은 입력·콘텐츠 버전·생성기 버전·seed에서는 같은 생성 데이터를 구성한다.
+1. 첫 준비 시 관찰 조건을 통과한 원형을 가중 선택. 필수 unknown 제외.
+2. 슬롯별 한 후보 조합. 금지/관찰 모순/판단·문체 미비 조합 제외.
+3. 슬롯 키/trait_id 정렬. 후보 weight 곱으로 seed 추첨. 반복 재추첨/LLM 모순 수정 금지.
+4. 조합 없음은 검수 default_traits. 기본도 부적합이면 원형 거부 → 승인 기본 시민 → 미유효 시 대화 거부.
+5. 원형/특성의 identity·판단·말투·예시 로컬 정규화. 배경→원형→특성 금기 합집합. 금지 우선. 문체 충돌은 사전 제외.
+6. 저장: persona_id, npc_instance_key, archetype_id/revision, content_version, identity_structure_version, generator_version, seed, traits, background, identity, identity_rules, voice_style, example_ids. 동일 입력/버전/seed는 동일 결과.
 
-compatibility_rules는 금지 trait_id 집합과 적용 조건으로 표현한다. 대립하는 요소를 무조건 제거하지는 않는다. 승인된 갈등 해소 기준이 있는 복합 성격은 허용한다. 예를 들어 생계를 중시하는 신중한 인물에게 위험을 감수할지 여부는 작성된 판단 규칙이 결정한다. traits는 그 규칙의 대체물이 아니다.
+compatibility_rules는 금지 trait_id 집합+조건. 작성 갈등 해소 기준이 있으면 복합 성격 허용. traits로 판단 규칙 대체 금지.
 
 ### 3.3. 유지와 무효화
 
-대화와 유효한 같은 npc_instance_key의 재접촉에서는 원래 생성 데이터를 재사용한다. 턴마다 추첨하지 않으며 플레이어의 장비·평판·새 발화로 슬롯을 바꾸지 않는다. 현재 목표·감정·일시 반응은 상황·반응 규칙으로 달라질 수 있지만 다음 만남의 기본 태도를 누적 호감·불신으로 바꾸지 않는다. 저장·만료·소멸·용량 제한과 재접촉 범위는 [NPC 식별 규격](npc-identity-specification.md)이 기준이다.
+같은 유효 인스턴스의 생성 데이터 재사용. 턴/장비/평판/발화에 따른 성격 재추첨·누적 기본 태도 변경 금지. 현재 목표/감정은 상황 규칙 적용.
 
-생성 데이터가 무효화된 뒤 새로 등록한 군중은 새 생성 대상으로 취급한다. 외형이나 레코드가 같다는 이유로 이전 정체성을 복원하지 않는다. 콘텐츠 개정 중 유효한 세션은 기존 버전을 유지하고, 이전 버전을 사용할 수 없으면 세션을 종료·무효화한 뒤 새로 등록한다. 대화 중 조용히 새 성격으로 교체하지 않는다.
-
-개인 배경은 창작으로 표시하고 유명 인물과의 관계·원작 사건 참여·퀘스트 비밀을 임의로 생성하지 않는다.
+무효화 후 새 군중은 새 생성 대상. 외형/레코드로 과거 복원 금지. 유효 세션은 기존 콘텐츠 버전 유지, 미지원 시 종료 후 재등록. 개인 배경은 창작 표시; 유명 인물 관계/사건 참여/비밀 생성 금지. 재접촉/만료: [NPC 식별 규격](npc-identity-specification.md).
 
 ### 3.4. 신규 Big Five 군중 생성
 
-승인된 원형별 성격 생성 프로필은 다섯 축의 1~5 가중치 후보·금지 조합·검수된 기본 조합·생성기 버전을 로컬에 둔다. 원형·조건 필터 후 유효한 다섯 수준의 조합을 축 순서와 값 순서로 정렬하고 각 후보 가중치의 곱으로 seed 추첨한다. 유효 조합이 없으면 같은 원형의 검수된 기본 조합을 사용하며 기본값도 유효하지 않으면 승인 기본 시민 원형으로 전환하거나 대화를 거부한다. 범위·변환표는 [Big Five 규격](personality-specification.md)이 유일한 기준이다.
-
-결과 core_personality에는 다섯 정수만 저장한다. seed·원형/생성기/콘텐츠 버전·분포·추첨 결과의 보관은 생성 레코드에 둔다. 같은 생성 입력은 같은 결과를 만들며 유효 대화·재접촉 동안 다시 뽑지 않는다. 지역·직업·지식·말투·개인 원칙은 별도 배경 계약을 사용한다. 커뮤니티의 수치는 작성된 고정 값이며 군중 생성기로 뽑지 않는다. 기존 세 슬롯을 기계적으로 수치에 환산하거나 서로 충돌하는 두 성격 정의를 동시에 주입하지 않는다.
+- 승인 원형별 다섯 축 1~5 후보 가중치·금지 조합·검수 기본 조합·생성기 버전 등록.
+- 원형/조건 필터 → 축/값 정렬 → 후보 weight 곱의 seed 추첨. 조합 없음은 같은 원형 기본값 → 승인 시민 → 대화 거부.
+- core_personality에는 다섯 정수만 저장. seed·원형/생성기/콘텐츠 버전·분포/추첨 자료는 로컬 생성 레코드.
+- 동일 입력/버전/seed는 동일 결과. 유효 대화/재접촉 중 재추첨 없음. 배경·지식·말투·원칙은 별도 데이터. 커뮤니티 수치는 고정 작성.
 
 ## 4. 세계관 사실과 인물 지식
 
@@ -117,17 +129,19 @@ compatibility_rules는 금지 trait_id 집합과 적용 조건으로 표현한�
 | world_fact | statement, source, validity_condition, spoiler_scope | source는 자료 위치·식별자와 근거 요약을 포함 |
 | knowledge_entry | fact_id, domain_id, required_depth, access_condition, certainty, interpretation, disclosure | 인물의 인지·해석·공개 여부와 설명에 필요한 깊이를 표현 |
 
-조건은 all/any/not과 등록된 상태 필드의 eq/in/gte/lte만 허용한다. 리프 조건은 field, op, value로 표현하고 all·any는 조건 배열, not은 단일 조건을 값으로 가진다. 빈 all·any는 거부한다. 임의 스크립트는 허용하지 않는다. 필드가 unknown이면 해당 조건은 충족되지 않으며 not으로 뒤집어 허용하지도 않는다. 필수 공개 조건이 없거나 모호한 퀘스트 사실은 기본적으로 비공개다.
-
-certainty는 knows, suspects, unaware다. disclosure는 public, evasive, withheld다. knows는 출처와 인지 조건이 모두 맞아야 한다. suspects는 추측임을 드러내며, unaware 항목의 실제 사실은 프롬프트에 넣지 않는다. 인물의 interpretation은 사실 자체를 수정하지 않는다. 같은 사건을 두 인물이 다르게 판단할 근거는 identity와 interpretation에 저장한다.
-
-사실에는 역할·지역·화제 태그와 usage_mode를 색인용으로 추가할 수 있다. usage_mode는 background(생활 표현 배경), answer(직접 답할 지식), restricted(조건부 공개)다. 태그는 access_condition을 대신하지 않는다. 매 턴 출처 원문 전체 대신 fact_id·최소 진술·확실성·인물 해석·주장 한도만 전송하고 원래 출처는 로컬 검수 자료에 보존한다.
+- 조건 형태는 공통 Condition 참조. 등록 필드만 사용. 빈 all/any·스크립트 금지. unknown은 충족하지 않으며 not 반전 금지.
+- 필수 공개 조건 누락/불명은 비공개. knows는 출처+인지 조건 충족, suspects는 추정 유지, unaware 실제 내용 제외.
+- disclosure: public/evasive/withheld. interpretation으로 사실 수정 금지.
+- 선택 색인: 역할/지역/화제 태그, usage_mode(background/answer/restricted). 접근 조건 대체 금지.
+- 요청은 허용 최소 진술·확실성·해석·주장 한도만. 출처는 로컬 보존.
 
 ### 4.1. 인물별 분야와 지식 깊이
 
-카드의 `knowledge_profile`은 `version`, `default_depth`, `exposure_background`, `domains`, `response_rules`를 포함한다. 출신·직업·소속·직접 경험에서 얻은 인지 범위를 정체성의 신념·말투와 구분한다. `exposure_background`는 출처 있는 배경 요약·생활/업무 맥락·evidence_refs·provenance를 보관한다. 추정한 경험을 원작 배경으로 기록하지 않는다.
+knowledge_profile: version, default_depth, exposure_background, domains, response_rules.
 
-각 domains 항목은 `domain_id`, `depth`, `basis`, `evidence_refs`, `rationale`, `review_status`를 가진다. `basis`는 source_role(자료에서 확인한 역할을 기반으로 작성), authored_candidate(인지 검수 전 작성 후보), unverified(개인 인지 근거 미확보)다. source_role에도 개별 사실·실무 경험의 인지 검수는 필요하다. 분야의 승인 상태와 해당 지식의 인지·공개 조건을 함께 확인한다. unverified의 깊이는 unknown이다.
+exposure_background: 출처 배경·생활/업무 맥락·evidence_refs·provenance. domains 항목: domain_id, depth, basis, evidence_refs, rationale, review_status.
+
+basis: source_role(확인 역할), authored_candidate(작성 후보), unverified(개인 근거 미확보). source_role도 개별 사실/경험 검수 필수. unverified의 depth=unknown.
 
 | depth | 허용하는 범위 |
 | --- | --- |
@@ -137,75 +151,64 @@ certainty는 knows, suspects, unaware다. disclosure는 public, evasive, withhel
 | practical | 제공된 실무·이용 경험 범위. 전문 이론·미확인 교육/자격으로 확대 금지 |
 | specialist | 제공된 전문 설명 범위. 전문직이라는 이유로 미등록 사실까지 생성 금지 |
 
-미등록 분야는 `default_depth=unknown`으로 처리한다. knowledge_entry의 required_depth는 unknown을 제외한 깊이 중 하나이며, 해당 최소 진술을 설명하는 데 필요한 수준이다. 분야 상한이 required_depth 이상이어야 사실을 제공한다. 높은 수준의 사실을 자르지 않고 낮은 수준으로 표시하는 것은 금지한다. 이름만 인지하는 응답에는 별도 awareness 진술을 작성한다.
+미등록 default_depth=unknown. required_depth는 unknown 제외. 승인 분야 상한 ≥ required_depth일 때만 제공. 높은 사실을 낮은 수준으로 재표시 금지. 이름 인지는 별도 awareness 진술 작성.
 
-certainty는 사실에 대한 확실성, depth는 설명 가능한 범위, disclosure는 공개 가능성이다. unknown과 certainty=unaware를 동일시하지 않는다. 전자는 조사 근거 부족이고 후자는 근거에 따라 실제로 모르는 항목이다. 이 구조의 배분·갱신 규칙은 [NPC 지식 부여 규격](npc-knowledge-specification.md)이 기준이다.
+certainty=확실성, depth=설명 범위, disclosure=공개. unknown은 근거 부족, unaware는 확인된 무지. 배분/갱신은 NPC 지식 규격.
 
 ## 5. 반응 규칙과 대사 예시
 
-reaction_rule은 priority, condition, topic_ids, action_preferences, prohibited_claims와 일시적인 reaction_tone을 포함한다. 전환 전 attitude_delta는 누적 관계 점수로 사용하지 않으며 신규 요청에 누적 적용하지 않는다. 반응은 현재 장비·상황·원작 관계 범위 안에서만 표현하고 원작 관계·퀘스트 값을 변경하지 않는다. 규칙 적용 순서는 금기·지식 제한 → 단계별 목표·관계 → 장비·평판 반응 → 말투다. 같은 우선순위에서는 ID 순서를 적용하고 금지는 선호보다 우선한다.
-
-dialogue_example에는 input, context_condition, expected_intent, sample_dialogue, preferred_actions, rationale을 둔다. sample_dialogue는 문체 참고이며 정답 문장을 항상 반복하도록 강제하지 않는다. 행동 선호에도 실행되지 않은 일을 이미 했다는 표현을 넣지 않는다.
+| 객체 | 필드/규칙 |
+| --- | --- |
+| reaction_rule | priority, condition, topic_ids, action_preferences, prohibited_claims, reaction_tone. 기존 attitude_delta 누적 적용 금지 |
+| 적용 순서 | 금기/지식 → 단계 목표/관계 → 장비/평판 → 말투. 동률 ID순. 금지 우선 |
+| dialogue_example | input, context_condition, expected_intent, sample_dialogue, preferred_actions, rationale. 문체 참고이며 반복 강제/미실행 성공 표현 금지 |
 
 ### 5.1. 상황별 판단 기준과 근거
 
-identity_rules는 trigger_tags, context_condition, value_priority, preferred_intent, prohibited_choices, evidence_refs, review_status를 포함한다. value_priority는 해당 상황에서 먼저 고려하는 카드의 가치 목록이다. 금지 선택은 게임의 행동 권한을 확장하지 않는다. 서로 충돌하면 금기·현재 단계의 목표·관계 제약을 우선한다. 모델에게 우선순위나 원작 관계를 재작성하게 하지 않는다.
+identity_rules: trigger_tags, context_condition, value_priority, preferred_intent, prohibited_choices, evidence_refs, review_status(draft/approved).
 
-evidence_refs는 원작 사실 ID와 장면 위치를 참조한다. 장면 자료에는 작품·언어·퀘스트/장면 식별자·발화 전후 상황·관계 조건·검수 요약을 둔다. 작성자의 정체성 해석을 실제 원작 사건과 구분한다. review_status는 draft 또는 approved다. 커뮤니티 인물의 새 규칙·요약은 approved이고 근거 참조가 유효할 때만 생성용으로 제공한다. 기존 카드의 필수 계약은 유지하지만 새 필드를 모델이 임의로 채우지 않는다.
-
-identity_anchor는 고정 가치와 금기를 간결하게 표현한다. 현재 목표·플레이어와의 관계는 원작 상태 조건에서 별도로 얻는다. 요약에 새로운 성격·경험·관계를 추가하지 않는다. 군중은 승인된 원형과 처음 추출한 특성에서 요약을 만들고 재접촉 때 같은 값으로 유지한다.
+- 카드 가치/금기·현재 목표/관계 우선. 금지 선택으로 행동 권한 확대 금지.
+- evidence_refs: 원작 사실 ID/장면. 장면에는 작품·언어·퀘스트/장면 ID·전후 맥락·관계·검수 요약. 해석/원작 구분.
+- 새 커뮤니티 규칙/요약은 approved+유효 근거만 제공. 모델로 누락 보충 금지.
+- identity_anchor는 승인 가치/금기만 요약. 현재 목표/관계는 상태 계산. 군중은 첫 승인 생성 데이터에서 작성 후 유지.
 
 ### 5.2. 상황별 예시와 검색 메타데이터
 
-dialogue_example에 character_keys, topic_tags, trigger_terms, required_fact_ids, review_status, provenance, evidence_refs를 선택 확장으로 둔다. provenance는 canon_excerpt, authored_adaptation, reviewed_adaptation, fictional_example 중 하나다. 실제 원작 발화, 검수 전 작성 예시, 원작 근거로 검수한 새 상황의 대사, 창작 인물 예시를 각각 구분한다. authored_adaptation은 draft이며 생성기에 제공하지 않는다. rationale과 evidence_refs는 검수용으로 보존하며 생성 입력에는 상황·입력·응답만 전달한다.
+선택 확장: character_keys, topic_tags, trigger_terms, required_fact_ids, review_status, provenance, evidence_refs.
 
-커뮤니티 인물의 새 예시는 character_keys에 현재 인물이 명시되고 approved이며 단계·관계 조건과 required_fact_ids의 공개 조건이 충족되어야 한다. 근거 없는 예시를 원작 예시로 표시하지 않는다. 군중 예시는 같은 원형·선택된 특성에 맞을 때만 사용한다. 예시는 이번 턴의 새 원작 사건·실제 행동 결과·기억으로 등록하지 않는다.
+provenance: canon_excerpt/authored_adaptation/reviewed_adaptation/fictional_example. authored_adaptation은 draft/생성 제외. 검수 rationale/근거는 로컬, 요청에는 상황/입력/응답만.
 
-지식 항목에도 topic_tags와 trigger_terms를 색인 메타데이터로 둘 수 있다. 한국어 용어·별칭은 작성자가 등록한다. 지식 접근 계약은 4절이 기준이고 선별 순서는 프롬프트 명세를 따른다. 서비스·공개 코드와 학습 접근의 근거는 [캐릭터 정체성 벤치마킹 분석](character-identity-benchmark.md)에 둔다.
+커뮤니티 예시는 현재 인물 명시+approved+단계/관계/필요 사실 공개 조건 필수. 군중은 같은 원형/선택 특성만 사용. 예시를 사건·실행·기억으로 등록 금지. 용어/별칭은 작성 등록. 검색 순서는 프롬프트 규격.
 
 ### 5.3. 관계 기준과 공개 평판 반응
 
-커뮤니티의 relationship_to_player는 현재 원작 관계·호칭·기본 거리감과 현재 상황의 반응을 구분한다. 대화 기억은 과거에 무슨 말을 했는지 이어주는 자료이며 지속적인 호감·불신·연애 단계·협력 권한을 추가하지 않는다. 과거 무례한 말을 언급할 수 있지만 다음 만남의 기본 태도를 별도 누적 점수로 바꾸지 않는다. 원작 진행으로 관계가 바뀌면 새 원작 상태를 적용한다. 군중도 생성된 기본 대인 성향·현재 상황·이름/평판 인지를 기준으로 반응하며 별도 관계 성장 시스템을 두지 않는다.
+관계/호칭/기본 거리감은 현재 원작 상태. 현재 감정·과거 발화 기억은 별도. 누적 호감/불신/연애/협력 성장 없음. 군중도 생성 기본 성향+현재 상황/인지 적용.
 
-공개 평판 규칙은 rule_id, street_cred_threshold, 대상/지역 조건, recognition(name_only/public_profile), public_fact_ids, validity_condition을 가진다. 임계값은 승인 배포 프로필에 명시하며 이 문서에서 실측 없는 공통 숫자를 정하지 않는다. 현재 게임 평판이 임계 이상이고 적용 조건을 충족하면 처음 만난 시민도 V의 이름·승인된 공개 행적을 알아볼 수 있다. name_only는 이름 인지만 허용한다. 공개 프로필 항목도 현재 단계·인지·공개 조건을 통과해야 한다.
+공개 평판 규칙: rule_id, street_cred_threshold, 대상/지역 조건, recognition(name_only/public_profile), public_fact_ids, validity_condition. 임계는 승인 배포 프로필에서 명시.
 
-평판 규칙은 비밀 퀘스트·렐릭·사적 관계·직접 목격 경험의 권한을 만들지 않는다. 잘 알려진 행적은 “들었다”는 공개 지식으로, 직접 본 사건은 실제 관찰로 구분한다. 조건 미달·unknown·규칙 누락이면 이름을 자동 호칭하지 않고 확인된 소개·만남 조건을 따른다. 평판 상승과 인지 변화는 게임 정보 계층에서 계산한다.
+평판 임계+적용/단계/인지/공개 조건 충족 시 첫 만남도 이름/공개 행적 허용. name_only는 이름만. 비밀·렐릭·사적 관계·직접 목격 권한 없음. 미달/unknown/규칙 누락은 확인된 소개 조건만 사용.
 
 ## 6. 프롬프트 조립 계약
 
-콘텐츠 원본을 정규화한 persona, 인지·공개 조건을 통과한 지식과 현재 상황을 프롬프트 조립기에 전달한다. 고정 베이스, 메시지 배치, 정규화 필드, 턴별 규칙과 예산 처리는 [NPC 대사·행동 생성 프롬프트 명세](prompt-specification.md)를 기준으로 한다.
+정규화 PersonaView + 조건을 통과한 KnowledgeView/CanonView를 전달한다. 베이스·배치·선별·예산: [프롬프트 규격](prompt-specification.md).
 
 ## 7. 기억 작성 규칙
 
-기억 항목·출처·주장과 실행 결과의 구분·정리·조회는 [NPC 기억 규격](memory-specification.md)을 기준으로 한다. 기억 정리기는 승인 카드·세계관 사실·지식 깊이·인지·공개 조건을 수정하지 않는다. 기억이 원작 퀘스트나 관계·보상을 바꾸는 콘텐츠 권한을 만들지 않는다. 대상 식별과 근거리 재접촉 조건은 [NPC 식별 규격](npc-identity-specification.md)을 따른다.
+원문·유형·정리·조회: [기억 규격](memory-specification.md). 기억으로 승인 카드·인지·분야·공개·퀘스트·관계·보상 변경 금지.
 
 ## 8. 세계관 지식 자료와 승인 조건
 
-조사 자료는 [콘텐츠 자료 안내](../content/README.md)에 연결된 JSON에 저장한다. 현재 묶음은 커뮤니티 NPC 10명, 세계관 사실 53개, 인물별 지식 후보 154개, 작성 대사 예시 20개와 군중 지식 묶음 후보 13개다. 인물별 조사와 출처 한계는 [커뮤니티 NPC 조사](community-npc-catalog.md), 보유·추첨·인지·공개·프롬프트 선별 규칙은 [NPC 지식 부여 규격](npc-knowledge-specification.md)이 기준이다.
+자료 위치: [콘텐츠 안내](../content/README.md). 조사 상태: [인물 조사](community-npc-catalog.md).
 
-world_fact의 source_checked는 출처 확인 상태다. 캐릭터 카드·인지 조건·작성 대사는 draft이며 런타임 사용을 승인한 상태가 아니다. 게임 NPC 키와 단계 조건 매핑, 인물의 실제 인지 범위, 원작 장면과 한국어 말투 검수를 거쳐 승인한다. 현재 자료에는 runtime_enabled=false를 적용한다.
-
-현재 위치·생존·소속·친밀도는 게임 상태로 확인한다. 공개된 인물 소개만으로 군중에게 해당 인물의 사적 지식이나 퀘스트 정보를 부여하지 않는다. 세계관 전체 사건을 수록한 자료가 아니며 2077년 일반 배경과 선정한 인물의 핵심 설정을 우선 다룬다.
+승인 조건: 실제 NPC 키/단계 매핑 + 개인 인지 + 원작 장면 + 한국어 문체 검수. source_checked만으로 카드/인지/예시 승인 금지. 현재 위치·생존·소속·친밀도는 게임 상태 기준.
 
 ## 9. 생활 표현과 인물 해석
 
-원작 사실·인물 해석·승인한 창작 생활 설정을 분리해 작성한다. 같은 사실에 다른 이해관계를 적용해도 사실 자체는 바꾸지 않는다. 세계관 이름을 반복하는 횟수로 캐릭터성을 평가하지 않는다.
-
-| 인물 | 우선 관심 | 생활 소재·반응 방식 |
-| --- | --- | --- |
-| 군중 배달원 | 배달·벌이·안전 | 도시 설명보다 자기 일정·물건 파손·귀가에 반응 |
-| 군중 정비 노동자 | 부품·대금·작업 책임 | 작업 기준으로 말하지만 숨은 장비·개인 병력을 읽지 않음 |
-| 군중 기업 근로자 | 계약·평가·안정 | 기업을 일괄 비난하지 않고 자기 이해관계에 따라 말을 아낌 |
-| 주디 작성 초안 | 기술적 판단·부당함에 대한 반응 | BD에는 작업자 관점, 사람을 거래 대상으로 보는 제안에는 경계 |
-| 팬앰 작성 초안 | 자유·함께 움직이는 사람 | 보상만보다 누가 위험을 떠안는지·동료를 버리는지에 주목 |
-
-군중 생활 소재는 승인된 창작 원형이다. 주디·팬앰의 반응은 공식 소개를 바탕으로 작성한 해석이며 원작 인용이 아니다. 발화 길이·반말/존댓말·욕설·호칭은 한국어판 대화와 관계 단계 검수 후 확정한다. 카드마다 거절 이유·직업 표현·대화 종료 조건이 구별되어야 한다. 예시는 [프롬프트 명세](prompt-specification.md), 품질 시험은 [개발 및 검증 계획](development-validation.md)에 둔다.
+원작 사실·인물 해석·승인 창작 분리. 카드별 거절 이유·직업 표현·종료 조건 구분. 발화 길이·호칭·욕설·말끝은 한국어/관계 단계 검수. 고유명사 빈도로 캐릭터성을 판정하지 않는다.
 
 ### 9.1. 사소한 일상 창작 정책
 
-커뮤니티와 군중 모두 성격·현재 단계·관계·직업/생활 배경에 맞고 원작과 충돌하지 않는 사소한 일상 이야기를 생성할 수 있다. 예를 들어 작업 가능한 단계의 주디가 “오늘 편집이 잘 안 풀리네”라고 말하는 것은 허용 후보이며 실제 게임에서 편집 이벤트가 일어났다는 뜻은 아니다. 불가능한 장소·활동·위험 상태에서는 그 소재를 허용하지 않는다.
-
-정책은 policy_id, allowed_topics, prohibited_claims, validity_condition을 가진다. 인물/원형은 승인된 정책을 참조하거나 카드에 작성하고 요청에는 현재 조건을 통과한 허용 소재·주장 제한만 제공한다. 정책이 없으면 일반 감상·취향·농담은 허용하되 구체적인 일상 사건을 생성하지 않는다. 새 설정은 이 정책 안에서만 생성하고 누락된 원작 카드·분야 근거를 대신하지 않는다.
+정책 필드: policy_id, allowed_topics, prohibited_claims, validity_condition. 승인 정책+현재 조건을 통과한 소재/제한만 요청에 제공. 미설정은 감상/취향/농담만 허용, 구체적 일상 사건 금지. 원작/분야 근거 보충 용도 금지.
 
 | 구분 | 허용 범위 |
 | --- | --- |
@@ -214,4 +217,6 @@ world_fact의 source_checked는 출처 확인 상태다. 캐릭터 카드·인�
 | 원작·관계·전문 경험 | 새 가족·연인·유명 인물과의 접점·퀘스트 결과·자격/교육·인지 근거가 없는 기술 이용 경험 생성 금지 |
 | 실제 장면·행동 | 관찰하지 않은 복장·목격·날씨·범죄, 실행하지 않은 이동·거래·제스처 완료 생성 금지 |
 
-일상 이야기는 화면에서 반드시 창작 꼬리표를 말하게 하지 않고 자연스러운 NPC 대사로 표현한다. 로컬 기억에서는 NPC가 말한 이야기로 보관하고 원작 world_fact·runtime_confirmed·새 전문성으로 승격하지 않는다. 모델 출력에 창작 판정 필드를 요구하지 않으며 로컬에서 구분할 수 없는 자기보고도 npc_statement로 유지한다. 같은 유효 기억에서는 이야기를 이어갈 수 있으나 기억이 없으면 과거의 구체적인 창작 사건을 알고 있는 척하지 않는다. 더 높은 사실 기준과 충돌하면 생성 이야기를 철회·제외하며 원작이나 게임을 수정하지 않는다.
+- 인물·단계·관계·생활/직업에 맞는 소재만 사용. 불가능 장소/활동/위험 상태에서는 제외.
+- 창작 꼬리표/추가 출력 필드 없음. 로컬에는 npc_statement로 기록. world_fact/runtime_confirmed/전문성 승격 금지.
+- 유효 기억에서만 구체 이야기 이어가기. 현재 게임/원작 충돌은 철회/제외하며 원작 상태 수정 금지.

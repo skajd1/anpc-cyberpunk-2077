@@ -1,0 +1,300 @@
+{
+  "date": "2026-10-03",
+  "unit": "UTF-16 text characters, not tokens",
+  "cases": 36,
+  "before_instruction_characters": 5622,
+  "after_instruction_characters": 3285,
+  "total_before_characters": 403131,
+  "total_after_characters": 291543,
+  "reduction_percent": 27.7,
+  "records": [
+    {
+      "npc": "judy",
+      "input": "로그 알아?",
+      "before_characters": 11615,
+      "after_characters": 8408,
+      "saved_characters": 3207,
+      "preserved": true
+    },
+    {
+      "npc": "judy",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 12062,
+      "after_characters": 8855,
+      "saved_characters": 3207,
+      "preserved": true
+    },
+    {
+      "npc": "judy",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11227,
+      "after_characters": 8020,
+      "saved_characters": 3207,
+      "preserved": true
+    },
+    {
+      "npc": "panam",
+      "input": "로그 알아?",
+      "before_characters": 12108,
+      "after_characters": 8900,
+      "saved_characters": 3208,
+      "preserved": true
+    },
+    {
+      "npc": "panam",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 11333,
+      "after_characters": 8125,
+      "saved_characters": 3208,
+      "preserved": true
+    },
+    {
+      "npc": "panam",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11243,
+      "after_characters": 8035,
+      "saved_characters": 3208,
+      "preserved": true
+    },
+    {
+      "npc": "jackie",
+      "input": "로그 알아?",
+      "before_characters": 11574,
+      "after_characters": 8463,
+      "saved_characters": 3111,
+      "preserved": true
+    },
+    {
+      "npc": "jackie",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 11491,
+      "after_characters": 8380,
+      "saved_characters": 3111,
+      "preserved": true
+    },
+    {
+      "npc": "jackie",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11185,
+      "after_characters": 8074,
+      "saved_characters": 3111,
+      "preserved": true
+    },
+    {
+      "npc": "viktor",
+      "input": "로그 알아?",
+      "before_characters": 11631,
+      "after_characters": 8381,
+      "saved_characters": 3250,
+      "preserved": true
+    },
+    {
+      "npc": "viktor",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 11333,
+      "after_characters": 8083,
+      "saved_characters": 3250,
+      "preserved": true
+    },
+    {
+      "npc": "viktor",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11243,
+      "after_characters": 7993,
+      "saved_characters": 3250,
+      "preserved": true
+    },
+    {
+      "npc": "misty",
+      "input": "로그 알아?",
+      "before_characters": 11649,
+      "after_characters": 8443,
+      "saved_characters": 3206,
+      "preserved": true
+    },
+    {
+      "npc": "misty",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 11351,
+      "after_characters": 8145,
+      "saved_characters": 3206,
+      "preserved": true
+    },
+    {
+      "npc": "misty",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11261,
+      "after_characters": 8055,
+      "saved_characters": 3206,
+      "preserved": true
+    },
+    {
+      "npc": "rogue",
+      "input": "로그 알아?",
+      "before_characters": 11639,
+      "after_characters": 8540,
+      "saved_characters": 3099,
+      "preserved": true
+    },
+    {
+      "npc": "rogue",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 11137,
+      "after_characters": 8038,
+      "saved_characters": 3099,
+      "preserved": true
+    },
+    {
+      "npc": "rogue",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11047,
+      "after_characters": 7948,
+      "saved_characters": 3099,
+      "preserved": true
+    },
+    {
+      "npc": "goro",
+      "input": "로그 알아?",
+      "before_characters": 11622,
+      "after_characters": 8448,
+      "saved_characters": 3174,
+      "preserved": true
+    },
+    {
+      "npc": "goro",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 11324,
+      "after_characters": 8150,
+      "saved_characters": 3174,
+      "preserved": true
+    },
+    {
+      "npc": "goro",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11234,
+      "after_characters": 8060,
+      "saved_characters": 3174,
+      "preserved": true
+    },
+    {
+      "npc": "kerry",
+      "input": "로그 알아?",
+      "before_characters": 11619,
+      "after_characters": 8464,
+      "saved_characters": 3155,
+      "preserved": true
+    },
+    {
+      "npc": "kerry",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 11321,
+      "after_characters": 8166,
+      "saved_characters": 3155,
+      "preserved": true
+    },
+    {
+      "npc": "kerry",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11231,
+      "after_characters": 8076,
+      "saved_characters": 3155,
+      "preserved": true
+    },
+    {
+      "npc": "river",
+      "input": "로그 알아?",
+      "before_characters": 11516,
+      "after_characters": 8355,
+      "saved_characters": 3161,
+      "preserved": true
+    },
+    {
+      "npc": "river",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 11218,
+      "after_characters": 8057,
+      "saved_characters": 3161,
+      "preserved": true
+    },
+    {
+      "npc": "river",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11128,
+      "after_characters": 7967,
+      "saved_characters": 3161,
+      "preserved": true
+    },
+    {
+      "npc": "evelyn",
+      "input": "로그 알아?",
+      "before_characters": 11633,
+      "after_characters": 8514,
+      "saved_characters": 3119,
+      "preserved": true
+    },
+    {
+      "npc": "evelyn",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 12091,
+      "after_characters": 8972,
+      "saved_characters": 3119,
+      "preserved": true
+    },
+    {
+      "npc": "evelyn",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 11245,
+      "after_characters": 8126,
+      "saved_characters": 3119,
+      "preserved": true
+    },
+    {
+      "npc": "courier",
+      "input": "로그 알아?",
+      "before_characters": 10136,
+      "after_characters": 7377,
+      "saved_characters": 2759,
+      "preserved": true
+    },
+    {
+      "npc": "courier",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 10055,
+      "after_characters": 7296,
+      "saved_characters": 2759,
+      "preserved": true
+    },
+    {
+      "npc": "courier",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 9749,
+      "after_characters": 6990,
+      "saved_characters": 2759,
+      "preserved": true
+    },
+    {
+      "npc": "resident",
+      "input": "로그 알아?",
+      "before_characters": 10116,
+      "after_characters": 7369,
+      "saved_characters": 2747,
+      "preserved": true
+    },
+    {
+      "npc": "resident",
+      "input": "브레인댄스 해보고 싶어.",
+      "before_characters": 10035,
+      "after_characters": 7288,
+      "saved_characters": 2747,
+      "preserved": true
+    },
+    {
+      "npc": "resident",
+      "input": "전에 입은 옷 기억해?",
+      "before_characters": 9729,
+      "after_characters": 6982,
+      "saved_characters": 2747,
+      "preserved": true
+    }
+  ]
+}

@@ -1,0 +1,654 @@
+{
+  "description": "검사용 가상 자료. 실제 구현 등록 또는 완성된 대화 구성 아님.",
+  "valid": {
+    "fields": {
+      "kind": "field_registry",
+      "config_version": "1.0",
+      "game_id": "cyberpunk2077",
+      "mod_id": "anpc",
+      "revision": 1,
+      "fields": [
+        {
+          "field_id": "npc.can_observe_equipment",
+          "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+          "value_type": "boolean",
+          "unit": "none",
+          "visibility": "internal",
+          "observation_guard": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "field_id": "player.visible_equipment",
+          "meaning": "실제로 확인한 외부 무장 항목",
+          "value_type": "visible_items",
+          "unit": "none",
+          "visibility": "public",
+          "observation_guard": "npc.can_observe_equipment",
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "field_id": "content.relationship_stage",
+          "meaning": "현재 인물에서 확인한 원작 관계 분기 ID",
+          "value_type": "string",
+          "unit": "none",
+          "visibility": "internal",
+          "observation_guard": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ]
+    },
+    "manifest": {
+      "kind": "module_manifest",
+      "config_version": "1.0",
+      "module_id": "example.prompt",
+      "module_version": "1",
+      "contract_versions": [
+        "1.0"
+      ],
+      "environment": "portable",
+      "ports": [
+        "PromptAssembler.assemble"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "prompt_policy",
+          "kind": "policy",
+          "required": true
+        }
+      ]
+    },
+    "plan": {
+      "kind": "module_plan",
+      "config_version": "1.0",
+      "environment": "test",
+      "game_id": "cyberpunk2077",
+      "mod_id": "anpc",
+      "required_ports": [
+        "PromptAssembler.assemble"
+      ],
+      "bindings": [
+        {
+          "port": "PromptAssembler.assemble",
+          "module_id": "example.prompt",
+          "module_version": "1",
+          "config_ref": null,
+          "resources": [
+            {
+              "dependency_id": "prompt_policy",
+              "resource_ref": "example.policy"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "manifests": [
+    {
+      "kind": "module_manifest",
+      "config_version": "1.0",
+      "module_id": "example.prompt",
+      "module_version": "1",
+      "contract_versions": [
+        "1.0"
+      ],
+      "environment": "portable",
+      "ports": [
+        "PromptAssembler.assemble"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "prompt_policy",
+          "kind": "policy",
+          "required": true
+        }
+      ]
+    },
+    {
+      "kind": "module_manifest",
+      "config_version": "1.0",
+      "module_id": "example.simulation",
+      "module_version": "1",
+      "contract_versions": [
+        "1.0"
+      ],
+      "environment": "simulation",
+      "ports": [
+        "PromptAssembler.assemble"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "prompt_policy",
+          "kind": "policy",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "invalid": [
+    {
+      "name": "중복 필드",
+      "base": "fields",
+      "value": {
+        "kind": "field_registry",
+        "config_version": "1.0",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "revision": 1,
+        "fields": [
+          {
+            "field_id": "npc.can_observe_equipment",
+            "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+            "value_type": "boolean",
+            "unit": "none",
+            "visibility": "internal",
+            "observation_guard": null,
+            "minimum": null,
+            "maximum": null
+          },
+          {
+            "field_id": "player.visible_equipment",
+            "meaning": "실제로 확인한 외부 무장 항목",
+            "value_type": "visible_items",
+            "unit": "none",
+            "visibility": "public",
+            "observation_guard": "npc.can_observe_equipment",
+            "minimum": null,
+            "maximum": null
+          },
+          {
+            "field_id": "npc.can_observe_equipment",
+            "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+            "value_type": "boolean",
+            "unit": "none",
+            "visibility": "internal",
+            "observation_guard": null,
+            "minimum": null,
+            "maximum": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "누락 관찰 조건",
+      "base": "fields",
+      "value": {
+        "kind": "field_registry",
+        "config_version": "1.0",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "revision": 1,
+        "fields": [
+          {
+            "field_id": "npc.can_observe_equipment",
+            "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+            "value_type": "boolean",
+            "unit": "none",
+            "visibility": "internal",
+            "observation_guard": null,
+            "minimum": null,
+            "maximum": null
+          },
+          {
+            "field_id": "player.visible_equipment",
+            "meaning": "실제로 확인한 외부 무장 항목",
+            "value_type": "visible_items",
+            "unit": "none",
+            "visibility": "public",
+            "observation_guard": "unknown.guard",
+            "minimum": null,
+            "maximum": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "불리언 아닌 관찰 조건",
+      "base": "fields",
+      "value": {
+        "kind": "field_registry",
+        "config_version": "1.0",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "revision": 1,
+        "fields": [
+          {
+            "field_id": "npc.can_observe_equipment",
+            "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+            "value_type": "string",
+            "unit": "none",
+            "visibility": "internal",
+            "observation_guard": null,
+            "minimum": null,
+            "maximum": null
+          },
+          {
+            "field_id": "player.visible_equipment",
+            "meaning": "실제로 확인한 외부 무장 항목",
+            "value_type": "visible_items",
+            "unit": "none",
+            "visibility": "public",
+            "observation_guard": "npc.can_observe_equipment",
+            "minimum": null,
+            "maximum": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "자기 자신인 관찰 조건",
+      "base": "fields",
+      "value": {
+        "kind": "field_registry",
+        "config_version": "1.0",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "revision": 1,
+        "fields": [
+          {
+            "field_id": "npc.can_observe_equipment",
+            "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+            "value_type": "boolean",
+            "unit": "none",
+            "visibility": "internal",
+            "observation_guard": "npc.can_observe_equipment",
+            "minimum": null,
+            "maximum": null
+          },
+          {
+            "field_id": "player.visible_equipment",
+            "meaning": "실제로 확인한 외부 무장 항목",
+            "value_type": "visible_items",
+            "unit": "none",
+            "visibility": "public",
+            "observation_guard": "npc.can_observe_equipment",
+            "minimum": null,
+            "maximum": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "숫자 아닌 단위",
+      "base": "fields",
+      "value": {
+        "kind": "field_registry",
+        "config_version": "1.0",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "revision": 1,
+        "fields": [
+          {
+            "field_id": "npc.can_observe_equipment",
+            "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+            "value_type": "boolean",
+            "unit": "metres",
+            "visibility": "internal",
+            "observation_guard": null,
+            "minimum": null,
+            "maximum": null
+          },
+          {
+            "field_id": "player.visible_equipment",
+            "meaning": "실제로 확인한 외부 무장 항목",
+            "value_type": "visible_items",
+            "unit": "none",
+            "visibility": "public",
+            "observation_guard": "npc.can_observe_equipment",
+            "minimum": null,
+            "maximum": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "역전된 범위",
+      "base": "fields",
+      "value": {
+        "kind": "field_registry",
+        "config_version": "1.0",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "revision": 1,
+        "fields": [
+          {
+            "field_id": "npc.can_observe_equipment",
+            "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+            "value_type": "number",
+            "unit": "none",
+            "visibility": "internal",
+            "observation_guard": null,
+            "minimum": 10,
+            "maximum": 1
+          },
+          {
+            "field_id": "player.visible_equipment",
+            "meaning": "실제로 확인한 외부 무장 항목",
+            "value_type": "visible_items",
+            "unit": "none",
+            "visibility": "public",
+            "observation_guard": "npc.can_observe_equipment",
+            "minimum": null,
+            "maximum": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "미지원 포트",
+      "base": "manifest",
+      "value": {
+        "kind": "module_manifest",
+        "config_version": "1.0",
+        "module_id": "example.prompt",
+        "module_version": "1",
+        "contract_versions": [
+          "1.0"
+        ],
+        "environment": "portable",
+        "ports": [
+          "Unknown.run"
+        ],
+        "dependencies": [
+          {
+            "dependency_id": "prompt_policy",
+            "kind": "policy",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "미지원 계약 버전",
+      "base": "manifest",
+      "value": {
+        "kind": "module_manifest",
+        "config_version": "1.0",
+        "module_id": "example.prompt",
+        "module_version": "1",
+        "contract_versions": [
+          "2.0"
+        ],
+        "environment": "portable",
+        "ports": [
+          "PromptAssembler.assemble"
+        ],
+        "dependencies": [
+          {
+            "dependency_id": "prompt_policy",
+            "kind": "policy",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "중복 의존성",
+      "base": "manifest",
+      "value": {
+        "kind": "module_manifest",
+        "config_version": "1.0",
+        "module_id": "example.prompt",
+        "module_version": "1",
+        "contract_versions": [
+          "1.0"
+        ],
+        "environment": "portable",
+        "ports": [
+          "PromptAssembler.assemble"
+        ],
+        "dependencies": [
+          {
+            "dependency_id": "prompt_policy",
+            "kind": "policy",
+            "required": true
+          },
+          {
+            "dependency_id": "prompt_policy",
+            "kind": "policy",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "필수 포트 미연결",
+      "base": "plan",
+      "value": {
+        "kind": "module_plan",
+        "config_version": "1.0",
+        "environment": "test",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "required_ports": [
+          "PromptAssembler.assemble",
+          "Provider.generate"
+        ],
+        "bindings": [
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "example.prompt",
+            "module_version": "1",
+            "config_ref": null,
+            "resources": [
+              {
+                "dependency_id": "prompt_policy",
+                "resource_ref": "example.policy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "동일 포트 중복 연결",
+      "base": "plan",
+      "value": {
+        "kind": "module_plan",
+        "config_version": "1.0",
+        "environment": "test",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "required_ports": [
+          "PromptAssembler.assemble"
+        ],
+        "bindings": [
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "example.prompt",
+            "module_version": "1",
+            "config_ref": null,
+            "resources": [
+              {
+                "dependency_id": "prompt_policy",
+                "resource_ref": "example.policy"
+              }
+            ]
+          },
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "example.prompt",
+            "module_version": "1",
+            "config_ref": null,
+            "resources": [
+              {
+                "dependency_id": "prompt_policy",
+                "resource_ref": "example.policy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "미등록 구현",
+      "base": "plan",
+      "value": {
+        "kind": "module_plan",
+        "config_version": "1.0",
+        "environment": "test",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "required_ports": [
+          "PromptAssembler.assemble"
+        ],
+        "bindings": [
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "unknown.module",
+            "module_version": "1",
+            "config_ref": null,
+            "resources": [
+              {
+                "dependency_id": "prompt_policy",
+                "resource_ref": "example.policy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "구현 버전 불일치",
+      "base": "plan",
+      "value": {
+        "kind": "module_plan",
+        "config_version": "1.0",
+        "environment": "test",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "required_ports": [
+          "PromptAssembler.assemble"
+        ],
+        "bindings": [
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "example.prompt",
+            "module_version": "2",
+            "config_ref": null,
+            "resources": [
+              {
+                "dependency_id": "prompt_policy",
+                "resource_ref": "example.policy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "필수 자원 누락",
+      "base": "plan",
+      "value": {
+        "kind": "module_plan",
+        "config_version": "1.0",
+        "environment": "test",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "required_ports": [
+          "PromptAssembler.assemble"
+        ],
+        "bindings": [
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "example.prompt",
+            "module_version": "1",
+            "config_ref": null,
+            "resources": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "미선언 자원",
+      "base": "plan",
+      "value": {
+        "kind": "module_plan",
+        "config_version": "1.0",
+        "environment": "test",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "required_ports": [
+          "PromptAssembler.assemble"
+        ],
+        "bindings": [
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "example.prompt",
+            "module_version": "1",
+            "config_ref": null,
+            "resources": [
+              {
+                "dependency_id": "prompt_policy",
+                "resource_ref": "example.policy"
+              },
+              {
+                "dependency_id": "extra",
+                "resource_ref": "example.extra"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "실제 키 필드 혼입",
+      "base": "plan",
+      "value": {
+        "kind": "module_plan",
+        "config_version": "1.0",
+        "environment": "test",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "required_ports": [
+          "PromptAssembler.assemble"
+        ],
+        "bindings": [
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "example.prompt",
+            "module_version": "1",
+            "config_ref": null,
+            "resources": [
+              {
+                "dependency_id": "prompt_policy",
+                "resource_ref": "example.policy"
+              }
+            ],
+            "api_key": "검사용 가상 문자열"
+          }
+        ]
+      }
+    },
+    {
+      "name": "게임 구성의 모의 구현",
+      "base": "plan",
+      "value": {
+        "kind": "module_plan",
+        "config_version": "1.0",
+        "environment": "game",
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "required_ports": [
+          "PromptAssembler.assemble"
+        ],
+        "bindings": [
+          {
+            "port": "PromptAssembler.assemble",
+            "module_id": "example.simulation",
+            "module_version": "1",
+            "config_ref": null,
+            "resources": [
+              {
+                "dependency_id": "prompt_policy",
+                "resource_ref": "example.policy"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

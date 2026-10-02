@@ -1,44 +1,55 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ANPC · 대화 테스트</title><link rel="stylesheet" href="/style.css"><script type="module" src="/compare.js"></script></head>
-<body class="compare-page"><header><div><span class="brand">ANPC</span><span class="edition">대화 테스트</span></div><a href="/">기존 시제품</a></header>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ANPC · 캐릭터 대화</title><link rel="stylesheet" href="/style.css"><script type="module" src="/compare.js"></script></head>
+<body class="compare-page">
+<header class="app-header"><a class="brand" href="/compare" aria-label="ANPC 대화 홈">ANPC</a><span class="edition">캐릭터 대화</span><button id="open-settings" class="quiet-button" type="button">연결 설정</button></header>
 <main class="comparison-layout">
-<aside class="settings-rail"><h1>설정</h1>
-<label class="check"><input id="allow-draft" type="checkbox">조사 초안으로 테스트</label>
-<section><h2>연결</h2><label for="mode">실행 모드</label><select id="mode"><option value="mock">모의 응답</option><option value="openai">OpenAI API</option><option value="codex">Codex 로그인</option></select>
-<div id="provider-settings" hidden><label for="model">모델</label><select id="model"></select><div id="custom-settings" hidden><label for="custom-model">모델 ID</label><input id="custom-model" autocomplete="off"></div></div>
-<div id="key-settings" hidden><label for="api-key">API 키</label><input id="api-key" type="password" autocomplete="off"><button id="forget-key">키 지우기</button><p id="key-help" class="hint">키는 메모리에서만 사용합니다.</p></div>
-<div id="codex-settings" hidden><button id="refresh-models">모델 목록 조회</button><p id="codex-status" role="status">조회 전</p></div>
-<p id="provider-help" class="hint"></p></section>
-<details class="settings-advanced"><summary>대화 조건</summary>
-<label for="configuration">프롬프트 구성</label><select id="configuration"><option value="card">카드만</option><option value="knowledge">카드 + 지식</option><option value="full" selected>카드 + 지식 + 예시</option></select>
-<label for="relationship">가상 관계</label><select id="relationship"><option value="unknown">알 수 없음</option><option value="acquaintance" selected>안면 있음</option><option value="cooperative">협력 중</option></select>
-<div id="phase-settings"></div>
-<label class="check"><input id="alive" type="checkbox" checked>생존 확인</label>
-<label class="check"><input id="free" type="checkbox" checked>자유 대화 가능</label>
-<label class="check"><input id="basic-knowledge" type="checkbox" checked>지식 프로필 적용</label>
-<label class="check"><input id="relic-known" type="checkbox">렐릭 인지</label>
-<label class="check"><input id="relic-disclosed" type="checkbox">렐릭 공개 허용</label>
-<p class="hint">현재 관계는 원작 기준의 모의 입력입니다. 반복 대화로 친밀도를 올리지 않습니다.</p></details>
-<details class="settings-advanced"><summary>상황 테스트</summary>
-<label for="outfit">현재 표시 복장</label><select id="outfit"></select>
-<div id="custom-outfit" hidden><label for="outfit-name">복장 이름</label><input id="outfit-name" maxlength="150" value="화려한 파란 재킷"><label for="outfit-description">외형 설명 텍스트</label><textarea id="outfit-description" rows="2" maxlength="500">밝은 파란색과 금속 장식이 돋보이는 재킷</textarea></div>
-<label class="check"><input id="outfit-visible" type="checkbox" checked>NPC가 현재 복장을 볼 수 있음</label>
-<label class="check"><input id="public-recognition" type="checkbox">공개 평판으로 V의 이름 인지 (모의)</label>
-<label class="check"><input id="minor-fiction" type="checkbox" checked>배경 안의 사소한 일상 자기보고 허용</label>
-<label class="check"><input id="select-actions" type="checkbox" checked>추가 제스처 선택 허용 · 실행 안 함</label>
-<button id="danger" type="button">전투 발생 · 대화 중단</button>
-<button id="safe-world" type="button">안전 상태로 복귀</button>
-<p class="hint">표시 복장 텍스트만 전달합니다. 게임 시간은 멈추지 않는 전제입니다.</p></details>
-<details class="settings-advanced"><summary>모의 저장·로드</summary>
-<label for="save-slot">저장 슬롯</label><select id="save-slot"><option value="a">슬롯 A</option><option value="b">슬롯 B</option></select>
-<div class="scenario-buttons"><button id="save-test" type="button">저장</button><button id="load-test" type="button">로드</button></div>
-<p id="save-hint" class="hint" role="status">페이지 메모리에만 저장 · 새로고침 시 삭제</p></details>
-<p class="hint">상황 변경은 기억을 유지합니다. 초기화는 모든 시험 기억·저장을 지웁니다.</p></aside>
-<article class="comparison-workspace" id="dialogue-test"><div class="chat-toolbar"><h2>채팅</h2><div><button id="recontact" type="button">종료</button><button id="reset" type="button">초기화</button></div></div>
-<p id="status" class="hint" role="status">조사 초안 사용을 켜고 대화를 시작하세요.</p>
-<div class="entry-row"><button id="enter-ai" type="button">더 깊은 대화를 해볼까?</button><span id="entry-hint" class="hint">기존 대화 종료 후 진입을 모의합니다.</span></div>
-<div id="comparison-results" class="comparison-results" aria-label="대화 내용"></div>
-<div id="error" role="alert" hidden></div>
-<form id="compare-form"><div class="preset-row"><label for="question-preset">질문 프리셋</label><select id="question-preset"><option value="">질문 선택…</option></select></div><p id="preset-hint" class="hint" hidden></p><label for="input" class="sr-only">선택한 인물에게 보낼 질문</label><textarea id="input" maxlength="1000" rows="2" placeholder="메시지를 입력하세요"></textarea><div class="compose-footer"><span id="request-count"></span><div><button id="cancel" type="button" hidden>취소</button><button id="send" type="submit" class="primary">보내기</button></div></div></form></article>
-<aside class="character-rail" id="profile-inspector"><h2>인물 특성</h2><p class="hint">원작 인물은 고정 · 군중은 창작 예시</p><p id="scenario-summary" class="hint" aria-live="polite"></p><div id="character-profile"></div></aside>
-</main><footer>게임 미연결 · 모의 응답은 품질 평가용이 아닙니다 · 새로고침하면 대화가 초기화됩니다</footer></body></html>
+  <aside id="character-nav" class="character-nav" aria-label="캐릭터 선택">
+    <div class="rail-heading"><h1>캐릭터</h1><button class="mobile-close quiet-button" type="button" data-close>닫기</button></div>
+    <div id="selection-slot" class="selection-slot" hidden><button type="button" data-slot="0">첫 번째</button><button type="button" data-slot="1">두 번째</button></div>
+    <label for="character-search" class="sr-only">캐릭터 검색</label><input id="character-search" type="search" placeholder="캐릭터 검색" autocomplete="off">
+    <nav id="character-list" aria-label="등록 캐릭터"></nav>
+    <p class="rail-note">게임 미연결 · 테스트용 작성 초안</p>
+  </aside>
+  <article class="comparison-workspace" id="dialogue-test">
+    <div class="chat-heading">
+      <div class="chat-identity"><button id="open-characters" class="quiet-button" type="button">인물 선택</button><h2 id="chat-title">대화</h2><p id="status" role="status"></p></div>
+      <div class="chat-controls"><label for="target-count" class="sr-only">대화 인원</label><select id="target-count"><option value="1">1명 대화</option><option value="2">2명 비교</option></select><button id="open-profile" class="quiet-button" type="button">인물 정보</button><button id="new-dialogue" class="quiet-button" type="button">새 대화</button></div>
+    </div>
+    <div id="comparison-results" class="comparison-results" aria-label="대화 내용"></div>
+    <div id="error" role="alert" hidden></div>
+    <form id="compare-form">
+      <div class="composer-box"><label for="input" class="sr-only">메시지</label><textarea id="input" maxlength="1000" rows="2" placeholder="메시지를 입력하세요"></textarea><button id="cancel" type="button" hidden>중단</button><button id="send" type="submit" class="primary">보내기</button></div>
+      <div class="compose-footer"><div class="composer-tools"><details id="question-menu"><summary>질문 예시</summary><div class="question-popover"><label for="question-preset">테스트할 질문</label><select id="question-preset"><option value="">질문 선택…</option></select><p id="preset-hint" class="hint" hidden></p></div></details><button id="open-scene" class="quiet-button" type="button">상황 설정</button><button id="recontact" class="quiet-button" type="button">재접촉</button></div><span id="request-count">Enter로 전송</span></div>
+    </form>
+  </article>
+  <aside class="character-rail" id="profile-inspector" aria-label="선택 인물의 특성"><div class="rail-heading"><h2>인물 정보</h2><button class="mobile-close quiet-button" type="button" data-close>닫기</button></div><div id="profile-tabs" class="profile-tabs" hidden></div><div id="character-profile"></div></aside>
+</main>
+<dialog id="settings-dialog" aria-labelledby="settings-title">
+  <div class="dialog-heading"><h2 id="settings-title">대화 설정</h2><button type="button" class="quiet-button" data-close>닫기</button></div>
+  <nav class="settings-tabs" aria-label="설정 분류"><button type="button" data-settings-tab="connection">연결</button><button type="button" data-settings-tab="scene">상황</button><button type="button" data-settings-tab="advanced">고급 시험</button></nav>
+  <div id="connection-panel" class="settings-panel">
+    <label for="mode">응답 방식</label><select id="mode"><option value="mock">모의 응답</option><option value="openai">OpenAI API</option><option value="codex">Codex 로그인</option></select>
+    <div id="provider-settings" hidden><label for="model">모델</label><select id="model"></select><div id="custom-settings" hidden><label for="custom-model">모델 ID</label><input id="custom-model" autocomplete="off"></div></div>
+    <div id="reasoning-settings" hidden><label for="reasoning-effort">추론 설정</label><select id="reasoning-effort"><option value="none" selected>none · 추론 끄기</option><option value="low">low · 낮음</option><option value="medium">medium · 보통</option><option value="high">high · 높음</option><option value="xhigh">xhigh · 매우 높음</option><option value="max">max · 최대</option></select><p id="reasoning-help" class="hint"></p></div>
+    <div id="key-settings" hidden><label for="api-key">API 키</label><input id="api-key" type="password" autocomplete="off"><button id="forget-key" type="button">입력한 키 지우기</button><p id="key-help" class="hint">입력한 키는 이 페이지 메모리에서만 사용합니다.</p></div>
+    <div id="codex-settings" hidden><button id="refresh-models" type="button">모델 목록 조회</button><p id="codex-status" role="status">조회 전</p></div><p id="provider-help" class="hint"></p>
+  </div>
+  <div id="scene-panel" class="settings-panel" hidden>
+    <label for="outfit">현재 복장</label><select id="outfit"></select>
+    <div id="custom-outfit" hidden><label for="outfit-name">복장 이름</label><input id="outfit-name" maxlength="150" value="화려한 파란 재킷"><label for="outfit-description">외형 설명</label><textarea id="outfit-description" rows="2" maxlength="500">밝은 파란색과 금속 장식이 돋보이는 재킷</textarea></div>
+    <label class="check"><input id="outfit-visible" type="checkbox" checked>현재 복장을 볼 수 있음</label>
+      <div id="phase-settings"></div>
+      <p class="hint">선택한 원작 분기의 조건을 충족한 상황으로 시험합니다. 대화 횟수로 관계가 바뀌지는 않습니다.</p>
+    <label class="check"><input id="public-recognition" type="checkbox">공개 평판으로 이름 인지</label><label class="check"><input id="minor-fiction" type="checkbox" checked>사소한 일상 이야기 허용</label><label class="check"><input id="select-actions" type="checkbox" checked>제스처 선택 허용 (실행 안 함)</label>
+    <p class="hint">다음 메시지에 현재 상황과 이 인물의 이전 관찰을 전달합니다.</p>
+  </div>
+  <div id="advanced-panel" class="settings-panel" hidden>
+    <label for="configuration">프롬프트 구성</label><select id="configuration"><option value="card">카드만</option><option value="knowledge">카드 + 지식</option><option value="full" selected>카드 + 지식 + 예시</option></select>
+    <label class="check"><input id="alive" type="checkbox" checked>대화 대상 존재 확인</label><label class="check"><input id="free" type="checkbox" checked>자유 대화 가능</label><label class="check"><input id="basic-knowledge" type="checkbox" checked>지식 프로필 적용</label><label class="check"><input id="relic-known" type="checkbox">렐릭 인지</label><label class="check"><input id="relic-disclosed" type="checkbox">렐릭 공개 허용</label>
+    <section><h3>기억·저장 시험</h3><button id="summarize-memory" type="button">이전 대화 기억 정리</button><p id="memory-hint" class="hint" role="status">최근 6개 발화는 원문 유지 · 8회 대화마다 이전 내용을 정리합니다. OpenAI 모드에서는 추가 API 요금이 발생합니다.</p><div class="scenario-buttons"><button id="danger" type="button">전투 발생</button><button id="safe-world" type="button">안전 상태로 복귀</button></div><label for="save-slot">모의 저장 슬롯</label><select id="save-slot"><option value="a">슬롯 A</option><option value="b">슬롯 B</option></select><div class="scenario-buttons"><button id="save-test" type="button">저장</button><button id="load-test" type="button">로드</button></div><p id="save-hint" class="hint" role="status">브라우저에 저장 · 새로고침 후에도 유지</p><button id="reset" type="button">전체 초기화</button><p class="hint">대화·시험 기억·모의 저장을 모두 지웁니다.</p></section>
+  </div>
+</dialog>
+<dialog id="request-inspector" aria-labelledby="request-title"><div class="dialog-heading"><h2 id="request-title">응답 기록</h2><button type="button" class="quiet-button" data-close>닫기</button></div><div id="request-content"></div></dialog>
+<dialog id="character-picker" aria-label="캐릭터 선택"></dialog><dialog id="profile-dialog" aria-label="선택 인물의 특성"></dialog>
+</body></html>

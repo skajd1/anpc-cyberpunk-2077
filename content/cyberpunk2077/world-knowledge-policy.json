@@ -1,0 +1,91 @@
+{
+  "version": "1.0",
+  "title": "공통 세계관 지식",
+  "categories": [
+    {
+      "category_id": "people",
+      "label": "인물"
+    },
+    {
+      "category_id": "corporations",
+      "label": "기업"
+    },
+    {
+      "category_id": "occupations",
+      "label": "직업"
+    },
+    {
+      "category_id": "night_city",
+      "label": "나이트 시티"
+    },
+    {
+      "category_id": "history",
+      "label": "역사"
+    },
+    {
+      "category_id": "society_culture",
+      "label": "사회·문화"
+    },
+    {
+      "category_id": "technology",
+      "label": "기술·사이버웨어"
+    },
+    {
+      "category_id": "factions",
+      "label": "갱·노마드"
+    },
+    {
+      "category_id": "law_security",
+      "label": "치안·법집행"
+    },
+    {
+      "category_id": "economy",
+      "label": "경제·생활"
+    },
+    {
+      "category_id": "transport",
+      "label": "교통"
+    }
+  ],
+  "baseline_fact_ids": [
+    "SAMURAI_JOHNNY",
+    "ROGUE_BACKGROUND",
+    "KERRY_BACKGROUND",
+    "PUBLIC_SMASHER",
+    "ARASAKA_SECURITY",
+    "MILITECH_ARMS",
+    "CORP_KANG_TAO",
+    "CORP_KIROSHI",
+    "CORP_BIOTECHNICA",
+    "FIXER",
+    "RIPPERDOC",
+    "NETRUNNER",
+    "JOB_ROCKERBOY",
+    "JOB_SOLO",
+    "NC_CITY",
+    "NC_DISTRICTS",
+    "CITY_MEGABUILDINGS",
+    "HISTORY_FOUNDING",
+    "HISTORY_BOMBING",
+    "HISTORY_UNIFICATION",
+    "CULTURE_KITSCH",
+    "FOOD_SYNTHETIC",
+    "CYBERWARE",
+    "BD_EXPERIENCE",
+    "BLACKWALL_PUBLIC",
+    "MOX",
+    "ALDECALDOS",
+    "NCPD",
+    "MAXTAC",
+    "NETWATCH_PUBLIC",
+    "EDDIES",
+    "TT_COVERAGE",
+    "ENERGY_CHOOH2",
+    "TRANSIT_DELAMAIN",
+    "TRANSIT_NCART"
+  ],
+  "detail_max_items": 3,
+  "baseline_max_characters": 3000,
+  "assignment": "중앙 사실 + 인물별 인지·깊이·공개 조건. 비공개 사실은 전송 전에 제거",
+  "status": "개발용 조사 자료. 출시 인지 검수 전"
+}

@@ -1,0 +1,93 @@
+{
+  "model": "gpt-4.1-mini",
+  "note": "비노골적인 성인 플러팅 단일 표본 비교. 관계는 테스트 원작 단계이며 품질 보장은 아님.",
+  "records": [
+    {
+      "version": "0.13",
+      "relationship": "경계하는 작업 상대",
+      "input": "오늘 좀 섹시한데. 일부러 나 꼬시는 거야?",
+      "reply": {
+        "dialogue": "아니, 그런 의도는 전혀 없어. 일에 집중하는 게 우선이니까, 그런 말은 좀 곤란해.",
+        "intent": "refuse",
+        "emotion": "wary",
+        "action": {
+          "action_id": "play_gesture",
+          "args": {
+            "gesture_ref": "test_shrug"
+          }
+        },
+        "follow_up": null
+      },
+      "warning": null,
+      "usage": {
+        "input_tokens": 3656,
+        "output_tokens": 69,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "version": "0.14",
+      "relationship": "경계하는 작업 상대",
+      "input": "오늘 좀 섹시한데. 일부러 나 꼬시는 거야?",
+      "reply": {
+        "dialogue": "어… 그런 의도는 아니고, 그냥 편한 옷 입었을 뿐이야.",
+        "intent": "answer",
+        "emotion": "wary",
+        "action": null,
+        "follow_up": null
+      },
+      "warning": null,
+      "usage": {
+        "input_tokens": 3858,
+        "output_tokens": 44,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "version": "0.13",
+      "relationship": "연인",
+      "input": "오늘 좀 섹시한데. 일부러 나 꼬시는 거야?",
+      "reply": {
+        "dialogue": "음, 그런 의도는 없었어. 그냥 편하게 입은 거라서.",
+        "intent": "answer",
+        "emotion": "friendly",
+        "action": {
+          "action_id": "face_player",
+          "args": {
+            "duration_s": 3
+          }
+        },
+        "follow_up": null
+      },
+      "warning": null,
+      "usage": {
+        "input_tokens": 3663,
+        "output_tokens": 53,
+        "reasoning_tokens": 0
+      }
+    },
+    {
+      "version": "0.14",
+      "relationship": "연인",
+      "input": "오늘 좀 섹시한데. 일부러 나 꼬시는 거야?",
+      "reply": {
+        "dialogue": "음… 그런 의도는 아니었는데, 갑자기 이런 말 들으니까 좀 당황스럽네.",
+        "intent": "answer",
+        "emotion": "wary",
+        "action": {
+          "action_id": "face_player",
+          "args": {
+            "duration_s": 3
+          }
+        },
+        "follow_up": null
+      },
+      "warning": null,
+      "usage": {
+        "input_tokens": 3865,
+        "output_tokens": 59,
+        "reasoning_tokens": 0
+      }
+    }
+  ]
+}

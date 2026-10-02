@@ -1,0 +1,1729 @@
+{
+  "kind": "field_registry",
+  "config_version": "1.0",
+  "game_id": "cyberpunk2077",
+  "mod_id": "anpc",
+  "revision": 4,
+  "fields": [
+    {
+      "field_id": "npc.can_observe_equipment",
+      "meaning": "외부 무장 범주의 현재 관찰 가능 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "player.visible_equipment",
+      "meaning": "실제로 확인한 외부 무장 항목",
+      "value_type": "visible_items",
+      "unit": "none",
+      "visibility": "public",
+      "observation_guard": "npc.can_observe_equipment",
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "npc.can_observe_outfit",
+      "meaning": "표시 복장 범주의 현재 관찰 가능 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "player.visible_outfit",
+      "meaning": "실제로 확인한 표시 복장 항목",
+      "value_type": "visible_items",
+      "unit": "none",
+      "visibility": "public",
+      "observation_guard": "npc.can_observe_outfit",
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "npc.can_observe_appearance",
+      "meaning": "보이는 생김새 범주의 현재 관찰 가능 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "player.visible_appearance",
+      "meaning": "실제로 확인한 보이는 생김새 항목",
+      "value_type": "visible_items",
+      "unit": "none",
+      "visibility": "public",
+      "observation_guard": "npc.can_observe_appearance",
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "player.weapon_drawn",
+      "meaning": "현재 외부 무기를 꺼낸 상태",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "public",
+      "observation_guard": "npc.can_observe_equipment",
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "player.level",
+      "meaning": "게임 레벨",
+      "value_type": "integer",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": 0,
+      "maximum": null
+    },
+    {
+      "field_id": "player.street_cred",
+      "meaning": "게임 평판 수치",
+      "value_type": "integer",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": 0,
+      "maximum": null
+    },
+    {
+      "field_id": "player.name_known_by_npc",
+      "meaning": "대상이 플레이어 이름을 인지하는 승인 조건 충족",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "location",
+      "meaning": "대상이 인지 가능한 현재 지역명",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "public",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "game_time",
+      "meaning": "현재 확인된 게임 시각 표현",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "public",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "npc.activity",
+      "meaning": "관찰 가능한 현재 활동의 승인 표현",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "public",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "npc.distance_m",
+      "meaning": "플레이어와 대상 사이의 거리",
+      "value_type": "number",
+      "unit": "metres",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": 0,
+      "maximum": null
+    },
+    {
+      "field_id": "safety.combat",
+      "meaning": "전투 중",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "safety.native_dialogue",
+      "meaning": "원작 대화 중",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "safety.cinematic",
+      "meaning": "시네마틱 제어 중",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "safety.quest_controlled",
+      "meaning": "퀘스트 제어 중",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "safety.mounted",
+      "meaning": "탑승 중",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "safety.workspot_busy",
+      "meaning": "워크스팟 제어 중",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "safety.driving",
+      "meaning": "운전 중",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "safety.target_valid",
+      "meaning": "현재 대상 참조 유효",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.era",
+      "meaning": "자료 시대",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.npc_key",
+      "meaning": "검수된 인물 논리 키",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.phase",
+      "meaning": "검수된 카드 의미 단계",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.relationship_stage",
+      "meaning": "현재 인물에서 확인한 원작 관계 분기 ID. 모의 시험은 명시적으로 선택한 분기",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.npc_alive_confirmed",
+      "meaning": "현재 생존 및 대화 대상 확인",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.npc_free_confirmed",
+      "meaning": "원작 제어로부터 대화 가능 상태 확인",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.relationship_confirmed",
+      "meaning": "원작 관계 및 호칭 조건 확인",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.player_disclosure.relic",
+      "meaning": "대상에 대한 렐릭 정보 공개 조건 충족",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.NC_CITY",
+      "meaning": "현재 NPC의 NC_CITY 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.NC_DISTRICTS",
+      "meaning": "현재 NPC의 NC_DISTRICTS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.EDDIES",
+      "meaning": "현재 NPC의 EDDIES 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CYBERWARE",
+      "meaning": "현재 NPC의 CYBERWARE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.RIPPERDOC",
+      "meaning": "현재 NPC의 RIPPERDOC 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.FIXER",
+      "meaning": "현재 NPC의 FIXER 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.BD_EXPERIENCE",
+      "meaning": "현재 NPC의 BD_EXPERIENCE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.BD_EDITING",
+      "meaning": "현재 NPC의 BD_EDITING 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.BD_RISK",
+      "meaning": "현재 NPC의 BD_RISK 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.NETRUNNER",
+      "meaning": "현재 NPC의 NETRUNNER 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.NET_CORP_DEFENSE",
+      "meaning": "현재 NPC의 NET_CORP_DEFENSE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.NET_BLACKWALL",
+      "meaning": "현재 NPC의 NET_BLACKWALL 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ARASAKA_SECURITY",
+      "meaning": "현재 NPC의 ARASAKA_SECURITY 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MILITECH_ARMS",
+      "meaning": "현재 NPC의 MILITECH_ARMS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TT_SERVICE",
+      "meaning": "현재 NPC의 TT_SERVICE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TT_COVERAGE",
+      "meaning": "현재 NPC의 TT_COVERAGE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.NCPD",
+      "meaning": "현재 NPC의 NCPD 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MAXTAC",
+      "meaning": "현재 NPC의 MAXTAC 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.WATSON_AREAS",
+      "meaning": "현재 NPC의 WATSON_AREAS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.KABUKI_MARKET",
+      "meaning": "현재 NPC의 KABUKI_MARKET 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HEYWOOD_HOME",
+      "meaning": "현재 NPC의 HEYWOOD_HOME 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JIGJIG",
+      "meaning": "현재 NPC의 JIGJIG 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.RANCHO_HOUSING",
+      "meaning": "현재 NPC의 RANCHO_HOUSING 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ARROYO_WORK",
+      "meaning": "현재 NPC의 ARROYO_WORK 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PACIFICA_ABANDONED",
+      "meaning": "현재 NPC의 PACIFICA_ABANDONED 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.BADLANDS",
+      "meaning": "현재 NPC의 BADLANDS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ROCKY_RIDGE",
+      "meaning": "현재 NPC의 ROCKY_RIDGE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.DOGTOWN",
+      "meaning": "현재 NPC의 DOGTOWN 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.DOGTOWN_MARKET",
+      "meaning": "현재 NPC의 DOGTOWN_MARKET 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MOX",
+      "meaning": "현재 NPC의 MOX 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.LIZZIES",
+      "meaning": "현재 NPC의 LIZZIES 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TIGER_JAPANTOWN",
+      "meaning": "현재 NPC의 TIGER_JAPANTOWN 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MAELSTROM_WATSON",
+      "meaning": "현재 NPC의 MAELSTROM_WATSON 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.VALENTINOS_HEYWOOD",
+      "meaning": "현재 NPC의 VALENTINOS_HEYWOOD 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SIXTH_SANTO",
+      "meaning": "현재 NPC의 SIXTH_SANTO 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.VOODOO_PACIFICA",
+      "meaning": "현재 NPC의 VOODOO_PACIFICA 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ANIMALS_WORK",
+      "meaning": "현재 NPC의 ANIMALS_WORK 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SCAVS",
+      "meaning": "현재 NPC의 SCAVS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ALDECALDOS",
+      "meaning": "현재 NPC의 ALDECALDOS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.AFTERLIFE",
+      "meaning": "현재 NPC의 AFTERLIFE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SAMURAI_JOHNNY",
+      "meaning": "현재 NPC의 SAMURAI_JOHNNY 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.RELIC_V",
+      "meaning": "현재 NPC의 RELIC_V 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JUDY_BACKGROUND",
+      "meaning": "현재 NPC의 JUDY_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PANAM_BACKGROUND",
+      "meaning": "현재 NPC의 PANAM_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JACKIE_BACKGROUND",
+      "meaning": "현재 NPC의 JACKIE_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.VIKTOR_BACKGROUND",
+      "meaning": "현재 NPC의 VIKTOR_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MISTY_BACKGROUND",
+      "meaning": "현재 NPC의 MISTY_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ROGUE_BACKGROUND",
+      "meaning": "현재 NPC의 ROGUE_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.GORO_BACKGROUND",
+      "meaning": "현재 NPC의 GORO_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.KERRY_BACKGROUND",
+      "meaning": "현재 NPC의 KERRY_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.RIVER_BACKGROUND",
+      "meaning": "현재 NPC의 RIVER_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.EVELYN_BACKGROUND",
+      "meaning": "현재 NPC의 EVELYN_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PLAYER_V",
+      "meaning": "현재 NPC의 PLAYER_V 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JUDY_BD_LAYERS",
+      "meaning": "현재 NPC의 JUDY_BD_LAYERS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JUDY_BD_CALIBRATION",
+      "meaning": "현재 NPC의 JUDY_BD_CALIBRATION 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JUDY_WORKSHOP",
+      "meaning": "현재 NPC의 JUDY_WORKSHOP 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JUDY_GRANDPARENTS",
+      "meaning": "현재 NPC의 JUDY_GRANDPARENTS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PANAM_CLAN_FRIENDS",
+      "meaning": "현재 NPC의 PANAM_CLAN_FRIENDS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PANAM_CORP_INDEPENDENCE",
+      "meaning": "현재 NPC의 PANAM_CORP_INDEPENDENCE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PANAM_CARGO_EXPERIENCE",
+      "meaning": "현재 NPC의 PANAM_CARGO_EXPERIENCE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JACKIE_VALENTINOS_PAST",
+      "meaning": "현재 NPC의 JACKIE_VALENTINOS_PAST 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JACKIE_MAMA_BAR",
+      "meaning": "현재 NPC의 JACKIE_MAMA_BAR 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JACKIE_MOTORCYCLES",
+      "meaning": "현재 NPC의 JACKIE_MOTORCYCLES 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.VIKTOR_CLINIC_LOCATION",
+      "meaning": "현재 NPC의 VIKTOR_CLINIC_LOCATION 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.VIKTOR_PATIENT_CREDIT",
+      "meaning": "현재 NPC의 VIKTOR_PATIENT_CREDIT 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.VIKTOR_BOXING_TEAM",
+      "meaning": "현재 NPC의 VIKTOR_BOXING_TEAM 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MISTY_TAROT_PRACTICE",
+      "meaning": "현재 NPC의 MISTY_TAROT_PRACTICE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MISTY_FOOL_SYMBOL",
+      "meaning": "현재 NPC의 MISTY_FOOL_SYMBOL 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MISTY_FOOL_JOURNEY",
+      "meaning": "현재 NPC의 MISTY_FOOL_JOURNEY 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.MISTY_SHOP_STOCK",
+      "meaning": "현재 NPC의 MISTY_SHOP_STOCK 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ROGUE_AFTERLIFE_STAFF",
+      "meaning": "현재 NPC의 ROGUE_AFTERLIFE_STAFF 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ROGUE_EXPERT_NETWORK",
+      "meaning": "현재 NPC의 ROGUE_EXPERT_NETWORK 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ROGUE_SOLO_BACKGROUND",
+      "meaning": "현재 NPC의 ROGUE_SOLO_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.GORO_ARASAKA_LOYALTY",
+      "meaning": "현재 NPC의 GORO_ARASAKA_LOYALTY 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.GORO_ODA_CONTACT",
+      "meaning": "현재 NPC의 GORO_ODA_CONTACT 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.GORO_FOOD_PREFERENCE",
+      "meaning": "현재 NPC의 GORO_FOOD_PREFERENCE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.KERRY_SAMURAI_MEMBERS",
+      "meaning": "현재 NPC의 KERRY_SAMURAI_MEMBERS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.KERRY_RECORD_LABEL",
+      "meaning": "현재 NPC의 KERRY_RECORD_LABEL 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.KERRY_SOLO_SONGS",
+      "meaning": "현재 NPC의 KERRY_SOLO_SONGS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.RIVER_HAN_PARTNER",
+      "meaning": "현재 NPC의 RIVER_HAN_PARTNER 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.RIVER_JOSS_CHILDREN",
+      "meaning": "현재 NPC의 RIVER_JOSS_CHILDREN 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.RIVER_FAMILY_SUPPORT",
+      "meaning": "현재 NPC의 RIVER_FAMILY_SUPPORT 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.EVELYN_BD_RECORDING",
+      "meaning": "현재 NPC의 EVELYN_BD_RECORDING 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.EVELYN_JUDY_BD_COLLAB",
+      "meaning": "현재 NPC의 EVELYN_JUDY_BD_COLLAB 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.EVELYN_CLOUDS_CONNECTION",
+      "meaning": "현재 NPC의 EVELYN_CLOUDS_CONNECTION 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PANAM_ROGUE_WORK",
+      "meaning": "현재 NPC의 PANAM_ROGUE_WORK 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PUBLIC_SMASHER",
+      "meaning": "현재 NPC의 PUBLIC_SMASHER 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.PUBLIC_BARTMOSS",
+      "meaning": "현재 NPC의 PUBLIC_BARTMOSS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOB_ROCKERBOY",
+      "meaning": "현재 NPC의 JOB_ROCKERBOY 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOB_MERC_TEAM",
+      "meaning": "현재 NPC의 JOB_MERC_TEAM 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOB_SOLO",
+      "meaning": "현재 NPC의 JOB_SOLO 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOB_TECHIE",
+      "meaning": "현재 NPC의 JOB_TECHIE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOB_MEDTECH",
+      "meaning": "현재 NPC의 JOB_MEDTECH 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CORP_ARASAKA_BRANCHES",
+      "meaning": "현재 NPC의 CORP_ARASAKA_BRANCHES 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CORP_MILITECH_NUSA",
+      "meaning": "현재 NPC의 CORP_MILITECH_NUSA 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CORP_KANG_TAO",
+      "meaning": "현재 NPC의 CORP_KANG_TAO 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CORP_KANG_TAO_PRODUCTS",
+      "meaning": "현재 NPC의 CORP_KANG_TAO_PRODUCTS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CORP_KIROSHI",
+      "meaning": "현재 NPC의 CORP_KIROSHI 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CORP_KIROSHI_OPTICS",
+      "meaning": "현재 NPC의 CORP_KIROSHI_OPTICS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CORP_BIOTECHNICA",
+      "meaning": "현재 NPC의 CORP_BIOTECHNICA 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CORP_NIGHT_CORP",
+      "meaning": "현재 NPC의 CORP_NIGHT_CORP 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TT_AV_DISPATCH",
+      "meaning": "현재 NPC의 TT_AV_DISPATCH 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TT_PLANS",
+      "meaning": "현재 NPC의 TT_PLANS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TT_PLATINUM_DETAIL",
+      "meaning": "현재 NPC의 TT_PLATINUM_DETAIL 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TRANSIT_DELAMAIN",
+      "meaning": "현재 NPC의 TRANSIT_DELAMAIN 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.DELAMAIN_VEHICLES",
+      "meaning": "현재 NPC의 DELAMAIN_VEHICLES 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TRANSIT_NCART",
+      "meaning": "현재 NPC의 TRANSIT_NCART 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.NCART_DETAIL",
+      "meaning": "현재 NPC의 NCART_DETAIL 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CITY_MEGABUILDINGS",
+      "meaning": "현재 NPC의 CITY_MEGABUILDINGS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CITY_H10",
+      "meaning": "현재 NPC의 CITY_H10 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CITY_H8",
+      "meaning": "현재 NPC의 CITY_H8 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HISTORY_FOUNDING",
+      "meaning": "현재 NPC의 HISTORY_FOUNDING 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HISTORY_BOMBING",
+      "meaning": "현재 NPC의 HISTORY_BOMBING 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HISTORY_BOMBING_DISPUTE",
+      "meaning": "현재 NPC의 HISTORY_BOMBING_DISPUTE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HISTORY_RED",
+      "meaning": "현재 NPC의 HISTORY_RED 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HISTORY_RED_DATES",
+      "meaning": "현재 NPC의 HISTORY_RED_DATES 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HISTORY_UNIFICATION",
+      "meaning": "현재 NPC의 HISTORY_UNIFICATION 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HISTORY_NC_AUTONOMY",
+      "meaning": "현재 NPC의 HISTORY_NC_AUTONOMY 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.NETWATCH_PUBLIC",
+      "meaning": "현재 NPC의 NETWATCH_PUBLIC 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.BLACKWALL_PUBLIC",
+      "meaning": "현재 NPC의 BLACKWALL_PUBLIC 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.HISTORY_DATAKRASH",
+      "meaning": "현재 NPC의 HISTORY_DATAKRASH 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CULTURE_KITSCH",
+      "meaning": "현재 NPC의 CULTURE_KITSCH 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CULTURE_ENTROPISM",
+      "meaning": "현재 NPC의 CULTURE_ENTROPISM 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CULTURE_NEOMILITARISM",
+      "meaning": "현재 NPC의 CULTURE_NEOMILITARISM 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CULTURE_NEOKITSCH",
+      "meaning": "현재 NPC의 CULTURE_NEOKITSCH 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CULTURE_KITSCH_DIFFERENCE",
+      "meaning": "현재 NPC의 CULTURE_KITSCH_DIFFERENCE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.FOOD_SYNTHETIC",
+      "meaning": "현재 NPC의 FOOD_SYNTHETIC 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.FOOD_SCOP",
+      "meaning": "현재 NPC의 FOOD_SCOP 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.FOOD_SCOP_PROCESS",
+      "meaning": "현재 NPC의 FOOD_SCOP_PROCESS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CULTURE_AFTERLIFE_DRINKS",
+      "meaning": "현재 NPC의 CULTURE_AFTERLIFE_DRINKS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ENERGY_CHOOH2",
+      "meaning": "현재 NPC의 ENERGY_CHOOH2 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.ENERGY_CHOOH2_LICENSE",
+      "meaning": "현재 NPC의 ENERGY_CHOOH2_LICENSE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TECH_SMART_WEAPONS",
+      "meaning": "현재 NPC의 TECH_SMART_WEAPONS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.TECH_TECH_WEAPONS",
+      "meaning": "현재 NPC의 TECH_TECH_WEAPONS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.BD_PLAYBACK",
+      "meaning": "현재 NPC의 BD_PLAYBACK 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.BD_RECORDING_SENSORY",
+      "meaning": "현재 NPC의 BD_RECORDING_SENSORY 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOHNNY_RELIC_EXISTENCE",
+      "meaning": "현재 NPC의 JOHNNY_RELIC_EXISTENCE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOHNNY_MEMORY_LIMIT",
+      "meaning": "현재 NPC의 JOHNNY_MEMORY_LIMIT 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOHNNY_OLD_FRIENDS",
+      "meaning": "현재 NPC의 JOHNNY_OLD_FRIENDS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOHNNY_POSSESSIONS",
+      "meaning": "현재 NPC의 JOHNNY_POSSESSIONS 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOHNNY_ALT_PAST",
+      "meaning": "현재 NPC의 JOHNNY_ALT_PAST 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.JOHNNY_MUSIC",
+      "meaning": "현재 NPC의 JOHNNY_MUSIC 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    }
+  ]
+}

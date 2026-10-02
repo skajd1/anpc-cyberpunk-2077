@@ -1,9 +1,10 @@
 import { researchMock } from './research.js';
 import { ScenarioEngine, OUTFITS, resolveOutfit, withTestCrowds, captureTestSave } from './scenario.js';
-import { GESTURE_CANDIDATES } from './core.js';
-import { buildCharacterProfile, testTargets, DEPTH_LABELS, domainLabel } from './profile.js';
+import { buildCharacterProfile, testTargets, DEPTH_LABELS, PHASE_LABELS, domainLabel } from './profile.js';
 import { renderCharacterProfiles } from './profile-view.js';
-import { buildQuestionPresets, elapsedText, requestMetrics } from './test-tools.js';
+import { buildQuestionPresets, requestMetrics, snapshotTestResult, conversationExchanges } from './test-tools.js';
+import { API_MODELS, apiModelProfile, supportsReasoningEffort } from './api-models.js';
+import { extractLocalSummary, makeSummaryInput } from './memory.js';
 const $ = id => document.getElementById(id);
 const bootstrap = await fetch('/api/bootstrap').then(r => r.json());
 const QUESTION_PRESETS = buildQuestionPresets(bootstrap.playerIdentity.display_name);
@@ -11,27 +12,81 @@ const bundle = withTestCrowds(await fetch('/api/research', { headers: { 'X-ANPC-
 let keys = [];
 const selectedTargets = [bundle.cards[0].character_key, bundle.cards[1]?.character_key ?? ''];
 const phases = Object.fromEntries(bundle.cards.map(c => [c.character_key, c.phase_labels[0]]));
+const relationshipStages = Object.fromEntries(bundle.cards.filter(c => c.relationship_stages).map(c => [c.character_key, c.relationship_stages[0].id]));
 let engines = {}, results = {}, busy = false, sequence = 0, codexModels = [], modelRevision = 0;
 let requestRun = null;
+const runs = [];
+let editingSlot = 0, profileKey = selectedTargets[0], followLatest = true;
+const viewStarts = {};
 let inCombat = false;
-const saves = new Map();
-const apiModels = [['gpt-4o-mini', 'GPT-4o mini'], ['gpt-4.1-mini', 'GPT-4.1 mini'], ['gpt-4.1', 'GPT-4.1'], ['__custom', '직접 입력']];
+const summaryUsage = { calls: 0, input_tokens: 0, output_tokens: 0 };
+const MEMORY_STORAGE_KEY = 'anpc-test-memory-v1';
+let persisted = { version: 1, owners: {}, saves: {} };
+try {
+  const data = JSON.parse(localStorage.getItem(MEMORY_STORAGE_KEY) ?? 'null');
+  if (data) {
+    if (data.version !== 1 || !data.owners || !data.saves) throw new Error('invalid_storage');
+    for (const snapshot of Object.values(data.owners)) validateStoredMemory(snapshot);
+    for (const save of Object.values(data.saves)) {
+      if (!save.scenario?.fields || !save.journals || !save.worlds || !save.memories) throw new Error('invalid_storage');
+      for (const [key, journal] of Object.entries(save.journals)) validateStoredMemory({ journal, memory: save.memories[key] });
+    }
+    persisted = data;
+  }
+} catch { $('save-hint').textContent = '저장 자료를 읽지 못했습니다. 빈 기억으로 시작합니다.'; }
+const saves = new Map(Object.entries(persisted.saves));
+function validateStoredMemory(snapshot) {
+  if (!Array.isArray(snapshot?.journal) || snapshot.memory?.version !== 1 || !Array.isArray(snapshot.memory.records)
+    || !Array.isArray(snapshot.memory.processed)) throw new Error('invalid_storage');
+  const ids = new Set(snapshot.journal.map(e => e?.event_id));
+  if (ids.has(undefined) || ids.size !== snapshot.journal.length || (snapshot.memory.summary_boundary != null && !ids.has(snapshot.memory.summary_boundary)) || snapshot.journal.some(e => /_utterance$/.test(e.event_type) && (typeof e.text !== 'string' || !['player', 'npc'].includes(e.role)))
+    || snapshot.memory.records.some(r => typeof r.memory_id !== 'string' || typeof r.text !== 'string' || !r.text.trim() || !Number.isInteger(r.validity?.occurred_at?.sequence)
+      || !['player_claim', 'npc_statement'].includes(r.kind) || r.epistemic_status !== r.kind
+      || ![r.subject_keys, r.topic_tags].every(a => Array.isArray(a) && a.every(v => typeof v === 'string'))
+      || !Array.isArray(r.evidence_event_ids) || !r.evidence_event_ids.length || r.evidence_event_ids.some(id => !ids.has(id)))
+    || snapshot.memory.processed.some(id => !ids.has(id))) throw new Error('invalid_storage');
+}
+function persistMemory(engine) {
+  if (engine?.npcType === 'community') persisted.owners[engine.npcKey] = engine.memorySnapshot();
+  persisted.saves = Object.fromEntries(saves);
+  try { localStorage.setItem(MEMORY_STORAGE_KEY, JSON.stringify(persisted)); }
+  catch { $('save-hint').textContent = '브라우저 저장 실패 · 현재 페이지의 기억만 유지됩니다.'; }
+}
+async function summarizeMemory(events, signal) {
+  if ($('mode').value !== 'openai' || events.length < 8) return { reply: extractLocalSummary(events), mode: 'local_extract' };
+  const summaryInput = await makeSummaryInput(events); summaryUsage.calls++;
+  const response = await fetch('/api/summarize', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-ANPC-Token': bootstrap.token },
+    body: JSON.stringify({ prompt: { instructions: bootstrap.memoryBase, input: [{ role: 'user', content: JSON.stringify(summaryInput) }] },
+      mode: 'openai', model: selectedApiModel(), reasoningEffort: 'none', apiKey: $('api-key').value }), signal });
+  const data = await response.json(); if (!response.ok) throw new Error(data.error);
+  summaryUsage.input_tokens += data.usage?.input_tokens ?? 0; summaryUsage.output_tokens += data.usage?.output_tokens ?? 0;
+  return data;
+}
+const apiModels = [...API_MODELS.map(m => [m.id, m.label]), ['__custom', '직접 입력']];
 function element(tag, text, className) { const e = document.createElement(tag); if (text != null) e.textContent = text; if (className) e.className = className; return e; }
 function selectTargets() {
-  keys = testTargets(selectedTargets[0], selectedTargets[1], bundle.cards);
+  keys = testTargets(selectedTargets[0], $('target-count').value === '2' ? selectedTargets[1] : '', bundle.cards);
   $('phase-settings').replaceChildren();
   for (const key of keys) {
-    const card = bundle.cards.find(c => c.character_key === key), label = element('label', `${card.display_name}의 가상 단계`), select = element('select');
+    const card = bundle.cards.find(c => c.character_key === key), label = element('label', `${card.display_name}의 원작 관계 단계`), select = element('select');
     select.id = `phase-${key}`; label.htmlFor = select.id;
-    for (const phase of card.phase_labels) { const option = element('option', phase); option.value = phase; select.append(option); }
+    if (card.relationship_stages) {
+      for (const stage of card.relationship_stages) { const option = element('option', stage.label); option.value = stage.id; select.append(option); }
+      select.value = relationshipStages[key];
+      const hint = element('p', null, 'hint');
+      const update = () => { const stage = card.relationship_stages.find(s => s.id === select.value); phases[key] = stage.phase; hint.textContent = stage.requirements.join(' · '); };
+      update(); select.onchange = () => { relationshipStages[key] = select.value; update(); changeScenario(true); };
+      $('phase-settings').append(label, select, hint); continue;
+    }
+    for (const phase of card.phase_labels) { const option = element('option', PHASE_LABELS[phase] ?? phase); option.value = phase; select.append(option); }
     select.value = phases[key]; select.onchange = () => { phases[key] = select.value; changeScenario(true); };
     $('phase-settings').append(label, select);
   }
 }
 selectTargets();
 function settings(key) {
-  return { allowDraft: $('allow-draft').checked, configuration: $('configuration').value, phase: phases[key],
-    relationship: $('relationship').value, alive: $('alive').checked, free: $('free').checked, basicKnowledge: $('basic-knowledge').checked,
+  return { allowDraft: true, configuration: $('configuration').value, phase: phases[key],
+    relationshipStage: relationshipStages[key], alive: $('alive').checked, free: $('free').checked, basicKnowledge: $('basic-knowledge').checked,
     relicKnown: $('relic-known').checked, relicDisclosed: $('relic-disclosed').checked,
     outfitId: $('outfit').value, outfitName: $('outfit-name').value, outfitDescription: $('outfit-description').value, outfitVisible: $('outfit-visible').checked,
     publicRecognition: $('public-recognition').checked, minorFiction: $('minor-fiction').checked, selectActions: $('select-actions').checked };
@@ -40,10 +95,11 @@ function details(label, value) { const e = element('details'); e.append(element(
 function changeTarget(index, value) {
   if (busy) return;
   const next = [...selectedTargets]; next[index] = value;
+  if (next[0] === next[1]) next[1 - index] = bundle.cards.find(c => c.character_key !== value).character_key;
   testTargets(next[0], next[1], bundle.cards);
-  selectedTargets[index] = value;
+  selectedTargets.splice(0, 2, ...next); profileKey = value; followLatest = true;
   for (const engine of Object.values(engines)) engine.end(true, '선택 인물 변경');
-  requestRun = null; results = {}; selectTargets(); render();
+  requestRun = null; results = {}; $('error').hidden = true; $('status').textContent = '인물을 선택했습니다. 질문을 보내면 대화가 시작됩니다.'; selectTargets(); render();
 }
 for (const outfit of OUTFITS) { const option = element('option', outfit.display_name); option.value = outfit.id; $('outfit').append(option); }
 const customOutfit = element('option', '직접 입력'); customOutfit.value = 'custom'; $('outfit').append(customOutfit);
@@ -55,99 +111,136 @@ $('question-preset').onchange = () => {
   if (preset) { $('input').value = preset.question; $('input').focus(); }
 };
 function updateRequestDisplay() {
-  const now = performance.now();
-  for (const node of document.querySelectorAll('.request-metrics')) {
-    const result = results[node.dataset.key];
-    if (result) node.textContent = requestMetrics(result, now);
+  const mode = $('mode').selectedOptions[0].textContent;
+  $('open-settings').textContent = mode + ' · 설정';
+  if (inCombat) $('status').textContent = '전투 중 · 안전 상태로 복귀한 뒤 대화하세요';
+  else if (busy) $('status').textContent = requestRun?.cancelling ? '응답 중단 중…' : '대답을 기다리는 중…';
+  else if (requestRun && Object.values(results).some(r => r.status === 'failed')) $('status').textContent = '응답 실패 · 해당 메시지를 확인하세요';
+  else $('status').textContent = keys.length === 2 ? '같은 메시지에 각자 답변합니다' : mode === '모의 응답' ? '모의 응답 · API 호출 없음' : mode;
+}
+function renderCharacters() {
+  $('selection-slot').hidden = keys.length === 1;
+  if (keys.length === 1) editingSlot = 0;
+  for (const button of document.querySelectorAll('[data-slot]')) {
+    button.setAttribute('aria-pressed', String(Number(button.dataset.slot) === editingSlot)); button.disabled = busy;
   }
-  if (!requestRun) return;
-  const values = Object.values(results), count = status => values.filter(r => r.status === status).length;
-  const progress = [`완료 ${count('completed')}/${values.length}`];
-  if (count('failed')) progress.push(`실패 ${count('failed')}`);
-  if (count('cancelled')) progress.push(`취소 ${count('cancelled')}`);
-  const title = inCombat ? '전투 발생 · 대화 중단' : busy ? (requestRun.cancelling ? '취소 중' : '요청 중') : values.every(r => r.status === 'completed') ? '응답 완료' : '요청 종료';
-  $('status').textContent = [title, ...progress, elapsedText((requestRun.ended_ms ?? now) - requestRun.started_ms)].join(' · ');
+  $('character-list').replaceChildren();
+  const query = $('character-search').value.normalize('NFKC').toLocaleLowerCase('ko').trim();
+  const cards = bundle.cards.filter(c => [c.display_name, c.presentation?.role, c.lived_context?.occupation].join(' ').toLocaleLowerCase('ko').includes(query));
+  for (const card of cards) {
+    const button = element('button', null, 'character-choice'); button.type = 'button'; button.disabled = busy;
+    button.setAttribute('aria-pressed', String(card.character_key === selectedTargets[editingSlot]));
+    const text = element('span', null, 'character-choice-text');
+    text.append(element('strong', card.display_name.replace(' · 군중 예시', '')), element('small', card.presentation?.role ?? card.lived_context?.occupation));
+    button.append(element('span', card.display_name[0], 'character-avatar'), text);
+    const index = keys.indexOf(card.character_key);
+    if (keys.length === 2 && index >= 0) button.append(element('span', String(index + 1), 'selection-number'));
+    button.onclick = () => { changeTarget(editingSlot, card.character_key); if ($('character-picker').open) $('character-picker').close(); };
+    $('character-list').append(button);
+  }
+  if (!cards.length) $('character-list').append(element('p', '검색 결과가 없습니다.', 'hint'));
+}
+function inspectResult(run, target, result) {
+  $('request-title').textContent = target.name + ' · 응답 기록';
+  const content = $('request-content'); content.replaceChildren();
+  content.append(element('p', run.input, 'inspected-question'), element('p', requestMetrics(result, performance.now()), 'hint'));
+  if (run.mode === 'openai') content.append(element('p', `${run.model} · 추론 ${run.reasoningEffort}`, 'hint'));
+  if (result.status === 'completed') {
+    const label = element('label', '내 평가'), review = element('select');
+    review.id = 'response-review'; label.htmlFor = review.id;
+    for (const text of ['미검수', '작성 방향에 적합', '판단 문제', '말투 문제', '지식·관계 문제', '근거 부족']) review.append(element('option', text));
+    review.value = result.review ?? '미검수'; review.onchange = () => { result.review = review.value; };
+    const note = element('textarea'); note.rows = 2; note.placeholder = '검수 메모'; note.setAttribute('aria-label', '검수 메모');
+    note.value = result.note ?? ''; note.oninput = () => { result.note = note.value; };
+    content.append(label, review, note);
+  }
+  if (result.selection) {
+    const d = result.selection;
+    content.append(element('h3', '이 응답에 제공한 지식'), element('p', d.knowledge_boundaries.map(b => domainLabel(b.domain_id) + ': ' + DEPTH_LABELS[b.depth]).join(' · '), 'hint'));
+    for (const k of d.knowledge) content.append(element('p', k.statement ?? k.response_constraint));
+    content.append(details('선별·기억 전달 기록', d));
+  }
+  if (result.actionSelection) content.append(details('행동 선택 · 실행 안 함', result.actionSelection));
+  if (result.prompt) {
+    const { instructions, input, ...local } = result.prompt;
+    content.append(details('실제 전송 프롬프트', { instructions, input }), details('로컬 정보 · 모델 미전송', local));
+  }
+  if (result.rawReply) content.append(details('원시 모델 응답', result.rawReply));
+  if (result.reply) content.append(details('검사한 응답', result.reply));
+  $('request-inspector').showModal();
+}
+function renderTranscript() {
+  const transcript = $('comparison-results'), scroll = transcript.scrollTop;
+  const atBottom = transcript.scrollHeight - transcript.clientHeight - scroll < 72;
+  transcript.replaceChildren();
+  const visible = conversationExchanges(runs, keys, viewStarts);
+  if (!visible.length) {
+    const empty = element('div', null, 'empty-conversation'), card = bundle.cards.find(c => c.character_key === keys[0]);
+    empty.append(element('div', card.display_name[0], 'character-avatar empty-avatar'), element('h3', keys.length === 2 ? '두 인물의 답변을 비교해보세요' : card.display_name + '에게 말을 걸어보세요'),
+      element('p', keys.length === 2 ? '한 번 입력하면 두 인물이 각자 답합니다.' : card.presentation?.role ?? card.lived_context?.occupation, 'hint'));
+    const questions = element('div', null, 'starter-questions');
+    for (const preset of QUESTION_PRESETS.filter(p => ['everyday', 'outfit', 'values'].includes(p.id))) {
+      const button = element('button', preset.question); button.type = 'button';
+      button.onclick = () => { $('input').value = preset.question; $('input').focus(); }; questions.append(button);
+    }
+    empty.append(questions); transcript.append(empty);
+  }
+  for (const { run, targets } of visible) {
+    const exchange = element('section', null, 'chat-exchange');
+    const player = element('div', null, 'player-message'); player.append(element('span', bootstrap.playerIdentity.display_name, 'message-author'), element('p', run.input)); exchange.append(player);
+    const responses = element('div', null, 'response-columns'); exchange.append(responses);
+    for (const target of targets) {
+      const result = run.results[target.key], message = element('article', null, 'npc-message');
+      const heading = element('div', null, 'message-heading'); heading.append(element('span', target.name[0], 'character-avatar'), element('strong', target.name.replace(' · 군중 예시', ''))); message.append(heading);
+      if (result.reply) {
+        message.append(element('p', [result.reply.dialogue, result.reply.follow_up].filter(Boolean).join('\n'), 'message-text'));
+        if (result.reply.warning) message.append(element('p', '허용 범위를 벗어난 답변을 안전 대사로 대체했습니다.', 'result-warning'));
+        if (result.actionSelection) message.append(element('p', '제스처 선택 · 실행되지 않음', 'action-note'));
+      } else message.append(element('p', result.error ?? '대답을 기다리는 중…', result.error ? 'result-warning' : 'pending-response'));
+      if (result.status !== 'pending') {
+        const menu = element('details', null, 'message-options'), summary = element('summary', '···');
+        summary.setAttribute('aria-label', target.name + ' 답변 메뉴'); menu.append(summary);
+        const button = element('button', '응답 기록'); button.type = 'button';
+        button.onclick = () => { menu.open = false; inspectResult(run, target, result); }; menu.append(button); message.append(menu);
+      }
+      responses.append(message);
+    }
+    transcript.append(exchange);
+  }
+  transcript.scrollTop = followLatest || atBottom ? transcript.scrollHeight : scroll;
+  followLatest = false;
 }
 function render() {
-  const entered = keys.every(key => engines[key]?.session && engines[key].state === 'active');
-  $('send').disabled = busy || !entered || !$('allow-draft').checked; $('cancel').hidden = !busy; $('input').disabled = busy;
-  $('question-preset').disabled = busy;
-  for (const e of document.querySelectorAll('aside input, aside textarea, aside select, aside button, #reset')) e.disabled = busy;
-  // 종료·전투·저장 로드는 대기 중에도 요청을 중단할 수 있다.
-  $('recontact').disabled = false;
+  $('send').disabled = busy || inCombat; $('cancel').hidden = !busy; $('input').disabled = busy;
+  for (const e of document.querySelectorAll('#settings-dialog input, #settings-dialog textarea, #settings-dialog select, #settings-dialog button:not([data-close]):not([data-settings-tab]), #target-count, #new-dialogue, #question-preset')) e.disabled = busy;
+  if (!busy) showReasoning();
+  $('recontact').disabled = !keys.some(key => engines[key]?.session);
   $('danger').disabled = false; $('save-test').disabled = false; $('load-test').disabled = !saves.has($('save-slot').value);
-  $('enter-ai').disabled = busy || entered || inCombat || !$('allow-draft').checked;
-  $('entry-hint').textContent = keys.some(key => bundle.cards.find(c => c.character_key === key).npc_type === 'crowd')
-    ? '군중 기본 반응 “무슨 일이야?” → 선택지 진입 (모의 · API 호출 없음)'
-    : '원작 대화 제어 반환 → 선택지 진입 (모의 · API 호출 없음)';
   $('custom-outfit').hidden = $('outfit').value !== 'custom';
-  const outfit = resolveOutfit(settings(keys[0]));
-  $('scenario-summary').textContent = `${outfit?.display_name ?? '복장 미설정'} · ${$('outfit-visible').checked && outfit ? '관찰 가능' : '관찰 불명'} · 전체 ${Object.values(engines).reduce((n, e) => n + e.journal.length, 0)}개 시험 사건`;
-  $('request-count').textContent = keys.length === 2 ? '같은 메시지를 2명에게 전송' : 'Enter로 전송 · Shift+Enter로 줄바꿈';
-  $('send').textContent = keys.length === 2 ? '두 인물에게 보내기' : '보내기';
-  $('comparison-results').classList.toggle('single-target', keys.length === 1);
-  $('provider-help').textContent = $('mode').value === 'mock' ? 'API 호출 없음 · 고정 모의 응답' : $('mode').value === 'openai'
-    ? `전송당 ${keys.length}건의 API 호출` : 'Codex 계정 사용량 적용';
-  renderCharacterProfiles($('character-profile'), keys.map(key => ({ ...buildCharacterProfile(bundle, key, settings(key), engines[key]?.lastSelection?.selected_fact_ids),
-    instanceTraits: engines[key]?.instances.get(key)?.persona.traits })));
-  $('comparison-results').replaceChildren();
-  for (const [index, key] of selectedTargets.entries()) {
-    const pane = element('section', null, 'comparison-pane');
-    const heading = element('div', null, 'response-heading'), picker = element('select');
-    picker.id = `response-npc-${index}`;
-    picker.setAttribute('aria-label', index === 0 ? '첫 번째 답변 인물' : '두 번째 답변 인물');
-    if (index === 1) { const empty = element('option', '비교 안 함'); empty.value = ''; picker.append(empty); }
-    for (const candidate of bundle.cards) {
-      const option = element('option', candidate.display_name); option.value = candidate.character_key;
-      option.disabled = selectedTargets.some((selected, other) => other !== index && selected === candidate.character_key);
-      picker.append(option);
-    }
-    picker.value = key; picker.disabled = busy;
-    picker.onchange = () => changeTarget(index, picker.value);
-    heading.append(picker); pane.append(heading);
-    $('comparison-results').append(pane);
-    if (!key) continue;
-    const card = bundle.cards.find(c => c.character_key === key), engine = engines[key], result = results[key];
-    const turns = engine?.session?.turns ?? engine?.closedTurns ?? [], transcript = element('div', null, 'comparison-transcript');
-    if (!turns.length) transcript.append(element('p', '대화를 기다리고 있어요.', 'hint'));
-    for (const t of turns) { const message = element('div', null, `message ${t.role}`); message.append(element('span', t.role === 'player' ? bootstrap.playerIdentity.display_name : `${card.display_name} · 대사 자막`, 'who'), element('p', t.text)); transcript.append(message); }
-    pane.append(transcript);
-    if (engine) pane.append(element('p', `${engine.session ? 'AI 대화 중' : '진입 대기'} · ${engine.journal.length}개 기억 사건 · ${engine.npcType === 'crowd' ? '동일 군중 인스턴스 · 10분' : '원작 관계 고정 · 모의 저장 대상'}`, 'hint'));
-    if (engine?.lastActionSelection && engine.lastReply?.action) {
-      const meaning = GESTURE_CANDIDATES.find(g => g.ref === engine.lastActionSelection.args.gesture_ref)?.meaning;
-      pane.append(element('p', `행동 선택: ${meaning ?? engine.lastActionSelection.action_id} · 실행 안 함`, 'action-selection'));
-    } else if (engine?.lastReply?.action) pane.append(element('p', `기본 제어: ${engine.lastReply.action.action_id} · 가상 실행`, 'hint'));
-    if (result) {
-      const metrics = element('p', null, 'hint request-metrics'); metrics.dataset.key = key; pane.append(metrics);
-      if (result.error) pane.append(element('p', result.error, 'hint'));
-    }
-    const debug = element('details', null, 'request-details'); debug.append(element('summary', '요청 상세'));
-    if (engine?.lastSelection) {
-      const d = engine.lastSelection; debug.append(element('h4', '이번 턴에 주입한 지식'));
-      debug.append(element('p', `화제별 지식 한도: ${d.knowledge_boundaries.map(b => `${domainLabel(b.domain_id)} · ${DEPTH_LABELS[b.depth]}`).join(', ') || '관련 분야 미선택'}`, 'hint'));
-      if (!d.knowledge.length) debug.append(element('p', '관련 지식 미주입', 'hint'));
-      for (const k of d.knowledge) debug.append(element('p', `${k.fact_id} · ${k.statement ?? k.response_constraint}`));
-      debug.append(element('p', `예시: ${d.selected_example_ids.join(', ') || '없음'}`, 'hint'), details('선별 조건·후보 확인', d));
-    }
-    if (engine?.lastPrompt) debug.append(details('실제 전송 프롬프트', engine.lastPrompt));
-    if (engine) debug.append(details('목격·대화 기억 사건 (시험용 원문)', engine.journal));
-    if (engine?.lastRawReply) debug.append(details('원시 모델 응답', engine.lastRawReply));
-    if (engine?.lastReply) debug.append(details('검사·표시한 응답', engine.lastReply));
-    if (result?.status === 'completed') {
-      const review = element('select');
-      for (const text of ['미검수', '작성 방향에 적합', '판단 문제', '말투 문제', '지식·관계 문제', '근거 부족']) review.append(element('option', text));
-      review.setAttribute('aria-label', `${card.display_name} 수동 검수`); review.value = result.review ?? '미검수'; review.onchange = () => { result.review = review.value; };
-      const note = element('textarea'); note.rows = 2; note.placeholder = '문제가 되는 발화와 이유'; note.setAttribute('aria-label', `${card.display_name} 검수 의견`); note.value = result.note ?? ''; note.oninput = () => { result.note = note.value; };
-      debug.append(element('p', '수동 검수 (원작 합격 판정 아님)', 'hint'), review, note);
-    }
-    if (engine?.lastSelection || result) pane.append(debug);
+  $('chat-title').textContent = keys.map(key => bundle.cards.find(c => c.character_key === key).display_name.replace(' · 군중 예시', '')).join(' / ');
+  $('request-count').textContent = keys.length === 2 ? '2건 요청 · 각자 응답' : 'Enter 전송 · Shift+Enter 줄바꿈';
+  $('send').textContent = busy ? '응답 중' : '보내기';
+  $('provider-help').textContent = $('mode').value === 'mock' ? 'API 호출 없이 고정된 모의 응답을 표시합니다.' : $('mode').value === 'openai' ? '메시지 전송당 ' + keys.length + '건의 API 호출' : 'Codex 계정 사용량 적용';
+  if (!keys.includes(profileKey)) profileKey = keys[0];
+  $('profile-tabs').hidden = keys.length === 1; $('profile-tabs').replaceChildren();
+  for (const key of keys) {
+    const button = element('button', bundle.cards.find(c => c.character_key === key).display_name.replace(' · 군중 예시', '')); button.type = 'button';
+    button.setAttribute('aria-pressed', String(key === profileKey)); button.onclick = () => { profileKey = key; render(); }; $('profile-tabs').append(button);
   }
-  updateRequestDisplay();
+  renderCharacterProfiles($('character-profile'), [buildCharacterProfile(bundle, profileKey, settings(profileKey), engines[profileKey]?.lastSelection ? [...(engines[profileKey].lastSelection.common_fact_ids ?? []), ...engines[profileKey].lastSelection.selected_fact_ids] : undefined, engines[profileKey]?.instances.get(profileKey)?.persona.core_personality)]);
+  for (const button of document.querySelectorAll('[data-relationship-key]')) button.onclick = () => { openSettings('scene'); $('phase-' + button.dataset.relationshipKey).focus(); };
+  const memoryLabels = { running: '정리 중', ready: '준비', local_extract: '원문 추출', invalid_summary: '요약 검증 실패', stale_job: '이전 작업 폐기', network_error: '연결 실패', network_blocked: '연결 차단', timeout: '시간 초과', auth_failed: 'API 키 확인 필요', busy: '다른 요청 처리 중', invalid_response: '응답 검증 실패', memory_capacity_exceeded: '기억 용량 초과', provider_refused: '요약 거절', provider_rejected: '요약 요청 거부', rate_limited: 'API 한도 초과' };
+  $('memory-hint').textContent = keys.map(key => {
+    const memory = engines[key]?.longMemory, snapshot = persisted.owners[key];
+    return `${bundle.cards.find(c => c.character_key === key).display_name}: 기억 ${memory?.records.length ?? snapshot?.memory.records.length ?? 0}개 · ${memoryLabels[memory?.status] ?? memory?.status ?? '준비'}`;
+  }).join(' / ') + ` · 요약 요청 ${summaryUsage.calls}회 (입력 ${summaryUsage.input_tokens}, 출력 ${summaryUsage.output_tokens}토큰). 최근 6개 발화 유지, 8회 대화마다 정리. 실패 시 원문 유지·수동 재시도. OpenAI 요약은 추가 요금이 발생합니다.`;
+  renderCharacters(); renderTranscript(); updateRequestDisplay();
 }
 function reset() {
   requestRun = null;
-  sequence++; for (const engine of Object.values(engines)) engine.end(false, '비교 설정 변경');
-  engines = {}; saves.clear(); inCombat = false; $('save-hint').textContent = '페이지 메모리에만 저장 · 새로고침 시 삭제'; results = {}; busy = false; $('status').textContent = '시험 대화·기억·저장을 초기화했습니다.'; $('error').hidden = true; render();
+  runs.length = 0; for (const key of Object.keys(viewStarts)) delete viewStarts[key];
+  sequence++; for (const engine of Object.values(engines)) { engine.end(false, '전체 초기화'); engine.clearMemory(); }
+  engines = {}; saves.clear(); persisted = { version: 1, owners: {}, saves: {} }; persistMemory(); inCombat = false; $('save-hint').textContent = '브라우저에 저장 · 새로고침 후에도 유지'; results = {}; busy = false; $('status').textContent = '시험 대화·기억·저장을 초기화했습니다.'; $('error').hidden = true; render();
 }
 function changeScenario(requireEntry = false) {
   requestRun = null; results = {}; $('error').hidden = true;
@@ -158,19 +251,44 @@ function changeScenario(requireEntry = false) {
   }
   $('status').textContent = '상황을 변경했습니다. 완료된 기억은 유지하고 다음 요청의 맥락을 갱신합니다.'; render();
 }
-for (const id of ['allow-draft', 'configuration', 'relationship', 'alive', 'free', 'basic-knowledge', 'relic-known', 'relic-disclosed']) $(id).onchange = () => changeScenario(true);
+for (const id of ['configuration', 'alive', 'free', 'basic-knowledge', 'relic-known', 'relic-disclosed']) $(id).onchange = () => changeScenario(true);
 for (const id of ['outfit', 'outfit-name', 'outfit-description', 'outfit-visible', 'public-recognition', 'minor-fiction', 'select-actions']) $(id).onchange = () => changeScenario();
-$('enter-ai').onclick = () => {
-  try {
+function enterDialogue() {
     // 전체 인물 조건을 먼저 검증한 뒤 제어 반환을 모의한다. 여기서는 모델을 호출하지 않는다.
-    for (const key of keys) if (!engines[key]) engines[key] = new ScenarioEngine({ bundle, npcKey: key, settings: () => settings(key), base: bootstrap.base, notify: render });
+    if (inCombat) throw new Error('안전 상태로 복귀한 뒤 테스트하세요.');
+    for (const key of keys) if (!engines[key]) {
+      engines[key] = new ScenarioEngine({ bundle, npcKey: key, settings: () => settings(key), base: bootstrap.base, notify: render,
+        summarize: summarizeMemory, persist: persistMemory });
+      const snapshot = persisted.owners[key];
+      if (snapshot) engines[key].restore(snapshot.journal, undefined, snapshot.memory);
+    }
     for (const key of keys) {
       const engine = engines[key];
       if (!engine.session) engine.assertCanEnter();
     }
     for (const key of keys) if (!engines[key].session) engines[key].start(key);
-    $('error').hidden = true; $('status').textContent = 'AI 대화로 진입했습니다. 질문을 입력하세요.'; render();
-  } catch (err) { $('error').textContent = err.message; $('error').hidden = false; render(); }
+}
+$('target-count').onchange = () => changeTarget(0, selectedTargets[0]);
+$('character-search').oninput = renderCharacters;
+for (const button of document.querySelectorAll('[data-slot]')) button.onclick = () => { editingSlot = Number(button.dataset.slot); profileKey = selectedTargets[editingSlot]; render(); };
+function openSettings(tab = 'connection') {
+  for (const button of document.querySelectorAll('[data-settings-tab]')) button.setAttribute('aria-pressed', String(button.dataset.settingsTab === tab));
+  for (const id of ['connection', 'scene', 'advanced']) $(id + '-panel').hidden = id !== tab;
+  if (!$('settings-dialog').open) $('settings-dialog').showModal();
+}
+$('open-settings').onclick = () => openSettings(); $('open-scene').onclick = () => openSettings('scene');
+for (const button of document.querySelectorAll('[data-settings-tab]')) button.onclick = () => openSettings(button.dataset.settingsTab);
+for (const button of document.querySelectorAll('[data-close]')) button.onclick = () => button.closest('dialog')?.close();
+for (const [buttonId, dialogId, panelId] of [['open-characters', 'character-picker', 'character-nav'], ['open-profile', 'profile-dialog', 'profile-inspector']]) {
+  const panel = $(panelId), parent = panel.parentNode, next = panel.nextSibling;
+  $(buttonId).onclick = () => { $(dialogId).append(panel); $(dialogId).showModal(); };
+  $(dialogId).onclose = () => { parent.insertBefore(panel, next); };
+}
+
+$('new-dialogue').onclick = () => {
+  for (const key of keys) { engines[key]?.end(false, '새 대화'); engines[key]?.clearMemory(); }
+  for (const key of keys) viewStarts[key] = runs.length;
+  followLatest = true; requestRun = null; results = {}; $('error').hidden = true; $('input').value = ''; render();
 };
 $('danger').onclick = () => {
   inCombat = true;
@@ -178,39 +296,71 @@ $('danger').onclick = () => {
   for (const engine of Object.values(engines)) engine.changeWorld({ combat: true });
   $('status').textContent = '전투 발생 · 요청과 자막 출력 중단 · 모의 제어 해제'; render();
 };
-$('safe-world').onclick = () => { inCombat = false; for (const engine of Object.values(engines)) engine.changeWorld({ combat: false }); $('status').textContent = '안전 상태로 복귀했습니다. 선택지로 다시 진입하세요.'; render(); };
-const savedFields = ['allow-draft', 'configuration', 'relationship', 'alive', 'free', 'basic-knowledge', 'relic-known', 'relic-disclosed', 'outfit', 'outfit-name', 'outfit-description', 'outfit-visible', 'public-recognition', 'minor-fiction', 'select-actions'];
-function scenarioSnapshot() { return { inCombat, phases: structuredClone(phases), fields: Object.fromEntries(savedFields.map(id => [id, $(id).type === 'checkbox' ? $(id).checked : $(id).value])) }; }
+$('safe-world').onclick = () => { inCombat = false; for (const engine of Object.values(engines)) engine.changeWorld({ combat: false }); $('status').textContent = '안전 상태로 복귀했습니다. 질문을 보내면 다시 시작합니다.'; render(); };
+const savedFields = ['configuration', 'alive', 'free', 'basic-knowledge', 'relic-known', 'relic-disclosed', 'outfit', 'outfit-name', 'outfit-description', 'outfit-visible', 'public-recognition', 'minor-fiction', 'select-actions'];
+function scenarioSnapshot() { return { inCombat, phases: structuredClone(phases), relationshipStages: structuredClone(relationshipStages), fields: Object.fromEntries(savedFields.map(id => [id, $(id).type === 'checkbox' ? $(id).checked : $(id).value])) }; }
 $('save-slot').onchange = render;
 $('save-test').onclick = () => {
   saves.set($('save-slot').value, captureTestSave(engines, scenarioSnapshot()));
+  // 아직 선택하지 않은 인물의 완료된 기억도 같은 저장 시점에 포함한다.
+  const saved = saves.get($('save-slot').value);
+  for (const [key, snapshot] of Object.entries(persisted.owners)) if (!Object.hasOwn(saved.journals, key)) {
+    saved.journals[key] = structuredClone(snapshot.journal); saved.memories[key] = structuredClone(snapshot.memory);
+  }
+  persistMemory();
   $('save-hint').textContent = `슬롯 ${$('save-slot').value.toUpperCase()}에 현재 상황과 완료된 고유 인물 사건을 저장했습니다.`; render();
 };
 $('load-test').onclick = () => {
   const saved = saves.get($('save-slot').value); if (!saved) return;
+  if (busy && requestRun) {
+    requestRun.ended_ms = performance.now();
+    for (const result of Object.values(results)) if (result.status === 'pending') Object.assign(result, { status: 'cancelled', elapsed_ms: Math.round(requestRun.ended_ms - result.started_ms), error: '저장 로드로 요청 취소' });
+  }
   sequence++; busy = false; requestRun = null; results = {};
   inCombat = saved.scenario.inCombat;
-  for (const engine of Object.values(engines)) engine.restore(saved.journals[engine.npcKey], saved.worlds[engine.npcKey] ?? { ...engine.world, combat: inCombat });
+  persisted.owners = Object.fromEntries(Object.entries(saved.journals).map(([key, journal]) => [key, { journal: structuredClone(journal), memory: structuredClone(saved.memories[key]) }]));
+  for (const engine of Object.values(engines)) engine.restore(saved.journals[engine.npcKey], saved.worlds[engine.npcKey] ?? { ...engine.world, combat: inCombat }, saved.memories[engine.npcKey]);
+  persistMemory();
   for (const [id, value] of Object.entries(saved.scenario.fields)) { if ($(id).type === 'checkbox') $(id).checked = value; else $(id).value = value; }
-  Object.assign(phases, saved.scenario.phases); selectTargets();
+  Object.assign(phases, saved.scenario.phases); Object.assign(relationshipStages, saved.scenario.relationshipStages); selectTargets();
   for (const engine of Object.values(engines)) engine.changeWorld({ quest_controlled: !$('free').checked || !$('alive').checked });
   $('save-hint').textContent = `슬롯 ${$('save-slot').value.toUpperCase()} 복원 · 이후 기억 폐기 · 군중 인스턴스 새로 생성`;
-  $('status').textContent = '모의 저장을 로드했습니다. 선택지로 다시 진입하세요.'; $('error').hidden = true; render();
+  $('status').textContent = '모의 저장을 로드했습니다. 다음 질문에 저장 시점의 기억을 사용합니다.'; $('error').hidden = true; render();
+};
+$('summarize-memory').onclick = async () => {
+  $('summarize-memory').disabled = true;
+  try { await Promise.all(keys.map(key => engines[key]?.consolidateMemory())); }
+  finally { $('summarize-memory').disabled = false; render(); }
 };
 function showModels() {
   const options = $('mode').value === 'codex' ? [['', 'Codex 기본 모델'], ...codexModels.map(m => [m.id, m.label])] : apiModels;
   $('model').replaceChildren(); for (const [value, label] of options) { const option = element('option', label); option.value = value; $('model').append(option); }
   $('custom-settings').hidden = true;
+  showReasoning();
+}
+function selectedApiModel() { return $('model').value === '__custom' ? $('custom-model').value.trim() : $('model').value; }
+function showReasoning() {
+  $('reasoning-settings').hidden = $('mode').value !== 'openai';
+  const profile = apiModelProfile(selectedApiModel());
+  $('reasoning-effort').disabled = !profile.efforts.length;
+  for (const option of $('reasoning-effort').options) option.disabled = profile.efforts.length > 0 && !profile.efforts.includes(option.value);
+  if (!profile.efforts.length) $('reasoning-effort').value = 'none';
+  $('reasoning-help').textContent = !profile.efforts.length ? '이 모델은 추론 설정을 지원하지 않습니다. API에 추론 값을 보내지 않습니다.'
+    : !profile.efforts.includes('none') ? '이 모델은 none을 지원하지 않습니다. 지원되는 추론 값을 선택하세요.'
+    : profile.unverified ? '직접 입력 모델은 추론 지원 값을 확인해 주세요. 선택한 값을 API로 전달합니다.'
+    : '기본은 none입니다. 추론을 켜면 최대 대기 시간과 출력 예산이 늘어나며 내부 추론도 과금됩니다.';
 }
 $('mode').onchange = () => {
   modelRevision++; changeScenario(true); const mode = $('mode').value;
   $('provider-settings').hidden = mode === 'mock'; $('key-settings').hidden = mode !== 'openai'; $('codex-settings').hidden = mode !== 'codex';
   showModels();
 };
-$('model').onchange = () => { changeScenario(true); $('custom-settings').hidden = $('model').value !== '__custom'; };
-$('custom-model').onchange = () => changeScenario(true);
+$('model').onchange = () => { changeScenario(true); $('custom-settings').hidden = $('model').value !== '__custom'; showReasoning(); };
+$('custom-model').onchange = () => { changeScenario(true); showReasoning(); };
+$('custom-model').oninput = showReasoning;
+$('reasoning-effort').onchange = () => changeScenario(true);
 $('forget-key').onclick = () => { $('api-key').value = ''; };
-if (bootstrap.hasEnvironmentKey) $('key-help').textContent = '실행 환경 키가 있습니다. 입력하지 않으면 환경 키를 사용합니다. 키 값은 표시하지 않습니다.';
+if (bootstrap.hasEnvironmentKey) $('key-help').textContent = '서버에 저장된 키가 있습니다. 입력 없이 자동 사용합니다. .env 변경은 서버 재시작 후 반영됩니다.';
 $('refresh-models').onclick = async () => {
   const revision = ++modelRevision; $('codex-status').textContent = '조회 중…';
   try {
@@ -220,38 +370,49 @@ $('refresh-models').onclick = async () => {
     codexModels = data.models; changeScenario(true); showModels(); $('codex-status').textContent = `모델 ${codexModels.length}개 · 연결 유지`;
   } catch { if (revision === modelRevision) $('codex-status').textContent = '모델 조회 실패. CLI 로그인과 사용 한도를 확인하세요.'; }
 };
-async function provider(args, mode, model) {
+async function provider(args, mode, model, reasoningEffort) {
   if (mode === 'mock') return researchMock(args);
   const response = await fetch('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-ANPC-Token': bootstrap.token },
-    body: JSON.stringify({ prompt: args.prompt, mode, model, ...(mode === 'openai' ? { apiKey: $('api-key').value } : {}) }), signal: args.signal });
-  const data = await response.json(); if (!response.ok) throw new Error(data.error); return data;
+    body: JSON.stringify({ prompt: args.prompt, mode, model, ...(mode === 'openai' ? { apiKey: $('api-key').value, reasoningEffort } : {}) }), signal: args.signal });
+  const data = await response.json();
+  if (!response.ok) throw new Error({
+    network_blocked: '서버의 외부 연결이 차단됐습니다. 외부 연결이 허용된 환경에서 서버를 다시 실행하세요.',
+    network_error: '제공자에 연결하지 못했습니다. 인터넷 연결을 확인하세요.',
+    auth_failed: 'API 키 또는 계정의 모델 접근 권한을 확인하세요.',
+    invalid_reasoning_effort: '이 모델이 지원하는 추론 값을 선택하세요.'
+  }[data.error] ?? data.error);
+  return data;
 }
 $('compare-form').onsubmit = async event => {
   event.preventDefault(); if (busy) return; $('error').hidden = true;
-  const input = $('input').value.trim(), mode = $('mode').value, model = $('model').value === '__custom' ? $('custom-model').value.trim() : $('model').value;
+  const input = $('input').value.trim(), mode = $('mode').value, model = selectedApiModel(), reasoningEffort = $('reasoning-effort').value;
   try {
     if (!input || [...input].length > 1000) throw new Error('질문을 1~1000자로 입력하세요.');
     if (mode === 'openai' && !$('api-key').value && !bootstrap.hasEnvironmentKey) throw new Error('개인 API 키를 입력하세요.');
     if (mode === 'openai' && !model) throw new Error('모델 ID를 입력하세요.');
-    if (!keys.every(key => engines[key]?.session)) throw new Error('“더 깊은 대화를 해볼까?” 선택지로 먼저 진입하세요.');
-    const started = performance.now(); requestRun = { started_ms: started, ended_ms: null, cancelling: false };
+    if (mode === 'openai' && !supportsReasoningEffort(model, reasoningEffort)) throw new Error('이 모델이 지원하는 추론 값을 선택하세요.');
+    enterDialogue();
+    const started = performance.now(); requestRun = { id: runs.length + 1, input, mode, model, reasoningEffort: mode === 'openai' ? reasoningEffort : null, started_ms: started, ended_ms: null, cancelling: false,
+      targets: keys.map(key => ({ key, name: bundle.cards.find(c => c.character_key === key).display_name, phase: phases[key], relationshipStage: relationshipStages[key] ?? null })),
+      configuration: $('configuration').selectedOptions[0].textContent };
     results = Object.fromEntries(keys.map(key => [key, { status: 'pending', started_ms: started, mode, model, input }]));
+    requestRun.results = results; runs.push(requestRun); followLatest = true; $('input').value = ''; $('question-menu').open = false;
     busy = true; const revision = ++sequence; render();
     await Promise.allSettled(keys.map(async key => {
       const engine = engines[key];
       try {
-        const result = await engine.send(input, args => provider(args, mode, model));
+        const result = await engine.send(input, args => provider(args, mode, model, reasoningEffort));
         if (revision !== sequence) return;
         results[key] = { ...results[key], status: result.stale ? 'cancelled' : 'completed', elapsed_ms: Math.round(performance.now() - started),
-          ...(result.stale ? { error: '늦은 응답 폐기' } : { usage: engine.lastReply?.usage }) };
+          ...(result.stale ? { error: '늦은 응답 폐기' } : snapshotTestResult(engine)) };
       } catch (err) { if (revision === sequence) results[key] = { ...results[key], status: err.name === 'AbortError' ? 'cancelled' : 'failed', elapsed_ms: Math.round(performance.now() - started), error: `${err.message} · 응답 미표시` }; }
       if (revision === sequence) render();
     }));
-    if (revision === sequence) { busy = false; requestRun.ended_ms = performance.now(); render(); }
+    if (revision === sequence) { busy = false; requestRun.ended_ms = performance.now(); render(); $('input').focus(); }
   } catch (err) { busy = false; $('error').textContent = err.message; $('error').hidden = false; render(); }
 };
 $('cancel').onclick = () => { if (requestRun) requestRun.cancelling = true; for (const result of Object.values(results)) if (result.status === 'pending') result.cancelling = true; for (const engine of Object.values(engines)) engine.cancel(); updateRequestDisplay(); };
-$('recontact').onclick = () => { if (busy && requestRun) requestRun.cancelling = true; else requestRun = null; for (const engine of Object.values(engines)) engine.end(); $('status').textContent = '대화 종료. 선택지로 다시 진입하면 기억을 연결합니다.'; render(); };
+$('recontact').onclick = () => { if (busy && requestRun) requestRun.cancelling = true; else requestRun = null; for (const key of keys) engines[key]?.end(); $('status').textContent = '대화 종료 · 기억 유지. 다음 질문을 보내면 재접촉합니다.'; render(); };
 $('reset').onclick = reset;
 $('input').onkeydown = event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); $('compare-form').requestSubmit(); } };
 showModels(); render();

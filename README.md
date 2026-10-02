@@ -18,8 +18,10 @@ Node.js 22 이상에서 `npm start`를 실행하고 브라우저로 http://127.0
 ## 명세 문서
 
 - [전체 제품 명세](docs/full-specification.md)
+- [모드 공통 데이터 및 모듈 입출력 규격](docs/module-interface-specification.md)
 - [초기 버전 명세](docs/initial-design.md)
 - [기술 구조 및 AI 통신 규격](docs/runtime-specification.md)
+- [플레이어 음성 인식 구현 규격](docs/speech-recognition-specification.md) — 선택 후속 모듈 설계, 아직 미구현
 - [NPC 식별 및 대화 허용 규격](docs/npc-identity-specification.md)
 - [NPC 단기·장기 기억 및 비동기 정리 규격](docs/memory-specification.md)
 - [게임 정보 수집 및 NPC 인지 규격](docs/game-context-specification.md)
@@ -30,6 +32,8 @@ Node.js 22 이상에서 `npm start`를 실행하고 브라우저로 http://127.0
 - [NPC 대화 정체성 평가 규격](docs/dialogue-evaluation-specification.md)
 - [NPC 대사·행동 생성 프롬프트 명세](docs/prompt-specification.md)
 - [NPC 행동 범위 명세](docs/npc-action-scope.md)
+
+공통 데이터 형태와 모듈 포트는 [contracts/v1](contracts/v1/registry.json)을 기준으로 참조한다. 계약 설계 자료는 `npm run check:contracts`로 검사한다. 현재 웹 전체의 공통 인터페이스 전환은 아직 진행하지 않았다.
 
 ## 참고 분석과 개발 계획
 

@@ -3,7 +3,11 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { PassThrough } from 'node:stream';
 import { CodexConnection } from '../codex-connection.js';
-const prompt = { instructions: 'NPC 규칙', input: [{role:'user',content:'안녕'}] };
+import { assemblePrompt } from '../public/core.js';
+const prompt = assemblePrompt('NPC 규칙 {{OUTPUT_CONTRACT}}', {
+  core_personality: { openness: 4, conscientiousness: 3, extraversion: 2, agreeableness: 3, neuroticism: 4 },
+  personal_principles: ['개인 정보를 함부로 공개하지 않는다.']
+}, { knowledge: [] }, '안녕');
 
 function fixture({ pause = false } = {}) {
   let spawns = 0, serial = 0, notifyStart;
@@ -45,6 +49,9 @@ test('모델 조회와 연속·동시 생성은 같은 실행기를 쓰고 각 �
   const [a,b]=await Promise.all([client.generate({prompt}),client.generate({prompt})]);
   assert.equal(f.spawns,1); assert.equal(new Set([first.reply.dialogue,a.reply.dialogue,b.reply.dialogue]).size,3);
   assert.equal(f.requests.filter(r=>r.method==='initialize').length,1); assert.equal(client.jobs.size,0);
+  const starts=f.requests.filter(r=>r.method==='thread/start');
+  assert.ok(starts.every(r=>r.params.developerInstructions.endsWith(prompt.instructions)));
+  assert.ok(f.requests.filter(r=>r.method==='turn/start').every(r=>r.params.input[0].text===JSON.stringify(prompt.input)));
 });
 
 test('취소는 해당 turn만 중단하고 늦은 응답을 폐기하며 연결은 유지한다', async t => {

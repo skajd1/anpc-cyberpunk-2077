@@ -4,8 +4,8 @@ const bootstrap = await fetch('/api/bootstrap').then(r => { if (!r.ok) throw new
 const engine = new DialogueEngine({ personas: bootstrap.personas, base: bootstrap.base, playerIdentity: bootstrap.playerIdentity, notify: render });
 let pendingText = ''; let apiKey = '';
 let codexModels = []; let modelRefresh = 0;
-const selectedModels = { codex: '', openai: 'gpt-4o-mini' };
-const apiModels = [ ['gpt-4o-mini', 'GPT-4o mini'], ['gpt-4.1-mini', 'GPT-4.1 mini'], ['gpt-4.1', 'GPT-4.1'] ];
+const selectedModels = { codex: '', openai: 'gpt-6-luna' };
+const apiModels = [ ['gpt-6-luna', 'GPT-6 Luna'], ['gpt-4o-mini', 'GPT-4o mini'], ['gpt-4.1-mini', 'GPT-4.1 mini'], ['gpt-4.1', 'GPT-4.1'] ];
 function showModels() {
   const mode = $('mode').value;
   $('model').replaceChildren();

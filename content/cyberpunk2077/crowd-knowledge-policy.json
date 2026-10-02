@@ -29,7 +29,11 @@
         "ARASAKA_SECURITY",
         "MILITECH_ARMS",
         "TT_SERVICE",
-        "NCPD"
+        "NCPD",
+        "NC_DISTRICTS",
+        "ROGUE_BACKGROUND",
+        "KERRY_BACKGROUND",
+        "SAMURAI_JOHNNY"
       ],
       "eligibility": "항상 제공하되 외부인·인지 예외는 승인 프로필에서 제외",
       "review_status": "draft"

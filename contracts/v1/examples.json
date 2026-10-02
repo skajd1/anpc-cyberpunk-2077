@@ -1,0 +1,2361 @@
+{
+  "description": "모든 값은 계약 검사용 가상 자료이며 원작/게임 검증 근거가 아니다.",
+  "valid": {
+    "session.target-request": {
+      "contract": "session.target-request",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "target_handle": "opaque-handle"
+      }
+    },
+    "session.target": {
+      "contract": "session.target",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "eligible": true,
+        "reason_code": null,
+        "npc_instance_key": "instance-example",
+        "character_key": "judy",
+        "profile_id": "judy",
+        "npc_type": "community"
+      }
+    },
+    "identity.profile": {
+      "contract": "identity.profile",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "persona_id": "judy",
+        "revision": 1,
+        "content_version": "example-1",
+        "npc_type": "community",
+        "display_name": "예시 인물",
+        "core_personality": {
+          "openness": 4,
+          "conscientiousness": 3,
+          "extraversion": 2,
+          "agreeableness": 3,
+          "neuroticism": 4
+        },
+        "personal_principles": [
+          "예시 원칙"
+        ],
+        "voice_style": {
+          "sentence_length": "짧게",
+          "register": "구어체",
+          "vocabulary": [],
+          "address": "상대",
+          "forbidden_phrases": []
+        },
+        "background": {
+          "text": "형식 검사용 가상 배경",
+          "provenance": "authored"
+        },
+        "lived_context": [],
+        "forbidden_claims": [],
+        "fallback_lines": {
+          "unknown": "잘 모르겠어.",
+          "unavailable_action": "지금은 어려워.",
+          "declined": "그건 말하기 어려워."
+        },
+        "review_status": "draft"
+      }
+    },
+    "identity.view": {
+      "contract": "identity.view",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "persona_id": "judy",
+        "display_name": "예시 인물",
+        "npc_type": "community",
+        "personality_instructions": [
+          "문구 1",
+          "문구 2",
+          "문구 3",
+          "문구 4",
+          "문구 5"
+        ],
+        "personal_principles": [
+          "예시 원칙"
+        ],
+        "voice_style": {
+          "sentence_length": "짧게",
+          "register": "구어체",
+          "vocabulary": [],
+          "address": "상대",
+          "forbidden_phrases": []
+        },
+        "background": {
+          "text": "형식 검사용 가상 배경",
+          "provenance": "authored"
+        },
+        "lived_context": [],
+        "forbidden_claims": []
+      }
+    },
+    "state.snapshot": {
+      "contract": "state.snapshot",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "snapshot_id": "snapshot-example",
+        "fields": [
+          {
+            "field_id": "player.visible_outfit",
+            "status": "known",
+            "value": [
+              {
+                "slot": "outer",
+                "display_name": "검은 재킷",
+                "appearance_text": "무광 외투"
+              }
+            ],
+            "source": {
+              "kind": "runtime",
+              "source_id": "mock-observation"
+            },
+            "at": {
+              "session_id": "session-example",
+              "sequence": 1,
+              "game_time": null,
+              "recorded_at_utc": null
+            },
+            "visibility": "character_known"
+          }
+        ]
+      }
+    },
+    "state.canon": {
+      "contract": "state.canon",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "current_goals": [],
+        "relationship_to_player": {
+          "label": "모의 안면",
+          "attitude": "가상 기본 거리감",
+          "address": "상대",
+          "source": "simulation"
+        },
+        "known_past_events": [],
+        "applied_rules": [],
+        "everyday_fiction_policy": {
+          "allowed": false,
+          "scope": "",
+          "prohibited": []
+        }
+      }
+    },
+    "knowledge.view": {
+      "contract": "knowledge.view",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "items": [],
+        "boundaries": [],
+        "common_knowledge": [
+          {
+            "category_id": "night_city",
+            "statements": [
+              "형식 검사용 가상 도시 상식."
+            ]
+          }
+        ]
+      }
+    },
+    "selection.query": {
+      "contract": "selection.query",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "player_text": "내가 좋아하는 색 기억해?",
+        "topic_tags": [
+          "preference.color"
+        ],
+        "subject_keys": [
+          "player"
+        ],
+        "current_session_id": "session-example",
+        "recent_event_ids": [],
+        "token_budget": 600,
+        "item_limit": 5
+      }
+    },
+    "memory.events": {
+      "contract": "memory.events",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": [
+        {
+          "event_id": "e1",
+          "session_id": "session-example",
+          "exchange_id": "exchange-example",
+          "sequence": 1,
+          "event_kind": "player_utterance",
+          "speaker": "player",
+          "epistemic_status": "player_claim",
+          "at": {
+            "session_id": "session-example",
+            "sequence": 1,
+            "game_time": null,
+            "recorded_at_utc": null
+          },
+          "payload": {
+            "text": "나는 파란색을 좋아해."
+          }
+        }
+      ]
+    },
+    "memory.record": {
+      "contract": "memory.record",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "memory_id": "m1",
+        "revision": 1,
+        "kind": "player_claim",
+        "text": "플레이어는 파란색을 좋아한다고 말했다.",
+        "subject_keys": [
+          "player"
+        ],
+        "topic_tags": [
+          "preference.color"
+        ],
+        "evidence_event_ids": [
+          "e1"
+        ],
+        "epistemic_status": "player_claim",
+        "status": "active",
+        "importance": "salient",
+        "validity": {
+          "occurred_at": {
+            "session_id": "session-example",
+            "sequence": 1,
+            "game_time": null,
+            "recorded_at_utc": null
+          },
+          "condition": null,
+          "expires_at_utc": null
+        },
+        "supersedes_id": null,
+        "observation_ref": null
+      }
+    },
+    "memory.snapshot": {
+      "contract": "memory.snapshot",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "snapshot_id": "memory-snapshot-example",
+        "memory_revision": 1,
+        "memory_generation": 0,
+        "checkpoint_ref": null,
+        "source_through_sequence": 1,
+        "records": [
+          {
+            "memory_id": "m1",
+            "revision": 1,
+            "kind": "player_claim",
+            "text": "플레이어는 파란색을 좋아한다고 말했다.",
+            "subject_keys": [
+              "player"
+            ],
+            "topic_tags": [
+              "preference.color"
+            ],
+            "evidence_event_ids": [
+              "e1"
+            ],
+            "epistemic_status": "player_claim",
+            "status": "active",
+            "importance": "salient",
+            "validity": {
+              "occurred_at": {
+                "session_id": "session-example",
+                "sequence": 1,
+                "game_time": null,
+                "recorded_at_utc": null
+              },
+              "condition": null,
+              "expires_at_utc": null
+            },
+            "supersedes_id": null,
+            "observation_ref": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "e1",
+            "session_id": "session-example",
+            "exchange_id": "exchange-example",
+            "sequence": 1,
+            "event_kind": "player_utterance",
+            "speaker": "player",
+            "epistemic_status": "player_claim",
+            "at": {
+              "session_id": "session-example",
+              "sequence": 1,
+              "game_time": null,
+              "recorded_at_utc": null
+            },
+            "payload": {
+              "text": "나는 파란색을 좋아해."
+            }
+          }
+        ],
+        "event_processing": [
+          {
+            "event_id": "e1",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    "memory.view": {
+      "contract": "memory.view",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "memory_view_version": "1.3",
+        "short_term": {
+          "topic_tags": [],
+          "active_items": [],
+          "recalled_events": []
+        },
+        "long_term": [
+          {
+            "memory_id": "r1",
+            "kind": "player_claim",
+            "text": "플레이어는 파란색을 좋아한다고 말했다.",
+            "epistemic_status": "player_claim",
+            "status": "active",
+            "temporal_scope": "이전 대화"
+          }
+        ],
+        "recall_constraints": []
+      }
+    },
+    "memory.summary-input": {
+      "contract": "memory.summary-input",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "source_events": [
+          {
+            "event_id": "e1",
+            "session_id": "session-example",
+            "exchange_id": "exchange-example",
+            "sequence": 1,
+            "event_kind": "player_utterance",
+            "speaker": "player",
+            "epistemic_status": "player_claim",
+            "at": {
+              "session_id": "session-example",
+              "sequence": 1,
+              "game_time": null,
+              "recorded_at_utc": null
+            },
+            "payload": {
+              "text": "나는 파란색을 좋아해."
+            }
+          }
+        ],
+        "existing_relevant_memories": [],
+        "source_digest": "example-digest",
+        "policy_version": "memory-policy-1.2",
+        "summarizer_version": "local-extract-example",
+        "local_constraints": [
+          "주장을 사실로 승격하지 않는다."
+        ]
+      }
+    },
+    "memory.summary-candidates": {
+      "contract": "memory.summary-candidates",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "candidates": [
+          {
+            "kind": "player_claim",
+            "text": "플레이어는 파란색을 좋아한다고 말했다.",
+            "subject_keys": [
+              "player"
+            ],
+            "topic_tags": [
+              "preference.color"
+            ],
+            "evidence_event_ids": [
+              "e1"
+            ],
+            "epistemic_status": "player_claim",
+            "conflict_refs": []
+          }
+        ]
+      }
+    },
+    "memory.save-bundle": {
+      "contract": "memory.save-bundle",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": null
+      },
+      "data": {
+        "bundle_id": "bundle-example",
+        "game_save_ref": "save-success-example",
+        "policy_version": "memory-policy-1.2",
+        "content_version": "example-1",
+        "source_digest": "example-digest",
+        "owners": [
+          {
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "snapshot": {
+              "snapshot_id": "memory-snapshot-example",
+              "memory_revision": 1,
+              "memory_generation": 0,
+              "checkpoint_ref": null,
+              "source_through_sequence": 1,
+              "records": [
+                {
+                  "memory_id": "m1",
+                  "revision": 1,
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "subject_keys": [
+                    "player"
+                  ],
+                  "topic_tags": [
+                    "preference.color"
+                  ],
+                  "evidence_event_ids": [
+                    "e1"
+                  ],
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "importance": "salient",
+                  "validity": {
+                    "occurred_at": {
+                      "session_id": "session-example",
+                      "sequence": 1,
+                      "game_time": null,
+                      "recorded_at_utc": null
+                    },
+                    "condition": null,
+                    "expires_at_utc": null
+                  },
+                  "supersedes_id": null,
+                  "observation_ref": null
+                }
+              ],
+              "events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "event_processing": [
+                {
+                  "event_id": "e1",
+                  "status": "pending"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "action.catalog": {
+      "contract": "action.catalog",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "catalog_version": "example-1",
+        "definitions": [
+          {
+            "action_id": "face_player",
+            "description": "플레이어 쪽 시선",
+            "args": [
+              {
+                "name": "duration_s",
+                "type": "number",
+                "required": true,
+                "candidates": [],
+                "minimum": 1,
+                "maximum": 10
+              }
+            ],
+            "required_capabilities": [
+              "gaze"
+            ]
+          }
+        ]
+      }
+    },
+    "action.options": {
+      "contract": "action.options",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": [
+        {
+          "action_id": "face_player",
+          "description": "플레이어 쪽 시선",
+          "args": [
+            {
+              "name": "duration_s",
+              "type": "number",
+              "required": true,
+              "candidates": [],
+              "minimum": 1,
+              "maximum": 10
+            }
+          ],
+          "execution_mode": "execute"
+        }
+      ]
+    },
+    "action.request": {
+      "contract": "action.request",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "action_request_id": "action-example",
+        "proposal": {
+          "action_id": "face_player",
+          "args": {
+            "duration_s": 3
+          }
+        },
+        "execution_mode": "execute",
+        "catalog_version": "example-1"
+      }
+    },
+    "action.control": {
+      "contract": "action.control",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "action_request_id": "action-example",
+        "reason_code": "session_closed"
+      }
+    },
+    "action.result": {
+      "contract": "action.result",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "action_request_id": "action-example",
+        "action_id": "face_player",
+        "status": "succeeded",
+        "reason_code": null,
+        "started_at": {
+          "session_id": "session-example",
+          "sequence": 1,
+          "game_time": null,
+          "recorded_at_utc": null
+        },
+        "ended_at": {
+          "session_id": "session-example",
+          "sequence": 1,
+          "game_time": null,
+          "recorded_at_utc": null
+        },
+        "observed_effect": [
+          "시선 설정을 확인했다."
+        ]
+      }
+    },
+    "prompt.assembly": {
+      "contract": "prompt.assembly",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "persona": {
+          "persona_id": "judy",
+          "display_name": "예시 인물",
+          "npc_type": "community",
+          "personality_instructions": [
+            "문구 1",
+            "문구 2",
+            "문구 3",
+            "문구 4",
+            "문구 5"
+          ],
+          "personal_principles": [
+            "예시 원칙"
+          ],
+          "voice_style": {
+            "sentence_length": "짧게",
+            "register": "구어체",
+            "vocabulary": [],
+            "address": "상대",
+            "forbidden_phrases": []
+          },
+          "background": {
+            "text": "형식 검사용 가상 배경",
+            "provenance": "authored"
+          },
+          "lived_context": [],
+          "forbidden_claims": []
+        },
+        "context": {
+          "observations": [
+            {
+              "field_id": "player.visible_outfit",
+              "status": "known",
+              "value": [
+                {
+                  "slot": "outer",
+                  "display_name": "검은 재킷",
+                  "appearance_text": "무광 외투"
+                }
+              ]
+            }
+          ],
+          "canon_context": {
+            "current_goals": [],
+            "relationship_to_player": {
+              "label": "모의 안면",
+              "attitude": "가상 기본 거리감",
+              "address": "상대",
+              "source": "simulation"
+            },
+            "known_past_events": [],
+            "applied_rules": [],
+            "everyday_fiction_policy": {
+              "allowed": false,
+              "scope": "",
+              "prohibited": []
+            }
+          },
+          "knowledge": [],
+          "knowledge_boundaries": [],
+          "memory": {
+            "memory_view_version": "1.3",
+            "short_term": {
+              "topic_tags": [],
+              "active_items": [],
+              "recalled_events": []
+            },
+            "long_term": [
+              {
+                "memory_id": "r1",
+                "kind": "player_claim",
+                "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                "epistemic_status": "player_claim",
+                "status": "active",
+                "temporal_scope": "이전 대화"
+              }
+            ],
+            "recall_constraints": []
+          },
+          "recent_turns": [],
+          "last_action_result": null,
+          "allowed_actions": [
+            {
+              "action_id": "face_player",
+              "description": "플레이어 쪽 시선",
+              "args": [
+                {
+                  "name": "duration_s",
+                  "type": "number",
+                  "required": true,
+                  "candidates": [],
+                  "minimum": 1,
+                  "maximum": 10
+                }
+              ],
+              "execution_mode": "execute"
+            }
+          ],
+          "player_identity": {
+            "name": null,
+            "name_known_by_npc": false,
+            "known_facts": []
+          },
+          "conversation_state": {
+            "encounter": "recontact",
+            "topic_tags": [],
+            "closing": false
+          }
+        },
+        "style_examples": [],
+        "identity_reminder": null,
+        "player_text": "내가 좋아하는 색 기억해?",
+        "output_language": "ko-KR",
+        "output_token_limit": 256
+      }
+    },
+    "prompt.model-input": {
+      "contract": "prompt.model-input",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "instructions": "가상 계약 검사 지침이다.",
+        "data_messages": [
+          {
+            "kind": "persona",
+            "content": "{\"persona_id\":\"judy\",\"display_name\":\"예시 인물\",\"npc_type\":\"community\",\"personality_instructions\":[\"문구 1\",\"문구 2\",\"문구 3\",\"문구 4\",\"문구 5\"],\"personal_principles\":[\"예시 원칙\"],\"voice_style\":{\"sentence_length\":\"짧게\",\"register\":\"구어체\",\"vocabulary\":[],\"address\":\"상대\",\"forbidden_phrases\":[]},\"background\":{\"text\":\"형식 검사용 가상 배경\",\"provenance\":\"authored\"},\"lived_context\":[],\"forbidden_claims\":[]}"
+          },
+          {
+            "kind": "context",
+            "content": "{\"observations\":[{\"field_id\":\"player.visible_outfit\",\"status\":\"known\",\"value\":[{\"slot\":\"outer\",\"display_name\":\"검은 재킷\",\"appearance_text\":\"무광 외투\"}]}],\"canon_context\":{\"current_goals\":[],\"relationship_to_player\":{\"label\":\"모의 안면\",\"attitude\":\"가상 기본 거리감\",\"address\":\"상대\",\"source\":\"simulation\"},\"known_past_events\":[],\"applied_rules\":[],\"everyday_fiction_policy\":{\"allowed\":false,\"scope\":\"\",\"prohibited\":[]}},\"knowledge\":[],\"knowledge_boundaries\":[],\"memory\":{\"memory_view_version\":\"1.3\",\"short_term\":{\"topic_tags\":[],\"active_items\":[],\"recalled_events\":[]},\"long_term\":[{\"memory_id\":\"r1\",\"kind\":\"player_claim\",\"text\":\"플레이어는 파란색을 좋아한다고 말했다.\",\"epistemic_status\":\"player_claim\",\"status\":\"active\",\"temporal_scope\":\"이전 대화\"}],\"recall_constraints\":[]},\"last_action_result\":null,\"allowed_actions\":[{\"action_id\":\"face_player\",\"description\":\"플레이어 쪽 시선\",\"args\":[{\"name\":\"duration_s\",\"type\":\"number\",\"required\":true,\"candidates\":[],\"minimum\":1,\"maximum\":10}],\"execution_mode\":\"execute\"}],\"player_identity\":{\"name\":null,\"name_known_by_npc\":false,\"known_facts\":[]},\"conversation_state\":{\"encounter\":\"recontact\",\"topic_tags\":[],\"closing\":false},\"common_knowledge\":[{\"category_id\":\"night_city\",\"statements\":[\"형식 검사용 가상 도시 상식.\"]}]}"
+          },
+          {
+            "kind": "recent_turn",
+            "role": "user",
+            "content": "나는 파란색이 좋아."
+          },
+          {
+            "kind": "recent_turn",
+            "role": "assistant",
+            "content": "그렇구나."
+          },
+          {
+            "kind": "player_input",
+            "content": "내가 좋아하는 색 기억해?"
+          }
+        ],
+        "output_contract": "dialogue.reply@1.0",
+        "output_token_limit": 256
+      }
+    },
+    "dialogue.reply": {
+      "contract": "dialogue.reply",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "dialogue": "파란색을 좋아한다고 했지.",
+        "intent": "answer",
+        "emotion": "neutral",
+        "action": null,
+        "follow_up": null
+      }
+    },
+    "provider.result": {
+      "contract": "provider.result",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "raw_text": "{\"dialogue\":\"파란색을 좋아한다고 했지.\",\"intent\":\"answer\",\"emotion\":\"neutral\",\"action\":null,\"follow_up\":null}",
+        "usage": {
+          "input_tokens": null,
+          "output_tokens": null,
+          "cached_tokens": null
+        },
+        "latency_ms": 25
+      }
+    },
+    "memory.control": {
+      "contract": "memory.control",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "reason_code": "user_deleted",
+        "delete_persistent": true
+      }
+    },
+    "memory.save-request": {
+      "contract": "memory.save-request",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": null
+      },
+      "data": {
+        "game_save_ref": "save-success-example",
+        "policy_version": "memory-policy-1.2",
+        "content_version": "example-1"
+      }
+    }
+  },
+  "invalid": [
+    {
+      "name": "지원하지 않는 버전",
+      "base": "memory.record",
+      "path": "/contract_version",
+      "operation": "set",
+      "value": "2.0"
+    },
+    {
+      "name": "버전 누락",
+      "base": "memory.record",
+      "path": "/contract_version",
+      "operation": "delete"
+    },
+    {
+      "name": "알 수 없는 계약",
+      "base": "memory.record",
+      "path": "/contract",
+      "operation": "set",
+      "value": "unknown.contract"
+    },
+    {
+      "name": "범위 없는 장기 기억",
+      "base": "memory.record",
+      "path": "/scope/actor",
+      "operation": "set",
+      "value": null
+    },
+    {
+      "name": "저장 범위 없는 장기 기억",
+      "base": "memory.record",
+      "path": "/scope/save_scope",
+      "operation": "set",
+      "value": null
+    },
+    {
+      "name": "비어 있는 근거",
+      "base": "memory.record",
+      "path": "/data/evidence_event_ids",
+      "operation": "set",
+      "value": []
+    },
+    {
+      "name": "기억 뷰에 저장 근거 유출",
+      "base": "memory.view",
+      "path": "/data/long_term/0/evidence_event_ids",
+      "operation": "set",
+      "value": [
+        "e1"
+      ]
+    },
+    {
+      "name": "인물 뷰에 원본 수치 유출",
+      "base": "identity.view",
+      "path": "/data/core_personality",
+      "operation": "set",
+      "value": {
+        "openness": 4,
+        "conscientiousness": 3,
+        "extraversion": 2,
+        "agreeableness": 3,
+        "neuroticism": 4
+      }
+    },
+    {
+      "name": "선택 전용 실행 요청",
+      "base": "action.request",
+      "path": "/data/execution_mode",
+      "operation": "set",
+      "value": "selection_only"
+    },
+    {
+      "name": "모델 응답이 요청 ID 생성",
+      "base": "dialogue.reply",
+      "path": "/data/request_id",
+      "operation": "set",
+      "value": "forged"
+    },
+    {
+      "name": "생성 발화의 사실성 승격",
+      "base": "memory.events",
+      "path": "/data/0/epistemic_status",
+      "operation": "set",
+      "value": "runtime_confirmed"
+    },
+    {
+      "name": "플레이어 발화의 화자 위조",
+      "base": "memory.events",
+      "path": "/data/0/speaker",
+      "operation": "set",
+      "value": "runtime"
+    },
+    {
+      "name": "불명 관찰에 값 제공",
+      "base": "state.snapshot",
+      "path": "/data/fields/0/status",
+      "operation": "set",
+      "value": "unknown"
+    },
+    {
+      "name": "군중 seed를 프롬프트 뷰에 주입",
+      "base": "prompt.assembly",
+      "path": "/data/persona/seed",
+      "operation": "set",
+      "value": "private"
+    },
+    {
+      "name": "프롬프트 뷰에 작업 세대 유출",
+      "base": "prompt.assembly",
+      "path": "/data/context/memory/memory_generation",
+      "operation": "set",
+      "value": 4
+    },
+    {
+      "name": "현재 입력이 마지막이 아님",
+      "base": "prompt.model-input",
+      "path": "/data/data_messages",
+      "operation": "set",
+      "value": [
+        {
+          "kind": "player_input",
+          "content": "내가 좋아하는 색 기억해?"
+        },
+        {
+          "kind": "persona",
+          "content": "{\"persona_id\":\"judy\",\"display_name\":\"예시 인물\",\"npc_type\":\"community\",\"personality_instructions\":[\"문구 1\",\"문구 2\",\"문구 3\",\"문구 4\",\"문구 5\"],\"personal_principles\":[\"예시 원칙\"],\"voice_style\":{\"sentence_length\":\"짧게\",\"register\":\"구어체\",\"vocabulary\":[],\"address\":\"상대\",\"forbidden_phrases\":[]},\"background\":{\"text\":\"형식 검사용 가상 배경\",\"provenance\":\"authored\"},\"lived_context\":[],\"forbidden_claims\":[]}"
+        },
+        {
+          "kind": "context",
+          "content": "{\"observations\":[{\"field_id\":\"player.visible_outfit\",\"status\":\"known\",\"value\":[{\"slot\":\"outer\",\"display_name\":\"검은 재킷\",\"appearance_text\":\"무광 외투\"}]}],\"canon_context\":{\"current_goals\":[],\"relationship_to_player\":{\"label\":\"모의 안면\",\"attitude\":\"가상 기본 거리감\",\"address\":\"상대\",\"source\":\"simulation\"},\"known_past_events\":[],\"applied_rules\":[],\"everyday_fiction_policy\":{\"allowed\":false,\"scope\":\"\",\"prohibited\":[]}},\"knowledge\":[],\"knowledge_boundaries\":[],\"memory\":{\"memory_view_version\":\"1.3\",\"short_term\":{\"topic_tags\":[],\"active_items\":[],\"recalled_events\":[]},\"long_term\":[{\"memory_id\":\"r1\",\"kind\":\"player_claim\",\"text\":\"플레이어는 파란색을 좋아한다고 말했다.\",\"epistemic_status\":\"player_claim\",\"status\":\"active\",\"temporal_scope\":\"이전 대화\"}],\"recall_constraints\":[]},\"recent_turns\":[],\"last_action_result\":null,\"allowed_actions\":[{\"action_id\":\"face_player\",\"description\":\"플레이어 쪽 시선\",\"args\":[{\"name\":\"duration_s\",\"type\":\"number\",\"required\":true,\"candidates\":[],\"minimum\":1,\"maximum\":10}],\"execution_mode\":\"execute\"}],\"player_identity\":{\"name\":null,\"name_known_by_npc\":false,\"known_facts\":[]},\"conversation_state\":{\"encounter\":\"recontact\",\"topic_tags\":[],\"closing\":false}}"
+        }
+      ]
+    },
+    {
+      "name": "제공자 전송 context에 저장소 유출",
+      "base": "prompt.model-input",
+      "path": "/data/data_messages/1/content",
+      "operation": "set",
+      "value": "{\"observations\":[{\"field_id\":\"player.visible_outfit\",\"status\":\"known\",\"value\":[{\"slot\":\"outer\",\"display_name\":\"검은 재킷\",\"appearance_text\":\"무광 외투\"}]}],\"canon_context\":{\"current_goals\":[],\"relationship_to_player\":{\"label\":\"모의 안면\",\"attitude\":\"가상 기본 거리감\",\"address\":\"상대\",\"source\":\"simulation\"},\"known_past_events\":[],\"applied_rules\":[],\"everyday_fiction_policy\":{\"allowed\":false,\"scope\":\"\",\"prohibited\":[]}},\"knowledge\":[],\"knowledge_boundaries\":[],\"memory\":{\"snapshot_id\":\"memory-snapshot-example\",\"memory_revision\":1,\"memory_generation\":0,\"checkpoint_ref\":null,\"source_through_sequence\":1,\"records\":[{\"memory_id\":\"m1\",\"revision\":1,\"kind\":\"player_claim\",\"text\":\"플레이어는 파란색을 좋아한다고 말했다.\",\"subject_keys\":[\"player\"],\"topic_tags\":[\"preference.color\"],\"evidence_event_ids\":[\"e1\"],\"epistemic_status\":\"player_claim\",\"status\":\"active\",\"importance\":\"salient\",\"validity\":{\"occurred_at\":{\"session_id\":\"session-example\",\"sequence\":1,\"game_time\":null,\"recorded_at_utc\":null},\"condition\":null,\"expires_at_utc\":null},\"supersedes_id\":null,\"observation_ref\":null}],\"events\":[{\"event_id\":\"e1\",\"session_id\":\"session-example\",\"exchange_id\":\"exchange-example\",\"sequence\":1,\"event_kind\":\"player_utterance\",\"speaker\":\"player\",\"epistemic_status\":\"player_claim\",\"at\":{\"session_id\":\"session-example\",\"sequence\":1,\"game_time\":null,\"recorded_at_utc\":null},\"payload\":{\"text\":\"나는 파란색을 좋아해.\"}}],\"event_processing\":[{\"event_id\":\"e1\",\"status\":\"pending\"}]},\"recent_turns\":[],\"last_action_result\":null,\"allowed_actions\":[{\"action_id\":\"face_player\",\"description\":\"플레이어 쪽 시선\",\"args\":[{\"name\":\"duration_s\",\"type\":\"number\",\"required\":true,\"candidates\":[],\"minimum\":1,\"maximum\":10}],\"execution_mode\":\"execute\"}],\"player_identity\":{\"name\":null,\"name_known_by_npc\":false,\"known_facts\":[]},\"conversation_state\":{\"encounter\":\"recontact\",\"topic_tags\":[],\"closing\":false}}"
+    },
+    {
+      "name": "음수 실제 사용량",
+      "base": "provider.result",
+      "path": "/data/usage/input_tokens",
+      "operation": "set",
+      "value": -1
+    },
+    {
+      "name": "성격 수준 초과",
+      "base": "identity.profile",
+      "path": "/data/core_personality/openness",
+      "operation": "set",
+      "value": 6
+    },
+    {
+      "name": "요약이 기억 중요도를 결정",
+      "base": "memory.summary-candidates",
+      "path": "/data/candidates/0/importance",
+      "operation": "set",
+      "value": "protected"
+    },
+    {
+      "name": "최근 발화에 높은 지침 역할 사용 금지",
+      "base": "prompt.model-input",
+      "path": "/data/data_messages/2/role",
+      "value": "system"
+    }
+  ],
+  "calls": [
+    {
+      "name": "정상 기억 선별",
+      "accepted": true,
+      "value": {
+        "call_id": "call-example",
+        "port": "MemorySelector.select",
+        "fence": {
+          "world_epoch": 1,
+          "snapshot_id": "snapshot-example",
+          "memory_generation": 0,
+          "memory_revision": 1,
+          "session": {
+            "session_id": "session-example",
+            "request_id": "request-example",
+            "request_sequence": 1,
+            "npc_instance_key": "instance-example",
+            "dialogue_context_revision": 1
+          }
+        },
+        "inputs": [
+          {
+            "contract": "memory.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "memory-snapshot-example",
+              "memory_revision": 1,
+              "memory_generation": 0,
+              "checkpoint_ref": null,
+              "source_through_sequence": 1,
+              "records": [
+                {
+                  "memory_id": "m1",
+                  "revision": 1,
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "subject_keys": [
+                    "player"
+                  ],
+                  "topic_tags": [
+                    "preference.color"
+                  ],
+                  "evidence_event_ids": [
+                    "e1"
+                  ],
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "importance": "salient",
+                  "validity": {
+                    "occurred_at": {
+                      "session_id": "session-example",
+                      "sequence": 1,
+                      "game_time": null,
+                      "recorded_at_utc": null
+                    },
+                    "condition": null,
+                    "expires_at_utc": null
+                  },
+                  "supersedes_id": null,
+                  "observation_ref": null
+                }
+              ],
+              "events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "event_processing": [
+                {
+                  "event_id": "e1",
+                  "status": "pending"
+                }
+              ]
+            }
+          },
+          {
+            "contract": "state.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "snapshot-example",
+              "fields": [
+                {
+                  "field_id": "player.visible_outfit",
+                  "status": "known",
+                  "value": [
+                    {
+                      "slot": "outer",
+                      "display_name": "검은 재킷",
+                      "appearance_text": "무광 외투"
+                    }
+                  ],
+                  "source": {
+                    "kind": "runtime",
+                    "source_id": "mock-observation"
+                  },
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "visibility": "character_known"
+                }
+              ]
+            }
+          },
+          {
+            "contract": "selection.query",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "player_text": "내가 좋아하는 색 기억해?",
+              "topic_tags": [
+                "preference.color"
+              ],
+              "subject_keys": [
+                "player"
+              ],
+              "current_session_id": "session-example",
+              "recent_event_ids": [],
+              "token_budget": 600,
+              "item_limit": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "기억 뷰를 원본 스냅샷으로 전달",
+      "accepted": false,
+      "value": {
+        "call_id": "call-example",
+        "port": "MemorySelector.select",
+        "fence": {
+          "world_epoch": 1,
+          "snapshot_id": "snapshot-example",
+          "memory_generation": 0,
+          "memory_revision": 1,
+          "session": {
+            "session_id": "session-example",
+            "request_id": "request-example",
+            "request_sequence": 1,
+            "npc_instance_key": "instance-example",
+            "dialogue_context_revision": 1
+          }
+        },
+        "inputs": [
+          {
+            "contract": "memory.view",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "memory_view_version": "1.3",
+              "short_term": {
+                "topic_tags": [],
+                "active_items": [],
+                "recalled_events": []
+              },
+              "long_term": [
+                {
+                  "memory_id": "r1",
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "temporal_scope": "이전 대화"
+                }
+              ],
+              "recall_constraints": []
+            }
+          },
+          {
+            "contract": "state.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "snapshot-example",
+              "fields": [
+                {
+                  "field_id": "player.visible_outfit",
+                  "status": "known",
+                  "value": [
+                    {
+                      "slot": "outer",
+                      "display_name": "검은 재킷",
+                      "appearance_text": "무광 외투"
+                    }
+                  ],
+                  "source": {
+                    "kind": "runtime",
+                    "source_id": "mock-observation"
+                  },
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "visibility": "character_known"
+                }
+              ]
+            }
+          },
+          {
+            "contract": "selection.query",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "player_text": "내가 좋아하는 색 기억해?",
+              "topic_tags": [
+                "preference.color"
+              ],
+              "subject_keys": [
+                "player"
+              ],
+              "current_session_id": "session-example",
+              "recent_event_ids": [],
+              "token_budget": 600,
+              "item_limit": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "인수 순서 오류",
+      "accepted": false,
+      "value": {
+        "call_id": "call-example",
+        "port": "MemorySelector.select",
+        "fence": {
+          "world_epoch": 1,
+          "snapshot_id": "snapshot-example",
+          "memory_generation": 0,
+          "memory_revision": 1,
+          "session": {
+            "session_id": "session-example",
+            "request_id": "request-example",
+            "request_sequence": 1,
+            "npc_instance_key": "instance-example",
+            "dialogue_context_revision": 1
+          }
+        },
+        "inputs": [
+          {
+            "contract": "state.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "snapshot-example",
+              "fields": [
+                {
+                  "field_id": "player.visible_outfit",
+                  "status": "known",
+                  "value": [
+                    {
+                      "slot": "outer",
+                      "display_name": "검은 재킷",
+                      "appearance_text": "무광 외투"
+                    }
+                  ],
+                  "source": {
+                    "kind": "runtime",
+                    "source_id": "mock-observation"
+                  },
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "visibility": "character_known"
+                }
+              ]
+            }
+          },
+          {
+            "contract": "memory.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "memory-snapshot-example",
+              "memory_revision": 1,
+              "memory_generation": 0,
+              "checkpoint_ref": null,
+              "source_through_sequence": 1,
+              "records": [
+                {
+                  "memory_id": "m1",
+                  "revision": 1,
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "subject_keys": [
+                    "player"
+                  ],
+                  "topic_tags": [
+                    "preference.color"
+                  ],
+                  "evidence_event_ids": [
+                    "e1"
+                  ],
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "importance": "salient",
+                  "validity": {
+                    "occurred_at": {
+                      "session_id": "session-example",
+                      "sequence": 1,
+                      "game_time": null,
+                      "recorded_at_utc": null
+                    },
+                    "condition": null,
+                    "expires_at_utc": null
+                  },
+                  "supersedes_id": null,
+                  "observation_ref": null
+                }
+              ],
+              "events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "event_processing": [
+                {
+                  "event_id": "e1",
+                  "status": "pending"
+                }
+              ]
+            }
+          },
+          {
+            "contract": "selection.query",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "player_text": "내가 좋아하는 색 기억해?",
+              "topic_tags": [
+                "preference.color"
+              ],
+              "subject_keys": [
+                "player"
+              ],
+              "current_session_id": "session-example",
+              "recent_event_ids": [],
+              "token_budget": 600,
+              "item_limit": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "알 수 없는 포트",
+      "accepted": false,
+      "value": {
+        "call_id": "call-example",
+        "port": "Unknown.execute",
+        "fence": {
+          "world_epoch": 1,
+          "snapshot_id": "snapshot-example",
+          "memory_generation": 0,
+          "memory_revision": 1,
+          "session": {
+            "session_id": "session-example",
+            "request_id": "request-example",
+            "request_sequence": 1,
+            "npc_instance_key": "instance-example",
+            "dialogue_context_revision": 1
+          }
+        },
+        "inputs": [
+          {
+            "contract": "action.request",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "action_request_id": "action-example",
+              "proposal": {
+                "action_id": "face_player",
+                "args": {
+                  "duration_s": 3
+                }
+              },
+              "execution_mode": "execute",
+              "catalog_version": "example-1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "복수 소유자 저장 캡처",
+      "accepted": true,
+      "value": {
+        "call_id": "call-example",
+        "port": "MemoryStore.captureSaveBundle",
+        "fence": {
+          "world_epoch": 1,
+          "snapshot_id": "snapshot-example",
+          "memory_generation": 0,
+          "memory_revision": 1,
+          "session": {
+            "session_id": "session-example",
+            "request_id": "request-example",
+            "request_sequence": 1,
+            "npc_instance_key": "instance-example",
+            "dialogue_context_revision": 1
+          }
+        },
+        "inputs": [
+          {
+            "contract": "memory.save-request",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": null
+            },
+            "data": {
+              "game_save_ref": "save-success-example",
+              "policy_version": "memory-policy-1.2",
+              "content_version": "example-1"
+            }
+          },
+          {
+            "contract": "memory.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "memory-snapshot-example",
+              "memory_revision": 1,
+              "memory_generation": 0,
+              "checkpoint_ref": null,
+              "source_through_sequence": 1,
+              "records": [
+                {
+                  "memory_id": "m1",
+                  "revision": 1,
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "subject_keys": [
+                    "player"
+                  ],
+                  "topic_tags": [
+                    "preference.color"
+                  ],
+                  "evidence_event_ids": [
+                    "e1"
+                  ],
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "importance": "salient",
+                  "validity": {
+                    "occurred_at": {
+                      "session_id": "session-example",
+                      "sequence": 1,
+                      "game_time": null,
+                      "recorded_at_utc": null
+                    },
+                    "condition": null,
+                    "expires_at_utc": null
+                  },
+                  "supersedes_id": null,
+                  "observation_ref": null
+                }
+              ],
+              "events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "event_processing": [
+                {
+                  "event_id": "e1",
+                  "status": "pending"
+                }
+              ]
+            }
+          },
+          {
+            "contract": "memory.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "memory-snapshot-example",
+              "memory_revision": 1,
+              "memory_generation": 0,
+              "checkpoint_ref": null,
+              "source_through_sequence": 1,
+              "records": [
+                {
+                  "memory_id": "m1",
+                  "revision": 1,
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "subject_keys": [
+                    "player"
+                  ],
+                  "topic_tags": [
+                    "preference.color"
+                  ],
+                  "evidence_event_ids": [
+                    "e1"
+                  ],
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "importance": "salient",
+                  "validity": {
+                    "occurred_at": {
+                      "session_id": "session-example",
+                      "sequence": 1,
+                      "game_time": null,
+                      "recorded_at_utc": null
+                    },
+                    "condition": null,
+                    "expires_at_utc": null
+                  },
+                  "supersedes_id": null,
+                  "observation_ref": null
+                }
+              ],
+              "events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "event_processing": [
+                {
+                  "event_id": "e1",
+                  "status": "pending"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "전송 포트에 저장소 전달",
+      "accepted": false,
+      "value": {
+        "call_id": "call-example",
+        "port": "Provider.generate",
+        "fence": {
+          "world_epoch": 1,
+          "snapshot_id": "snapshot-example",
+          "memory_generation": 0,
+          "memory_revision": 1,
+          "session": {
+            "session_id": "session-example",
+            "request_id": "request-example",
+            "request_sequence": 1,
+            "npc_instance_key": "instance-example",
+            "dialogue_context_revision": 1
+          }
+        },
+        "inputs": [
+          {
+            "contract": "memory.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "memory-snapshot-example",
+              "memory_revision": 1,
+              "memory_generation": 0,
+              "checkpoint_ref": null,
+              "source_through_sequence": 1,
+              "records": [
+                {
+                  "memory_id": "m1",
+                  "revision": 1,
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "subject_keys": [
+                    "player"
+                  ],
+                  "topic_tags": [
+                    "preference.color"
+                  ],
+                  "evidence_event_ids": [
+                    "e1"
+                  ],
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "importance": "salient",
+                  "validity": {
+                    "occurred_at": {
+                      "session_id": "session-example",
+                      "sequence": 1,
+                      "game_time": null,
+                      "recorded_at_utc": null
+                    },
+                    "condition": null,
+                    "expires_at_utc": null
+                  },
+                  "supersedes_id": null,
+                  "observation_ref": null
+                }
+              ],
+              "events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "event_processing": [
+                {
+                  "event_id": "e1",
+                  "status": "pending"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "상태 의존 선별에 수명 정보 없음",
+      "accepted": false,
+      "value": {
+        "call_id": "call-example",
+        "port": "MemorySelector.select",
+        "fence": null,
+        "inputs": [
+          {
+            "contract": "memory.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "memory-snapshot-example",
+              "memory_revision": 1,
+              "memory_generation": 0,
+              "checkpoint_ref": null,
+              "source_through_sequence": 1,
+              "records": [
+                {
+                  "memory_id": "m1",
+                  "revision": 1,
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "subject_keys": [
+                    "player"
+                  ],
+                  "topic_tags": [
+                    "preference.color"
+                  ],
+                  "evidence_event_ids": [
+                    "e1"
+                  ],
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "importance": "salient",
+                  "validity": {
+                    "occurred_at": {
+                      "session_id": "session-example",
+                      "sequence": 1,
+                      "game_time": null,
+                      "recorded_at_utc": null
+                    },
+                    "condition": null,
+                    "expires_at_utc": null
+                  },
+                  "supersedes_id": null,
+                  "observation_ref": null
+                }
+              ],
+              "events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "event_processing": [
+                {
+                  "event_id": "e1",
+                  "status": "pending"
+                }
+              ]
+            }
+          },
+          {
+            "contract": "state.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "snapshot-example",
+              "fields": [
+                {
+                  "field_id": "player.visible_outfit",
+                  "status": "known",
+                  "value": [
+                    {
+                      "slot": "outer",
+                      "display_name": "검은 재킷",
+                      "appearance_text": "무광 외투"
+                    }
+                  ],
+                  "source": {
+                    "kind": "runtime",
+                    "source_id": "mock-observation"
+                  },
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "visibility": "character_known"
+                }
+              ]
+            }
+          },
+          {
+            "contract": "selection.query",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "player_text": "내가 좋아하는 색 기억해?",
+              "topic_tags": [
+                "preference.color"
+              ],
+              "subject_keys": [
+                "player"
+              ],
+              "current_session_id": "session-example",
+              "recent_event_ids": [],
+              "token_budget": 600,
+              "item_limit": 5
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "replies": [
+    {
+      "name": "정상 성공",
+      "accepted": true,
+      "value": {
+        "call_id": "call-example",
+        "status": "ok",
+        "outputs": [
+          {
+            "contract": "memory.view",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "memory_view_version": "1.3",
+              "short_term": {
+                "topic_tags": [],
+                "active_items": [],
+                "recalled_events": []
+              },
+              "long_term": [
+                {
+                  "memory_id": "r1",
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "temporal_scope": "이전 대화"
+                }
+              ],
+              "recall_constraints": []
+            }
+          }
+        ],
+        "error": null
+      },
+      "port": "MemorySelector.select"
+    },
+    {
+      "name": "정상 폐기",
+      "accepted": true,
+      "value": {
+        "call_id": "call-example",
+        "status": "discarded",
+        "outputs": [],
+        "error": {
+          "code": "stale_result",
+          "message": "이전 세대의 결과다.",
+          "retryable": false
+        }
+      },
+      "port": "MemorySelector.select"
+    },
+    {
+      "name": "실패와 성공 결과 혼합",
+      "accepted": false,
+      "value": {
+        "call_id": "call-example",
+        "status": "error",
+        "outputs": [
+          {
+            "contract": "memory.view",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "memory_view_version": "1.3",
+              "short_term": {
+                "topic_tags": [],
+                "active_items": [],
+                "recalled_events": []
+              },
+              "long_term": [
+                {
+                  "memory_id": "r1",
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "temporal_scope": "이전 대화"
+                }
+              ],
+              "recall_constraints": []
+            }
+          }
+        ],
+        "error": {
+          "code": "stale_result",
+          "message": "이전 세대의 결과다.",
+          "retryable": false
+        }
+      },
+      "port": "MemorySelector.select"
+    },
+    {
+      "name": "성공 결과에 오류 혼합",
+      "accepted": false,
+      "value": {
+        "call_id": "call-example",
+        "status": "ok",
+        "outputs": [
+          {
+            "contract": "memory.view",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "memory_view_version": "1.3",
+              "short_term": {
+                "topic_tags": [],
+                "active_items": [],
+                "recalled_events": []
+              },
+              "long_term": [
+                {
+                  "memory_id": "r1",
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "temporal_scope": "이전 대화"
+                }
+              ],
+              "recall_constraints": []
+            }
+          }
+        ],
+        "error": {
+          "code": "stale_result",
+          "message": "이전 세대의 결과다.",
+          "retryable": false
+        }
+      },
+      "port": "MemorySelector.select"
+    },
+    {
+      "name": "포트가 선언한 출력과 다른 객체",
+      "accepted": false,
+      "port": "MemorySelector.select",
+      "value": {
+        "call_id": "call-example",
+        "status": "ok",
+        "outputs": [
+          {
+            "contract": "memory.snapshot",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "snapshot_id": "memory-snapshot-example",
+              "memory_revision": 1,
+              "memory_generation": 0,
+              "checkpoint_ref": null,
+              "source_through_sequence": 1,
+              "records": [
+                {
+                  "memory_id": "m1",
+                  "revision": 1,
+                  "kind": "player_claim",
+                  "text": "플레이어는 파란색을 좋아한다고 말했다.",
+                  "subject_keys": [
+                    "player"
+                  ],
+                  "topic_tags": [
+                    "preference.color"
+                  ],
+                  "evidence_event_ids": [
+                    "e1"
+                  ],
+                  "epistemic_status": "player_claim",
+                  "status": "active",
+                  "importance": "salient",
+                  "validity": {
+                    "occurred_at": {
+                      "session_id": "session-example",
+                      "sequence": 1,
+                      "game_time": null,
+                      "recorded_at_utc": null
+                    },
+                    "condition": null,
+                    "expires_at_utc": null
+                  },
+                  "supersedes_id": null,
+                  "observation_ref": null
+                }
+              ],
+              "events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "event_processing": [
+                {
+                  "event_id": "e1",
+                  "status": "pending"
+                }
+              ]
+            }
+          }
+        ],
+        "error": null
+      }
+    }
+  ]
+}

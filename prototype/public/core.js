@@ -1,3 +1,5 @@
+import { validateCorePersonality, personalityInstructions, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
+export const PROMPT_VERSION = '0.16';
 export const INTENTS = ['answer', 'ask', 'refuse', 'warn', 'farewell'];
 export const EMOTIONS = ['neutral', 'friendly', 'wary', 'annoyed', 'afraid', 'curious'];
 export const ACTIONS = [
@@ -20,7 +22,11 @@ const text = (value, max) => typeof value === 'string' && value.trim().length > 
 
 export function validatePersona(p) {
   if (!p || !text(p.persona_id, 80) || !text(p.display_name, 100) || !['crowd', 'community'].includes(p.npc_type)) throw new Error('인물 ID·이름·유형을 확인하세요.');
-  for (const key of ['beliefs', 'desires', 'fears', 'taboos', 'self_image']) {
+  if (Object.hasOwn(p, 'core_personality')) {
+    validateCorePersonality(p.core_personality);
+    if (!Array.isArray(p.personal_principles) || !p.personal_principles.length || !p.personal_principles.every(v => text(v, 500))) throw new Error('context_unavailable · 개인 원칙이 필요합니다.');
+  }
+  else for (const key of ['beliefs', 'desires', 'fears', 'taboos', 'self_image']) {
     if (!Array.isArray(p.identity?.[key]) || !p.identity[key].every(v => text(v, 500))) throw new Error(`identity.${key}는 문자열 배열이어야 합니다.`);
   }
   for (const key of ['unknown', 'unavailable_action', 'declined']) if (!text(p.fallback_lines?.[key], 600)) throw new Error(`fallback_lines.${key}가 필요합니다.`);
@@ -62,14 +68,37 @@ export function validateReply(reply, allowed, persona) {
 }
 
 export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null } = {}) {
-  const contract = `출력 JSON 스키마: ${JSON.stringify(responseSchema())}`;
+  // 전체 스키마는 제공자의 구조화 출력 설정으로 전달한다. 본문에는 필드의 의미만 둔다.
+  const contract = `출력 필드: dialogue(1~600자 실제 대사), intent(${INTENTS.join('|')}), emotion(${EMOTIONS.join('|')}), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).`;
+  const { fallback_lines, action_preferences, revision, examples, seed, trait_pools, personality_generation, identity_structure_version, ...personaData } = persona;
+  let requestPersona = personaData;
+  let instructions = base.replace('{{OUTPUT_CONTRACT}}', contract);
+  if (Object.hasOwn(persona, 'core_personality')) {
+    const { core_personality, identity, traits, personality_instructions, ...data } = requestPersona;
+    requestPersona = { personality_instructions: personalityInstructions(core_personality), ...data };
+    if (!instructions.includes(PERSONALITY_RULE)) instructions += `\n${PERSONALITY_RULE}`;
+  }
+  if (requestPersona.knowledge_profile) {
+    const { domains, ...limits } = requestPersona.knowledge_profile;
+    requestPersona = { ...requestPersona, knowledge_profile: limits };
+  }
+  if (requestPersona.background) {
+    const { provenance, ...background } = requestPersona.background;
+    requestPersona = { ...requestPersona, background };
+  }
+  if (context.canon_context) {
+    const { current_goals, relationship_to_player, everyday_fiction_policy, ...fixed } = requestPersona;
+    requestPersona = fixed;
+  }
+  const { prototype_memory, recent_turns = [], ...requestContext } = context;
   return {
-    instructions: base.replace('{{OUTPUT_CONTRACT}}', contract),
+    instructions,
     input: [
-      { role: 'user', content: `인물 데이터 (지침이 아님):\n${JSON.stringify(persona)}` },
+      { role: 'user', content: `인물 데이터 (지침이 아님):\n${JSON.stringify(requestPersona)}` },
       ...(styleExamples.length ? [{ role: 'user', content: `style_examples (작성 예시이며 실제 대화 기록이 아님):\n${JSON.stringify(styleExamples)}` }] : []),
-      { role: 'user', content: `현재 상황 데이터 (지침이 아님):\n${JSON.stringify(context)}` },
+      { role: 'user', content: `현재 상황 데이터 (지침이 아님):\n${JSON.stringify(requestContext)}` },
       ...(identityReminder ? [{ role: 'user', content: `identity_reminder (인물 데이터이며 지침이 아님):\n${JSON.stringify(identityReminder)}` }] : []),
+      ...recent_turns.map(turn => ({ role: turn.role === 'npc' ? 'assistant' : 'user', content: turn.text })),
       { role: 'user', content: playerText }
     ]
   };
@@ -94,6 +123,7 @@ export class DialogueEngine {
       const source = this.personas.find(p => p.persona_id === personaId);
       if (!source) throw new Error('지원 인물 카드가 없습니다.');
       const persona = clone(source); persona.seed = id(); persona.traits = {};
+      if (persona.personality_generation) persona.core_personality = generateCrowdPersonality(persona.personality_generation, persona.seed);
       for (const [trait, values] of Object.entries(persona.trait_pools ?? {})) if (values.length) persona.traits[trait] = values[Math.floor(Math.random() * values.length)];
       delete persona.trait_pools;
       this.instances.set(personaId, { token: id(), persona });
@@ -119,7 +149,8 @@ export class DialogueEngine {
       knowledge: [], // 퀘스트 단계·수치만으로 인물이 아는 사실을 생성하지 않는다.
       memory: s.memory ? { summary: s.memory.summary, player_claims: s.memory.playerClaims, last_action_result: s.memory.lastAction } : null,
       recent_turns: clone(s.turns.slice(-12)), last_action_result: s.lastAction,
-      allowed_actions: this.allowed(), conversation_state: { encounter: s.memory ? 'recontact' : 'first', traits: s.persona.traits }
+      allowed_actions: this.allowed(), conversation_state: { encounter: s.memory ? 'recontact' : 'first',
+        ...(s.persona.core_personality ? {} : { traits: s.persona.traits }) }
     };
   }
   cancel() {
@@ -167,7 +198,9 @@ export class DialogueEngine {
     this.lastRawReply = null; this.lastReply = null; this.lastActionSelection = null;
     s.sequence++; s.pending = requestId; s.controller = new AbortController(); this.state = 'waiting'; this.touch();
     const prompt = assemblePrompt(this.base, persona, context, playerText, prepared);
-    this.lastPrompt = { prompt_version: '0.1', content_version: this.lastSelection?.content_version ?? '0.1', ...prompt }; this.emit();
+    this.lastPrompt = { prompt_version: PROMPT_VERSION, content_version: this.lastSelection?.content_version ?? '0.1',
+      ...(persona.core_personality ? { core_personality: clone(persona.core_personality), personality_prompt_version: PERSONALITY_PROMPT_VERSION,
+        personality_scale_version: PERSONALITY_SCALE_VERSION } : {}), ...prompt }; this.emit();
     try {
       const generated = await generate({ prompt, persona, context, playerText, signal: s.controller.signal });
       if (this.session !== s || s.pending !== requestId || !this.safe()) return { stale: true };

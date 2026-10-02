@@ -1,0 +1,3865 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:anpc:contracts:1.0",
+  "title": "모듈 공통 입출력 계약 1.0",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/Envelope"
+    },
+    {
+      "$ref": "#/$defs/Call"
+    },
+    {
+      "$ref": "#/$defs/Reply"
+    }
+  ],
+  "$defs": {
+    "ActorRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "key"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "community",
+            "instance"
+          ]
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      }
+    },
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "game_id",
+        "mod_id",
+        "save_scope",
+        "actor"
+      ],
+      "properties": {
+        "game_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "mod_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "save_scope": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actor": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ActorRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "OwnerScope": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/Scope"
+        },
+        {
+          "properties": {
+            "save_scope": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "actor": {
+              "$ref": "#/$defs/ActorRef"
+            }
+          }
+        }
+      ]
+    },
+    "SessionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_id",
+        "request_id",
+        "request_sequence",
+        "npc_instance_key",
+        "dialogue_context_revision"
+      ],
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "request_sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "npc_instance_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "dialogue_context_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "Fence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "world_epoch",
+        "snapshot_id",
+        "memory_generation",
+        "memory_revision",
+        "session"
+      ],
+      "properties": {
+        "world_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "memory_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "memory_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "session": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/SessionRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "TimeRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_id",
+        "sequence",
+        "game_time",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "session_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "game_time": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recorded_at_utc": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "SourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source_id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "runtime",
+            "approved_content",
+            "authored",
+            "player",
+            "npc"
+          ]
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      }
+    },
+    "Scalar": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    },
+    "VisibleItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slot",
+        "display_name",
+        "appearance_text"
+      ],
+      "properties": {
+        "slot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "appearance_text": {
+          "type": "string"
+        }
+      }
+    },
+    "ObservedValue": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Scalar"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VisibleItem"
+          }
+        }
+      ]
+    },
+    "ObservedField": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "status",
+            "value",
+            "source",
+            "at",
+            "visibility"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "status": {
+              "const": "known"
+            },
+            "value": {
+              "$ref": "#/$defs/ObservedValue"
+            },
+            "source": {
+              "$ref": "#/$defs/SourceRef"
+            },
+            "at": {
+              "$ref": "#/$defs/TimeRef"
+            },
+            "visibility": {
+              "enum": [
+                "public",
+                "character_known",
+                "internal"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "status",
+            "value",
+            "source",
+            "at",
+            "visibility"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "status": {
+              "enum": [
+                "unknown",
+                "unavailable"
+              ]
+            },
+            "value": {
+              "type": "null"
+            },
+            "source": {
+              "$ref": "#/$defs/SourceRef"
+            },
+            "at": {
+              "$ref": "#/$defs/TimeRef"
+            },
+            "visibility": {
+              "enum": [
+                "public",
+                "character_known",
+                "internal"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ObservationView": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "status",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "status": {
+              "const": "known"
+            },
+            "value": {
+              "$ref": "#/$defs/ObservedValue"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "status",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "status": {
+              "enum": [
+                "unknown",
+                "unavailable"
+              ]
+            },
+            "value": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "StateSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_id",
+        "fields"
+      ],
+      "properties": {
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ObservedField"
+          }
+        }
+      }
+    },
+    "Condition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "all"
+          ],
+          "properties": {
+            "all": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              },
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "any"
+          ],
+          "properties": {
+            "any": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              },
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "not"
+          ],
+          "properties": {
+            "not": {
+              "$ref": "#/$defs/Condition"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field",
+            "op",
+            "value"
+          ],
+          "properties": {
+            "field": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "op": {
+              "const": "eq"
+            },
+            "value": {
+              "$ref": "#/$defs/Scalar"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field",
+            "op",
+            "value"
+          ],
+          "properties": {
+            "field": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "op": {
+              "const": "in"
+            },
+            "value": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/Scalar"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field",
+            "op",
+            "value"
+          ],
+          "properties": {
+            "field": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "op": {
+              "enum": [
+                "gte",
+                "lte"
+              ]
+            },
+            "value": {
+              "type": "number"
+            }
+          }
+        }
+      ]
+    },
+    "Validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "occurred_at",
+        "condition",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "occurred_at": {
+          "$ref": "#/$defs/TimeRef"
+        },
+        "condition": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Condition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expires_at_utc": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CorePersonality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism"
+      ],
+      "properties": {
+        "openness": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "conscientiousness": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "extraversion": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "agreeableness": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "neuroticism": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      }
+    },
+    "VoiceStyle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sentence_length",
+        "register",
+        "vocabulary",
+        "address",
+        "forbidden_phrases"
+      ],
+      "properties": {
+        "sentence_length": {
+          "type": "string",
+          "minLength": 1
+        },
+        "register": {
+          "type": "string",
+          "minLength": 1
+        },
+        "vocabulary": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "address": {
+          "type": "string",
+          "minLength": 1
+        },
+        "forbidden_phrases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "Background": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "provenance"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provenance": {
+          "enum": [
+            "approved_content",
+            "authored"
+          ]
+        }
+      }
+    },
+    "FallbackLines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unknown",
+        "unavailable_action",
+        "declined"
+      ],
+      "properties": {
+        "unknown": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unavailable_action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "declined": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "IdentityProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "persona_id",
+        "revision",
+        "content_version",
+        "npc_type",
+        "display_name",
+        "core_personality",
+        "personal_principles",
+        "voice_style",
+        "background",
+        "lived_context",
+        "forbidden_claims",
+        "fallback_lines",
+        "review_status"
+      ],
+      "properties": {
+        "persona_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "content_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "npc_type": {
+          "enum": [
+            "community",
+            "crowd"
+          ]
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "core_personality": {
+          "$ref": "#/$defs/CorePersonality"
+        },
+        "personal_principles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "voice_style": {
+          "$ref": "#/$defs/VoiceStyle"
+        },
+        "background": {
+          "$ref": "#/$defs/Background"
+        },
+        "lived_context": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "forbidden_claims": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "fallback_lines": {
+          "$ref": "#/$defs/FallbackLines"
+        },
+        "review_status": {
+          "enum": [
+            "draft",
+            "approved"
+          ]
+        }
+      }
+    },
+    "PersonaView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "persona_id",
+        "display_name",
+        "npc_type",
+        "personality_instructions",
+        "personal_principles",
+        "voice_style",
+        "background",
+        "lived_context",
+        "forbidden_claims"
+      ],
+      "properties": {
+        "persona_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "npc_type": {
+          "enum": [
+            "community",
+            "crowd"
+          ]
+        },
+        "personality_instructions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 5,
+          "maxItems": 5
+        },
+        "personal_principles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "voice_style": {
+          "$ref": "#/$defs/VoiceStyle"
+        },
+        "background": {
+          "$ref": "#/$defs/Background"
+        },
+        "lived_context": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "forbidden_claims": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "RelationshipView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "attitude",
+        "address",
+        "source"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attitude": {
+          "type": "string",
+          "minLength": 1
+        },
+        "address": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "enum": [
+            "runtime",
+            "approved_content",
+            "simulation"
+          ]
+        }
+      }
+    },
+    "CanonView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_goals",
+        "relationship_to_player",
+        "known_past_events",
+        "applied_rules",
+        "everyday_fiction_policy"
+      ],
+      "properties": {
+        "current_goals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "relationship_to_player": {
+          "$ref": "#/$defs/RelationshipView"
+        },
+        "known_past_events": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "applied_rules": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "everyday_fiction_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowed",
+            "scope",
+            "prohibited"
+          ],
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "prohibited": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "KnowledgeItemView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_id",
+        "domain_id",
+        "required_depth",
+        "certainty",
+        "disclosure",
+        "statement",
+        "response_constraint",
+        "claim_limits"
+      ],
+      "properties": {
+        "fact_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "domain_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "required_depth": {
+          "enum": [
+            "awareness",
+            "familiar",
+            "practical",
+            "specialist"
+          ]
+        },
+        "certainty": {
+          "enum": [
+            "knows",
+            "suspects"
+          ]
+        },
+        "disclosure": {
+          "enum": [
+            "public",
+            "evasive",
+            "withheld"
+          ]
+        },
+        "statement": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "response_constraint": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claim_limits": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "KnowledgeBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain_id",
+        "depth"
+      ],
+      "properties": {
+        "domain_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "depth": {
+          "enum": [
+            "unknown",
+            "awareness",
+            "familiar",
+            "practical",
+            "specialist"
+          ]
+        }
+      }
+    },
+    "KnowledgeView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "items",
+        "boundaries"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KnowledgeItemView"
+          }
+        },
+        "boundaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KnowledgeBoundary"
+          }
+        },
+        "common_knowledge": {
+          "$ref": "#/$defs/CommonKnowledgeView"
+        }
+      }
+    },
+    "ArgSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "type",
+        "required",
+        "candidates",
+        "minimum",
+        "maximum"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "type": {
+          "enum": [
+            "string",
+            "number",
+            "integer",
+            "boolean"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Scalar"
+          }
+        },
+        "minimum": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maximum": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ActionDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "description",
+        "args",
+        "required_capabilities"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArgSpec"
+          }
+        },
+        "required_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "ActionCatalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_version",
+        "definitions"
+      ],
+      "properties": {
+        "catalog_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "definitions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActionDefinition"
+          }
+        }
+      }
+    },
+    "ActionOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "description",
+        "args",
+        "execution_mode"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ArgSpec"
+          }
+        },
+        "execution_mode": {
+          "enum": [
+            "selection_only",
+            "execute"
+          ]
+        }
+      }
+    },
+    "ActionProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "args"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "args": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/Scalar"
+          }
+        }
+      }
+    },
+    "ActionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_request_id",
+        "proposal",
+        "execution_mode",
+        "catalog_version"
+      ],
+      "properties": {
+        "action_request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "proposal": {
+          "$ref": "#/$defs/ActionProposal"
+        },
+        "execution_mode": {
+          "const": "execute"
+        },
+        "catalog_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      }
+    },
+    "ActionControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_request_id",
+        "reason_code"
+      ],
+      "properties": {
+        "action_request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      }
+    },
+    "ActionOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_request_id",
+        "action_id",
+        "status",
+        "reason_code",
+        "started_at",
+        "ended_at",
+        "observed_effect"
+      ],
+      "properties": {
+        "action_request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "action_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "running",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "rejected"
+          ]
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "started_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TimeRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ended_at": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TimeRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_effect": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "ActionOutcomeView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "status",
+        "reason_code",
+        "observed_effect"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed",
+            "cancelled",
+            "rejected"
+          ]
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_effect": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "EpistemicStatus": {
+      "enum": [
+        "player_claim",
+        "npc_statement",
+        "runtime_confirmed"
+      ]
+    },
+    "MemoryKind": {
+      "enum": [
+        "episode",
+        "observation",
+        "player_claim",
+        "npc_statement",
+        "commitment",
+        "relationship_event",
+        "action_outcome",
+        "open_question"
+      ]
+    },
+    "MemoryStatus": {
+      "enum": [
+        "active",
+        "resolved",
+        "superseded",
+        "expired",
+        "disputed"
+      ]
+    },
+    "MemoryRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memory_id",
+        "revision",
+        "kind",
+        "text",
+        "subject_keys",
+        "topic_tags",
+        "evidence_event_ids",
+        "epistemic_status",
+        "status",
+        "importance",
+        "validity",
+        "supersedes_id",
+        "observation_ref"
+      ],
+      "properties": {
+        "memory_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "$ref": "#/$defs/MemoryKind"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "topic_tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "evidence_event_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "minItems": 1
+        },
+        "epistemic_status": {
+          "$ref": "#/$defs/EpistemicStatus"
+        },
+        "status": {
+          "$ref": "#/$defs/MemoryStatus"
+        },
+        "importance": {
+          "enum": [
+            "routine",
+            "salient",
+            "protected"
+          ]
+        },
+        "validity": {
+          "$ref": "#/$defs/Validity"
+        },
+        "supersedes_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observation_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "PlayerUtterance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "session_id",
+        "exchange_id",
+        "sequence",
+        "event_kind",
+        "speaker",
+        "epistemic_status",
+        "at",
+        "payload"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "session_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exchange_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_kind": {
+          "const": "player_utterance"
+        },
+        "speaker": {
+          "const": "player"
+        },
+        "epistemic_status": {
+          "const": "player_claim"
+        },
+        "at": {
+          "$ref": "#/$defs/TimeRef"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "NpcUtterance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "session_id",
+        "exchange_id",
+        "sequence",
+        "event_kind",
+        "speaker",
+        "epistemic_status",
+        "at",
+        "payload"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "session_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exchange_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_kind": {
+          "const": "npc_utterance"
+        },
+        "speaker": {
+          "const": "npc"
+        },
+        "epistemic_status": {
+          "const": "npc_statement"
+        },
+        "at": {
+          "$ref": "#/$defs/TimeRef"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "PlayerObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "session_id",
+        "exchange_id",
+        "sequence",
+        "event_kind",
+        "speaker",
+        "epistemic_status",
+        "at",
+        "payload"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "session_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exchange_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_kind": {
+          "const": "player_observation"
+        },
+        "speaker": {
+          "const": "runtime"
+        },
+        "epistemic_status": {
+          "const": "runtime_confirmed"
+        },
+        "at": {
+          "$ref": "#/$defs/TimeRef"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "observation_ref",
+            "fields"
+          ],
+          "properties": {
+            "observation_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ObservedField"
+              },
+              "minItems": 1
+            }
+          }
+        }
+      }
+    },
+    "ActionEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "session_id",
+        "exchange_id",
+        "sequence",
+        "event_kind",
+        "speaker",
+        "epistemic_status",
+        "at",
+        "payload"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "session_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exchange_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_kind": {
+          "const": "action_result"
+        },
+        "speaker": {
+          "const": "runtime"
+        },
+        "epistemic_status": {
+          "const": "runtime_confirmed"
+        },
+        "at": {
+          "$ref": "#/$defs/TimeRef"
+        },
+        "payload": {
+          "$ref": "#/$defs/ActionOutcome"
+        }
+      }
+    },
+    "ResolutionEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "session_id",
+        "exchange_id",
+        "sequence",
+        "event_kind",
+        "speaker",
+        "epistemic_status",
+        "at",
+        "payload"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "session_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exchange_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_kind": {
+          "const": "memory_resolution"
+        },
+        "speaker": {
+          "const": "runtime"
+        },
+        "epistemic_status": {
+          "const": "runtime_confirmed"
+        },
+        "at": {
+          "$ref": "#/$defs/TimeRef"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "memory_id",
+            "status",
+            "evidence_event_ids",
+            "reason"
+          ],
+          "properties": {
+            "memory_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "status": {
+              "$ref": "#/$defs/MemoryStatus"
+            },
+            "evidence_event_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              },
+              "minItems": 1
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "SourceEvent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PlayerUtterance"
+        },
+        {
+          "$ref": "#/$defs/NpcUtterance"
+        },
+        {
+          "$ref": "#/$defs/PlayerObservation"
+        },
+        {
+          "$ref": "#/$defs/ActionEvent"
+        },
+        {
+          "$ref": "#/$defs/ResolutionEvent"
+        }
+      ]
+    },
+    "EventBatch": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SourceEvent"
+      },
+      "minItems": 1
+    },
+    "MemorySnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_id",
+        "memory_revision",
+        "memory_generation",
+        "checkpoint_ref",
+        "source_through_sequence",
+        "records",
+        "events",
+        "event_processing"
+      ],
+      "properties": {
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "memory_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "memory_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "checkpoint_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_through_sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MemoryRecord"
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceEvent"
+          }
+        },
+        "event_processing": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "status"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "summarized",
+                  "archived_raw",
+                  "deferred"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "MemoryItemView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memory_id",
+        "kind",
+        "text",
+        "epistemic_status",
+        "status",
+        "temporal_scope"
+      ],
+      "properties": {
+        "memory_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "kind": {
+          "$ref": "#/$defs/MemoryKind"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "epistemic_status": {
+          "$ref": "#/$defs/EpistemicStatus"
+        },
+        "status": {
+          "$ref": "#/$defs/MemoryStatus"
+        },
+        "temporal_scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "RecalledEventView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_ref",
+        "event_kind",
+        "speaker",
+        "text",
+        "epistemic_status",
+        "temporal_scope",
+        "is_excerpt"
+      ],
+      "properties": {
+        "event_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "event_kind": {
+          "enum": [
+            "player_utterance",
+            "npc_utterance",
+            "player_observation",
+            "action_result",
+            "memory_resolution"
+          ]
+        },
+        "speaker": {
+          "enum": [
+            "player",
+            "npc",
+            "runtime"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "epistemic_status": {
+          "$ref": "#/$defs/EpistemicStatus"
+        },
+        "temporal_scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "is_excerpt": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RecallConstraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "target",
+        "reason"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "exact_quote_unavailable",
+            "unresolved_conflict",
+            "omitted_for_budget",
+            "ambiguous_reference"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "MemoryView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memory_view_version",
+        "short_term",
+        "long_term",
+        "recall_constraints"
+      ],
+      "properties": {
+        "memory_view_version": {
+          "const": "1.3"
+        },
+        "short_term": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "topic_tags",
+            "active_items",
+            "recalled_events"
+          ],
+          "properties": {
+            "topic_tags": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              }
+            },
+            "active_items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MemoryItemView"
+              }
+            },
+            "recalled_events": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/RecalledEventView"
+              }
+            }
+          }
+        },
+        "long_term": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MemoryItemView"
+          }
+        },
+        "recall_constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RecallConstraint"
+          }
+        }
+      }
+    },
+    "SelectionQuery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "player_text",
+        "topic_tags",
+        "subject_keys",
+        "current_session_id",
+        "recent_event_ids",
+        "token_budget",
+        "item_limit"
+      ],
+      "properties": {
+        "player_text": {
+          "type": "string"
+        },
+        "topic_tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "subject_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "current_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "recent_event_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "token_budget": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "item_limit": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "SummaryCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "text",
+        "subject_keys",
+        "topic_tags",
+        "evidence_event_ids",
+        "epistemic_status",
+        "conflict_refs"
+      ],
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/MemoryKind"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "subject_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "maxItems": 8
+        },
+        "topic_tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "maxItems": 8
+        },
+        "evidence_event_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "minItems": 1
+        },
+        "epistemic_status": {
+          "$ref": "#/$defs/EpistemicStatus"
+        },
+        "conflict_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        }
+      }
+    },
+    "SummaryInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_events",
+        "existing_relevant_memories",
+        "source_digest",
+        "policy_version",
+        "summarizer_version",
+        "local_constraints"
+      ],
+      "properties": {
+        "source_events": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/PlayerUtterance"
+              },
+              {
+                "$ref": "#/$defs/NpcUtterance"
+              },
+              {
+                "$ref": "#/$defs/ActionEvent"
+              },
+              {
+                "$ref": "#/$defs/ResolutionEvent"
+              }
+            ]
+          },
+          "minItems": 1
+        },
+        "existing_relevant_memories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MemoryRecord"
+          }
+        },
+        "source_digest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "summarizer_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "local_constraints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "SummaryCandidates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidates"
+      ],
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SummaryCandidate"
+          },
+          "maxItems": 12
+        }
+      }
+    },
+    "SaveBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bundle_id",
+        "game_save_ref",
+        "policy_version",
+        "content_version",
+        "source_digest",
+        "owners"
+      ],
+      "properties": {
+        "bundle_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "game_save_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "content_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "source_digest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scope",
+              "snapshot"
+            ],
+            "properties": {
+              "scope": {
+                "$ref": "#/$defs/OwnerScope"
+              },
+              "snapshot": {
+                "$ref": "#/$defs/MemorySnapshot"
+              }
+            }
+          }
+        }
+      }
+    },
+    "TargetRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_handle"
+      ],
+      "properties": {
+        "target_handle": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      }
+    },
+    "TargetResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eligible",
+        "reason_code",
+        "npc_instance_key",
+        "character_key",
+        "profile_id",
+        "npc_type"
+      ],
+      "properties": {
+        "eligible": {
+          "type": "boolean"
+        },
+        "reason_code": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "npc_instance_key": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "character_key": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "profile_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "npc_type": {
+          "enum": [
+            "crowd",
+            "community",
+            "unsupported"
+          ]
+        }
+      }
+    },
+    "TurnView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "text"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "player",
+            "npc"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "StyleExample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input",
+        "sample_dialogue",
+        "expected_intent"
+      ],
+      "properties": {
+        "input": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sample_dialogue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_intent": {
+          "enum": [
+            "answer",
+            "ask",
+            "refuse",
+            "warn",
+            "farewell"
+          ]
+        }
+      }
+    },
+    "IdentityReminder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hard_limits"
+      ],
+      "properties": {
+        "hard_limits": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "PromptContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observations",
+        "canon_context",
+        "knowledge",
+        "knowledge_boundaries",
+        "memory",
+        "recent_turns",
+        "last_action_result",
+        "allowed_actions",
+        "player_identity",
+        "conversation_state"
+      ],
+      "properties": {
+        "observations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ObservationView"
+          }
+        },
+        "canon_context": {
+          "$ref": "#/$defs/CanonView"
+        },
+        "knowledge": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KnowledgeItemView"
+          }
+        },
+        "knowledge_boundaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KnowledgeBoundary"
+          }
+        },
+        "memory": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/MemoryView"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recent_turns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TurnView"
+          }
+        },
+        "last_action_result": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ActionOutcomeView"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowed_actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActionOption"
+          }
+        },
+        "player_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "name_known_by_npc",
+            "known_facts"
+          ],
+          "properties": {
+            "name": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name_known_by_npc": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "known_facts": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "conversation_state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "encounter",
+            "topic_tags",
+            "closing"
+          ],
+          "properties": {
+            "encounter": {
+              "enum": [
+                "first",
+                "recontact"
+              ]
+            },
+            "topic_tags": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              }
+            },
+            "closing": {
+              "type": "boolean"
+            }
+          }
+        },
+        "common_knowledge": {
+          "$ref": "#/$defs/CommonKnowledgeView"
+        }
+      }
+    },
+    "PromptAssembly": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "persona",
+        "context",
+        "style_examples",
+        "identity_reminder",
+        "player_text",
+        "output_language",
+        "output_token_limit"
+      ],
+      "properties": {
+        "persona": {
+          "$ref": "#/$defs/PersonaView"
+        },
+        "context": {
+          "$ref": "#/$defs/PromptContext"
+        },
+        "style_examples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StyleExample"
+          }
+        },
+        "identity_reminder": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/IdentityReminder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "player_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "output_language": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "output_token_limit": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "ModelInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instructions",
+        "data_messages",
+        "output_contract",
+        "output_token_limit"
+      ],
+      "properties": {
+        "instructions": {
+          "type": "string",
+          "minLength": 1
+        },
+        "data_messages": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "content"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "persona",
+                      "style_examples",
+                      "context",
+                      "identity_reminder",
+                      "player_input"
+                    ]
+                  },
+                  "content": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "role",
+                  "content"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "recent_turn"
+                  },
+                  "role": {
+                    "enum": [
+                      "user",
+                      "assistant"
+                    ]
+                  },
+                  "content": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          },
+          "minItems": 3
+        },
+        "output_contract": {
+          "const": "dialogue.reply@1.0"
+        },
+        "output_token_limit": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "DialogueReply": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dialogue",
+        "intent",
+        "emotion",
+        "action",
+        "follow_up"
+      ],
+      "properties": {
+        "dialogue": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "intent": {
+          "enum": [
+            "answer",
+            "ask",
+            "refuse",
+            "warn",
+            "farewell"
+          ]
+        },
+        "emotion": {
+          "enum": [
+            "neutral",
+            "friendly",
+            "wary",
+            "annoyed",
+            "afraid",
+            "curious"
+          ]
+        },
+        "action": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ActionProposal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "follow_up": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "cached_tokens"
+      ],
+      "properties": {
+        "input_tokens": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "output_tokens": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cached_tokens": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ProviderResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_text",
+        "usage",
+        "latency_ms"
+      ],
+      "properties": {
+        "raw_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "usage": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Usage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "latency_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "Fault": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retryable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "BaseEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "contract_version",
+        "scope",
+        "data"
+      ],
+      "properties": {
+        "contract": {
+          "enum": [
+            "session.target-request",
+            "session.target",
+            "identity.profile",
+            "identity.view",
+            "state.snapshot",
+            "state.canon",
+            "knowledge.view",
+            "selection.query",
+            "memory.events",
+            "memory.record",
+            "memory.snapshot",
+            "memory.view",
+            "memory.summary-input",
+            "memory.summary-candidates",
+            "memory.save-bundle",
+            "action.catalog",
+            "action.request",
+            "action.control",
+            "action.result",
+            "prompt.assembly",
+            "prompt.model-input",
+            "dialogue.reply",
+            "provider.result",
+            "action.options",
+            "memory.control",
+            "memory.save-request"
+          ]
+        },
+        "contract_version": {
+          "const": "1.0"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "data": {}
+      }
+    },
+    "Envelope": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/BaseEnvelope"
+        },
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "contract": {
+                  "const": "session.target-request"
+                },
+                "data": {
+                  "$ref": "#/$defs/TargetRequest"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "session.target"
+                },
+                "data": {
+                  "$ref": "#/$defs/TargetResolution"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "identity.profile"
+                },
+                "data": {
+                  "$ref": "#/$defs/IdentityProfile"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "identity.view"
+                },
+                "data": {
+                  "$ref": "#/$defs/PersonaView"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "state.snapshot"
+                },
+                "data": {
+                  "$ref": "#/$defs/StateSnapshot"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "state.canon"
+                },
+                "data": {
+                  "$ref": "#/$defs/CanonView"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "knowledge.view"
+                },
+                "data": {
+                  "$ref": "#/$defs/KnowledgeView"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "selection.query"
+                },
+                "data": {
+                  "$ref": "#/$defs/SelectionQuery"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.events"
+                },
+                "data": {
+                  "$ref": "#/$defs/EventBatch"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.record"
+                },
+                "data": {
+                  "$ref": "#/$defs/MemoryRecord"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.snapshot"
+                },
+                "data": {
+                  "$ref": "#/$defs/MemorySnapshot"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.view"
+                },
+                "data": {
+                  "$ref": "#/$defs/MemoryView"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.summary-input"
+                },
+                "data": {
+                  "$ref": "#/$defs/SummaryInput"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.summary-candidates"
+                },
+                "data": {
+                  "$ref": "#/$defs/SummaryCandidates"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.save-bundle"
+                },
+                "data": {
+                  "$ref": "#/$defs/SaveBundle"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "action.catalog"
+                },
+                "data": {
+                  "$ref": "#/$defs/ActionCatalog"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "action.request"
+                },
+                "data": {
+                  "$ref": "#/$defs/ActionRequest"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "action.control"
+                },
+                "data": {
+                  "$ref": "#/$defs/ActionControl"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "action.result"
+                },
+                "data": {
+                  "$ref": "#/$defs/ActionOutcome"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "prompt.assembly"
+                },
+                "data": {
+                  "$ref": "#/$defs/PromptAssembly"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "prompt.model-input"
+                },
+                "data": {
+                  "$ref": "#/$defs/ModelInput"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "dialogue.reply"
+                },
+                "data": {
+                  "$ref": "#/$defs/DialogueReply"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "provider.result"
+                },
+                "data": {
+                  "$ref": "#/$defs/ProviderResult"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "action.options"
+                },
+                "data": {
+                  "$ref": "#/$defs/ActionOptions"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.control"
+                },
+                "data": {
+                  "$ref": "#/$defs/MemoryControl"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.save-request"
+                },
+                "data": {
+                  "$ref": "#/$defs/SaveRequest"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "Call": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "call_id",
+        "port",
+        "fence",
+        "inputs"
+      ],
+      "properties": {
+        "call_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "port": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "fence": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Fence"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Envelope"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "Reply": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "call_id",
+            "status",
+            "outputs",
+            "error"
+          ],
+          "properties": {
+            "call_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "status": {
+              "const": "ok"
+            },
+            "outputs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Envelope"
+              },
+              "minItems": 1
+            },
+            "error": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "call_id",
+            "status",
+            "outputs",
+            "error"
+          ],
+          "properties": {
+            "call_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "status": {
+              "enum": [
+                "error",
+                "cancelled",
+                "discarded"
+              ]
+            },
+            "outputs": {
+              "type": "array",
+              "maxItems": 0,
+              "items": {
+                "$ref": "#/$defs/Envelope"
+              }
+            },
+            "error": {
+              "$ref": "#/$defs/Fault"
+            }
+          }
+        }
+      ]
+    },
+    "ActionOptions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ActionOption"
+      }
+    },
+    "MemoryControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reason_code",
+        "delete_persistent"
+      ],
+      "properties": {
+        "reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "delete_persistent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SaveRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "game_save_ref",
+        "policy_version",
+        "content_version"
+      ],
+      "properties": {
+        "game_save_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "content_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      }
+    },
+    "CommonKnowledgeView": {
+      "type": "array",
+      "maxItems": 11,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "category_id",
+          "statements"
+        ],
+        "properties": {
+          "category_id": {
+            "enum": [
+              "people",
+              "corporations",
+              "occupations",
+              "night_city",
+              "history",
+              "society_culture",
+              "technology",
+              "factions",
+              "law_security",
+              "economy",
+              "transport"
+            ]
+          },
+          "statements": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "PromptContextData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observations",
+        "canon_context",
+        "knowledge",
+        "knowledge_boundaries",
+        "memory",
+        "last_action_result",
+        "allowed_actions",
+        "player_identity",
+        "conversation_state"
+      ],
+      "properties": {
+        "observations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ObservationView"
+          }
+        },
+        "canon_context": {
+          "$ref": "#/$defs/CanonView"
+        },
+        "knowledge": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KnowledgeItemView"
+          }
+        },
+        "knowledge_boundaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KnowledgeBoundary"
+          }
+        },
+        "memory": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/MemoryView"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_action_result": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ActionOutcomeView"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowed_actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActionOption"
+          }
+        },
+        "player_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "name_known_by_npc",
+            "known_facts"
+          ],
+          "properties": {
+            "name": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name_known_by_npc": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "known_facts": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "conversation_state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "encounter",
+            "topic_tags",
+            "closing"
+          ],
+          "properties": {
+            "encounter": {
+              "enum": [
+                "first",
+                "recontact"
+              ]
+            },
+            "topic_tags": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              }
+            },
+            "closing": {
+              "type": "boolean"
+            }
+          }
+        },
+        "common_knowledge": {
+          "$ref": "#/$defs/CommonKnowledgeView"
+        }
+      }
+    }
+  }
+}
