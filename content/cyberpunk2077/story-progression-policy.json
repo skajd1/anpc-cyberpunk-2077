@@ -1,0 +1,3277 @@
+{
+  "version": "0.1",
+  "status": "draft",
+  "runtime_enabled": false,
+  "quest_statuses": [
+    "not_started",
+    "active",
+    "completed",
+    "failed"
+  ],
+  "periods": [
+    "pre_heist",
+    "act2",
+    "finale",
+    "epilogue"
+  ],
+  "contacts": [
+    "nearby",
+    "remote",
+    "scene",
+    "absent",
+    "engram"
+  ],
+  "choices": {
+    "judy_pisces": [
+      "v_plan",
+      "maiko_no_pay",
+      "maiko_killed",
+      "maiko_paid"
+    ],
+    "judy_relationship": [
+      "friend",
+      "partner",
+      "cut_off"
+    ],
+    "panam_relationship": [
+      "friend",
+      "partner",
+      "betrayed",
+      "pending"
+    ],
+    "goro_fate": [
+      "saved",
+      "abandoned",
+      "pending"
+    ],
+    "kerry_relationship": [
+      "friend",
+      "partner"
+    ],
+    "river_rescue": [
+      "rescued",
+      "failed",
+      "pending"
+    ],
+    "river_relationship": [
+      "friend",
+      "partner"
+    ],
+    "evelyn_offer": [
+      "client",
+      "dex_offer"
+    ],
+    "johnny_relationship": [
+      "second_chance",
+      "rejected",
+      "pending",
+      "separated"
+    ],
+    "songbird_route": [
+      "pending",
+      "songbird",
+      "reed",
+      "moon_departed",
+      "fia_custody",
+      "dead"
+    ]
+  },
+  "quests": [
+    {
+      "id": "nomad",
+      "title": "The Nomad",
+      "track": "lifepath",
+      "prerequisites": [],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "streetkid",
+      "title": "The Streetkid",
+      "track": "lifepath",
+      "prerequisites": [],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "corporate",
+      "title": "The Corpo-Rat",
+      "track": "lifepath",
+      "prerequisites": [],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "rescue",
+      "title": "The Rescue",
+      "track": "main",
+      "prerequisites": [],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "ripperdoc",
+      "title": "The Ripperdoc",
+      "track": "main",
+      "prerequisites": [
+        "rescue"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "ride",
+      "title": "The Ride",
+      "track": "main",
+      "prerequisites": [
+        "ripperdoc"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "information",
+      "title": "The Information",
+      "track": "main",
+      "prerequisites": [
+        "ride"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "pickup",
+      "title": "The Pickup",
+      "track": "main",
+      "prerequisites": [
+        "ride"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "heist",
+      "title": "The Heist",
+      "track": "main",
+      "prerequisites": [
+        "information",
+        "pickup"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "love_like_fire",
+      "title": "Love Like Fire",
+      "track": "main",
+      "prerequisites": [
+        "heist"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "playing_for_time",
+      "title": "Playing for Time",
+      "track": "main",
+      "prerequisites": [
+        "heist"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "automatic_love",
+      "title": "Automatic Love",
+      "track": "main",
+      "prerequisites": [
+        "playing_for_time"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "space_in_between",
+      "title": "The Space in Between",
+      "track": "main",
+      "prerequisites": [
+        "automatic_love"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "disasterpiece",
+      "title": "Disasterpiece",
+      "track": "main",
+      "prerequisites": [
+        "space_in_between"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "double_life",
+      "title": "Double Life",
+      "track": "main",
+      "prerequisites": [
+        "disasterpiece"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "map_tann_pelen",
+      "title": "M’ap Tann Pèlen",
+      "track": "main",
+      "prerequisites": [
+        "double_life"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "walk_the_line",
+      "title": "I Walk the Line",
+      "track": "main",
+      "prerequisites": [
+        "map_tann_pelen"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "transmission",
+      "title": "Transmission",
+      "track": "main",
+      "prerequisites": [
+        "walk_the_line"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "never_fade_away",
+      "title": "Never Fade Away",
+      "track": "main",
+      "prerequisites": [
+        "transmission"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "ghost_town",
+      "title": "Ghost Town",
+      "track": "main",
+      "prerequisites": [
+        "playing_for_time"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "lightning_breaks",
+      "title": "Lightning Breaks",
+      "track": "main",
+      "prerequisites": [
+        "ghost_town"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "life_during_wartime",
+      "title": "Life During Wartime",
+      "track": "main",
+      "prerequisites": [
+        "lightning_breaks"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "down_on_the_street",
+      "title": "Down on the Street",
+      "track": "main",
+      "prerequisites": [
+        "playing_for_time"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "gimme_danger",
+      "title": "Gimme Danger",
+      "track": "main",
+      "prerequisites": [
+        "down_on_the_street"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "play_it_safe",
+      "title": "Play It Safe",
+      "track": "main",
+      "prerequisites": [
+        "gimme_danger"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "search_and_destroy",
+      "title": "Search and Destroy",
+      "track": "main",
+      "prerequisites": [
+        "play_it_safe"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "nocturne",
+      "title": "Nocturne Op55N1",
+      "track": "main",
+      "prerequisites": [
+        "transmission",
+        "life_during_wartime",
+        "search_and_destroy"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "both_sides_now",
+      "title": "Both Sides, Now",
+      "track": "judy",
+      "prerequisites": [
+        "double_life"
+      ],
+      "source_ids": [
+        "WIKI_INFORMATION",
+        "WIKI_DOUBLE_LIFE",
+        "WIKI_JUDY",
+        "WIKI_PISCES",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "ex_factor",
+      "title": "Ex-Factor",
+      "track": "judy",
+      "prerequisites": [
+        "both_sides_now"
+      ],
+      "source_ids": [
+        "WIKI_INFORMATION",
+        "WIKI_DOUBLE_LIFE",
+        "WIKI_JUDY",
+        "WIKI_PISCES",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "talkin_revolution",
+      "title": "Talkin’ ’Bout a Revolution",
+      "track": "judy",
+      "prerequisites": [
+        "ex_factor"
+      ],
+      "source_ids": [
+        "WIKI_INFORMATION",
+        "WIKI_DOUBLE_LIFE",
+        "WIKI_JUDY",
+        "WIKI_PISCES",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "pisces",
+      "title": "Pisces",
+      "track": "judy",
+      "prerequisites": [
+        "talkin_revolution"
+      ],
+      "source_ids": [
+        "WIKI_INFORMATION",
+        "WIKI_DOUBLE_LIFE",
+        "WIKI_JUDY",
+        "WIKI_PISCES",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "pyramid_song",
+      "title": "Pyramid Song",
+      "track": "judy",
+      "prerequisites": [
+        "pisces"
+      ],
+      "source_ids": [
+        "WIKI_INFORMATION",
+        "WIKI_DOUBLE_LIFE",
+        "WIKI_JUDY",
+        "WIKI_PISCES",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "riders_storm",
+      "title": "Riders on the Storm",
+      "track": "panam",
+      "prerequisites": [
+        "life_during_wartime"
+      ],
+      "source_ids": [
+        "WIKI_PANAM",
+        "GUIDE_ROMANCE",
+        "WIKI_PANAM_FRIENDS"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "little_help",
+      "title": "With a Little Help from My Friends",
+      "track": "panam",
+      "prerequisites": [
+        "riders_storm"
+      ],
+      "source_ids": [
+        "WIKI_PANAM",
+        "GUIDE_ROMANCE",
+        "WIKI_PANAM_FRIENDS"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "queen_highway",
+      "title": "Queen of the Highway",
+      "track": "panam",
+      "prerequisites": [
+        "little_help"
+      ],
+      "source_ids": [
+        "WIKI_PANAM",
+        "GUIDE_ROMANCE",
+        "WIKI_PANAM_FRIENDS"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "fought_law",
+      "title": "I Fought the Law",
+      "track": "river",
+      "prerequisites": [
+        "life_during_wartime"
+      ],
+      "source_ids": [
+        "WIKI_RIVER",
+        "WIKI_HUNT",
+        "GUIDE_ROMANCE",
+        "GUIDE_RIVER"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "hunt",
+      "title": "The Hunt",
+      "track": "river",
+      "prerequisites": [
+        "fought_law"
+      ],
+      "source_ids": [
+        "WIKI_RIVER",
+        "WIKI_HUNT",
+        "GUIDE_ROMANCE",
+        "GUIDE_RIVER"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "following_river",
+      "title": "Following the River",
+      "track": "river",
+      "prerequisites": [
+        "hunt"
+      ],
+      "source_ids": [
+        "WIKI_RIVER",
+        "WIKI_HUNT",
+        "GUIDE_ROMANCE",
+        "GUIDE_RIVER"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "tapeworm",
+      "title": "Tapeworm",
+      "track": "johnny",
+      "prerequisites": [
+        "playing_for_time"
+      ],
+      "source_ids": [
+        "CDPR_GAME",
+        "LORE_TAPEWORM",
+        "LORE_CHIPPIN",
+        "LORE_SAMURAI"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "chippin_in",
+      "title": "Chippin’ In",
+      "track": "johnny",
+      "prerequisites": [
+        "tapeworm"
+      ],
+      "source_ids": [
+        "CDPR_GAME",
+        "LORE_TAPEWORM",
+        "LORE_CHIPPIN",
+        "LORE_SAMURAI"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "blistering_love",
+      "title": "Blistering Love",
+      "track": "johnny",
+      "prerequisites": [
+        "chippin_in"
+      ],
+      "source_ids": [
+        "CDPR_GAME",
+        "LORE_TAPEWORM",
+        "LORE_CHIPPIN",
+        "LORE_SAMURAI"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "holdin_on",
+      "title": "Holdin’ On",
+      "track": "kerry",
+      "prerequisites": [
+        "chippin_in"
+      ],
+      "source_ids": [
+        "WIKI_KERRY",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "second_conflict",
+      "title": "Second Conflict",
+      "track": "kerry",
+      "prerequisites": [
+        "holdin_on"
+      ],
+      "source_ids": [
+        "WIKI_KERRY",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "like_supreme",
+      "title": "A Like Supreme",
+      "track": "kerry",
+      "prerequisites": [
+        "second_conflict"
+      ],
+      "source_ids": [
+        "WIKI_KERRY",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "rebel_rebel",
+      "title": "Rebel! Rebel!",
+      "track": "kerry",
+      "prerequisites": [
+        "like_supreme"
+      ],
+      "source_ids": [
+        "WIKI_KERRY",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "dont_hear_it",
+      "title": "I Don’t Wanna Hear It",
+      "track": "kerry",
+      "prerequisites": [
+        "rebel_rebel"
+      ],
+      "source_ids": [
+        "WIKI_KERRY",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "off_leash",
+      "title": "Off the Leash",
+      "track": "kerry",
+      "prerequisites": [
+        "dont_hear_it"
+      ],
+      "source_ids": [
+        "WIKI_KERRY",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "boat_drinks",
+      "title": "Boat Drinks",
+      "track": "kerry",
+      "prerequisites": [
+        "off_leash"
+      ],
+      "source_ids": [
+        "WIKI_KERRY",
+        "GUIDE_ROMANCE"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "paid_full",
+      "title": "Paid in Full",
+      "track": "viktor",
+      "prerequisites": [
+        "ripperdoc"
+      ],
+      "source_ids": [
+        "WIKI_VIKTOR"
+      ],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "dog_eat_dog",
+      "title": "Dog Eat Dog",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "transmission"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "hole_sky",
+      "title": "Hole in the Sky",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "dog_eat_dog"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "spider_fly",
+      "title": "Spider and the Fly",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "hole_sky"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "lucretia",
+      "title": "Lucretia My Reflection",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "spider_fly"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "damned",
+      "title": "The Damned",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "lucretia"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "get_it_together",
+      "title": "Get It Together",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "damned"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "know_my_name",
+      "title": "You Know My Name",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "get_it_together"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "birds_broken",
+      "title": "Birds with Broken Wings",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "know_my_name"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "seen_face",
+      "title": "I’ve Seen That Face Before",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "birds_broken"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "firestarter",
+      "title": "Firestarter",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "seen_face"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "killing_moon",
+      "title": "The Killing Moon",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "firestarter"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "run_this_town",
+      "title": "Run This Town",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "firestarter"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "black_steel",
+      "title": "Black Steel in the Hour of Chaos",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "firestarter"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "somewhat_damaged",
+      "title": "Somewhat Damaged",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "black_steel"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "leave_silence",
+      "title": "Leave in Silence",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "somewhat_damaged"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "four_score",
+      "title": "Four Score and Seven",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "leave_silence"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "from_her_eternity",
+      "title": "From Her to Eternity",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "killing_moon"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "through_pain",
+      "title": "Through Pain to Heaven",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "killing_moon"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "who_wants_live",
+      "title": "Who Wants to Live Forever",
+      "track": "phantom_liberty",
+      "prerequisites": [],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "things_done",
+      "title": "Things Done Changed",
+      "track": "phantom_liberty",
+      "prerequisites": [
+        "who_wants_live"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "last_caress",
+      "title": "Last Caress",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "totalimmortal",
+      "title": "Totalimmortal",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "where_mind",
+      "title": "Where Is My Mind?",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "we_gotta_live",
+      "title": "We Gotta Live Together",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "forward_death",
+      "title": "Forward to Death",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "belly_beast",
+      "title": "Belly of the Beast",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "knockin_heaven",
+      "title": "Knockin’ on Heaven’s Door",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "for_whom_bell",
+      "title": "For Whom the Bell Tolls",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "dont_fear_reaper",
+      "title": "(Don’t Fear) The Reaper",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "changes",
+      "title": "Changes",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "path_glory",
+      "title": "Path of Glory",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "new_dawn",
+      "title": "New Dawn Fades",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    },
+    {
+      "id": "all_watchtower",
+      "title": "All Along the Watchtower",
+      "track": "ending",
+      "prerequisites": [
+        "nocturne"
+      ],
+      "source_ids": [],
+      "game_binding": null,
+      "binding_status": "unverified"
+    }
+  ],
+  "characters": [
+    {
+      "character_key": "evelyn",
+      "display_name": "에블린 파커",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "client": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.information",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.heist",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "dex_offer": {
+          "condition": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "content.quests.information",
+                    "op": "eq",
+                    "value": "completed"
+                  },
+                  {
+                    "field": "content.choices.evelyn_offer",
+                    "op": "eq",
+                    "value": "dex_offer"
+                  }
+                ]
+              },
+              {
+                "field": "content.quests.heist",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "recovered": {
+          "condition": {
+            "field": "content.quests.double_life",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": false
+        },
+        "dead": {
+          "condition": {
+            "field": "content.quests.both_sides_now",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_INFORMATION",
+        "WIKI_DOUBLE_LIFE",
+        "WIKI_EVELYN"
+      ]
+    },
+    {
+      "character_key": "goro",
+      "display_name": "고로 타케무라",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "witness": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.playing_for_time",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.down_on_the_street",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "investigation": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.down_on_the_street",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.gimme_danger",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "parade": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.gimme_danger",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.search_and_destroy",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "saved": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.search_and_destroy",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.goro_fate",
+                "op": "eq",
+                "value": "saved"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "abandoned": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.search_and_destroy",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.goro_fate",
+                "op": "eq",
+                "value": "abandoned"
+              }
+            ]
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_GORO"
+      ]
+    },
+    {
+      "character_key": "jackie",
+      "display_name": "재키 웰스",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "partner": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.rescue",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.story.period",
+                "op": "eq",
+                "value": "pre_heist"
+              },
+              {
+                "field": "content.quests.heist",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "dead": {
+          "condition": {
+            "field": "content.quests.heist",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_JACKIE"
+      ]
+    },
+    {
+      "character_key": "johnny",
+      "display_name": "조니 실버핸드",
+      "channels": [
+        "engram"
+      ],
+      "stages": {
+        "first": {
+          "condition": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "content.quests.playing_for_time",
+                    "op": "eq",
+                    "value": "completed"
+                  },
+                  {
+                    "field": "content.quests.automatic_love",
+                    "op": "in",
+                    "value": [
+                      "not_started",
+                      "active"
+                    ]
+                  }
+                ]
+              },
+              {
+                "field": "content.quests.ghost_town",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              },
+              {
+                "field": "content.quests.down_on_the_street",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              },
+              {
+                "field": "content.quests.chippin_in",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "cooperation": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.playing_for_time",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.chippin_in",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "second_chance": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.chippin_in",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.johnny_relationship",
+                "op": "eq",
+                "value": "second_chance"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "rejected": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.chippin_in",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.johnny_relationship",
+                "op": "eq",
+                "value": "rejected"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "friend": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.like_supreme",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.johnny_relationship",
+                "op": "eq",
+                "value": "second_chance"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "unavailable": {
+          "condition": {
+            "field": "content.choices.johnny_relationship",
+            "op": "eq",
+            "value": "separated"
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "CDPR_GAME",
+        "LORE_TAPEWORM",
+        "LORE_CHIPPIN",
+        "LORE_SAMURAI"
+      ]
+    },
+    {
+      "character_key": "judy",
+      "display_name": "주디 알바레스",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "first": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.information",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.double_life",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "rescue": {
+          "condition": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "content.quests.double_life",
+                    "op": "eq",
+                    "value": "completed"
+                  },
+                  {
+                    "field": "content.quests.talkin_revolution",
+                    "op": "in",
+                    "value": [
+                      "not_started",
+                      "active"
+                    ]
+                  }
+                ]
+              },
+              {
+                "field": "content.quests.both_sides_now",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "clouds": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.talkin_revolution",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.pisces",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "maiko_no_pay": {
+          "condition": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "content.quests.pisces",
+                    "op": "eq",
+                    "value": "completed"
+                  },
+                  {
+                    "field": "content.choices.judy_pisces",
+                    "op": "eq",
+                    "value": "maiko_no_pay"
+                  }
+                ]
+              },
+              {
+                "field": "content.quests.pyramid_song",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "maiko_killed": {
+          "condition": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "content.quests.pisces",
+                    "op": "eq",
+                    "value": "completed"
+                  },
+                  {
+                    "field": "content.choices.judy_pisces",
+                    "op": "eq",
+                    "value": "maiko_killed"
+                  }
+                ]
+              },
+              {
+                "field": "content.quests.pyramid_song",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "friend": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.pyramid_song",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.judy_relationship",
+                "op": "eq",
+                "value": "friend"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "partner": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.pyramid_song",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.judy_relationship",
+                "op": "eq",
+                "value": "partner"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "cut_off": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.pisces",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.judy_pisces",
+                "op": "eq",
+                "value": "maiko_paid"
+              }
+            ]
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_INFORMATION",
+        "WIKI_DOUBLE_LIFE",
+        "WIKI_JUDY",
+        "WIKI_PISCES",
+        "GUIDE_ROMANCE"
+      ]
+    },
+    {
+      "character_key": "kerry",
+      "display_name": "케리 유로다인",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "first": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.holdin_on",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.like_supreme",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "music": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.like_supreme",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.dont_hear_it",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "us_cracks": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.dont_hear_it",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.boat_drinks",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "friend": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.boat_drinks",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.kerry_relationship",
+                "op": "eq",
+                "value": "friend"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "partner": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.boat_drinks",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.kerry_relationship",
+                "op": "eq",
+                "value": "partner"
+              }
+            ]
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_KERRY",
+        "GUIDE_ROMANCE"
+      ]
+    },
+    {
+      "character_key": "misty",
+      "display_name": "미스티 올셰프스키",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "friend": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.ripperdoc",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.heist",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "loss": {
+          "condition": {
+            "field": "content.quests.playing_for_time",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": false
+        },
+        "rooftop": {
+          "condition": {
+            "field": "content.quests.nocturne",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": true
+        },
+        "arasaka": {
+          "condition": {
+            "field": "content.quests.nocturne",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": true
+        }
+      },
+      "source_ids": [
+        "WIKI_MISTY",
+        "WIKI_NOCTURNE"
+      ]
+    },
+    {
+      "character_key": "panam",
+      "display_name": "팬앰 팔머",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "first": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.ghost_town",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.life_during_wartime",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "hellman": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.life_during_wartime",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.riders_storm",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "saul_saved": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.riders_storm",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.queen_highway",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "friend": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.queen_highway",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.panam_relationship",
+                "op": "eq",
+                "value": "friend"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "partner": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.queen_highway",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.panam_relationship",
+                "op": "eq",
+                "value": "partner"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "betrayed": {
+          "condition": {
+            "field": "content.choices.panam_relationship",
+            "op": "eq",
+            "value": "betrayed"
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_PANAM",
+        "GUIDE_ROMANCE",
+        "WIKI_PANAM_FRIENDS"
+      ]
+    },
+    {
+      "character_key": "river",
+      "display_name": "리버 워드",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "case": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.fought_law",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.hunt",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "randy": {
+          "condition": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "content.quests.fought_law",
+                    "op": "eq",
+                    "value": "completed"
+                  },
+                  {
+                    "field": "content.quests.hunt",
+                    "op": "in",
+                    "value": [
+                      "not_started",
+                      "active"
+                    ]
+                  }
+                ]
+              },
+              {
+                "field": "content.quests.hunt",
+                "op": "eq",
+                "value": "active"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "saved": {
+          "condition": {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "content.quests.hunt",
+                    "op": "eq",
+                    "value": "completed"
+                  },
+                  {
+                    "field": "content.choices.river_rescue",
+                    "op": "eq",
+                    "value": "rescued"
+                  }
+                ]
+              },
+              {
+                "field": "content.quests.following_river",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "friend": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.following_river",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.river_rescue",
+                "op": "eq",
+                "value": "rescued"
+              },
+              {
+                "field": "content.choices.river_relationship",
+                "op": "eq",
+                "value": "friend"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "partner": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.following_river",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.river_rescue",
+                "op": "eq",
+                "value": "rescued"
+              },
+              {
+                "field": "content.choices.river_relationship",
+                "op": "eq",
+                "value": "partner"
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "failed": {
+          "condition": {
+            "field": "content.choices.river_rescue",
+            "op": "eq",
+            "value": "failed"
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_RIVER",
+        "WIKI_HUNT",
+        "GUIDE_ROMANCE",
+        "GUIDE_RIVER"
+      ]
+    },
+    {
+      "character_key": "rogue",
+      "display_name": "로그 아멘디아레스",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "client": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.playing_for_time",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.ghost_town",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "work": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.ghost_town",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.chippin_in",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "johnny": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.chippin_in",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.blistering_love",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "after_date": {
+          "condition": {
+            "field": "content.quests.blistering_love",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_ROGUE",
+        "GUIDE_BLISTERING"
+      ]
+    },
+    {
+      "character_key": "songbird",
+      "display_name": "송소미 (송버드)",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "introduced": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.transmission",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.hole_sky",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "rescue_operation": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.hole_sky",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.know_my_name",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "black_sapphire": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.know_my_name",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.birds_broken",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": true
+        },
+        "escape_planning": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.birds_broken",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.firestarter",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "moon_escape": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.firestarter",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.songbird_route",
+                "op": "eq",
+                "value": "songbird"
+              }
+            ]
+          },
+          "scene_only": true
+        },
+        "matrix_confession": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.firestarter",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.songbird_route",
+                "op": "eq",
+                "value": "songbird"
+              }
+            ]
+          },
+          "scene_only": true
+        },
+        "cynosure_core": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.black_steel",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.choices.songbird_route",
+                "op": "eq",
+                "value": "reed"
+              }
+            ]
+          },
+          "scene_only": true
+        },
+        "moon_departed": {
+          "condition": {
+            "field": "content.choices.songbird_route",
+            "op": "eq",
+            "value": "moon_departed"
+          },
+          "scene_only": false
+        },
+        "fia_custody": {
+          "condition": {
+            "field": "content.choices.songbird_route",
+            "op": "eq",
+            "value": "fia_custody"
+          },
+          "scene_only": false
+        },
+        "dead": {
+          "condition": {
+            "field": "content.choices.songbird_route",
+            "op": "eq",
+            "value": "dead"
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKIPEDIA_PHANTOM_LIBERTY",
+        "PCGAMER_PL_ENDINGS"
+      ]
+    },
+    {
+      "character_key": "viktor",
+      "display_name": "빅터 벡터",
+      "channels": [
+        "nearby"
+      ],
+      "stages": {
+        "friend": {
+          "condition": {
+            "all": [
+              {
+                "field": "content.quests.ripperdoc",
+                "op": "eq",
+                "value": "completed"
+              },
+              {
+                "field": "content.quests.playing_for_time",
+                "op": "in",
+                "value": [
+                  "not_started",
+                  "active"
+                ]
+              }
+            ]
+          },
+          "scene_only": false
+        },
+        "relic": {
+          "condition": {
+            "field": "content.quests.playing_for_time",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": false
+        },
+        "paid": {
+          "condition": {
+            "field": "content.quests.paid_full",
+            "op": "eq",
+            "value": "completed"
+          },
+          "scene_only": false
+        }
+      },
+      "source_ids": [
+        "WIKI_VIKTOR"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "viktor_debt_paid",
+      "character_keys": [
+        "viktor"
+      ],
+      "condition": {
+        "field": "content.quests.paid_full",
+        "op": "eq",
+        "value": "completed"
+      },
+      "current_goals": [],
+      "fact_id": "STORY_VIKTOR_PAID"
+    },
+    {
+      "id": "viktor_diagnosis",
+      "character_keys": [
+        "viktor"
+      ],
+      "condition": {
+        "field": "content.quests.playing_for_time",
+        "op": "eq",
+        "value": "completed"
+      },
+      "current_goals": [],
+      "fact_id": "STORY_VIKTOR_RELIC"
+    },
+    {
+      "id": "misty_loss",
+      "character_keys": [
+        "misty"
+      ],
+      "condition": {
+        "field": "content.quests.playing_for_time",
+        "op": "eq",
+        "value": "completed"
+      },
+      "current_goals": [],
+      "fact_id": "STORY_MISTY_LOSS"
+    }
+  ],
+  "presets": [
+    {
+      "id": "before_heist",
+      "label": "습격 전 · 의뢰 준비",
+      "fields": {
+        "content.quests.nomad": "not_started",
+        "content.quests.streetkid": "not_started",
+        "content.quests.corporate": "not_started",
+        "content.quests.rescue": "completed",
+        "content.quests.ripperdoc": "completed",
+        "content.quests.ride": "completed",
+        "content.quests.information": "completed",
+        "content.quests.pickup": "completed",
+        "content.quests.heist": "not_started",
+        "content.quests.love_like_fire": "not_started",
+        "content.quests.playing_for_time": "not_started",
+        "content.quests.automatic_love": "not_started",
+        "content.quests.space_in_between": "not_started",
+        "content.quests.disasterpiece": "not_started",
+        "content.quests.double_life": "not_started",
+        "content.quests.map_tann_pelen": "not_started",
+        "content.quests.walk_the_line": "not_started",
+        "content.quests.transmission": "not_started",
+        "content.quests.never_fade_away": "not_started",
+        "content.quests.ghost_town": "not_started",
+        "content.quests.lightning_breaks": "not_started",
+        "content.quests.life_during_wartime": "not_started",
+        "content.quests.down_on_the_street": "not_started",
+        "content.quests.gimme_danger": "not_started",
+        "content.quests.play_it_safe": "not_started",
+        "content.quests.search_and_destroy": "not_started",
+        "content.quests.nocturne": "not_started",
+        "content.quests.both_sides_now": "not_started",
+        "content.quests.ex_factor": "not_started",
+        "content.quests.talkin_revolution": "not_started",
+        "content.quests.pisces": "not_started",
+        "content.quests.pyramid_song": "not_started",
+        "content.quests.riders_storm": "not_started",
+        "content.quests.little_help": "not_started",
+        "content.quests.queen_highway": "not_started",
+        "content.quests.fought_law": "not_started",
+        "content.quests.hunt": "not_started",
+        "content.quests.following_river": "not_started",
+        "content.quests.tapeworm": "not_started",
+        "content.quests.chippin_in": "not_started",
+        "content.quests.blistering_love": "not_started",
+        "content.quests.holdin_on": "not_started",
+        "content.quests.second_conflict": "not_started",
+        "content.quests.like_supreme": "not_started",
+        "content.quests.rebel_rebel": "not_started",
+        "content.quests.dont_hear_it": "not_started",
+        "content.quests.off_leash": "not_started",
+        "content.quests.boat_drinks": "not_started",
+        "content.quests.paid_full": "not_started",
+        "content.quests.dog_eat_dog": "not_started",
+        "content.quests.hole_sky": "not_started",
+        "content.quests.spider_fly": "not_started",
+        "content.quests.lucretia": "not_started",
+        "content.quests.damned": "not_started",
+        "content.quests.get_it_together": "not_started",
+        "content.quests.know_my_name": "not_started",
+        "content.quests.birds_broken": "not_started",
+        "content.quests.seen_face": "not_started",
+        "content.quests.firestarter": "not_started",
+        "content.quests.killing_moon": "not_started",
+        "content.quests.run_this_town": "not_started",
+        "content.quests.black_steel": "not_started",
+        "content.quests.somewhat_damaged": "not_started",
+        "content.quests.leave_silence": "not_started",
+        "content.quests.four_score": "not_started",
+        "content.quests.from_her_eternity": "not_started",
+        "content.quests.through_pain": "not_started",
+        "content.quests.who_wants_live": "not_started",
+        "content.quests.things_done": "not_started",
+        "content.quests.last_caress": "not_started",
+        "content.quests.totalimmortal": "not_started",
+        "content.quests.where_mind": "not_started",
+        "content.quests.we_gotta_live": "not_started",
+        "content.quests.forward_death": "not_started",
+        "content.quests.belly_beast": "not_started",
+        "content.quests.knockin_heaven": "not_started",
+        "content.quests.for_whom_bell": "not_started",
+        "content.quests.dont_fear_reaper": "not_started",
+        "content.quests.changes": "not_started",
+        "content.quests.path_glory": "not_started",
+        "content.quests.new_dawn": "not_started",
+        "content.quests.all_watchtower": "not_started",
+        "content.story.period": "pre_heist",
+        "content.story.scene_free": true,
+        "content.contact.evelyn": "nearby",
+        "content.contact.goro": "absent",
+        "content.contact.jackie": "nearby",
+        "content.contact.johnny": "absent",
+        "content.contact.judy": "nearby",
+        "content.contact.kerry": "absent",
+        "content.contact.misty": "nearby",
+        "content.contact.panam": "absent",
+        "content.contact.river": "absent",
+        "content.contact.rogue": "absent",
+        "content.contact.songbird": "absent",
+        "content.contact.viktor": "nearby"
+      },
+      "relationship_stages": {
+        "jackie": "partner",
+        "viktor": "friend",
+        "misty": "friend",
+        "evelyn": "client",
+        "judy": "first"
+      }
+    },
+    {
+      "id": "after_heist",
+      "label": "렐릭 진단 이후",
+      "fields": {
+        "content.quests.nomad": "not_started",
+        "content.quests.streetkid": "not_started",
+        "content.quests.corporate": "not_started",
+        "content.quests.rescue": "completed",
+        "content.quests.ripperdoc": "completed",
+        "content.quests.ride": "completed",
+        "content.quests.information": "completed",
+        "content.quests.pickup": "completed",
+        "content.quests.heist": "completed",
+        "content.quests.love_like_fire": "completed",
+        "content.quests.playing_for_time": "completed",
+        "content.quests.automatic_love": "not_started",
+        "content.quests.space_in_between": "not_started",
+        "content.quests.disasterpiece": "not_started",
+        "content.quests.double_life": "not_started",
+        "content.quests.map_tann_pelen": "not_started",
+        "content.quests.walk_the_line": "not_started",
+        "content.quests.transmission": "not_started",
+        "content.quests.never_fade_away": "not_started",
+        "content.quests.ghost_town": "not_started",
+        "content.quests.lightning_breaks": "not_started",
+        "content.quests.life_during_wartime": "not_started",
+        "content.quests.down_on_the_street": "not_started",
+        "content.quests.gimme_danger": "not_started",
+        "content.quests.play_it_safe": "not_started",
+        "content.quests.search_and_destroy": "not_started",
+        "content.quests.nocturne": "not_started",
+        "content.quests.both_sides_now": "not_started",
+        "content.quests.ex_factor": "not_started",
+        "content.quests.talkin_revolution": "not_started",
+        "content.quests.pisces": "not_started",
+        "content.quests.pyramid_song": "not_started",
+        "content.quests.riders_storm": "not_started",
+        "content.quests.little_help": "not_started",
+        "content.quests.queen_highway": "not_started",
+        "content.quests.fought_law": "not_started",
+        "content.quests.hunt": "not_started",
+        "content.quests.following_river": "not_started",
+        "content.quests.tapeworm": "not_started",
+        "content.quests.chippin_in": "not_started",
+        "content.quests.blistering_love": "not_started",
+        "content.quests.holdin_on": "not_started",
+        "content.quests.second_conflict": "not_started",
+        "content.quests.like_supreme": "not_started",
+        "content.quests.rebel_rebel": "not_started",
+        "content.quests.dont_hear_it": "not_started",
+        "content.quests.off_leash": "not_started",
+        "content.quests.boat_drinks": "not_started",
+        "content.quests.paid_full": "not_started",
+        "content.quests.dog_eat_dog": "not_started",
+        "content.quests.hole_sky": "not_started",
+        "content.quests.spider_fly": "not_started",
+        "content.quests.lucretia": "not_started",
+        "content.quests.damned": "not_started",
+        "content.quests.get_it_together": "not_started",
+        "content.quests.know_my_name": "not_started",
+        "content.quests.birds_broken": "not_started",
+        "content.quests.seen_face": "not_started",
+        "content.quests.firestarter": "not_started",
+        "content.quests.killing_moon": "not_started",
+        "content.quests.run_this_town": "not_started",
+        "content.quests.black_steel": "not_started",
+        "content.quests.somewhat_damaged": "not_started",
+        "content.quests.leave_silence": "not_started",
+        "content.quests.four_score": "not_started",
+        "content.quests.from_her_eternity": "not_started",
+        "content.quests.through_pain": "not_started",
+        "content.quests.who_wants_live": "not_started",
+        "content.quests.things_done": "not_started",
+        "content.quests.last_caress": "not_started",
+        "content.quests.totalimmortal": "not_started",
+        "content.quests.where_mind": "not_started",
+        "content.quests.we_gotta_live": "not_started",
+        "content.quests.forward_death": "not_started",
+        "content.quests.belly_beast": "not_started",
+        "content.quests.knockin_heaven": "not_started",
+        "content.quests.for_whom_bell": "not_started",
+        "content.quests.dont_fear_reaper": "not_started",
+        "content.quests.changes": "not_started",
+        "content.quests.path_glory": "not_started",
+        "content.quests.new_dawn": "not_started",
+        "content.quests.all_watchtower": "not_started",
+        "content.story.period": "act2",
+        "content.story.scene_free": true,
+        "content.contact.evelyn": "absent",
+        "content.contact.goro": "nearby",
+        "content.contact.jackie": "absent",
+        "content.contact.johnny": "engram",
+        "content.contact.judy": "absent",
+        "content.contact.kerry": "absent",
+        "content.contact.misty": "nearby",
+        "content.contact.panam": "absent",
+        "content.contact.river": "absent",
+        "content.contact.rogue": "nearby",
+        "content.contact.songbird": "absent",
+        "content.contact.viktor": "nearby"
+      },
+      "relationship_stages": {
+        "viktor": "relic",
+        "misty": "loss",
+        "goro": "witness",
+        "rogue": "client",
+        "johnny": "first"
+      }
+    },
+    {
+      "id": "judy_track",
+      "label": "부두 보이즈 경로 완료",
+      "fields": {
+        "content.quests.nomad": "not_started",
+        "content.quests.streetkid": "not_started",
+        "content.quests.corporate": "not_started",
+        "content.quests.rescue": "completed",
+        "content.quests.ripperdoc": "completed",
+        "content.quests.ride": "completed",
+        "content.quests.information": "completed",
+        "content.quests.pickup": "completed",
+        "content.quests.heist": "completed",
+        "content.quests.love_like_fire": "completed",
+        "content.quests.playing_for_time": "completed",
+        "content.quests.automatic_love": "completed",
+        "content.quests.space_in_between": "completed",
+        "content.quests.disasterpiece": "completed",
+        "content.quests.double_life": "completed",
+        "content.quests.map_tann_pelen": "completed",
+        "content.quests.walk_the_line": "completed",
+        "content.quests.transmission": "completed",
+        "content.quests.never_fade_away": "not_started",
+        "content.quests.ghost_town": "not_started",
+        "content.quests.lightning_breaks": "not_started",
+        "content.quests.life_during_wartime": "not_started",
+        "content.quests.down_on_the_street": "not_started",
+        "content.quests.gimme_danger": "not_started",
+        "content.quests.play_it_safe": "not_started",
+        "content.quests.search_and_destroy": "not_started",
+        "content.quests.nocturne": "not_started",
+        "content.quests.both_sides_now": "not_started",
+        "content.quests.ex_factor": "not_started",
+        "content.quests.talkin_revolution": "not_started",
+        "content.quests.pisces": "not_started",
+        "content.quests.pyramid_song": "not_started",
+        "content.quests.riders_storm": "not_started",
+        "content.quests.little_help": "not_started",
+        "content.quests.queen_highway": "not_started",
+        "content.quests.fought_law": "not_started",
+        "content.quests.hunt": "not_started",
+        "content.quests.following_river": "not_started",
+        "content.quests.tapeworm": "not_started",
+        "content.quests.chippin_in": "not_started",
+        "content.quests.blistering_love": "not_started",
+        "content.quests.holdin_on": "not_started",
+        "content.quests.second_conflict": "not_started",
+        "content.quests.like_supreme": "not_started",
+        "content.quests.rebel_rebel": "not_started",
+        "content.quests.dont_hear_it": "not_started",
+        "content.quests.off_leash": "not_started",
+        "content.quests.boat_drinks": "not_started",
+        "content.quests.paid_full": "not_started",
+        "content.quests.dog_eat_dog": "not_started",
+        "content.quests.hole_sky": "not_started",
+        "content.quests.spider_fly": "not_started",
+        "content.quests.lucretia": "not_started",
+        "content.quests.damned": "not_started",
+        "content.quests.get_it_together": "not_started",
+        "content.quests.know_my_name": "not_started",
+        "content.quests.birds_broken": "not_started",
+        "content.quests.seen_face": "not_started",
+        "content.quests.firestarter": "not_started",
+        "content.quests.killing_moon": "not_started",
+        "content.quests.run_this_town": "not_started",
+        "content.quests.black_steel": "not_started",
+        "content.quests.somewhat_damaged": "not_started",
+        "content.quests.leave_silence": "not_started",
+        "content.quests.four_score": "not_started",
+        "content.quests.from_her_eternity": "not_started",
+        "content.quests.through_pain": "not_started",
+        "content.quests.who_wants_live": "not_started",
+        "content.quests.things_done": "not_started",
+        "content.quests.last_caress": "not_started",
+        "content.quests.totalimmortal": "not_started",
+        "content.quests.where_mind": "not_started",
+        "content.quests.we_gotta_live": "not_started",
+        "content.quests.forward_death": "not_started",
+        "content.quests.belly_beast": "not_started",
+        "content.quests.knockin_heaven": "not_started",
+        "content.quests.for_whom_bell": "not_started",
+        "content.quests.dont_fear_reaper": "not_started",
+        "content.quests.changes": "not_started",
+        "content.quests.path_glory": "not_started",
+        "content.quests.new_dawn": "not_started",
+        "content.quests.all_watchtower": "not_started",
+        "content.story.period": "act2",
+        "content.story.scene_free": true,
+        "content.contact.evelyn": "absent",
+        "content.contact.goro": "absent",
+        "content.contact.jackie": "absent",
+        "content.contact.johnny": "engram",
+        "content.contact.judy": "nearby",
+        "content.contact.kerry": "absent",
+        "content.contact.misty": "nearby",
+        "content.contact.panam": "absent",
+        "content.contact.river": "absent",
+        "content.contact.rogue": "absent",
+        "content.contact.songbird": "absent",
+        "content.contact.viktor": "nearby"
+      },
+      "relationship_stages": {
+        "viktor": "relic",
+        "misty": "loss",
+        "judy": "rescue",
+        "johnny": "cooperation"
+      }
+    },
+    {
+      "id": "panam_track",
+      "label": "헬맨 추적 경로 완료",
+      "fields": {
+        "content.quests.nomad": "not_started",
+        "content.quests.streetkid": "not_started",
+        "content.quests.corporate": "not_started",
+        "content.quests.rescue": "completed",
+        "content.quests.ripperdoc": "completed",
+        "content.quests.ride": "completed",
+        "content.quests.information": "completed",
+        "content.quests.pickup": "completed",
+        "content.quests.heist": "completed",
+        "content.quests.love_like_fire": "completed",
+        "content.quests.playing_for_time": "completed",
+        "content.quests.automatic_love": "not_started",
+        "content.quests.space_in_between": "not_started",
+        "content.quests.disasterpiece": "not_started",
+        "content.quests.double_life": "not_started",
+        "content.quests.map_tann_pelen": "not_started",
+        "content.quests.walk_the_line": "not_started",
+        "content.quests.transmission": "not_started",
+        "content.quests.never_fade_away": "not_started",
+        "content.quests.ghost_town": "completed",
+        "content.quests.lightning_breaks": "completed",
+        "content.quests.life_during_wartime": "completed",
+        "content.quests.down_on_the_street": "not_started",
+        "content.quests.gimme_danger": "not_started",
+        "content.quests.play_it_safe": "not_started",
+        "content.quests.search_and_destroy": "not_started",
+        "content.quests.nocturne": "not_started",
+        "content.quests.both_sides_now": "not_started",
+        "content.quests.ex_factor": "not_started",
+        "content.quests.talkin_revolution": "not_started",
+        "content.quests.pisces": "not_started",
+        "content.quests.pyramid_song": "not_started",
+        "content.quests.riders_storm": "not_started",
+        "content.quests.little_help": "not_started",
+        "content.quests.queen_highway": "not_started",
+        "content.quests.fought_law": "not_started",
+        "content.quests.hunt": "not_started",
+        "content.quests.following_river": "not_started",
+        "content.quests.tapeworm": "not_started",
+        "content.quests.chippin_in": "not_started",
+        "content.quests.blistering_love": "not_started",
+        "content.quests.holdin_on": "not_started",
+        "content.quests.second_conflict": "not_started",
+        "content.quests.like_supreme": "not_started",
+        "content.quests.rebel_rebel": "not_started",
+        "content.quests.dont_hear_it": "not_started",
+        "content.quests.off_leash": "not_started",
+        "content.quests.boat_drinks": "not_started",
+        "content.quests.paid_full": "not_started",
+        "content.quests.dog_eat_dog": "not_started",
+        "content.quests.hole_sky": "not_started",
+        "content.quests.spider_fly": "not_started",
+        "content.quests.lucretia": "not_started",
+        "content.quests.damned": "not_started",
+        "content.quests.get_it_together": "not_started",
+        "content.quests.know_my_name": "not_started",
+        "content.quests.birds_broken": "not_started",
+        "content.quests.seen_face": "not_started",
+        "content.quests.firestarter": "not_started",
+        "content.quests.killing_moon": "not_started",
+        "content.quests.run_this_town": "not_started",
+        "content.quests.black_steel": "not_started",
+        "content.quests.somewhat_damaged": "not_started",
+        "content.quests.leave_silence": "not_started",
+        "content.quests.four_score": "not_started",
+        "content.quests.from_her_eternity": "not_started",
+        "content.quests.through_pain": "not_started",
+        "content.quests.who_wants_live": "not_started",
+        "content.quests.things_done": "not_started",
+        "content.quests.last_caress": "not_started",
+        "content.quests.totalimmortal": "not_started",
+        "content.quests.where_mind": "not_started",
+        "content.quests.we_gotta_live": "not_started",
+        "content.quests.forward_death": "not_started",
+        "content.quests.belly_beast": "not_started",
+        "content.quests.knockin_heaven": "not_started",
+        "content.quests.for_whom_bell": "not_started",
+        "content.quests.dont_fear_reaper": "not_started",
+        "content.quests.changes": "not_started",
+        "content.quests.path_glory": "not_started",
+        "content.quests.new_dawn": "not_started",
+        "content.quests.all_watchtower": "not_started",
+        "content.story.period": "act2",
+        "content.story.scene_free": true,
+        "content.contact.evelyn": "absent",
+        "content.contact.goro": "absent",
+        "content.contact.jackie": "absent",
+        "content.contact.johnny": "engram",
+        "content.contact.judy": "absent",
+        "content.contact.kerry": "absent",
+        "content.contact.misty": "nearby",
+        "content.contact.panam": "nearby",
+        "content.contact.river": "absent",
+        "content.contact.rogue": "nearby",
+        "content.contact.songbird": "absent",
+        "content.contact.viktor": "nearby"
+      },
+      "relationship_stages": {
+        "panam": "hellman",
+        "rogue": "work",
+        "viktor": "relic",
+        "misty": "loss",
+        "johnny": "cooperation"
+      }
+    },
+    {
+      "id": "goro_track",
+      "label": "아라사카 추적 · 타케무라 구출",
+      "fields": {
+        "content.quests.nomad": "not_started",
+        "content.quests.streetkid": "not_started",
+        "content.quests.corporate": "not_started",
+        "content.quests.rescue": "completed",
+        "content.quests.ripperdoc": "completed",
+        "content.quests.ride": "completed",
+        "content.quests.information": "completed",
+        "content.quests.pickup": "completed",
+        "content.quests.heist": "completed",
+        "content.quests.love_like_fire": "completed",
+        "content.quests.playing_for_time": "completed",
+        "content.quests.automatic_love": "not_started",
+        "content.quests.space_in_between": "not_started",
+        "content.quests.disasterpiece": "not_started",
+        "content.quests.double_life": "not_started",
+        "content.quests.map_tann_pelen": "not_started",
+        "content.quests.walk_the_line": "not_started",
+        "content.quests.transmission": "not_started",
+        "content.quests.never_fade_away": "not_started",
+        "content.quests.ghost_town": "not_started",
+        "content.quests.lightning_breaks": "not_started",
+        "content.quests.life_during_wartime": "not_started",
+        "content.quests.down_on_the_street": "completed",
+        "content.quests.gimme_danger": "completed",
+        "content.quests.play_it_safe": "completed",
+        "content.quests.search_and_destroy": "completed",
+        "content.quests.nocturne": "not_started",
+        "content.quests.both_sides_now": "not_started",
+        "content.quests.ex_factor": "not_started",
+        "content.quests.talkin_revolution": "not_started",
+        "content.quests.pisces": "not_started",
+        "content.quests.pyramid_song": "not_started",
+        "content.quests.riders_storm": "not_started",
+        "content.quests.little_help": "not_started",
+        "content.quests.queen_highway": "not_started",
+        "content.quests.fought_law": "not_started",
+        "content.quests.hunt": "not_started",
+        "content.quests.following_river": "not_started",
+        "content.quests.tapeworm": "not_started",
+        "content.quests.chippin_in": "not_started",
+        "content.quests.blistering_love": "not_started",
+        "content.quests.holdin_on": "not_started",
+        "content.quests.second_conflict": "not_started",
+        "content.quests.like_supreme": "not_started",
+        "content.quests.rebel_rebel": "not_started",
+        "content.quests.dont_hear_it": "not_started",
+        "content.quests.off_leash": "not_started",
+        "content.quests.boat_drinks": "not_started",
+        "content.quests.paid_full": "not_started",
+        "content.quests.dog_eat_dog": "not_started",
+        "content.quests.hole_sky": "not_started",
+        "content.quests.spider_fly": "not_started",
+        "content.quests.lucretia": "not_started",
+        "content.quests.damned": "not_started",
+        "content.quests.get_it_together": "not_started",
+        "content.quests.know_my_name": "not_started",
+        "content.quests.birds_broken": "not_started",
+        "content.quests.seen_face": "not_started",
+        "content.quests.firestarter": "not_started",
+        "content.quests.killing_moon": "not_started",
+        "content.quests.run_this_town": "not_started",
+        "content.quests.black_steel": "not_started",
+        "content.quests.somewhat_damaged": "not_started",
+        "content.quests.leave_silence": "not_started",
+        "content.quests.four_score": "not_started",
+        "content.quests.from_her_eternity": "not_started",
+        "content.quests.through_pain": "not_started",
+        "content.quests.who_wants_live": "not_started",
+        "content.quests.things_done": "not_started",
+        "content.quests.last_caress": "not_started",
+        "content.quests.totalimmortal": "not_started",
+        "content.quests.where_mind": "not_started",
+        "content.quests.we_gotta_live": "not_started",
+        "content.quests.forward_death": "not_started",
+        "content.quests.belly_beast": "not_started",
+        "content.quests.knockin_heaven": "not_started",
+        "content.quests.for_whom_bell": "not_started",
+        "content.quests.dont_fear_reaper": "not_started",
+        "content.quests.changes": "not_started",
+        "content.quests.path_glory": "not_started",
+        "content.quests.new_dawn": "not_started",
+        "content.quests.all_watchtower": "not_started",
+        "content.story.period": "act2",
+        "content.story.scene_free": true,
+        "content.contact.evelyn": "absent",
+        "content.contact.goro": "nearby",
+        "content.contact.jackie": "absent",
+        "content.contact.johnny": "engram",
+        "content.contact.judy": "absent",
+        "content.contact.kerry": "absent",
+        "content.contact.misty": "nearby",
+        "content.contact.panam": "absent",
+        "content.contact.river": "absent",
+        "content.contact.rogue": "absent",
+        "content.contact.songbird": "absent",
+        "content.contact.viktor": "nearby",
+        "content.choices.goro_fate": "saved"
+      },
+      "relationship_stages": {
+        "goro": "saved",
+        "viktor": "relic",
+        "misty": "loss",
+        "johnny": "cooperation"
+      }
+    },
+    {
+      "id": "late_open",
+      "label": "본편 세 경로 완료 · 엠버스 진입 전",
+      "fields": {
+        "content.quests.nomad": "not_started",
+        "content.quests.streetkid": "not_started",
+        "content.quests.corporate": "not_started",
+        "content.quests.rescue": "completed",
+        "content.quests.ripperdoc": "completed",
+        "content.quests.ride": "completed",
+        "content.quests.information": "completed",
+        "content.quests.pickup": "completed",
+        "content.quests.heist": "completed",
+        "content.quests.love_like_fire": "completed",
+        "content.quests.playing_for_time": "completed",
+        "content.quests.automatic_love": "completed",
+        "content.quests.space_in_between": "completed",
+        "content.quests.disasterpiece": "completed",
+        "content.quests.double_life": "completed",
+        "content.quests.map_tann_pelen": "completed",
+        "content.quests.walk_the_line": "completed",
+        "content.quests.transmission": "completed",
+        "content.quests.never_fade_away": "not_started",
+        "content.quests.ghost_town": "completed",
+        "content.quests.lightning_breaks": "completed",
+        "content.quests.life_during_wartime": "completed",
+        "content.quests.down_on_the_street": "completed",
+        "content.quests.gimme_danger": "completed",
+        "content.quests.play_it_safe": "completed",
+        "content.quests.search_and_destroy": "completed",
+        "content.quests.nocturne": "not_started",
+        "content.quests.both_sides_now": "not_started",
+        "content.quests.ex_factor": "not_started",
+        "content.quests.talkin_revolution": "not_started",
+        "content.quests.pisces": "not_started",
+        "content.quests.pyramid_song": "not_started",
+        "content.quests.riders_storm": "not_started",
+        "content.quests.little_help": "not_started",
+        "content.quests.queen_highway": "not_started",
+        "content.quests.fought_law": "not_started",
+        "content.quests.hunt": "not_started",
+        "content.quests.following_river": "not_started",
+        "content.quests.tapeworm": "not_started",
+        "content.quests.chippin_in": "not_started",
+        "content.quests.blistering_love": "not_started",
+        "content.quests.holdin_on": "not_started",
+        "content.quests.second_conflict": "not_started",
+        "content.quests.like_supreme": "not_started",
+        "content.quests.rebel_rebel": "not_started",
+        "content.quests.dont_hear_it": "not_started",
+        "content.quests.off_leash": "not_started",
+        "content.quests.boat_drinks": "not_started",
+        "content.quests.paid_full": "not_started",
+        "content.quests.dog_eat_dog": "not_started",
+        "content.quests.hole_sky": "not_started",
+        "content.quests.spider_fly": "not_started",
+        "content.quests.lucretia": "not_started",
+        "content.quests.damned": "not_started",
+        "content.quests.get_it_together": "not_started",
+        "content.quests.know_my_name": "not_started",
+        "content.quests.birds_broken": "not_started",
+        "content.quests.seen_face": "not_started",
+        "content.quests.firestarter": "not_started",
+        "content.quests.killing_moon": "not_started",
+        "content.quests.run_this_town": "not_started",
+        "content.quests.black_steel": "not_started",
+        "content.quests.somewhat_damaged": "not_started",
+        "content.quests.leave_silence": "not_started",
+        "content.quests.four_score": "not_started",
+        "content.quests.from_her_eternity": "not_started",
+        "content.quests.through_pain": "not_started",
+        "content.quests.who_wants_live": "not_started",
+        "content.quests.things_done": "not_started",
+        "content.quests.last_caress": "not_started",
+        "content.quests.totalimmortal": "not_started",
+        "content.quests.where_mind": "not_started",
+        "content.quests.we_gotta_live": "not_started",
+        "content.quests.forward_death": "not_started",
+        "content.quests.belly_beast": "not_started",
+        "content.quests.knockin_heaven": "not_started",
+        "content.quests.for_whom_bell": "not_started",
+        "content.quests.dont_fear_reaper": "not_started",
+        "content.quests.changes": "not_started",
+        "content.quests.path_glory": "not_started",
+        "content.quests.new_dawn": "not_started",
+        "content.quests.all_watchtower": "not_started",
+        "content.story.period": "act2",
+        "content.story.scene_free": true,
+        "content.contact.evelyn": "absent",
+        "content.contact.goro": "nearby",
+        "content.contact.jackie": "absent",
+        "content.contact.johnny": "engram",
+        "content.contact.judy": "nearby",
+        "content.contact.kerry": "absent",
+        "content.contact.misty": "nearby",
+        "content.contact.panam": "nearby",
+        "content.contact.river": "absent",
+        "content.contact.rogue": "nearby",
+        "content.contact.songbird": "absent",
+        "content.contact.viktor": "nearby",
+        "content.choices.goro_fate": "saved"
+      },
+      "relationship_stages": {
+        "judy": "rescue",
+        "panam": "hellman",
+        "goro": "saved",
+        "rogue": "work",
+        "viktor": "relic",
+        "misty": "loss",
+        "johnny": "cooperation"
+      }
+    },
+    {
+      "id": "pl_planning",
+      "label": "팬텀 리버티 · 탈출 계획 공유 후",
+      "fields": {
+        "content.quests.nomad": "not_started",
+        "content.quests.streetkid": "not_started",
+        "content.quests.corporate": "not_started",
+        "content.quests.rescue": "completed",
+        "content.quests.ripperdoc": "completed",
+        "content.quests.ride": "completed",
+        "content.quests.information": "completed",
+        "content.quests.pickup": "completed",
+        "content.quests.heist": "completed",
+        "content.quests.love_like_fire": "completed",
+        "content.quests.playing_for_time": "completed",
+        "content.quests.automatic_love": "completed",
+        "content.quests.space_in_between": "completed",
+        "content.quests.disasterpiece": "completed",
+        "content.quests.double_life": "completed",
+        "content.quests.map_tann_pelen": "completed",
+        "content.quests.walk_the_line": "completed",
+        "content.quests.transmission": "completed",
+        "content.quests.never_fade_away": "not_started",
+        "content.quests.ghost_town": "not_started",
+        "content.quests.lightning_breaks": "not_started",
+        "content.quests.life_during_wartime": "not_started",
+        "content.quests.down_on_the_street": "not_started",
+        "content.quests.gimme_danger": "not_started",
+        "content.quests.play_it_safe": "not_started",
+        "content.quests.search_and_destroy": "not_started",
+        "content.quests.nocturne": "not_started",
+        "content.quests.both_sides_now": "not_started",
+        "content.quests.ex_factor": "not_started",
+        "content.quests.talkin_revolution": "not_started",
+        "content.quests.pisces": "not_started",
+        "content.quests.pyramid_song": "not_started",
+        "content.quests.riders_storm": "not_started",
+        "content.quests.little_help": "not_started",
+        "content.quests.queen_highway": "not_started",
+        "content.quests.fought_law": "not_started",
+        "content.quests.hunt": "not_started",
+        "content.quests.following_river": "not_started",
+        "content.quests.tapeworm": "not_started",
+        "content.quests.chippin_in": "not_started",
+        "content.quests.blistering_love": "not_started",
+        "content.quests.holdin_on": "not_started",
+        "content.quests.second_conflict": "not_started",
+        "content.quests.like_supreme": "not_started",
+        "content.quests.rebel_rebel": "not_started",
+        "content.quests.dont_hear_it": "not_started",
+        "content.quests.off_leash": "not_started",
+        "content.quests.boat_drinks": "not_started",
+        "content.quests.paid_full": "not_started",
+        "content.quests.dog_eat_dog": "completed",
+        "content.quests.hole_sky": "completed",
+        "content.quests.spider_fly": "completed",
+        "content.quests.lucretia": "completed",
+        "content.quests.damned": "completed",
+        "content.quests.get_it_together": "completed",
+        "content.quests.know_my_name": "completed",
+        "content.quests.birds_broken": "completed",
+        "content.quests.seen_face": "not_started",
+        "content.quests.firestarter": "not_started",
+        "content.quests.killing_moon": "not_started",
+        "content.quests.run_this_town": "not_started",
+        "content.quests.black_steel": "not_started",
+        "content.quests.somewhat_damaged": "not_started",
+        "content.quests.leave_silence": "not_started",
+        "content.quests.four_score": "not_started",
+        "content.quests.from_her_eternity": "not_started",
+        "content.quests.through_pain": "not_started",
+        "content.quests.who_wants_live": "not_started",
+        "content.quests.things_done": "not_started",
+        "content.quests.last_caress": "not_started",
+        "content.quests.totalimmortal": "not_started",
+        "content.quests.where_mind": "not_started",
+        "content.quests.we_gotta_live": "not_started",
+        "content.quests.forward_death": "not_started",
+        "content.quests.belly_beast": "not_started",
+        "content.quests.knockin_heaven": "not_started",
+        "content.quests.for_whom_bell": "not_started",
+        "content.quests.dont_fear_reaper": "not_started",
+        "content.quests.changes": "not_started",
+        "content.quests.path_glory": "not_started",
+        "content.quests.new_dawn": "not_started",
+        "content.quests.all_watchtower": "not_started",
+        "content.story.period": "act2",
+        "content.story.scene_free": true,
+        "content.contact.evelyn": "absent",
+        "content.contact.goro": "absent",
+        "content.contact.jackie": "absent",
+        "content.contact.johnny": "engram",
+        "content.contact.judy": "absent",
+        "content.contact.kerry": "absent",
+        "content.contact.misty": "nearby",
+        "content.contact.panam": "absent",
+        "content.contact.river": "absent",
+        "content.contact.rogue": "absent",
+        "content.contact.songbird": "nearby",
+        "content.contact.viktor": "nearby",
+        "content.choices.songbird_route": "pending"
+      },
+      "relationship_stages": {
+        "songbird": "escape_planning",
+        "viktor": "relic",
+        "misty": "loss",
+        "johnny": "cooperation"
+      }
+    },
+    {
+      "id": "finale",
+      "label": "엠버스 이후 · 원작 결말 진행",
+      "fields": {
+        "content.quests.nomad": "not_started",
+        "content.quests.streetkid": "not_started",
+        "content.quests.corporate": "not_started",
+        "content.quests.rescue": "completed",
+        "content.quests.ripperdoc": "completed",
+        "content.quests.ride": "completed",
+        "content.quests.information": "completed",
+        "content.quests.pickup": "completed",
+        "content.quests.heist": "completed",
+        "content.quests.love_like_fire": "completed",
+        "content.quests.playing_for_time": "completed",
+        "content.quests.automatic_love": "completed",
+        "content.quests.space_in_between": "completed",
+        "content.quests.disasterpiece": "completed",
+        "content.quests.double_life": "completed",
+        "content.quests.map_tann_pelen": "completed",
+        "content.quests.walk_the_line": "completed",
+        "content.quests.transmission": "completed",
+        "content.quests.never_fade_away": "not_started",
+        "content.quests.ghost_town": "completed",
+        "content.quests.lightning_breaks": "completed",
+        "content.quests.life_during_wartime": "completed",
+        "content.quests.down_on_the_street": "completed",
+        "content.quests.gimme_danger": "completed",
+        "content.quests.play_it_safe": "completed",
+        "content.quests.search_and_destroy": "completed",
+        "content.quests.nocturne": "completed",
+        "content.quests.both_sides_now": "not_started",
+        "content.quests.ex_factor": "not_started",
+        "content.quests.talkin_revolution": "not_started",
+        "content.quests.pisces": "not_started",
+        "content.quests.pyramid_song": "not_started",
+        "content.quests.riders_storm": "not_started",
+        "content.quests.little_help": "not_started",
+        "content.quests.queen_highway": "not_started",
+        "content.quests.fought_law": "not_started",
+        "content.quests.hunt": "not_started",
+        "content.quests.following_river": "not_started",
+        "content.quests.tapeworm": "not_started",
+        "content.quests.chippin_in": "not_started",
+        "content.quests.blistering_love": "not_started",
+        "content.quests.holdin_on": "not_started",
+        "content.quests.second_conflict": "not_started",
+        "content.quests.like_supreme": "not_started",
+        "content.quests.rebel_rebel": "not_started",
+        "content.quests.dont_hear_it": "not_started",
+        "content.quests.off_leash": "not_started",
+        "content.quests.boat_drinks": "not_started",
+        "content.quests.paid_full": "not_started",
+        "content.quests.dog_eat_dog": "not_started",
+        "content.quests.hole_sky": "not_started",
+        "content.quests.spider_fly": "not_started",
+        "content.quests.lucretia": "not_started",
+        "content.quests.damned": "not_started",
+        "content.quests.get_it_together": "not_started",
+        "content.quests.know_my_name": "not_started",
+        "content.quests.birds_broken": "not_started",
+        "content.quests.seen_face": "not_started",
+        "content.quests.firestarter": "not_started",
+        "content.quests.killing_moon": "not_started",
+        "content.quests.run_this_town": "not_started",
+        "content.quests.black_steel": "not_started",
+        "content.quests.somewhat_damaged": "not_started",
+        "content.quests.leave_silence": "not_started",
+        "content.quests.four_score": "not_started",
+        "content.quests.from_her_eternity": "not_started",
+        "content.quests.through_pain": "not_started",
+        "content.quests.who_wants_live": "not_started",
+        "content.quests.things_done": "not_started",
+        "content.quests.last_caress": "not_started",
+        "content.quests.totalimmortal": "not_started",
+        "content.quests.where_mind": "not_started",
+        "content.quests.we_gotta_live": "not_started",
+        "content.quests.forward_death": "not_started",
+        "content.quests.belly_beast": "not_started",
+        "content.quests.knockin_heaven": "not_started",
+        "content.quests.for_whom_bell": "not_started",
+        "content.quests.dont_fear_reaper": "not_started",
+        "content.quests.changes": "not_started",
+        "content.quests.path_glory": "not_started",
+        "content.quests.new_dawn": "not_started",
+        "content.quests.all_watchtower": "not_started",
+        "content.story.period": "finale",
+        "content.story.scene_free": false,
+        "content.contact.evelyn": "absent",
+        "content.contact.goro": "absent",
+        "content.contact.jackie": "absent",
+        "content.contact.johnny": "absent",
+        "content.contact.judy": "absent",
+        "content.contact.kerry": "absent",
+        "content.contact.misty": "scene",
+        "content.contact.panam": "absent",
+        "content.contact.river": "absent",
+        "content.contact.rogue": "absent",
+        "content.contact.songbird": "absent",
+        "content.contact.viktor": "absent"
+      },
+      "relationship_stages": {
+        "misty": "rooftop"
+      }
+    }
+  ]
+}

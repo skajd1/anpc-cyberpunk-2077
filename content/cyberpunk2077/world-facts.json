@@ -3563,9 +3563,9 @@
   {
     "schema_version": "0.1",
     "id": "STORY_VIKTOR_PAID",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
-    "statement": "V가 렐릭 진단을 받았고 외상 진료비 21,000에디를 갚았다.",
+    "statement": "V가 외상 진료비 21,000에디를 갚았다. 상환 전후에도 빅터와의 기존 우정은 유지된다.",
     "source": {
       "source_id": "WIKI_VIKTOR",
       "url": "https://cyberpunk.fandom.com/wiki/Viktor_Vektor",
@@ -3580,9 +3580,18 @@
           "value": "viktor"
         },
         {
-          "field": "content.relationship_stage",
-          "op": "eq",
-          "value": "paid"
+          "any": [
+            {
+              "field": "content.relationship_stage",
+              "op": "eq",
+              "value": "paid"
+            },
+            {
+              "field": "content.quests.paid_full",
+              "op": "eq",
+              "value": "completed"
+            }
+          ]
         }
       ]
     },

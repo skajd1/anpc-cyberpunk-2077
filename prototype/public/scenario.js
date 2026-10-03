@@ -1,5 +1,6 @@
 import { DialogueEngine, ACTIONS, SELECTION_ACTIONS } from './core.js';
-import { compileResearchTurn } from './research.js';
+import { compileResearchTurn, resolveRelationshipStage } from './research.js';
+import { evaluateStoryPolicy, storySignature, storyRequiresReset } from './story.js';
 import { TestMemory } from './memory.js';
 
 const clone = value => structuredClone(value);
@@ -60,16 +61,42 @@ export class ScenarioEngine extends DialogueEngine {
     const card = bundle.cards.find(c => c.character_key === npcKey);
     super({ personas: [{ ...initial.persona, trait_pools: card.trait_pools, personality_generation: card.personality_generation }], base, notify, clock });
     this.bundle = bundle; this.npcKey = npcKey; this.npcType = card.npc_type ?? 'community'; this.journal = []; this.lastEncounterAt = null;
-    this.readSettings = readSettings;
+    this.readSettings = readSettings; this.lastStorySettings = clone(readSettings());
     this.longMemory = new TestMemory(); this.summarize = summarize; this.persist = persist;
     this.turnAdapter = args => {
       if ([...JSON.stringify(this.journal)].length + [...args.playerText].length + 2000 > 192000) throw new Error('memory_capacity_exceeded');
+      this.synchronizeStoryMemory();
+      const signature = storySignature(readSettings());
       this.observeOutfit();
       const prepared = compileResearchTurn({ bundle, npcKey, settings: { ...readSettings(), scenario: true }, ...args,
         context: this.context(args.playerText), corePersonality: this.session.persona.core_personality });
       if (this.npcType === 'crowd') prepared.persona.lived_context.interests = Object.values(this.session.persona.traits);
+      prepared.isCurrent = () => storySignature(readSettings()) === signature && this.storyStatus().allowed;
       return prepared;
     };
+  }
+  synchronizeStoryMemory() {
+    const next = this.readSettings();
+    if (storyRequiresReset(this.lastStorySettings, next)) this.clearMemory();
+    this.lastStorySettings = clone(next);
+  }
+  storyStatus() {
+    const card = this.bundle.cards.find(c => c.character_key === this.npcKey), settings = this.readSettings();
+    return evaluateStoryPolicy(this.bundle, card, settings, resolveRelationshipStage(card, settings));
+  }
+  safe() {
+    if (!this.readSettings || !this.bundle) return super.safe();
+    const story = this.storyStatus();
+    if (!story.allowed) return false;
+    return story.enabled && story.channel === 'engram'
+      ? !this.world.combat && !this.world.quest_controlled : super.safe();
+  }
+  entryInRange() { return this.readSettings?.().storyState && this.storyStatus().channel === 'engram' || super.entryInRange(); }
+  tick() {
+    this.synchronizeStoryMemory();
+    if (this.session && this.readSettings().storyState && this.activeStorySignature !== storySignature(this.readSettings())) this.end(false, '퀘스트 상태 변경');
+    if (this.session && !this.safe()) this.end(false, '대화 지원 구간 종료');
+    super.tick();
   }
   allowed() {
     if (this.npcKey === 'johnny') return this.safe() ? clone(ACTIONS.filter(a => a.action_id === 'end_conversation')).map(a => ({ ...a, execution_mode: 'execute' })) : [];
@@ -77,14 +104,16 @@ export class ScenarioEngine extends DialogueEngine {
       ...(this.readSettings().selectActions ? clone(SELECTION_ACTIONS) : [])] : [];
   }
   start(key) {
+    this.synchronizeStoryMemory();
     this.assertCanEnter();
     if (this.npcType === 'crowd' && this.lastEncounterAt != null && this.clock() - this.lastEncounterAt >= 600000) this.clearMemory();
+    this.activeStorySignature = storySignature(this.readSettings());
     super.start(key); this.observeOutfit();
   }
   assertCanEnter() {
     compileResearchTurn({ bundle: this.bundle, npcKey: this.npcKey, settings: { ...this.readSettings(), scenario: true },
       context: { observations: {}, recent_turns: [], memory: null, allowed_actions: [] }, playerText: '' });
-    if (!this.safe() || this.world.distance > 4) throw new Error('안전 상태로 복귀한 뒤 4m 이내에서 진입하세요.');
+    if (!this.safe() || !this.entryInRange()) throw new Error('안전 상태로 복귀한 뒤 4m 이내에서 진입하세요.');
   }
   observeOutfit() {
     if (!this.session) return;
@@ -136,7 +165,7 @@ export class ScenarioEngine extends DialogueEngine {
     if (!result.stale) { this.persist?.(this); this.emit(); }
     return result;
   }
-  memorySnapshot() { return { journal: clone(this.journal), memory: this.longMemory.snapshot() }; }
+  memorySnapshot() { return { journal: clone(this.journal), memory: this.longMemory.snapshot(), storyState: clone(this.readSettings().storyState ?? null) }; }
   end(normal = true, reason) {
     if (this.session) this.lastEncounterAt = this.clock();
     super.end(normal, reason);
@@ -151,6 +180,7 @@ export class ScenarioEngine extends DialogueEngine {
   worldReset() { this.clearMemory(); super.worldReset(); }
   clearMemory() { this.journal = []; this.longMemory.clear(); this.lastEncounterAt = null; super.clearMemory(); this.persist?.(this); }
   restore(journal = [], world, memory) {
+    this.lastStorySettings = clone(this.readSettings());
     this.end(false, '모의 저장 로드'); this.worldEpoch++; this.instances.clear(); this.memories.clear();
     this.journal = this.npcType === 'community' ? clone(journal) : []; this.closedTurns = [];
     this.longMemory.restore(this.npcType === 'community' ? memory : null);

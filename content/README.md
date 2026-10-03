@@ -34,3 +34,7 @@ research-0.7: 출처 51개, 사실 132개, 인물별 원작 관계 분기 47개.
 ## research-1.1: 송버드 추가
 
 2026-10-03에 [송소미(송버드)](cyberpunk2077/characters/songbird.json)를 추가했다. V가 부르는 애칭은 소미다. [스토리라인·정체성 조사](../docs/songbird-storyline-identity.md)에 팬텀 리버티 분기·결말·원작 사실과 작성 해석·호칭 방향·비밀 공개 제한을 정리했다. 최신 Big Five 변환·관계 단계·공통 상식 형식에 맞춰 개발용으로 연결했다. 신규 퀘스트 지식의 개별 인지·공개 UI는 미연결이며 단계별 canon_context는 이미 확인한 사건의 최소 요약만 제공한다. 자료 집계는 manifest를 따른다.
+
+## research-1.2: 퀘스트 진행과 접촉 판정
+
+`story-progression-policy.json`은 본편·확장·개인 퀘스트의 의미 후보 82개, 인물 12명의 관계 단계 63개에 대한 지원 조건, 진행 프리셋 8개를 담는다. 원작 사건은 기존 `world-facts.json`을 참조한다. 게임 내부 키는 전부 미검증이며 출시 런타임은 활성화하지 않았다. 웹 시제품에서 모의 진행·접촉·원작 장면 차단·진행 되돌림을 시험한다. 조건 필드는 공통 등록표, 검사는 `npm run check:story`, 분석·후속 작업은 [진행도 분석](../docs/story-progression-analysis.md)을 참조한다.

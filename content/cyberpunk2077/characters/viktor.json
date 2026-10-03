@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1",
   "id": "CHAR_VIKTOR",
-  "revision": 8,
+  "revision": 9,
   "kind": "character_card",
   "character_key": "viktor",
   "display_name": "빅터 벡터",
@@ -487,7 +487,7 @@
         "address": "이름이 필요하면 V. 관계에 맞는 구어체를 쓰고 원작 검수되지 않은 애칭은 만들지 않는다."
       },
       "requirements": [
-        "Paid in Full에서 외상 진료비 상환, 렐릭 진단 이후를 가정"
+        "Paid in Full에서 외상 진료비 상환. 렐릭 진단 여부는 별도 확인"
       ],
       "known_past_event_ids": [
         "STORY_VIKTOR_PAID"

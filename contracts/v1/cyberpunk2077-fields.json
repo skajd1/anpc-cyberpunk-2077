@@ -3,7 +3,7 @@
   "config_version": "1.0",
   "game_id": "cyberpunk2077",
   "mod_id": "anpc",
-  "revision": 5,
+  "revision": 6,
   "fields": [
     {
       "field_id": "npc.can_observe_equipment",
@@ -1849,6 +1849,1066 @@
       "field_id": "content.songbird.archive_only",
       "meaning": "송버드 결말·독자용 분기 조사 조회 여부. 일반 대화에서는 설정하지 않음",
       "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.story.period",
+      "meaning": "본편 진행 구간. 결말·에필로그는 자유 대화 지원 밖",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.story.scene_free",
+      "meaning": "원작 대화·연출·퀘스트 제어가 없는 자유 상태의 확인값",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.nomad",
+      "meaning": "The Nomad의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.streetkid",
+      "meaning": "The Streetkid의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.corporate",
+      "meaning": "The Corpo-Rat의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.rescue",
+      "meaning": "The Rescue의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.ripperdoc",
+      "meaning": "The Ripperdoc의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.ride",
+      "meaning": "The Ride의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.information",
+      "meaning": "The Information의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.pickup",
+      "meaning": "The Pickup의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.heist",
+      "meaning": "The Heist의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.love_like_fire",
+      "meaning": "Love Like Fire의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.playing_for_time",
+      "meaning": "Playing for Time의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.automatic_love",
+      "meaning": "Automatic Love의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.space_in_between",
+      "meaning": "The Space in Between의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.disasterpiece",
+      "meaning": "Disasterpiece의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.double_life",
+      "meaning": "Double Life의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.map_tann_pelen",
+      "meaning": "M’ap Tann Pèlen의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.walk_the_line",
+      "meaning": "I Walk the Line의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.transmission",
+      "meaning": "Transmission의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.never_fade_away",
+      "meaning": "Never Fade Away의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.ghost_town",
+      "meaning": "Ghost Town의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.lightning_breaks",
+      "meaning": "Lightning Breaks의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.life_during_wartime",
+      "meaning": "Life During Wartime의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.down_on_the_street",
+      "meaning": "Down on the Street의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.gimme_danger",
+      "meaning": "Gimme Danger의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.play_it_safe",
+      "meaning": "Play It Safe의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.search_and_destroy",
+      "meaning": "Search and Destroy의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.nocturne",
+      "meaning": "Nocturne Op55N1의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.both_sides_now",
+      "meaning": "Both Sides, Now의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.ex_factor",
+      "meaning": "Ex-Factor의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.talkin_revolution",
+      "meaning": "Talkin’ ’Bout a Revolution의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.pisces",
+      "meaning": "Pisces의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.pyramid_song",
+      "meaning": "Pyramid Song의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.riders_storm",
+      "meaning": "Riders on the Storm의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.little_help",
+      "meaning": "With a Little Help from My Friends의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.queen_highway",
+      "meaning": "Queen of the Highway의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.fought_law",
+      "meaning": "I Fought the Law의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.hunt",
+      "meaning": "The Hunt의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.following_river",
+      "meaning": "Following the River의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.tapeworm",
+      "meaning": "Tapeworm의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.chippin_in",
+      "meaning": "Chippin’ In의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.blistering_love",
+      "meaning": "Blistering Love의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.holdin_on",
+      "meaning": "Holdin’ On의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.second_conflict",
+      "meaning": "Second Conflict의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.like_supreme",
+      "meaning": "A Like Supreme의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.rebel_rebel",
+      "meaning": "Rebel! Rebel!의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.dont_hear_it",
+      "meaning": "I Don’t Wanna Hear It의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.off_leash",
+      "meaning": "Off the Leash의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.boat_drinks",
+      "meaning": "Boat Drinks의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.paid_full",
+      "meaning": "Paid in Full의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.dog_eat_dog",
+      "meaning": "Dog Eat Dog의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.hole_sky",
+      "meaning": "Hole in the Sky의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.spider_fly",
+      "meaning": "Spider and the Fly의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.lucretia",
+      "meaning": "Lucretia My Reflection의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.damned",
+      "meaning": "The Damned의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.get_it_together",
+      "meaning": "Get It Together의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.know_my_name",
+      "meaning": "You Know My Name의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.birds_broken",
+      "meaning": "Birds with Broken Wings의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.seen_face",
+      "meaning": "I’ve Seen That Face Before의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.firestarter",
+      "meaning": "Firestarter의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.killing_moon",
+      "meaning": "The Killing Moon의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.run_this_town",
+      "meaning": "Run This Town의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.black_steel",
+      "meaning": "Black Steel in the Hour of Chaos의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.somewhat_damaged",
+      "meaning": "Somewhat Damaged의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.leave_silence",
+      "meaning": "Leave in Silence의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.four_score",
+      "meaning": "Four Score and Seven의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.from_her_eternity",
+      "meaning": "From Her to Eternity의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.through_pain",
+      "meaning": "Through Pain to Heaven의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.who_wants_live",
+      "meaning": "Who Wants to Live Forever의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.things_done",
+      "meaning": "Things Done Changed의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.last_caress",
+      "meaning": "Last Caress의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.totalimmortal",
+      "meaning": "Totalimmortal의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.where_mind",
+      "meaning": "Where Is My Mind?의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.we_gotta_live",
+      "meaning": "We Gotta Live Together의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.forward_death",
+      "meaning": "Forward to Death의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.belly_beast",
+      "meaning": "Belly of the Beast의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.knockin_heaven",
+      "meaning": "Knockin’ on Heaven’s Door의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.for_whom_bell",
+      "meaning": "For Whom the Bell Tolls의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.dont_fear_reaper",
+      "meaning": "(Don’t Fear) The Reaper의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.changes",
+      "meaning": "Changes의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.path_glory",
+      "meaning": "Path of Glory의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.new_dawn",
+      "meaning": "New Dawn Fades의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.quests.all_watchtower",
+      "meaning": "All Along the Watchtower의 정규화 진행 상태. 내부 게임 키 미검증",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.evelyn",
+      "meaning": "에블린 파커의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.goro",
+      "meaning": "고로 타케무라의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.jackie",
+      "meaning": "재키 웰스의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.johnny",
+      "meaning": "조니 실버핸드의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.judy",
+      "meaning": "주디 알바레스의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.kerry",
+      "meaning": "케리 유로다인의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.misty",
+      "meaning": "미스티 올셰프스키의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.panam",
+      "meaning": "팬앰 팔머의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.river",
+      "meaning": "리버 워드의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.rogue",
+      "meaning": "로그 아멘디아레스의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.songbird",
+      "meaning": "송소미 (송버드)의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.contact.viktor",
+      "meaning": "빅터 벡터의 현재 접촉 경로 확인값. 관계나 생존으로 추정하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.judy_pisces",
+      "meaning": "원작이 확인한 judy_pisces 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.judy_relationship",
+      "meaning": "원작이 확인한 judy_relationship 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.panam_relationship",
+      "meaning": "원작이 확인한 panam_relationship 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.goro_fate",
+      "meaning": "원작이 확인한 goro_fate 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.kerry_relationship",
+      "meaning": "원작이 확인한 kerry_relationship 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.river_rescue",
+      "meaning": "원작이 확인한 river_rescue 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.river_relationship",
+      "meaning": "원작이 확인한 river_relationship 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.evelyn_offer",
+      "meaning": "원작이 확인한 evelyn_offer 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.johnny_relationship",
+      "meaning": "원작이 확인한 johnny_relationship 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.choices.songbird_route",
+      "meaning": "원작이 확인한 songbird_route 분기. 대화 기억으로 변경하지 않음",
+      "value_type": "string",
       "unit": "none",
       "visibility": "internal",
       "observation_guard": null,

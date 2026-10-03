@@ -31,6 +31,7 @@ ANPC는 V가 먼저 시작하는 텍스트 대화·NPC 대사 자막과 상황�
 - [플레이어 음성 인식 구현 규격](docs/speech-recognition-specification.md): 선택 후속 PTT 모듈·실시간 전사·기존 텍스트 입력 연결·취소·설정·검증 기준.
 - [NPC 식별 및 대화 허용 규격](docs/npc-identity-specification.md): NPC 키, 고유/군중 추가 선택지·원작 제어 전환, 대화 조건·재접촉 기억.
 - [NPC 단기·장기 기억 및 비동기 정리 규격](docs/memory-specification.md): 미정리 원문·복장 관찰·일상 자기보고 조회, 부분 반영·용량, 저장별 기억 묶음과 로드 복원·재사용.
+- [메인 퀘스트 진행에 따른 NPC 대화 분석](docs/story-progression-analysis.md): 주요 사건·인물별 지원 창·게임 매핑 후보·후속 검증.
 - [게임 정보 수집 및 NPC 인지 규격](docs/game-context-specification.md): 표시 복장 텍스트·관찰, 원작 진행도 맥락·공개 평판 인지, 상태·출처와 갱신.
 - [콘텐츠 데이터 규격](docs/content-specification.md): 인물·군중과 성격 전환, 고정 신원·분야 깊이, 원작 관계·공개 평판·사소한 일상 창작 정책.
 - [NPC Big Five 핵심 성격 규격](docs/personality-specification.md): 다섯 축의 수준 기록·정량 해석, 25개 수준별 행동 지침, 로컬 변환·재사용과 기존 형식 전환 경계.

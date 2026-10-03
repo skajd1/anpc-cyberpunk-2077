@@ -1,3 +1,6 @@
+import { evaluateCondition } from './conditions.js';
+export { evaluateCondition } from './conditions.js';
+import { evaluateStoryPolicy, storySignature } from './story.js';
 import { DialogueEngine, validatePersona } from './core.js';
 import { validateCorePersonality, PERSONALITY_PROMPT_VERSION } from './personality.js';
 
@@ -27,26 +30,6 @@ export function knowledgeBlockReason(card, entry, fact, fields) {
   return null;
 }
 
-// unknown은 not으로 뒤집어 허용하지 않는 세 값 조건 평가.
-export function evaluateCondition(condition, fields) {
-  if (!condition || typeof condition !== 'object') return null;
-  if (condition.all) {
-    const values = condition.all.map(c => evaluateCondition(c, fields));
-    return values.includes(false) ? false : values.includes(null) ? null : values.length ? true : null;
-  }
-  if (condition.any) {
-    const values = condition.any.map(c => evaluateCondition(c, fields));
-    return values.includes(true) ? true : values.includes(null) ? null : values.length ? false : null;
-  }
-  if (condition.not) { const result = evaluateCondition(condition.not, fields); return result === null ? null : !result; }
-  const actual = fields[condition.field];
-  if (actual == null) return null;
-  if (condition.op === 'eq') return actual === condition.value;
-  if (condition.op === 'in') return Array.isArray(condition.value) ? condition.value.includes(actual) : null;
-  if (condition.op === 'gte') return typeof actual === 'number' ? actual >= condition.value : null;
-  if (condition.op === 'lte') return typeof actual === 'number' ? actual <= condition.value : null;
-  return null;
-}
 
 function normalize(text) { return text.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim(); }
 export function termMatches(text, term) {
@@ -76,6 +59,10 @@ export function resolveRelationshipStage(card, settings) {
   if (card.npc_type === 'crowd') return null;
   // 이전 시험 입력의 phase는 같은 단계의 첫 분기로만 해석한다. 협력 값으로 친밀도를 올리지 않는다.
   if (settings.relationship === 'unknown') return null;
+  if (card.character_key === 'viktor' && settings.storyState && settings.relationshipStage === 'paid') {
+    const id = settings.storyState.fields?.['content.quests.playing_for_time'] === 'completed' ? 'relic' : 'friend';
+    return card.relationship_stages.find(stage => stage.id === id);
+  }
   return settings.relationshipStage !== undefined
     ? card.relationship_stages?.find(stage => stage.id === settings.relationshipStage) ?? null
     : card.relationship_stages?.find(stage => stage.phase === settings.phase) ?? null;
@@ -90,9 +77,10 @@ export function relationshipContext(bundle, card, settings) {
     if (!fact || evaluateCondition(fact.validity_condition, fields) !== true) throw new Error('원작 관계 사건의 참조·분기 조건을 확인하세요.');
     return fact.statement;
   });
-  return { current_goals: clone(stage.current_goals), relationship_to_player: { ...clone(stage.relationship), source: 'simulation' },
-    known_past_events: events,
-    applied_rules: [`${card.character_key}:${stage.id}`] };
+  const story = evaluateStoryPolicy(bundle, card, settings, stage);
+  return { current_goals: [...clone(stage.current_goals), ...story.events.flatMap(e => e.current_goals)], relationship_to_player: { ...clone(stage.relationship), source: 'simulation' },
+    known_past_events: [...new Set([...events, ...story.events.map(e => e.statement)])],
+    applied_rules: [`${card.character_key}:${stage.id}`, ...story.events.map(e => e.id)] };
 }
 
 export function makeResearchFields(bundle, card, settings) {
@@ -114,6 +102,12 @@ export function makeResearchFields(bundle, card, settings) {
       ? settings.relicKnown === true && k.fact_id === 'RELIC_V'
       : settings.basicKnowledge === true);
   }
+  const story = evaluateStoryPolicy(bundle, card, settings, stage);
+  if (story.enabled) {
+    Object.assign(fields, story.fields);
+    // 시험 체크박스만으로 렐릭을 미리 알게 하지 않는다. 실제 인지 어댑터는 별도 필요.
+    fields['content.grants.RELIC_V'] &&= story.fields['content.quests.playing_for_time'] === 'completed';
+  }
   return fields;
 }
 
@@ -124,6 +118,8 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
   if (!card) throw new Error('조사 대상 인물이 아닙니다.');
   const stage = resolveRelationshipStage(card, settings);
   if (card.npc_type !== 'crowd' && !stage) throw new Error('인물의 원작 관계 단계를 선택하세요.');
+  const story = evaluateStoryPolicy(bundle, card, settings, stage);
+  if (!story.allowed) throw new Error(story.reason);
   if (stage?.available === false) throw new Error(`${stage.label}: 이 분기에서는 새 대화를 시작할 수 없습니다.`);
   const canon = relationshipContext(bundle, card, settings);
   const fields = makeResearchFields(bundle, card, settings);
@@ -207,7 +203,7 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
   const reminder = settings.configuration === 'full' ? { hard_limits: card.identity_anchor.hard_limits } : null;
   return { persona, context: preparedContext, styleExamples: examples, identityReminder: reminder,
     diagnostics: { npc_key: npcKey, content_version: bundle.version, configuration: settings.configuration,
-      development_only: true, review_status: card.review_status, runtime_enabled: card.runtime_enabled,
+      development_only: true, story_policy: { enabled: story.enabled, allowed: story.allowed, channel: story.channel, applied_events: story.events.map(e => e.id) }, review_status: card.review_status, runtime_enabled: card.runtime_enabled,
       core_personality: clone(persona.core_personality), personality_prompt_version: PERSONALITY_PROMPT_VERSION,
       simulation: { phase: fields['content.phase'], relationship_stage: stage?.id ?? null,
         relationship: persona.relationship_to_player.label, requirements: stage?.requirements ?? [] },
@@ -226,7 +222,10 @@ export function createResearchEngine({ bundle, npcKey, settings, base, notify })
   const emptyContext = { observations: {}, recent_turns: [], memory: null };
   const initial = compileResearchTurn({ bundle, npcKey, settings, context: emptyContext, playerText: '' });
   return new DialogueEngine({ personas: [initial.persona], base, notify,
-    turnAdapter: args => compileResearchTurn({ bundle, npcKey, settings, ...args }) });
+    turnAdapter: args => {
+      const signature = storySignature(settings);
+      return { ...compileResearchTurn({ bundle, npcKey, settings, ...args }), isCurrent: () => storySignature(settings) === signature };
+    } });
 }
 
 // 배선·취소·기억 시험용 고정 응답. 모델 품질 평가용 응답이 아님.

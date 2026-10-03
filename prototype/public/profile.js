@@ -1,3 +1,4 @@
+import { evaluateStoryPolicy } from './story.js';
 import { KNOWLEDGE_DEPTHS, evaluateCondition, makeResearchFields, knowledgeBlockReason, resolveRelationshipStage } from './research.js';
 import { PERSONALITY_AXES, personalityInstructions, validateCorePersonality } from './personality.js';
 
@@ -27,7 +28,8 @@ export function buildCharacterProfile(bundle, key, settings, selectedFactIds = [
   const relationshipStage = resolveRelationshipStage(card, settings);
   const facts = new Map(bundle.facts.map(f => [f.id, f]));
   const domains = card.knowledge_profile?.domains ?? [];
-  const ready = settings.allowDraft === true && evaluateCondition(card.dialogue_conditions, fields) === true;
+  const story = evaluateStoryPolicy(bundle, card, settings, relationshipStage);
+  const ready = story.allowed && settings.allowDraft === true && evaluateCondition(card.dialogue_conditions, fields) === true;
   const assigned = new Set(card.knowledge_ids);
   const entries = bundle.knowledge.filter(k => assigned.has(k.id) && k.owner_key === key).map(k => {
     const fact = facts.get(k.fact_id), domain = domains.find(d => d.domain_id === k.domain_id);
@@ -47,7 +49,7 @@ export function buildCharacterProfile(bundle, key, settings, selectedFactIds = [
   if (card.npc_type !== 'crowd') validateCorePersonality(core);
   const instructions = core ? personalityInstructions(core) : [];
   if (core) validateCorePersonality(core);
-  return { card, ready, relationshipStage,
+  return { card, ready, relationshipStage, story,
     personality: Object.entries(PERSONALITY_AXES).map(([id, label], i) => ({ id, label, level: core?.[id] ?? null, instruction: instructions[i] ?? null })),
     personalPrinciples: card.personal_principles,
     currentGoals: relationshipStage?.current_goals ?? card.goals.filter(g => evaluateCondition(g.condition, fields) === true).map(g => g.goal),

@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": { "start": "node prototype/server.js", "test": "node --test prototype/tests/*.test.js", "check:contracts": "node scripts/validate-contracts.mjs" },
-  "engines": { "node": ">=22" }
+  "scripts": {
+    "start": "node prototype/server.js",
+    "test": "node --test prototype/tests/*.test.js",
+    "check:contracts": "node scripts/validate-contracts.mjs",
+    "check:story": "node scripts/validate-story-policy.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
 }

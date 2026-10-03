@@ -1,3 +1,4 @@
+import { storyRequiresReset } from './story.js';
 import { researchMock } from './research.js';
 import { ScenarioEngine, OUTFITS, resolveOutfit, withTestCrowds, captureTestSave } from './scenario.js';
 import { buildCharacterProfile, testTargets, DEPTH_LABELS, PHASE_LABELS, domainLabel } from './profile.js';
@@ -13,6 +14,9 @@ let keys = [];
 const selectedTargets = [bundle.cards[0].character_key, bundle.cards[1]?.character_key ?? ''];
 const phases = Object.fromEntries(bundle.cards.map(c => [c.character_key, c.phase_labels[0]]));
 const relationshipStages = Object.fromEntries(bundle.cards.filter(c => c.relationship_stages).map(c => [c.character_key, c.relationship_stages[0].id]));
+const contactLabels = { nearby: '근처에 있고 대화 가능', remote: '원격 연락만 가능', scene: '원작 장면 진행 중', absent: '현재 접촉 불가', engram: '조니의 렐릭 접촉', unknown: '확인 안 됨' };
+let storyFields = structuredClone(bundle.storyPolicy.presets[0].fields);
+Object.assign(relationshipStages, bundle.storyPolicy.presets[0].relationship_stages);
 let engines = {}, results = {}, busy = false, sequence = 0, codexModels = [], modelRevision = 0;
 let requestRun = null;
 const runs = [];
@@ -82,10 +86,11 @@ function selectTargets() {
     select.value = phases[key]; select.onchange = () => { phases[key] = select.value; changeScenario(true); };
     $('phase-settings').append(label, select);
   }
+  renderStoryContacts();
 }
 selectTargets();
 function settings(key) {
-  return { allowDraft: true, configuration: $('configuration').value, phase: phases[key],
+  return { allowDraft: true, storyState: $('story-mode').value === 'progress' ? { fields: storyFields } : null, configuration: $('configuration').value, phase: phases[key],
     relationshipStage: relationshipStages[key], alive: $('alive').checked, free: $('free').checked, basicKnowledge: $('basic-knowledge').checked,
     relicKnown: $('relic-known').checked, relicDisclosed: $('relic-disclosed').checked,
     outfitId: $('outfit').value, outfitName: $('outfit-name').value, outfitDescription: $('outfit-description').value, outfitVisible: $('outfit-visible').checked,
@@ -260,7 +265,8 @@ function enterDialogue() {
       engines[key] = new ScenarioEngine({ bundle, npcKey: key, settings: () => settings(key), base: bootstrap.base, notify: render,
         summarize: summarizeMemory, persist: persistMemory });
       const snapshot = persisted.owners[key];
-      if (snapshot) engines[key].restore(snapshot.journal, undefined, snapshot.memory);
+      const current = settings(key);
+      if (snapshot && (!current.storyState || snapshot.storyState && !storyRequiresReset({ storyState: snapshot.storyState }, current))) engines[key].restore(snapshot.journal, undefined, snapshot.memory);
     }
     for (const key of keys) {
       const engine = engines[key];
@@ -297,8 +303,8 @@ $('danger').onclick = () => {
   $('status').textContent = '전투 발생 · 요청과 자막 출력 중단 · 모의 제어 해제'; render();
 };
 $('safe-world').onclick = () => { inCombat = false; for (const engine of Object.values(engines)) engine.changeWorld({ combat: false }); $('status').textContent = '안전 상태로 복귀했습니다. 질문을 보내면 다시 시작합니다.'; render(); };
-const savedFields = ['configuration', 'alive', 'free', 'basic-knowledge', 'relic-known', 'relic-disclosed', 'outfit', 'outfit-name', 'outfit-description', 'outfit-visible', 'public-recognition', 'minor-fiction', 'select-actions'];
-function scenarioSnapshot() { return { inCombat, phases: structuredClone(phases), relationshipStages: structuredClone(relationshipStages), fields: Object.fromEntries(savedFields.map(id => [id, $(id).type === 'checkbox' ? $(id).checked : $(id).value])) }; }
+const savedFields = ['story-mode', 'story-preset', 'story-scene-free', 'configuration', 'alive', 'free', 'basic-knowledge', 'relic-known', 'relic-disclosed', 'outfit', 'outfit-name', 'outfit-description', 'outfit-visible', 'public-recognition', 'minor-fiction', 'select-actions'];
+function scenarioSnapshot() { return { storyFields: structuredClone(storyFields), inCombat, phases: structuredClone(phases), relationshipStages: structuredClone(relationshipStages), fields: Object.fromEntries(savedFields.map(id => [id, $(id).type === 'checkbox' ? $(id).checked : $(id).value])) }; }
 $('save-slot').onchange = render;
 $('save-test').onclick = () => {
   saves.set($('save-slot').value, captureTestSave(engines, scenarioSnapshot()));
@@ -318,12 +324,16 @@ $('load-test').onclick = () => {
   }
   sequence++; busy = false; requestRun = null; results = {};
   inCombat = saved.scenario.inCombat;
-  persisted.owners = Object.fromEntries(Object.entries(saved.journals).map(([key, journal]) => [key, { journal: structuredClone(journal), memory: structuredClone(saved.memories[key]) }]));
+  storyFields = structuredClone(saved.scenario.storyFields ?? {});
+  persisted.owners = Object.fromEntries(Object.entries(saved.journals).map(([key, journal]) => [key, { journal: structuredClone(journal), memory: structuredClone(saved.memories[key]), storyState: saved.scenario.fields['story-mode'] === 'progress' ? { fields: structuredClone(saved.scenario.storyFields) } : null }]));
   for (const engine of Object.values(engines)) engine.restore(saved.journals[engine.npcKey], saved.worlds[engine.npcKey] ?? { ...engine.world, combat: inCombat }, saved.memories[engine.npcKey]);
   persistMemory();
   for (const [id, value] of Object.entries(saved.scenario.fields)) { if ($(id).type === 'checkbox') $(id).checked = value; else $(id).value = value; }
+  if (!saved.scenario.storyFields) $('story-mode').value = 'card';
+  renderStoryQuests();
   Object.assign(phases, saved.scenario.phases); Object.assign(relationshipStages, saved.scenario.relationshipStages); selectTargets();
-  for (const engine of Object.values(engines)) engine.changeWorld({ quest_controlled: !$('free').checked || !$('alive').checked });
+  for (const engine of Object.values(engines)) { engine.lastStorySettings = structuredClone(settings(engine.npcKey)); engine.changeWorld({ quest_controlled: !$('free').checked || !$('alive').checked }); }
+  $('story-settings').hidden = $('story-mode').value !== 'progress';
   $('save-hint').textContent = `슬롯 ${$('save-slot').value.toUpperCase()} 복원 · 이후 기억 폐기 · 군중 인스턴스 새로 생성`;
   $('status').textContent = '모의 저장을 로드했습니다. 다음 질문에 저장 시점의 기억을 사용합니다.'; $('error').hidden = true; render();
 };
@@ -415,6 +425,65 @@ $('cancel').onclick = () => { if (requestRun) requestRun.cancelling = true; for 
 $('recontact').onclick = () => { if (busy && requestRun) requestRun.cancelling = true; else requestRun = null; for (const key of keys) engines[key]?.end(); $('status').textContent = '대화 종료 · 기억 유지. 다음 질문을 보내면 재접촉합니다.'; render(); };
 $('reset').onclick = reset;
 $('input').onkeydown = event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); $('compare-form').requestSubmit(); } };
+const questLabels = { not_started: '시작 전', active: '진행 중', completed: '완료', failed: '실패' };
+function storyChanged(previous) {
+  const next = settings(keys[0]);
+  if (storyRequiresReset(previous, next)) {
+    for (const engine of Object.values(engines)) { engine.clearMemory(); engine.lastStorySettings = structuredClone(settings(engine.npcKey)); }
+    persisted.owners = {}; persistMemory();
+    $('story-hint').textContent = '진행도를 되돌리거나 분기를 바꿨습니다. 이후 사건의 기억을 지웠습니다. 저장 로드는 해당 시점의 기억을 복원합니다.';
+  } else $('story-hint').textContent = '관계와 현재 접촉 상태를 따로 판정합니다. 실제 게임에 연결되지 않은 모의 진행 상태입니다.';
+  changeScenario(true);
+}
+function renderStoryContacts() {
+  $('contact-settings').replaceChildren();
+  for (const key of keys) {
+    const card = bundle.cards.find(c => c.character_key === key); if (card.npc_type === 'crowd') continue;
+    const label = element('label', `${card.display_name}의 현재 접촉`), select = element('select'); select.id = `contact-${key}`; label.htmlFor = select.id;
+    for (const [value, text] of Object.entries({ ...contactLabels, ...(key !== 'johnny' ? { engram: undefined } : {}) })) {
+      if (!text) continue; const option = element('option', text); option.value = value; select.append(option);
+    }
+    select.value = storyFields[`content.contact.${key}`] ?? 'unknown';
+    select.onchange = () => { const previous = structuredClone(settings(key)); storyFields[`content.contact.${key}`] = select.value; storyChanged(previous); };
+    $('contact-settings').append(label, select);
+  }
+}
+function renderStoryQuests() {
+  $('quest-settings').replaceChildren();
+  for (const track of [...new Set(bundle.storyPolicy.quests.map(q => q.track))]) {
+    const group = element('details'), summary = element('summary', { main: '본편 메인', lifepath: '인생 경로', phantom_liberty: '팬텀 리버티', ending: '결말', judy: '주디', panam: '팬앰', river: '리버', johnny: '조니·로그', kerry: '케리', viktor: '빅터' }[track] ?? track); group.append(summary);
+    for (const q of bundle.storyPolicy.quests.filter(q => q.track === track)) {
+      const label = element('label', q.title), select = element('select'); select.id = `quest-${q.id}`; label.htmlFor = select.id;
+      for (const [value, text] of Object.entries({ ...questLabels, unknown: '확인 안 됨' })) { const option = element('option', text); option.value = value; select.append(option); }
+      select.value = storyFields[`content.quests.${q.id}`] ?? 'unknown';
+      select.onchange = () => { const previous = structuredClone(settings(keys[0])); storyFields[`content.quests.${q.id}`] = select.value; storyChanged(previous); };
+      group.append(label, select);
+    }
+    $('quest-settings').append(group);
+  }
+  const choiceLabels = { judy_pisces: '주디 · Pisces 선택', judy_relationship: '주디와의 관계', panam_relationship: '팬앰과의 관계', goro_fate: '타케무라 구출', kerry_relationship: '케리와의 관계', river_rescue: '랜디 구출', river_relationship: '리버와의 관계', evelyn_offer: '에블린의 제안', johnny_relationship: '조니 · 유전 대화와 렐릭', songbird_route: '소미의 분기' };
+  const valueLabels = { v_plan: 'V의 계획', maiko_no_pay: '마이코 계획 · 보수 거절', maiko_killed: '마이코 사망', maiko_paid: '마이코 계획 · 보수 수령', friend: '친구', partner: '연인 · 원작 조건 확인', cut_off: '관계 단절', betrayed: '사울에게 계획 공개', pending: '선택 전', saved: '구출', abandoned: '구출하지 않음', rescued: '구출 성공', failed: '구출 실패', client: '의뢰인', dex_offer: '덱스 제외 제안', second_chance: '두 번째 기회', rejected: '두 번째 기회 거절', separated: '렐릭 접촉 종료', songbird: '소미를 도움', reed: '리드를 도움', moon_departed: '달로 출발', fia_custody: 'FIA 인계', dead: '사망' };
+  for (const [key, values] of Object.entries(bundle.storyPolicy.choices)) {
+    const label = element('label', choiceLabels[key] ?? key), select = element('select'); select.id = `choice-${key}`; label.htmlFor = select.id;
+    for (const value of ['unknown', ...values]) { const option = element('option', value === 'unknown' ? '확인 안 됨' : valueLabels[value] ?? value); option.value = value; select.append(option); }
+    select.value = storyFields[`content.choices.${key}`] ?? 'unknown';
+    select.onchange = () => { const previous = structuredClone(settings(keys[0])); storyFields[`content.choices.${key}`] = select.value; storyChanged(previous); };
+    $('quest-settings').append(label, select);
+  }
+}
+for (const preset of bundle.storyPolicy.presets) { const option = element('option', preset.label); option.value = preset.id; $('story-preset').append(option); }
+$('story-preset').onchange = () => {
+  const previous = structuredClone(settings(keys[0])), preset = bundle.storyPolicy.presets.find(p => p.id === $('story-preset').value);
+  storyFields = structuredClone(preset.fields); Object.assign(relationshipStages, preset.relationship_stages);
+  $('story-scene-free').checked = storyFields['content.story.scene_free'] === true;
+  renderStoryQuests(); selectTargets(); storyChanged(previous);
+};
+$('story-mode').onchange = () => {
+  const next = settings(keys[0]), previous = { ...next, storyState: next.storyState ? null : { fields: storyFields } };
+  $('story-settings').hidden = $('story-mode').value !== 'progress'; storyChanged(previous);
+};
+$('story-scene-free').onchange = () => { const previous = structuredClone(settings(keys[0])); storyFields['content.story.scene_free'] = $('story-scene-free').checked; storyChanged(previous); };
+renderStoryQuests(); renderStoryContacts();
 showModels(); render();
 setInterval(() => { for (const engine of Object.values(engines)) engine.tick(); }, 1000);
 setInterval(() => { if (busy) updateRequestDisplay(); }, 250);

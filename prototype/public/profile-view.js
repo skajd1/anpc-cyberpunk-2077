@@ -23,6 +23,9 @@ export function renderCharacterProfiles(container, profiles) {
       const button = el('button', '관계 단계 바꾸기'); button.type = 'button'; button.dataset.relationshipKey = card.character_key;
       relation.append(button); panel.append(relation);
     }
+    if (profile.story.enabled) {
+      panel.append(el('p', profile.story.allowed ? '현재 퀘스트 구간에서 대화 가능 · 모의 상태' : profile.story.reason, 'hint'));
+    }
     const traits = el('section', null, 'profile-section'); traits.append(el('h4', '성격'));
     const rows = el('dl', null, 'personality-slots');
     for (const group of personality) {

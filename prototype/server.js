@@ -16,6 +16,8 @@ export function loadLocalEnvironment(path = resolve(root, '.env')) {
 const json = (res, status, value) => { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(value)); };
 const routes = { '/': ['compare.html', 'text/html'], '/compare': ['compare.html', 'text/html'], '/compare.js': ['compare.js', 'text/javascript'], '/test-tools.js': ['test-tools.js', 'text/javascript'], '/profile.js': ['profile.js', 'text/javascript'], '/profile-view.js': ['profile-view.js', 'text/javascript'], '/research.js': ['research.js', 'text/javascript'], '/app.js': ['app.js', 'text/javascript'], '/core.js': ['core.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'] };
 
+routes['/conditions.js'] = ['conditions.js', 'text/javascript'];
+routes['/story.js'] = ['story.js', 'text/javascript'];
 routes['/scenario.js'] = ['scenario.js', 'text/javascript'];
 routes['/personality.js'] = ['personality.js', 'text/javascript'];
 routes['/api-models.js'] = ['api-models.js', 'text/javascript'];
@@ -35,7 +37,7 @@ export async function createPrototypeServer({ apiKey = process.env.OPENAI_API_KE
   const manifest = await load('manifest.json');
   const cardFiles = manifest.files.filter(file => /^characters\/[a-z0-9_-]+\.json$/.test(file));
   const research = { version: manifest.content_version ?? manifest.version, cards: await Promise.all(cardFiles.map(load)),
-    facts: await load('world-facts.json'), knowledge: await load('knowledge.json'), examples: await load('dialogue-examples.json'), worldKnowledge: await load('world-knowledge-policy.json') };
+    facts: await load('world-facts.json'), knowledge: await load('knowledge.json'), examples: await load('dialogue-examples.json'), worldKnowledge: await load('world-knowledge-policy.json'), storyPolicy: await load('story-progression-policy.json') };
   const playerFact = research.facts.find(f => f.id === manifest.player_identity_fact_id);
   if (!playerFact?.player_identity?.display_name || !playerFact.player_identity.character_key) throw new Error('플레이어 신원 기준 사실이 없습니다.');
   const playerIdentity = { ...playerFact.player_identity, fact_id: playerFact.id, claim_limits: playerFact.claim_limits };

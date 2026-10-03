@@ -1,5 +1,5 @@
 {
-  "content_version": "research-1.1",
+  "content_version": "research-1.2",
   "identity_structure_version": "1.0",
   "status": "조사·작성 후보. 출시 승인 전",
   "runtime_enabled": false,
@@ -21,7 +21,8 @@
     "characters/evelyn.json",
     "characters/johnny.json",
     "world-knowledge-policy.json",
-    "characters/songbird.json"
+    "characters/songbird.json",
+    "story-progression-policy.json"
   ],
   "counts": {
     "characters": 12,

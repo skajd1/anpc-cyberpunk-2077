@@ -24,6 +24,7 @@ Node.js 22 이상에서 `npm start`를 실행하고 브라우저로 http://127.0
 - [플레이어 음성 인식 구현 규격](docs/speech-recognition-specification.md) — 선택 후속 모듈 설계, 아직 미구현
 - [NPC 식별 및 대화 허용 규격](docs/npc-identity-specification.md)
 - [NPC 단기·장기 기억 및 비동기 정리 규격](docs/memory-specification.md)
+- [메인 퀘스트 진행에 따른 NPC 대화 분석](docs/story-progression-analysis.md): 주요 사건·인물별 지원 창·게임 매핑 후보·후속 검증.
 - [게임 정보 수집 및 NPC 인지 규격](docs/game-context-specification.md)
 - [콘텐츠 데이터 규격](docs/content-specification.md)
 - [NPC Big Five 핵심 성격 규격](docs/personality-specification.md)

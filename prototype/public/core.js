@@ -117,6 +117,7 @@ export class DialogueEngine {
   emit() { this.notify(this); }
   allowed() { return this.safe() && !this.turnAdapter ? clone(ACTIONS) : []; }
   safe() { return !this.world.combat && !this.world.quest_controlled && Number.isFinite(this.world.distance) && this.world.distance <= 10; }
+  entryInRange() { return this.world.distance <= 4; }
   key(personaId) { return `${this.saveScope}:${this.worldEpoch}:${personaId}:${this.instances.get(personaId)?.token}`; }
   getInstance(personaId) {
     if (!this.instances.has(personaId)) {
@@ -132,13 +133,13 @@ export class DialogueEngine {
   }
   start(personaId) {
     if (this.session) throw new Error('현재 대화를 먼저 종료하세요.');
-    if (!this.safe() || this.world.distance > 4) throw new Error('4m 이내의 전투·원작 연출이 없는 상태에서 시작하세요.');
+    if (!this.safe() || !this.entryInRange()) throw new Error('4m 이내의 전투·원작 연출이 없는 상태에서 시작하세요.');
     const instance = this.getInstance(personaId); const key = this.key(personaId); const memory = this.memories.get(key);
     const validMemory = memory && this.clock() - memory.at < 600000 ? clone(memory) : null;
     if (memory && !validMemory) this.memories.delete(key);
-    this.session = { id: id(), key, persona: clone(instance.persona), memory: validMemory, turns: [], lastAction: null, sequence: 0, held: true, gazeUntil: null, touched: this.clock() };
+    this.session = { id: id(), key, persona: clone(instance.persona), memory: validMemory, turns: [], lastAction: null, sequence: 0, held: personaId !== 'johnny', gazeUntil: null, touched: this.clock() };
     this.state = 'active'; this.lastReply = null; this.lastRawReply = null; this.lastPrompt = null; this.lastSelection = null; this.closedTurns = [];
-    this.log(`대화 시작 · ${instance.persona.display_name}${validMemory ? ' · 재접촉 기억 연결' : ' · 첫 만남'} · 위치 유지(가상)`); this.emit();
+    this.log(`대화 시작 · ${instance.persona.display_name}${validMemory ? ' · 재접촉 기억 연결' : ' · 첫 만남'} · ${this.session.held ? '위치 유지(가상)' : '렐릭 접촉 · 물리 제어 없음'}`); this.emit();
   }
   touch() { if (this.session) this.session.touched = this.clock(); }
   context() {
@@ -203,6 +204,10 @@ export class DialogueEngine {
         personality_scale_version: PERSONALITY_SCALE_VERSION } : {}), ...prompt }; this.emit();
     try {
       const generated = await generate({ prompt, persona, context, playerText, signal: s.controller.signal });
+      if (prepared?.isCurrent && !prepared.isCurrent()) {
+        if (this.session === s) this.end(false, '퀘스트·대화 조건 변경 · 늦은 응답 폐기');
+        return { stale: true };
+      }
       if (this.session !== s || s.pending !== requestId || !this.safe()) return { stale: true };
       this.lastRawReply = clone(generated.reply);
       const currentAllowed = this.allowed();
