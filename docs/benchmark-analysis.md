@@ -46,7 +46,7 @@
 | [AMM 배포 코드](https://github.com/MaximiliumM/appearancemenumod/blob/main/Release/bin/x64/plugins/cyber_engine_tweaks/mods/AppearanceMenuMod/init.lua) | 차량·동료 제어 참고. 공식 원저장소로 가정하지 않는다. Director 상세 코드는 열리지 않아 근거에서 제외했다. |
 | [Codeware 문서](https://github.com/psiberx/cp2077-codeware/wiki) | 수명 이벤트와 관리 엔티티 생성·삭제·식별. 기존 군중의 영속 ID를 보장하지 않는다. |
 
-HTTP·보안 키 저장소의 실제 어댑터와 NPC 필드 매핑은 아직 구현 결정이 없다. [통신 규격](runtime-specification.md)의 실행 구조는 설계 선택이며 공개 도구로 재현 완료한 결과가 아니다. 구현 시 채택한 코드 커밋·도구 버전과 사용 조건을 기록한다.
+2026-10-04의 [모딩 도구 조사](mod-tooling-research.md)에서 제작자 문서·릴리스·HTTP 콜백·게임 저장 제약을 추가 확인했다. [게임 모드 구현 계획](game-mod-implementation-plan.md)은 CET/redscript/Codeware와 제품용 Native HTTPS/키 어댑터, 저장별 바이트 묶음을 채택 설계로 정한다. 실제 구현·NPC 필드 매핑·게임 재현은 아직 미수행이다. 이전의 어댑터 미선정 상태는 이 계획으로 대체하며 호환 검증 완료를 뜻하지 않는다.
 
 **판정:** 핵심 흐름에는 공개 선행 구현이 있어 기술적으로 시도할 근거가 충분하다. 다만 ANPC 전체 요구를 현재 PC에서 구현 완료 또는 게임에서 검증 완료라고 판단할 수는 없다. 첫 위험은 NPC 수명·복구와 동일성, 콘텐츠 위험은 퀘스트 시점과 인물 지식의 정확성이다.
 

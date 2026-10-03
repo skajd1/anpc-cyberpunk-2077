@@ -28,6 +28,8 @@ ANPC는 V가 먼저 시작하는 텍스트 대화·NPC 대사 자막과 상황�
 - [전체 제품 명세](docs/full-specification.md): 제품 요구사항과 분야별 기준 문서 안내.
 - [모드 공통 데이터 및 모듈 입출력 규격](docs/module-interface-specification.md): 저장·교환·전송 뷰의 고정 타입, 모듈 포트, 범위·버전·교체/전환 계약.
 - [기술 구조 및 AI 통신 규격](docs/runtime-specification.md): 실행 모듈, 진입 상태, 키·요청·응답·오류, 대사 자막과 게임 진행 계약.
+- [게임 모드 구현 계획](docs/game-mod-implementation-plan.md): 실제 모딩 도구·Lua/redscript/네이티브 배치·선택지·저장·첫 게임 실증 순서.
+- [모딩 도구와 게임 연결 조사](docs/mod-tooling-research.md): 제작자 문서/릴리스·후보 버전·HTTP/저장 제약과 확인한 공개 소스.
 - [플레이어 음성 인식 구현 규격](docs/speech-recognition-specification.md): 선택 후속 PTT 모듈·실시간 전사·기존 텍스트 입력 연결·취소·설정·검증 기준.
 - [NPC 식별 및 대화 허용 규격](docs/npc-identity-specification.md): NPC 키, 고유/군중 추가 선택지·원작 제어 전환, 대화 조건·재접촉 기억.
 - [NPC 단기·장기 기억 및 비동기 정리 규격](docs/memory-specification.md): 세션당 한 줄 요약·인물별 보관·저장 시점 복원.

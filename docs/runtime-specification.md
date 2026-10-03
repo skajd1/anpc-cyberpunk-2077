@@ -1,6 +1,6 @@
 # 기술 구조 및 AI 통신 규격
 
-규격 버전: 0.4 (2026-10-01). 목표 계약. 타입/포트: [공통 규격](module-interface-specification.md). 구현/시험: [개발·검증 계획](development-validation.md).
+규격 버전: 0.5 (2026-10-04). 목표 계약. 타입/포트: [공통 규격](module-interface-specification.md). 구현/시험: [개발·검증 계획](development-validation.md).
 
 ## 1. 실행 구조
 
@@ -10,7 +10,9 @@
 | 대화 | 콘텐츠·기억·프롬프트·응답 검사 |
 | 통신 어댑터 | 비동기 HTTPS·개인 키 접근·제공자 변환 |
 
-기본: 게임 내부 모드+로컬 설정/콘텐츠. UI=CET Lua, 제어=redscript. HTTP/보안 저장 어댑터 교체 가능. 별도 C#·제작자 서버 필수 없음. 콜백은 게임 큐로 전달하고 현재 세션 검사 후 적용. 로컬 모델/음성은 후속.
+기본: 게임 내부 모드+로컬 설정/콘텐츠. UI/대화 정책=CET Lua, 실제 수집/제어/자막/저장 연결=redscript+Codeware. 제품 HTTPS/키 보관은 RED4ext 플러그인 ANPC.Native.dll의 WinHTTP/Credential Manager로 구현한다. 작업 완료 큐를 CET onUpdate에서 읽고 현재 세션 검사 후 게임에 적용한다. 별도 C#·제작자 서버 필수 없음. 로컬 모델/음성은 후속.
+
+도구 버전·설치/소스 배치·선택지/저장 실증은 [게임 모드 구현 계획](game-mod-implementation-plan.md)을 따른다. RedHttpClient는 초기 통신 실증용이며 제품의 취소·제한 시간·키 보관 완료를 대신하지 않는다. 게임판 어댑터의 구현/컴파일/실게임 검증은 아직 수행하지 않았다.
 
 선택 플레이어 음성 입력은 [음성 인식 규격](speech-recognition-specification.md)과 [호스트 인터페이스 2.3](module-interface-specification.md#23-선택-음성-입력의-호스트-인터페이스)을 따른다. 마이크/전사 모듈은 확정 텍스트만 기존 요청 경로에 전달하며 대화 엔진·NPC 출력 계약을 변경하지 않는다.
 
@@ -59,7 +61,7 @@ PromptAssembly → ModelInput → ProviderResult → DialogueReply. 공통 스�
 - 잘못된 행동은 제거. 대사가 독립적일 때만 유지, 불명이면 안전 대체 대사. 정적 검사+지원 품질 프로필 적용.
 - execution_mode/candidate는 ActionOption, catalog_version은 ActionRequest. 모델의 모드/어댑터/자산 경로 변경 금지.
 - 현재 일상 허용은 CanonView만 전달. 출력 필드/평가 모델 추가 없음.
-- 실제 표시 대사와 실행기 확정 결과만 사건 등록. 요약 출력은 별도 SummaryCandidates.
+- 실제 표시 대사와 실행기 확정 결과만 사건 등록. 요약은 SessionSummarizer.propose의 SessionSummary이며 모델의 {summary}에 세션 ID를 호스트가 부여한다. SummaryCandidates는 이전 구현 호환용이다.
 
 ## 6. 오류와 재시도
 

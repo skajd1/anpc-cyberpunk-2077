@@ -82,6 +82,8 @@
 
 원격 연락과 결말별 별도 대화는 위 검증 뒤에 기능 범위를 결정한다. 현재 사망·부재를 임의 생성 대화로 채우거나 모든 엔딩 NPC에 새 목표를 만드는 작업은 필요하지 않다.
 
+실제 모딩 도구와 수집기·선택지·제어·저장 연결은 [게임 모드 구현 계획](game-mod-implementation-plan.md)의 G0~G7에 따라 진행한다. 이 계획 작성만으로 현재 game_binding=null 후보를 검증 완료로 바꾸지 않는다.
+
 ## 조사 근거와 한계
 
 기존 조사 묶음의 인물별 퀘스트 출처와 [Nocturne Op55N1](https://cyberpunk.fandom.com/wiki/Nocturne_Op55N1), [팬텀 리버티 결말 공략](https://www.gamesradar.com/cyberpunk-2077-phantom-liberty-endings/), [PC Gamer 결말 공략](https://www.pcgamer.com/cyberpunk-2077-phantom-liberty-endings/)을 기준으로 경계를 정리했다. 후자의 두 본문은 이전 소미 조사에서 확인했다. 위키 본문 접근 제한은 원본 sources.json에 기록되어 있다.

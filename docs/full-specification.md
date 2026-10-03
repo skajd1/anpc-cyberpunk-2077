@@ -43,7 +43,7 @@ UI: 이름·기록·입력·대기·취소/종료·오류. 입력 포커스의 �
 | 실행 구조·세션·키·요청·응답·오류 | [기술 구조 및 AI 통신](runtime-specification.md) |
 | 선택 후속 플레이어 음성·PTT·전사·기존 입력 연결 | [플레이어 음성 인식](speech-recognition-specification.md) |
 | NPC 키·대화 조건·재접촉 기억 | [NPC 식별 및 대화 허용](npc-identity-specification.md) |
-| 단기·장기 기억·조회·비동기 정리·보존 근거·저장 시점 | [NPC 기억 규격](memory-specification.md) |
+| 현재 세션 발화·세션당 한 줄 요약·소유 범위·저장 시점 | [NPC 기억 규격](memory-specification.md) |
 | 게임 관찰 필드·출처·인지 변환 | [게임 정보 수집 및 NPC 인지](game-context-specification.md) |
 | 인물 카드·군중 원형·세계관·반응 | [콘텐츠 데이터](content-specification.md) |
 | 지식 저장·인물별 인지·군중 지식 배분 | [NPC 세계관 지식 부여](npc-knowledge-specification.md) |
@@ -55,6 +55,8 @@ UI: 이름·기록·입력·대기·취소/종료·오류. 입력 포커스의 �
 | 현재 시제품·첫 게임판·후속 확장의 경계 | [초기 버전 명세](initial-design.md) |
 
 공통 형태는 스키마/등록표, 정책은 해당 문서 한 곳에서 정의한다.
+
+실제 도구·언어별 배치·설치·게임 실증의 순서는 [게임 모드 구현 계획](game-mod-implementation-plan.md)을 따른다.
 
 ## 5. 단계별 기능 경계
 
