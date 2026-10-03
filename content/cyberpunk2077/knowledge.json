@@ -29291,5 +29291,1783 @@
     "interpretation": "공개 설정의 개요이며 개인 경험·전문 지식·현재 사건으로 확대하지 않는다.",
     "assignment_basis": "공통 상식 후보 또는 공개 자료의 조회 가능 개요. 원작 개별 인지는 출시 검수 필요.",
     "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_BACKGROUND",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_BACKGROUND",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "원작 소개 범위만 사용한다. 현재 소속·위치·V와의 관계·대화 가능 여부는 게임 상태로 확인한다.",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_NUSA_CONSTRAINT",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_NUSA_CONSTRAINT",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_NUSA_CONSTRAINT",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "원작 소개 범위만 사용한다. 현재 소속·위치·V와의 관계·대화 가능 여부는 게임 상태로 확인한다.",
+    "domain_id": "espionage",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_RECRUITMENT",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_RECRUITMENT",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_RECRUITMENT",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_BLACKWALL_DAMAGE",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_BLACKWALL_DAMAGE",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_BLACKWALL_DAMAGE",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "black_sapphire",
+            "escape_planning",
+            "moon_escape",
+            "matrix_confession",
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "domain_id": "netrunning",
+    "required_depth": "specialist"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_V_CURE_PROMISE",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_V_CURE_PROMISE",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_V_CURE_PROMISE",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "introduced",
+            "rescue_operation",
+            "black_sapphire",
+            "escape_planning",
+            "moon_escape"
+          ]
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다. 소미의 제안이라는 사실이며 치료 가능성·성공 보장이 아니다.",
+    "domain_id": "espionage",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_HANSEN_PLAN",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_HANSEN_PLAN",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_HANSEN_PLAN",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "escape_planning",
+            "moon_escape",
+            "matrix_confession",
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "domain_id": "espionage",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_FIRESTARTER_SPLIT",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_FIRESTARTER_SPLIT",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_FIRESTARTER_SPLIT",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.songbird.archive_only",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "domain_id": "espionage",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_MATRIX_LIMIT",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_MATRIX_LIMIT",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_MATRIX_LIMIT",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "matrix_confession"
+          ]
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "domain_id": "netrunning",
+    "required_depth": "specialist"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_MOON_DEPARTURE",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_MOON_DEPARTURE",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_MOON_DEPARTURE",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.songbird.archive_only",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다. 달 도착 이후 완치·영구 자유·연락·일상을 확정하지 않는다.",
+    "domain_id": "espionage",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_FIA_RETURN",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_FIA_RETURN",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_FIA_RETURN",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.songbird.archive_only",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "domain_id": "espionage",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_CYNOSURE_PLEA",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_CYNOSURE_PLEA",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_CYNOSURE_PLEA",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SONGBIRD_CYNOSURE_DEATH",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SONGBIRD_CYNOSURE_DEATH",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.grants.SONGBIRD_CYNOSURE_DEATH",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.songbird.archive_only",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "현재 단계의 인지·공개 범위 안에서만 사용한다",
+    "disclosure": "evasive",
+    "review_status": "draft",
+    "assignment_basis": "웹 출처를 바탕으로 작성한 인지 후보. 게임 장면·개별 공개 매핑 미검수",
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "domain_id": "self_background",
+    "required_depth": "practical"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_NETRUNNER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NETRUNNER",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.NETRUNNER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 범위의 기본 개요만 설명하며 특정 침입·공격을 실행했다고 주장하지 않는다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "netrunning",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_NC_CITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_CITY",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.NC_CITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 범위의 기본 개요만 설명하며 특정 침입·공격을 실행했다고 주장하지 않는다",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_SAMURAI_JOHNNY",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "SAMURAI_JOHNNY",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.SAMURAI_JOHNNY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "공개 이름·직업·명성의 개요만. 직접 만남·친분·의뢰 경험·사생활·렐릭·현재 생존/위치·퀘스트 결과를 추론하지 않는다.",
+    "domain_id": "public_figures",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_ROGUE_BACKGROUND",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "ROGUE_BACKGROUND",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.ROGUE_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "공개 이름·직업·명성의 개요만. 직접 만남·친분·의뢰 경험·사생활·렐릭·현재 생존/위치·퀘스트 결과를 추론하지 않는다.",
+    "domain_id": "public_figures",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_KERRY_BACKGROUND",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "KERRY_BACKGROUND",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.KERRY_BACKGROUND",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "공개 이름·직업·명성의 개요만. 직접 만남·친분·의뢰 경험·사생활·렐릭·현재 생존/위치·퀘스트 결과를 추론하지 않는다.",
+    "domain_id": "public_figures",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_PUBLIC_SMASHER",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "PUBLIC_SMASHER",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.PUBLIC_SMASHER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "public_figures",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_ARASAKA_SECURITY",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ARASAKA_SECURITY",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.ARASAKA_SECURITY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_MILITECH_ARMS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MILITECH_ARMS",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.MILITECH_ARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_CORP_KANG_TAO",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "CORP_KANG_TAO",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.CORP_KANG_TAO",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_CORP_KIROSHI",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "CORP_KIROSHI",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.CORP_KIROSHI",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_CORP_BIOTECHNICA",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "CORP_BIOTECHNICA",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.CORP_BIOTECHNICA",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_FIXER",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "FIXER",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.FIXER",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_RIPPERDOC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "RIPPERDOC",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.RIPPERDOC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_JOB_ROCKERBOY",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "JOB_ROCKERBOY",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.JOB_ROCKERBOY",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_JOB_SOLO",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "JOB_SOLO",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.JOB_SOLO",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_NC_DISTRICTS",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "NC_DISTRICTS",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.NC_DISTRICTS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_CITY_MEGABUILDINGS",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "CITY_MEGABUILDINGS",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.CITY_MEGABUILDINGS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_HISTORY_FOUNDING",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "HISTORY_FOUNDING",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.HISTORY_FOUNDING",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_HISTORY_BOMBING",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "HISTORY_BOMBING",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.HISTORY_BOMBING",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_HISTORY_UNIFICATION",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "HISTORY_UNIFICATION",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.HISTORY_UNIFICATION",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_CULTURE_KITSCH",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "CULTURE_KITSCH",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.CULTURE_KITSCH",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_FOOD_SYNTHETIC",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "FOOD_SYNTHETIC",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.FOOD_SYNTHETIC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_CYBERWARE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "CYBERWARE",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.CYBERWARE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_BD_EXPERIENCE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "BD_EXPERIENCE",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.BD_EXPERIENCE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_BLACKWALL_PUBLIC",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "BLACKWALL_PUBLIC",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.BLACKWALL_PUBLIC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_MOX",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MOX",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.MOX",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_ALDECALDOS",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "ALDECALDOS",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.ALDECALDOS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_NCPD",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "NCPD",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.NCPD",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_MAXTAC",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "MAXTAC",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.MAXTAC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_NETWATCH_PUBLIC",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "NETWATCH_PUBLIC",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.NETWATCH_PUBLIC",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_EDDIES",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "EDDIES",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.EDDIES",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_TT_COVERAGE",
+    "revision": 2,
+    "kind": "knowledge_entry",
+    "fact_id": "TT_COVERAGE",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.TT_COVERAGE",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
+    "domain_id": "city_life",
+    "required_depth": "awareness"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_ENERGY_CHOOH2",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "ENERGY_CHOOH2",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.ENERGY_CHOOH2",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_TRANSIT_DELAMAIN",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "TRANSIT_DELAMAIN",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.TRANSIT_DELAMAIN",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_TRANSIT_NCART",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "TRANSIT_NCART",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.TRANSIT_NCART",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "disclosure": "public",
+    "domain_id": "city_life",
+    "required_depth": "awareness",
+    "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
+    "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
+    "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
+    "review_status": "draft"
   }
 ]

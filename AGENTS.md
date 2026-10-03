@@ -35,7 +35,8 @@ ANPC는 V가 먼저 시작하는 텍스트 대화·NPC 대사 자막과 상황�
 - [콘텐츠 데이터 규격](docs/content-specification.md): 인물·군중과 성격 전환, 고정 신원·분야 깊이, 원작 관계·공개 평판·사소한 일상 창작 정책.
 - [NPC Big Five 핵심 성격 규격](docs/personality-specification.md): 다섯 축의 수준 기록·정량 해석, 25개 수준별 행동 지침, 로컬 변환·재사용과 기존 형식 전환 경계.
 - [NPC 세계관 지식 부여 규격](docs/npc-knowledge-specification.md): 저장 위치, 공통·지역·직업·선택·개인·퀘스트 지식, 출신·경험별 분야 깊이, 군중 추첨과 인지 조건.
-- [대표 인물 11명 및 세계관 조사](docs/community-npc-catalog.md): 인물별 정체성·지식 방향, 출처 접근 방식·충돌·미검수 항목과 군중 확장 순서.
+- [대표 인물 12명 및 세계관 조사](docs/community-npc-catalog.md): 인물별 정체성·지식 방향, 출처 접근 방식·충돌·미검수 항목과 군중 확장 순서.
+- [송버드 스토리라인·정체성 조사](docs/songbird-storyline-identity.md): 팬텀 리버티 분기·결말·소미 호칭·인지 제한과 검수 상태.
 - [콘텐츠 자료 안내](content/README.md): JSON 묶음, 승인 상태, 시제품 연결 상태와 기준 문서.
 - [NPC 대사·행동 생성 프롬프트 명세](docs/prompt-specification.md): 고정 베이스, 인물·상황 주입, Big Five 변환 문구 배치·버전, 생성·예외 규칙과 예시.
 - [API 비용 및 응답 효율 규격](docs/api-cost-specification.md): 토큰 예산·문맥 선별·캐시·중복 요청·재시도·개인 사용 한도와 비용 원장.
@@ -45,4 +46,4 @@ ANPC는 V가 먼저 시작하는 텍스트 대화·NPC 대사 자막과 상황�
 - [캐릭터 정체성 벤치마킹 및 적용 분석](docs/character-identity-benchmark.md): Character.AI·Chub·SillyTavern의 공개 설계·코드, 역할 학습 연구, 주디·팬앰 자료 작성과 적용 한계.
 - [NPC 대화 정체성 평가 규격](docs/dialogue-evaluation-specification.md): 원작·작성·군중 근거 구분, 중대 위반, 7개 품질 축·채점 앵커, 평가 데이터와 AI·사람 판정 계약.
 - [개발 및 검증 계획](docs/development-validation.md): 구현 순서·모의/게임 시험·출시 판정, 인터뷰 요구사항 추적·전체 문서 검토와 검증 상태.
-- [대화 시제품 사용 및 구현 안내](docs/dialogue-prototype.md): 로컬 실행, 원작 11명/군중 예시 선택·3열 화면·복장 목격/원작 조건/행동 선택·모의 저장/로드·프리셋/사용량·확장, API·Codex 연결과 게임판의 차이.
+- [대화 시제품 사용 및 구현 안내](docs/dialogue-prototype.md): 로컬 실행, 원작 12명/군중 예시 선택·3열 화면·복장 목격/원작 조건/행동 선택·모의 저장/로드·프리셋/사용량·확장, API·Codex 연결과 게임판의 차이.

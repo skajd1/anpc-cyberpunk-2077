@@ -774,6 +774,51 @@
       "access_method": "search_extract",
       "locator": "2077 무기 설명: Smart Link 요구",
       "checked_at": "2026-10-03"
+    },
+    {
+      "id": "CDPR_PHANTOM_LIBERTY",
+      "title": "CDPR 공식 팬텀 리버티 소개",
+      "url": "https://www.cyberpunk.net/en/phantom-liberty",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "DOSSIERS: Songbird / Reed / Myers / Alex; MISSION BRIEFING",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "title": "Wikipedia: Cyberpunk 2077: Phantom Liberty",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "tier": "secondary",
+      "access_method": "web_body",
+      "locator": "Synopsis / Plot. 원작 장면 직접 검수와 구분",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "GAMESRADAR_PL_ENDINGS",
+      "title": "GamesRadar+: 팬텀 리버티 결말 공략",
+      "url": "https://www.gamesradar.com/cyberpunk-2077-phantom-liberty-endings/",
+      "tier": "secondary",
+      "access_method": "web_body",
+      "locator": "2025-02-12 갱신; Firestarter 분기, 네 결말과 일회용 치료 고백",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "PCGAMER_PL_ENDINGS",
+      "title": "PC Gamer: 팬텀 리버티 결말 공략",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-phantom-liberty-endings/",
+      "tier": "secondary",
+      "access_method": "web_body",
+      "locator": "All endings / 네 결말별 조건·결과. 도덕적 평가 문구는 사실로 수록하지 않음",
+      "checked_at": "2026-10-03"
+    },
+    {
+      "id": "WIKI_SONGBIRD",
+      "title": "Cyberpunk Wiki: Song So Mi",
+      "url": "https://cyberpunk.fandom.com/wiki/Song_So_Mi",
+      "tier": "secondary",
+      "access_method": "search_extract",
+      "locator": "DuckDuckGo 검색 발췌로 본명·역할·한센 거래 확인. 본문/API는 HTTP 402로 열람하지 못함",
+      "checked_at": "2026-10-03"
     }
   ]
 }

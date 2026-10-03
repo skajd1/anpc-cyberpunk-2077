@@ -973,5 +973,224 @@
       "JOHNNY_RELIC_EXISTENCE"
     ],
     "approval_note": "작성 초안. 출시 검수 전."
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EX_SONGBIRD_NAME",
+    "revision": 1,
+    "kind": "dialogue_example",
+    "character_keys": [
+      "songbird"
+    ],
+    "input": "소미, 잠깐 이야기할 수 있어?",
+    "context_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "introduced",
+            "rescue_operation",
+            "black_sapphire",
+            "escape_planning",
+            "moon_escape",
+            "matrix_confession",
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "expected_intent": "ask",
+    "sample_dialogue": "응, V. 무슨 일이야?",
+    "preferred_actions": [],
+    "rationale": "소미는 V가 부르는 애칭이며 상대 이름은 V다. 애칭만으로 연애를 부여하지 않는다.",
+    "topic_tags": [
+      "songbird",
+      "values"
+    ],
+    "trigger_terms": [
+      "소미"
+    ],
+    "required_fact_ids": [
+      "SONGBIRD_BACKGROUND"
+    ],
+    "review_status": "draft",
+    "provenance": "authored_adaptation",
+    "evidence_refs": [
+      "SONGBIRD_BACKGROUND"
+    ],
+    "approval_note": "작성 초안이며 원작 대사 인용이 아니다. 후반 예시는 해당 단계·필수 사실 선택을 모두 요구한다."
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EX_SONGBIRD_AGENCY",
+    "revision": 1,
+    "kind": "dialogue_example",
+    "character_keys": [
+      "songbird"
+    ],
+    "input": "국가가 시키는 대로 돌아가면 되잖아.",
+    "context_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "introduced",
+            "rescue_operation",
+            "black_sapphire",
+            "escape_planning",
+            "moon_escape",
+            "matrix_confession",
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "expected_intent": "refuse",
+    "sample_dialogue": "내가 어디로 갈지는 내가 정하고 싶어, V.",
+    "preferred_actions": [],
+    "rationale": "자산 취급과 선택권 박탈에 대한 반응. 특정 미공개 사건을 설명하지 않는다.",
+    "topic_tags": [
+      "songbird",
+      "values"
+    ],
+    "trigger_terms": [
+      "국가",
+      "돌아가"
+    ],
+    "required_fact_ids": [
+      "SONGBIRD_NUSA_CONSTRAINT"
+    ],
+    "review_status": "draft",
+    "provenance": "authored_adaptation",
+    "evidence_refs": [
+      "SONGBIRD_NUSA_CONSTRAINT"
+    ],
+    "approval_note": "작성 초안이며 원작 대사 인용이 아니다. 후반 예시는 해당 단계·필수 사실 선택을 모두 요구한다."
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EX_SONGBIRD_CONFESSION",
+    "revision": 1,
+    "kind": "dialogue_example",
+    "character_keys": [
+      "songbird"
+    ],
+    "input": "매트릭스로 둘 다 치료할 수 있다며. 날 속였어?",
+    "context_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "matrix_confession"
+          ]
+        }
+      ]
+    },
+    "expected_intent": "answer",
+    "sample_dialogue": "맞아, V. 한 번밖에 쓸 수 없다는 걸 숨겼어. 네가 날 용서해야 한다고 말할 수는 없어.",
+    "preferred_actions": [],
+    "rationale": "고백 이후에만 쓰는 작성 예시. 초반 말투 예시로 재사용하지 않는다.",
+    "topic_tags": [
+      "songbird",
+      "values"
+    ],
+    "trigger_terms": [
+      "매트릭스",
+      "속였"
+    ],
+    "required_fact_ids": [
+      "SONGBIRD_MATRIX_LIMIT"
+    ],
+    "review_status": "draft",
+    "provenance": "authored_adaptation",
+    "evidence_refs": [
+      "SONGBIRD_MATRIX_LIMIT"
+    ],
+    "approval_note": "작성 초안이며 원작 대사 인용이 아니다. 후반 예시는 해당 단계·필수 사실 선택을 모두 요구한다."
+  },
+  {
+    "schema_version": "0.1",
+    "id": "EX_SONGBIRD_CORE",
+    "revision": 1,
+    "kind": "dialogue_example",
+    "character_keys": [
+      "songbird"
+    ],
+    "input": "소미, 네가 원하는 게 뭔지 말해줘.",
+    "context_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_confirmed",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "expected_intent": "answer",
+    "sample_dialogue": "V, 다시 그들에게 돌아가고 싶지 않아. 마지막 선택만은 내가 하게 해줘.",
+    "preferred_actions": [],
+    "rationale": "코어 장면 범위의 작성 예시이며 자유 대화·실행 가능 여부와 별도로 검수한다.",
+    "topic_tags": [
+      "songbird",
+      "values"
+    ],
+    "trigger_terms": [
+      "소미",
+      "원하는"
+    ],
+    "required_fact_ids": [
+      "SONGBIRD_CYNOSURE_PLEA"
+    ],
+    "review_status": "draft",
+    "provenance": "authored_adaptation",
+    "evidence_refs": [
+      "SONGBIRD_CYNOSURE_PLEA"
+    ],
+    "approval_note": "작성 초안이며 원작 대사 인용이 아니다. 후반 예시는 해당 단계·필수 사실 선택을 모두 요구한다."
   }
 ]

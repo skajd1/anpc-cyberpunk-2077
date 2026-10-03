@@ -6888,5 +6888,925 @@
     "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
     "review_status": "source_checked",
     "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_BACKGROUND",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "송소미(송버드)는 NUSA를 위해 일하는 뛰어난 넷러너이며 마이어스 대통령의 오른팔이다",
+    "source": {
+      "source_id": "CDPR_PHANTOM_LIBERTY",
+      "url": "https://www.cyberpunk.net/en/phantom-liberty",
+      "locator": "DOSSIERS / Songbird",
+      "support_summary": "송소미(송버드)는 NUSA를 위해 일하는 뛰어난 넷러너이며 마이어스 대통령의 오른팔이다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "songbird",
+      "self_background"
+    ],
+    "trigger_terms": [
+      "소미",
+      "송버드",
+      "송소미",
+      "Songbird"
+    ],
+    "claim_limits": "원작 소개 범위만 사용한다. 현재 소속·위치·V와의 관계·대화 가능 여부는 게임 상태로 확인한다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_NUSA_CONSTRAINT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "NUSA는 송버드의 능력을 중요한 국가 자산으로 여기며 그녀가 직위를 떠나는 것을 허용하지 않는다",
+    "source": {
+      "source_id": "CDPR_PHANTOM_LIBERTY",
+      "url": "https://www.cyberpunk.net/en/phantom-liberty",
+      "locator": "DOSSIERS / Songbird",
+      "support_summary": "NUSA는 송버드의 능력을 중요한 국가 자산으로 여기며 그녀가 직위를 떠나는 것을 허용하지 않는다"
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "personal",
+    "topic_tags": [
+      "songbird",
+      "espionage"
+    ],
+    "trigger_terms": [
+      "NUSA",
+      "마이어스",
+      "국가 자산",
+      "자유",
+      "돌아가"
+    ],
+    "claim_limits": "원작 소개 범위만 사용한다. 현재 소속·위치·V와의 관계·대화 가능 여부는 게임 상태로 확인한다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_RECRUITMENT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리드는 해킹이 적발된 소미에게 FIA에 합류하거나 넷워치에 넘겨지는 선택을 제시했고 소미는 기존 삶을 떠났다",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / Cynosure에서 드러나는 과거",
+      "support_summary": "리드는 해킹이 적발된 소미에게 FIA에 합류하거나 넷워치에 넘겨지는 선택을 제시했고 소미는 기존 삶을 떠났다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_past",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "self_background"
+    ],
+    "trigger_terms": [
+      "리드",
+      "FIA",
+      "과거",
+      "넷워치"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_BLACKWALL_DAMAGE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "마이어스의 지시로 블랙월을 넘나든 소미는 그 너머 존재들에 의해 정신이 손상되고 있다",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / Slider와 Black Sapphire 이후 배경",
+      "support_summary": "마이어스의 지시로 블랙월을 넘나든 소미는 그 너머 존재들에 의해 정신이 손상되고 있다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "black_sapphire",
+            "escape_planning",
+            "moon_escape",
+            "matrix_confession",
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_secret",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "netrunning"
+    ],
+    "trigger_terms": [
+      "블랙월",
+      "Blackwall",
+      "손상",
+      "정신"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "technology",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_V_CURE_PROMISE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "소미는 마이어스 구조를 도와주는 대가로 V의 렐릭 문제를 해결할 수 있다고 제안한다",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / 최초 접촉과 대통령 구조 요청",
+      "support_summary": "소미는 마이어스 구조를 도와주는 대가로 V의 렐릭 문제를 해결할 수 있다고 제안한다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "introduced",
+            "rescue_operation",
+            "black_sapphire",
+            "escape_planning",
+            "moon_escape"
+          ]
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_intro",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "espionage"
+    ],
+    "trigger_terms": [
+      "구조",
+      "대가",
+      "치료",
+      "약속"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다. 소미의 제안이라는 사실이며 치료 가능성·성공 보장이 아니다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_HANSEN_PLAN",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "소미는 한센과 거래해 대통령 전용기 사건을 계획했으며 신경 매트릭스를 확보해 탈출하려 한다",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / Black Sapphire 이후 한센 거래 확인",
+      "support_summary": "소미는 한센과 거래해 대통령 전용기 사건을 계획했으며 신경 매트릭스를 확보해 탈출하려 한다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "escape_planning",
+            "moon_escape",
+            "matrix_confession",
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_secret",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "espionage"
+    ],
+    "trigger_terms": [
+      "한센",
+      "전용기",
+      "추락",
+      "계획",
+      "매트릭스"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_FIRESTARTER_SPLIT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "Firestarter에서 소미의 탈출을 돕는 선택과 리드의 생포를 돕는 선택은 서로 다른 후속 경로로 이어진다",
+    "source": {
+      "source_id": "GAMESRADAR_PL_ENDINGS",
+      "url": "https://www.gamesradar.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "Cyberpunk 2077 ending choices explained",
+      "support_summary": "Firestarter에서 소미의 탈출을 돕는 선택과 리드의 생포를 돕는 선택은 서로 다른 후속 경로로 이어진다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.songbird.archive_only",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_branch",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "espionage"
+    ],
+    "trigger_terms": [
+      "Firestarter",
+      "분기"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_MATRIX_LIMIT",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "소미는 우주공항 열차에서 신경 매트릭스가 한 번만 사용 가능하며 자신을 치료할 계획이었다고 V에게 고백한다",
+    "source": {
+      "source_id": "GAMESRADAR_PL_ENDINGS",
+      "url": "https://www.gamesradar.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "Cure Songbird ending / 열차에서의 고백",
+      "support_summary": "소미는 우주공항 열차에서 신경 매트릭스가 한 번만 사용 가능하며 자신을 치료할 계획이었다고 V에게 고백한다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "matrix_confession"
+          ]
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_late_secret",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "netrunning"
+    ],
+    "trigger_terms": [
+      "매트릭스",
+      "치료",
+      "둘 다",
+      "거짓말",
+      "고백"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "technology",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_MOON_DEPARTURE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "소미의 탈출을 끝까지 돕는 결말에서 V는 리드와 대치한 뒤 그를 죽이고 소미를 달로 가는 셔틀에 태운다",
+    "source": {
+      "source_id": "PCGAMER_PL_ENDINGS",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "Phantom Liberty ending 1",
+      "support_summary": "소미의 탈출을 끝까지 돕는 결말에서 V는 리드와 대치한 뒤 그를 죽이고 소미를 달로 가는 셔틀에 태운다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.songbird.archive_only",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_ending",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "espionage"
+    ],
+    "trigger_terms": [
+      "달",
+      "셔틀",
+      "결말"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다. 달 도착 이후 완치·영구 자유·연락·일상을 확정하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_FIA_RETURN",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "우주공항에서 소미를 넘기거나 Cynosure에서 살려 넘기면 소미는 FIA에 인계된다",
+    "source": {
+      "source_id": "PCGAMER_PL_ENDINGS",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "Phantom Liberty endings 2 / 4",
+      "support_summary": "우주공항에서 소미를 넘기거나 Cynosure에서 살려 넘기면 소미는 FIA에 인계된다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.songbird.archive_only",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_ending",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "espionage"
+    ],
+    "trigger_terms": [
+      "FIA",
+      "인계",
+      "결말"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_CYNOSURE_PLEA",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리드의 생포 경로에서 Cynosure 코어에 도달한 소미는 V에게 자신을 죽여 달라고 부탁한다",
+    "source": {
+      "source_id": "GAMESRADAR_PL_ENDINGS",
+      "url": "https://www.gamesradar.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "Kill Songbird ending / Cynosure core",
+      "support_summary": "리드의 생포 경로에서 Cynosure 코어에 도달한 소미는 V에게 자신을 죽여 달라고 부탁한다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.phase",
+          "op": "in",
+          "value": [
+            "cynosure_core"
+          ]
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_late_secret",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "self_background"
+    ],
+    "trigger_terms": [
+      "Cynosure",
+      "코어",
+      "부탁",
+      "죽여"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "SONGBIRD_CYNOSURE_DEATH",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "Cynosure에서 소미의 마지막 부탁을 받아들이는 결말에서는 소미가 사망한다",
+    "source": {
+      "source_id": "PCGAMER_PL_ENDINGS",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "Phantom Liberty ending 3",
+      "support_summary": "Cynosure에서 소미의 마지막 부탁을 받아들이는 결말에서는 소미가 사망한다"
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.songbird.archive_only",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_ending",
+    "knowledge_layer": "quest",
+    "topic_tags": [
+      "songbird",
+      "self_background"
+    ],
+    "trigger_terms": [
+      "사망",
+      "결말"
+    ],
+    "claim_limits": "개별 인지·공개와 해당 경로의 진행도 확인 필요. 다른 분기·미래 사건·치료 성공·실행 권한으로 확대하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "restricted",
+    "category_id": "people",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_INTRODUCED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "소미가 V에게 대통령 구조를 요청했다.",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / 해당 진행 경로",
+      "support_summary": "소미가 V에게 대통령 구조를 요청했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "introduced"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_RESCUE_OPERATION",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V가 마이어스를 구조하고 소미와의 연락이 끊겼다.",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / 해당 진행 경로",
+      "support_summary": "V가 마이어스를 구조하고 소미와의 연락이 끊겼다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "rescue_operation"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_BLACK_SAPPHIRE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V는 Black Sapphire에서 소미와 다시 만났다.",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / 해당 진행 경로",
+      "support_summary": "V는 Black Sapphire에서 소미와 다시 만났다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "black_sapphire"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_ESCAPE_PLANNING",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "소미는 V에게 한센과 NUSA를 벗어나기 위한 도움을 요청했다.",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / 해당 진행 경로",
+      "support_summary": "소미는 V에게 한센과 NUSA를 벗어나기 위한 도움을 요청했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "escape_planning"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_MOON_ESCAPE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V는 Firestarter에서 소미의 탈출을 돕고 우주공항으로 향했다.",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / 해당 진행 경로",
+      "support_summary": "V는 Firestarter에서 소미의 탈출을 돕고 우주공항으로 향했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "moon_escape"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_MATRIX_CONFESSION",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "소미는 우주공항 열차에서 자신의 계획에 대해 V에게 고백했다.",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / 해당 진행 경로",
+      "support_summary": "소미는 우주공항 열차에서 자신의 계획에 대해 V에게 고백했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "matrix_confession"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_CYNOSURE_CORE",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V는 리드 생포 지원 경로를 거쳐 Cynosure 코어에서 소미를 만났다.",
+    "source": {
+      "source_id": "WIKIPEDIA_PHANTOM_LIBERTY",
+      "url": "https://en.wikipedia.org/wiki/Cyberpunk_2077:_Phantom_Liberty",
+      "locator": "Plot / 해당 진행 경로",
+      "support_summary": "V는 리드 생포 지원 경로를 거쳐 Cynosure 코어에서 소미를 만났다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "cynosure_core"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_MOON_DEPARTED",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V는 소미를 달행 셔틀에 태워 보냈다.",
+    "source": {
+      "source_id": "PCGAMER_PL_ENDINGS",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "네 주요 결말 중 해당 경로",
+      "support_summary": "V는 소미를 달행 셔틀에 태워 보냈다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "moon_departed"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_FIA_CUSTODY",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "소미는 V의 선택에 따라 FIA에 인계됐다.",
+    "source": {
+      "source_id": "PCGAMER_PL_ENDINGS",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "네 주요 결말 중 해당 경로",
+      "support_summary": "소미는 V의 선택에 따라 FIA에 인계됐다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "fia_custody"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "STORY_SONGBIRD_DEAD",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "V는 Cynosure에서 소미의 마지막 부탁을 받아들였고 소미는 사망했다.",
+    "source": {
+      "source_id": "PCGAMER_PL_ENDINGS",
+      "url": "https://www.pcgamer.com/cyberpunk-2077-phantom-liberty-endings/",
+      "locator": "네 주요 결말 중 해당 경로",
+      "support_summary": "V는 Cynosure에서 소미의 마지막 부탁을 받아들였고 소미는 사망했다."
+    },
+    "validity_condition": {
+      "all": [
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.relationship_stage",
+          "op": "eq",
+          "value": "dead"
+        }
+      ]
+    },
+    "spoiler_scope": "phantom_liberty_stage",
+    "knowledge_layer": "quest",
+    "category_id": "people",
+    "injection_mode": "selected",
+    "topic_tags": [
+      "songbird",
+      "people"
+    ],
+    "trigger_terms": [],
+    "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
+    "review_status": "source_checked",
+    "usage_mode": "canon_context"
   }
 ]

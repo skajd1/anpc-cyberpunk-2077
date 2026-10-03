@@ -37,5 +37,7 @@ Node.js 22 이상에서 `npm start`를 실행하고 브라우저로 http://127.0
 
 ## 참고 분석과 개발 계획
 
+- [대표 인물 12명 및 세계관 조사](docs/community-npc-catalog.md)
+- [송소미(송버드) 스토리라인·정체성 조사](docs/songbird-storyline-identity.md)
 - [벤치마크 및 구현 가능성 분석](docs/benchmark-analysis.md)
 - [개발 및 검증 계획](docs/development-validation.md)

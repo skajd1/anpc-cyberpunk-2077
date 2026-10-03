@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { compileResearchTurn, createResearchEngine, evaluateCondition, termMatches, entityMatches } from '../public/research.js';
+import { compileResearchTurn, createResearchEngine, evaluateCondition, termMatches, entityMatches, knowledgeBlockReason } from '../public/research.js';
 import { createPrototypeServer } from '../server.js';
 import { buildCharacterProfile, filterKnowledge, testTargets } from '../public/profile.js';
 import { assemblePrompt } from '../public/core.js';
@@ -15,6 +15,50 @@ const config = key => ({ ...settings, phase: bundle.cards.find(c=>c.character_ke
 const context = { recent_turns: [], observations: {}, memory: null };
 const compile = (input, overrides={}) => compileResearchTurn({ bundle, npcKey:'judy', settings:{...config('judy'),...overrides}, context, playerText:input });
 const reply = { dialogue:'확인할 수 있는 것부터 이야기하자.',intent:'answer',emotion:'neutral',action:null,follow_up:null };
+
+test('송버드는 소미 애칭과 V 호칭을 구분하고 초반에 후반 비밀·예시를 주입하지 않는다', () => {
+  const result = compileResearchTurn({ bundle, npcKey:'songbird', settings:config('songbird'), context,
+    playerText:'소미, 매트릭스로 둘 다 치료할 수 있어? Cynosure에서 무슨 일이 생겨?' });
+  assert.equal(result.persona.voice_style.called_by_player, '소미');
+  assert.equal(result.persona.voice_style.player_address, 'V');
+  assert.ok(result.styleExamples.some(ex => ex.id === 'EX_SONGBIRD_NAME'));
+  const serialized = JSON.stringify(result);
+  for (const id of ['SONGBIRD_MATRIX_LIMIT','SONGBIRD_CYNOSURE_PLEA','SONGBIRD_CYNOSURE_DEATH']) {
+    assert.ok(!result.diagnostics.eligible_fact_ids.includes(id));
+    assert.ok(!serialized.includes(bundle.facts.find(f => f.id === id).statement));
+  }
+  assert.ok(result.styleExamples.every(ex => !['EX_SONGBIRD_CONFESSION','EX_SONGBIRD_CORE'].includes(ex.id)));
+  assert.ok(!result.persona.current_goals.some(goal => goal.includes('고백') || goal.includes('마지막 의사')));
+  assert.throws(() => compileResearchTurn({ bundle, npcKey:'songbird',
+    settings:{...config('songbird'),phase:'moon_departed'},context,playerText:'소미' }));
+});
+
+test('송버드 비밀은 개별 인지와 해당 분기가 모두 필요하며 화면 단계 선택은 비밀을 활성화하지 않는다', () => {
+  const card = bundle.cards.find(c => c.character_key === 'songbird');
+  for (const [id,phase,otherPhase] of [
+    ['SONGBIRD_MATRIX_LIMIT','matrix_confession','cynosure_core'],
+    ['SONGBIRD_CYNOSURE_PLEA','cynosure_core','matrix_confession'],
+    ['SONGBIRD_RECRUITMENT','cynosure_core','introduced']
+  ]) {
+    const entry = bundle.knowledge.find(k => k.owner_key === 'songbird' && k.fact_id === id);
+    const fact = bundle.facts.find(f => f.id === id);
+    const fields = { 'content.era':'2077','content.npc_key':'songbird','content.relationship_confirmed':true,
+      'content.phase':phase,[`content.grants.${id}`]:true };
+    assert.equal(knowledgeBlockReason(card,entry,fact,fields),null);
+    assert.ok(knowledgeBlockReason(card,entry,fact,{...fields,[`content.grants.${id}`]:false}));
+    assert.ok(knowledgeBlockReason(card,entry,fact,{...fields,'content.phase':otherPhase}));
+    const simulated = compileResearchTurn({ bundle, npcKey:'songbird',
+      settings:{...config('songbird'),phase,relicKnown:true,relicDisclosed:true},context,playerText:'소미 매트릭스 Cynosure 과거' });
+    assert.ok(!simulated.diagnostics.eligible_fact_ids.includes(id));
+    assert.ok(!JSON.stringify(simulated).includes(fact.statement));
+  }
+  for (const fact of bundle.facts.filter(f => f.spoiler_scope === 'phantom_liberty_ending')) {
+    const entry = bundle.knowledge.find(k => k.owner_key === 'songbird' && k.fact_id === fact.id);
+    const fields = { 'content.era':'2077','content.npc_key':'songbird','content.relationship_confirmed':true,
+      'content.phase':'matrix_confession',[`content.grants.${fact.id}`]:true };
+    assert.ok(knowledgeBlockReason(card,entry,fact,fields));
+  }
+});
 
 test('공개 유명 인물은 기본 상식으로 전송하고 조니의 각성 초기 시대 제한을 유지한다', () => {
   for (const card of bundle.cards) for (const id of ['ROGUE_BACKGROUND','KERRY_BACKGROUND','SAMURAI_JOHNNY']) {
@@ -47,7 +91,7 @@ test('인명 경계는 로그인·부분 문자열을 제외하고 직접 물은
   assert.ok(turn.context.knowledge.length<=3);
 });
 
-test('10명 전체의 원작 관계 분기를 화면과 생성 요청에 동일하게 적용한다', () => {
+test('등록 인물 전체의 원작 관계 분기를 화면과 생성 요청에 동일하게 적용한다', () => {
   for (const card of bundle.cards) for (const stage of card.relationship_stages) {
     const s={...config(card.character_key),relationshipStage:stage.id};
     const profile=buildCharacterProfile(bundle,card.character_key,s);
@@ -203,12 +247,12 @@ test('조사 경로는 manifest의 카드를 제공하고 인증된 토큰 없�
   assert.equal((await fetch(origin+'/api/research')).status,403);
   const boot=await fetch(origin+'/api/bootstrap').then(r=>r.json());
   const data=await fetch(origin+'/api/research',{headers:{'X-ANPC-Token':boot.token}}).then(r=>r.json());
-  assert.deepEqual(data.cards.map(c=>c.character_key),bundle.cards.map(c=>c.character_key)); assert.equal(data.cards.length,11); assert.ok(data.cards.every(c=>c.runtime_enabled===false&&c.review_status==='draft'));
+  assert.deepEqual(data.cards.map(c=>c.character_key),bundle.cards.map(c=>c.character_key)); assert.equal(data.cards.length,manifest.counts.characters); assert.ok(data.cards.every(c=>c.runtime_enabled===false&&c.review_status==='draft'));
   assert.equal((await fetch(origin+'/compare')).status,200);
   for(const route of ['/profile.js','/profile-view.js']) assert.equal((await fetch(origin+route)).status,200);
 });
 
-test('10개 인물의 단계·정체성·지식이 선택한 카드로 조립되고 인물 목록은 확장된다', () => {
+test('등록 인물의 단계·정체성·지식이 선택한 카드로 조립되고 인물 목록은 확장된다', () => {
   for(const card of bundle.cards) {
     const result=compileResearchTurn({bundle,npcKey:card.character_key,settings:config(card.character_key),context,playerText:'BD는 뭐야?'});
     assert.equal(result.persona.persona_id,card.character_key);

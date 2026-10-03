@@ -3,7 +3,7 @@
   "config_version": "1.0",
   "game_id": "cyberpunk2077",
   "mod_id": "anpc",
-  "revision": 4,
+  "revision": 5,
   "fields": [
     {
       "field_id": "npc.can_observe_equipment",
@@ -1718,6 +1718,136 @@
     {
       "field_id": "content.grants.JOHNNY_MUSIC",
       "meaning": "현재 NPC의 JOHNNY_MUSIC 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_BACKGROUND",
+      "meaning": "현재 NPC의 SONGBIRD_BACKGROUND 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_NUSA_CONSTRAINT",
+      "meaning": "현재 NPC의 SONGBIRD_NUSA_CONSTRAINT 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_RECRUITMENT",
+      "meaning": "현재 NPC의 SONGBIRD_RECRUITMENT 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_BLACKWALL_DAMAGE",
+      "meaning": "현재 NPC의 SONGBIRD_BLACKWALL_DAMAGE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_V_CURE_PROMISE",
+      "meaning": "현재 NPC의 SONGBIRD_V_CURE_PROMISE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_HANSEN_PLAN",
+      "meaning": "현재 NPC의 SONGBIRD_HANSEN_PLAN 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_FIRESTARTER_SPLIT",
+      "meaning": "현재 NPC의 SONGBIRD_FIRESTARTER_SPLIT 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_MATRIX_LIMIT",
+      "meaning": "현재 NPC의 SONGBIRD_MATRIX_LIMIT 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_MOON_DEPARTURE",
+      "meaning": "현재 NPC의 SONGBIRD_MOON_DEPARTURE 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_FIA_RETURN",
+      "meaning": "현재 NPC의 SONGBIRD_FIA_RETURN 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_CYNOSURE_PLEA",
+      "meaning": "현재 NPC의 SONGBIRD_CYNOSURE_PLEA 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.SONGBIRD_CYNOSURE_DEATH",
+      "meaning": "현재 NPC의 SONGBIRD_CYNOSURE_DEATH 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.songbird.archive_only",
+      "meaning": "송버드 결말·독자용 분기 조사 조회 여부. 일반 대화에서는 설정하지 않음",
       "value_type": "boolean",
       "unit": "none",
       "visibility": "internal",
