@@ -2059,6 +2059,13 @@
               }
             }
           }
+        },
+        "session_summaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SessionSummary"
+          },
+          "maxItems": 64
         }
       }
     },
@@ -2231,6 +2238,15 @@
           "items": {
             "$ref": "#/$defs/RecallConstraint"
           }
+        },
+        "session_summaries": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 320
+          },
+          "maxItems": 3
         }
       }
     },
@@ -3098,7 +3114,8 @@
             "provider.result",
             "action.options",
             "memory.control",
-            "memory.save-request"
+            "memory.save-request",
+            "memory.session-summary"
           ]
         },
         "contract_version": {
@@ -3528,6 +3545,23 @@
                 "contract",
                 "data"
               ]
+            },
+            {
+              "properties": {
+                "contract": {
+                  "const": "memory.session-summary"
+                },
+                "data": {
+                  "$ref": "#/$defs/SessionSummary"
+                },
+                "scope": {
+                  "$ref": "#/$defs/OwnerScope"
+                }
+              },
+              "required": [
+                "contract",
+                "data"
+              ]
             }
           ]
         }
@@ -3858,6 +3892,26 @@
         },
         "common_knowledge": {
           "$ref": "#/$defs/CommonKnowledgeView"
+        }
+      }
+    },
+    "SessionSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_id",
+        "summary"
+      ],
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320
         }
       }
     }

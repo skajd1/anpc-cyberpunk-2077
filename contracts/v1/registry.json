@@ -27,7 +27,8 @@
     "provider.result": "ProviderResult",
     "action.options": "ActionOptions",
     "memory.control": "MemoryControl",
-    "memory.save-request": "SaveRequest"
+    "memory.save-request": "SaveRequest",
+    "memory.session-summary": "SessionSummary"
   },
   "ports": {
     "TargetResolver.resolve": {
@@ -252,6 +253,24 @@
       ],
       "outputs": [
         "action.request"
+      ],
+      "requires_fence": true
+    },
+    "SessionSummarizer.propose": {
+      "inputs": [
+        "memory.summary-input"
+      ],
+      "outputs": [
+        "memory.session-summary"
+      ],
+      "requires_fence": true
+    },
+    "MemoryStore.commitSession": {
+      "inputs": [
+        "memory.session-summary"
+      ],
+      "outputs": [
+        "memory.snapshot"
       ],
       "requires_fence": true
     }

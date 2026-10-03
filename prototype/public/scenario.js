@@ -64,10 +64,9 @@ export class ScenarioEngine extends DialogueEngine {
     this.readSettings = readSettings; this.lastStorySettings = clone(readSettings());
     this.longMemory = new TestMemory(); this.summarize = summarize; this.persist = persist;
     this.turnAdapter = args => {
-      if ([...JSON.stringify(this.journal)].length + [...args.playerText].length + 2000 > 192000) throw new Error('memory_capacity_exceeded');
+      if ([...JSON.stringify(this.journal)].length + [...args.playerText].length + 2400 > 64000) throw new Error('memory_capacity_exceeded');
       this.synchronizeStoryMemory();
       const signature = storySignature(readSettings());
-      this.observeOutfit();
       const prepared = compileResearchTurn({ bundle, npcKey, settings: { ...readSettings(), scenario: true }, ...args,
         context: this.context(args.playerText), corePersonality: this.session.persona.core_personality });
       if (this.npcType === 'crowd') prepared.persona.lived_context.interests = Object.values(this.session.persona.traits);
@@ -108,23 +107,13 @@ export class ScenarioEngine extends DialogueEngine {
     this.assertCanEnter();
     if (this.npcType === 'crowd' && this.lastEncounterAt != null && this.clock() - this.lastEncounterAt >= 600000) this.clearMemory();
     this.activeStorySignature = storySignature(this.readSettings());
-    super.start(key); this.observeOutfit();
+    super.start(key);
+    this.memorySessionId = this.journal[0]?.session_id ?? this.session.id;
   }
   assertCanEnter() {
     compileResearchTurn({ bundle: this.bundle, npcKey: this.npcKey, settings: { ...this.readSettings(), scenario: true },
       context: { observations: {}, recent_turns: [], memory: null, allowed_actions: [] }, playerText: '' });
     if (!this.safe() || !this.entryInRange()) throw new Error('안전 상태로 복귀한 뒤 4m 이내에서 진입하세요.');
-  }
-  observeOutfit() {
-    if (!this.session) return;
-    const s = this.readSettings();
-    if (s.outfitVisible !== true) return;
-    const outfit = resolveOutfit(s);
-    if (!outfit) return;
-    const last = this.journal.findLast(e => e.event_type === 'outfit_observation');
-    if (last?.outfit.id === outfit.id) return;
-    this.journal.push({ event_id: crypto.randomUUID(), event_type: 'outfit_observation', kind: 'observation',
-      epistemic_status: 'runtime_confirmed', source: 'mock_displayed_outfit', observed_at_ms: this.clock(), outfit: clone(outfit) });
   }
   context(playerText = '') {
     const context = super.context(), s = this.readSettings(), outfit = resolveOutfit(s);
@@ -135,40 +124,41 @@ export class ScenarioEngine extends DialogueEngine {
     // 원문과 관찰을 구분해 로컬에서 선별한다. 자기보고를 사실로 승격하지 않는다.
     const utterances = this.journal.filter(e => /_utterance$/.test(e.event_type));
     const recalled = this.longMemory.recall(this.journal, playerText), raw = recalled.recent;
-    const outfitEvents = this.journal.filter(e => e.event_type === 'outfit_observation');
-    const outfits = outfitEvents.slice(-2).map(e => {
-      return { event_ref: e.event_id, event_kind: 'player_observation', speaker: 'runtime',
-        text: `${e.outfit.display_name}: ${e.outfit.appearance_text}`, epistemic_status: 'runtime_confirmed',
-        temporal_scope: `과거 관찰 순서 ${this.journal.indexOf(e)}`, is_excerpt: false };
-    });
     return { ...context, observations, recent_turns: raw.map(e => ({ role: e.role, text: e.text })),
       memory: { memory_view_version: '1.3', short_term: { topic_tags: [], active_items: [],
-        recalled_events: [...outfits, ...recalled.recalled_events] }, long_term: recalled.long_term, recall_constraints: [] },
-      prototype_memory: { implementation: 'local_journal_summary_recall', npc_type: this.npcType, event_count: this.journal.length,
+        recalled_events: [] }, long_term: [], session_summaries: recalled.session_summaries, recall_constraints: [] },
+      prototype_memory: { implementation: 'one_summary_per_session', npc_type: this.npcType, event_count: this.journal.length,
         summary_count: this.longMemory.records.length, summary_status: this.longMemory.status,
         player_name_disclosed: utterances.some(e => e.role === 'player' && /(?:이름은|나는)\s*V(?:야|입니다|예요|다|\b)/i.test(e.text)) },
       allowed_actions: this.allowed(), conversation_state: { ...context.conversation_state,
         encounter: utterances.length ? 'recontact' : 'first' } };
   }
   onAccepted({ playerText, reply, context }) {
-    this.journal.push({ event_id: crypto.randomUUID(), event_type: 'player_utterance', role: 'player', text: playerText,
+    this.journal.push({ event_id: crypto.randomUUID(), session_id: this.memorySessionId, event_type: 'player_utterance', role: 'player', text: playerText,
       kind: 'player_claim', epistemic_status: 'reported', source: 'player_text' },
-    { event_id: crypto.randomUUID(), event_type: 'npc_utterance', role: 'npc', text: [reply.dialogue, reply.follow_up].filter(Boolean).join('\n'),
+    { event_id: crypto.randomUUID(), session_id: this.memorySessionId, event_type: 'npc_utterance', role: 'npc', text: [reply.dialogue, reply.follow_up].filter(Boolean).join('\n'),
       kind: 'npc_statement', epistemic_status: 'reported', source: 'model_or_mock' });
     if (reply.action && context.allowed_actions.find(a => a.action_id === reply.action.action_id)?.execution_mode === 'execute')
       this.journal.push({ event_id: crypto.randomUUID(), event_type: 'action_result', ...clone(this.session.lastAction), source: 'mock_control' });
     this.persist?.(this);
-    if (this.longMemory.needsSummary(this.journal)) void this.consolidateMemory();
   }
   async consolidateMemory() {
-    const result = await this.longMemory.consolidate(this.journal, this.summarize);
-    if (!result.stale) { this.persist?.(this); this.emit(); }
-    return result;
+    this.end(true, '세션 종료·한 줄 요약');
+    return this.longMemory.pending ? await this.longMemory.pending : { committed: false };
   }
   memorySnapshot() { return { journal: clone(this.journal), memory: this.longMemory.snapshot(), storyState: clone(this.readSettings().storyState ?? null) }; }
   end(normal = true, reason) {
-    if (this.session) this.lastEncounterAt = this.clock();
-    super.end(normal, reason);
+    if (!this.session) return;
+    this.lastEncounterAt = this.clock();
+    const source = this.journal.filter(e => /_utterance$/.test(e.event_type));
+    const sessionId = this.memorySessionId;
+    // 종료한 세션의 발화를 다음 세션의 원문으로 재사용하지 않는다.
+    super.end(false, reason); this.journal = []; this.memorySessionId = null;
+    if (source.length) {
+      const job = this.longMemory.finish(sessionId, source, normal ? this.summarize : undefined);
+      this.persist?.(this);
+      void job.then(result => { if (!result.stale) { this.persist?.(this); this.emit(); } });
+    }
   }
   respawn(key) { super.respawn(key); this.clearMemory(); }
   changeWorld(update) {
@@ -184,6 +174,7 @@ export class ScenarioEngine extends DialogueEngine {
     this.end(false, '모의 저장 로드'); this.worldEpoch++; this.instances.clear(); this.memories.clear();
     this.journal = this.npcType === 'community' ? clone(journal) : []; this.closedTurns = [];
     this.longMemory.restore(this.npcType === 'community' ? memory : null);
+    this.memorySessionId = this.journal[0]?.session_id ?? null;
     this.lastEncounterAt = null;
     if (world) this.world = clone(world);
     this.lastActionSelection = null; this.lastReply = null; this.lastRawReply = null; this.lastPrompt = null; this.lastSelection = null;

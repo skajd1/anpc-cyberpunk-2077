@@ -71,7 +71,7 @@ phase_labels는 의미 단계이며 원작 퀘스트 ID 아님. 필드값만으�
 
 원작 사건=CanonView, ANPC 경험=MemoryView. 원작 대사를 recent_turns로 복사하지 않는다. 매 요청 단계·분기·인지·관계·공개 필터.
 
-공개 인지는 [평판 정책](content-specification.md#53-관계-기준과-공개-평판-반응). 비밀 권한 확대 없음. 관찰/일상 자기보고는 [기억 규격](memory-specification.md#43-복장-관찰과-생성-일상-기억).
+공개 인지는 [평판 정책](content-specification.md#53-관계-기준과-공개-평판-반응). 비밀 권한 확대 없음. 관찰/일상 자기보고는 [기억 규격](memory-specification.md#1-기본-원칙).
 
 ## 7. 자료 확장 기준
 

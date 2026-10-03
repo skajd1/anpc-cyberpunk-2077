@@ -116,9 +116,10 @@ public도 대상의 인지·거리·시야·분야별 정책을 통과해야 한
 | 타입 | 규칙 |
 | --- | --- |
 | SourceEvent | player_utterance=player/player_claim, npc_utterance=npc/npc_statement, 관찰·실행·해결=runtime/runtime_confirmed |
-| MemoryRecord | 의미 요약·원문 근거·사실성·상태·중요도·유효 조건·정정 참조 저장. 근거 실재·소유자·효과는 로컬 검사 |
-| MemorySnapshot | 불변 조회/커밋 자료. revision·generation·사건 처리 상태는 로컬용 |
-| MemoryView | long_term=MemoryItemView, 과거 원문=RecalledEventView, 미해결 문맥=active_items, 불명/충돌=recall_constraints |
+| SessionSummary | session_id + summary. 한 세션의 전체 대화를 짧게 정리한 보고. 지식·관계 수정 권한 없음 |
+| MemoryRecord | 이전 세부 기억 구현의 호환 타입. 현재 세션 요약 정책에서 새 항목을 생성하지 않음 |
+| MemorySnapshot | session_summaries에 세션 요약, events에 진행 중 수용 발화. revision·generation은 로컬용 |
+| MemoryView | session_summaries에 최신 세션 요약 문자열. 기존 long_term/active_items/recalled_events는 현재 정책에서 비움 |
 | 전송 제외 | validity·importance·근거 ID 목록·체크포인트·세대·저장/작업 정보 |
 | 전송 참조 | 요청 내 짧은 참조 사용 가능. 원본 대응표는 로컬 보존. 같은 참조의 의미 교체 금지 |
 | SaveBundle | 확인된 game_save_ref + 소유자별 MemorySnapshot. 봉투 actor=null, owners는 같은 game_id/mod_id/save_scope |
@@ -137,7 +138,8 @@ public도 대상의 인지·거리·시야·분야별 정책을 통과해야 한
 | KnowledgeSelector.select | 공통 핵심 CommonKnowledgeView + 조건·분야 상한 내 KnowledgeView.items |
 | MemoryStore.appendEvents/readSnapshot | 사건 중복 차단·불변 스냅샷 |
 | MemorySelector.select | 쿼리·스냅샷·예산으로 MemoryView 선택 |
-| MemoryConsolidator.propose / MemoryStore.commit | 근거 기반 후보 / 검사 후 원자적 반영 |
+| SessionSummarizer.propose / MemoryStore.commitSession | 한 세션 전체 정리 / 같은 세션 ID로 요약 저장 |
+| MemoryConsolidator.propose / MemoryStore.commit | 이전 세부 기억 구현 호환 포트 |
 | MemoryStore.captureSaveBundle/restoreSaveBundle | 다중 소유자 캡처 / 대상 소유자 복원 |
 | MemoryStore.invalidate/delete | 세대 증가·무효화/삭제·늦은 재삽입 차단 |
 | ActionCatalog.describe / ActionSelector.select | 등록 의미 / 현재 허용 후보 |
@@ -217,7 +219,7 @@ ModuleManifest/ModulePlan은 호스트 구성 자료이며 Envelope·LLM 입력�
 | player_identity/public_reputation | PromptContext.player_identity·KnowledgeView | name은 name_known_by_npc=true일 때만 display_name. 공개 행적은 확인·허용된 진술만 known_facts로 제공. character_key/fact_id/모의 진단 제외 |
 | session.turns/scenario 최근 발화 | TurnView[] | role/text만. follow_up은 원래 NPC 발화의 일부. 최근 발화와 조회 기억의 중복 제거는 프롬프트 정책 적용 |
 | conversation_state/engine.state | PromptContext.conversation_state | encounter 유지, topic_tags는 실제 선택 질의의 태그 또는 [], closing은 호스트 상태가 closing일 때 true. traits 제외 |
-| scenario.journal 발화/복장 관찰 | SourceEvent → MemorySnapshot/MemoryView | 소유자 확인 필수. event_id 유지, 배열 순서로 가져오기 sequence 발급. 미보존 session_id/exchange_id/게임·UTC 시각은 null. observed_at_ms를 UTC로 변환 금지 |
+| scenario.journal 현재 세션 발화 / memory.records | SourceEvent / SessionSummary → MemorySnapshot·MemoryView.session_summaries | 현재 세션 ID·화자·순서 유지. 종료한 세션은 한 줄만 투영하며 관찰 이력을 생성하지 않음. 모의 저장 전용 |
 | memory_view_version=1.2/짧은 summary·player_claims | 원문 재조회 또는 보류 | 1.3으로 버전만 변경 금지. 검증 가능한 원문으로 새 뷰 구성. 근거 없는 합친 대사/요약은 MemoryRecord·관찰 사실로 가져오지 않음 |
 | allowed_actions의 args 객체 | ActionCatalog/ActionOption의 ArgSpec[] | duration_s:number/필수/1..10, gesture_ref:string/필수/등록 후보. 없는 수치 한도=null, 무제한 후보=[]. 가상 기본 행동은 simulation에서만 execute, 제스처는 selection_only 유지 |
 | lastAction의 가상 성공/lastActionSelection | 테스트 진단 또는 검증된 ActionOutcome | observed_effect가 문자열이면 확인된 결과 문장 배열로 변환. 선택을 실행으로 승격 금지. 요청 ID·완료 근거 없는 옛 성공은 실행 사건/실게임 결과로 가져오지 않음 |
@@ -228,7 +230,7 @@ ModuleManifest/ModulePlan은 호스트 구성 자료이며 Envelope·LLM 입력�
 
 필수 프로필/원작 맥락을 구성할 자료가 없으면 요청 보류. 플레이어 신원 미제공은 name=null/name_known_by_npc=null/known_facts=[]; 검증된 마지막 실행 결과가 없으면 last_action_result=null. 출력 언어·토큰 상한은 호스트 요청 설정에서 주입한다.
 
-전환 수용 조건: 같은 입력의 허용 진술·주장/관찰 구분·이전 관찰·행동 후보가 일치하고, 소유자/초안/모의 출처와 선택 전용 권한이 보존되어야 한다. 불일치·잘못된 형태는 거부, 원본 근거 부족은 보류한다. 두 경로를 동시에 실행·저장·유료 호출하지 않는다.
+전환 수용 조건: 같은 입력의 허용 진술·대화/게임 사실 구분·행동 후보가 일치하고, 소유자/초안/모의 출처와 선택 전용 권한이 보존되어야 한다. 불일치·잘못된 형태는 거부, 원본 근거 부족은 보류한다. 두 경로를 동시에 실행·저장·유료 호출하지 않는다.
 
 ## 8. 계약 검증과 구현 경계
 
@@ -245,3 +247,7 @@ ModuleManifest/ModulePlan은 호스트 구성 자료이며 Envelope·LLM 입력�
 - recent_turn: kind=recent_turn, role=user/assistant, content=실제 표시한 원문. player→user, npc→assistant. 역할을 높은 지침으로 변환하거나 현재 입력을 중복 추가하지 않음.
 - 포트 계약 1.0은 유지하며 v1 스키마의 전송 메시지 종류를 확장. 신규 어댑터는 recent_turn을 반드시 지원. 예전 메시지 배열은 여전히 유효하되 context에서 recent_turns는 제거해야 함.
 - 웹 내부 journal/슬롯 형식은 테스트 어댑터 전용. SummaryInput·MemoryRecord·MemoryView는 공통 타입 사용. 실제 SourceEvent 등록·SaveBundle 연결을 구현한 것으로 간주하지 않음.
+
+## 11. 세션 요약 확장
+
+`memory.session-summary`와 SessionSummary를 추가 등록한다. SummaryInput은 같은 세션 source_events 전체를 사용하며 기존 의미를 변경하지 않는다. MemorySnapshot/MemoryView의 session_summaries는 선택 확장이다. 이전 MemoryRecord·SummaryCandidates 계약은 호환 검사용으로 유지한다. 새 포트의 출력은 호스트가 세션 ID를 부여한 SessionSummary다. 모델 출력 `{summary}`를 직접 봉투로 사용하지 않는다. 현재 웹 저장 버전 2와 목표 SaveBundle의 변환은 테스트 어댑터 경계이며 실게임 연결이 아니다.

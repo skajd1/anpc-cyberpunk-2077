@@ -136,7 +136,7 @@ test('로컬 API는 다른 Origin·Host 요청을 거부하고 키를 응답에 
 
 test('기억 요약 경로는 별도 출력 규격과 고정 요약 지침을 사용한다', async t => {
   let seen;
-  const server=await createPrototypeServer({apiKey:'test-only',generate:async args=>{seen=args;return {reply:{candidates:[]},mode:'openai',usage:{input_tokens:12,output_tokens:4}};}});
+  const server=await createPrototypeServer({apiKey:'test-only',generate:async args=>{seen=args;return {reply:{summary:'테스트 세션 요약'},mode:'openai',usage:{input_tokens:12,output_tokens:4}};}});
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));t.after(()=>server.close());
   const origin='http://127.0.0.1:'+server.address().port,boot=await fetch(origin+'/api/bootstrap').then(r=>r.json());
   const response=await fetch(origin+'/api/summarize',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json','X-ANPC-Token':boot.token},body:JSON.stringify({prompt,mode:'openai',model:'gpt-4.1-mini',reasoningEffort:'none'})});

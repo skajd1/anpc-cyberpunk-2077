@@ -5,7 +5,7 @@ import { buildCharacterProfile, testTargets, DEPTH_LABELS, PHASE_LABELS, domainL
 import { renderCharacterProfiles } from './profile-view.js';
 import { buildQuestionPresets, requestMetrics, snapshotTestResult, conversationExchanges } from './test-tools.js';
 import { API_MODELS, apiModelProfile, supportsReasoningEffort } from './api-models.js';
-import { extractLocalSummary, makeSummaryInput } from './memory.js';
+import { extractLocalSummary, makeSummaryInput, validSessionSummary } from './memory.js';
 const $ = id => document.getElementById(id);
 const bootstrap = await fetch('/api/bootstrap').then(r => r.json());
 const QUESTION_PRESETS = buildQuestionPresets(bootstrap.playerIdentity.display_name);
@@ -24,12 +24,12 @@ let editingSlot = 0, profileKey = selectedTargets[0], followLatest = true;
 const viewStarts = {};
 let inCombat = false;
 const summaryUsage = { calls: 0, input_tokens: 0, output_tokens: 0 };
-const MEMORY_STORAGE_KEY = 'anpc-test-memory-v1';
-let persisted = { version: 1, owners: {}, saves: {} };
+const MEMORY_STORAGE_KEY = 'anpc-test-memory-v2';
+let persisted = { version: 2, owners: {}, saves: {} };
 try {
   const data = JSON.parse(localStorage.getItem(MEMORY_STORAGE_KEY) ?? 'null');
   if (data) {
-    if (data.version !== 1 || !data.owners || !data.saves) throw new Error('invalid_storage');
+    if (data.version !== 2 || !data.owners || !data.saves) throw new Error('invalid_storage');
     for (const snapshot of Object.values(data.owners)) validateStoredMemory(snapshot);
     for (const save of Object.values(data.saves)) {
       if (!save.scenario?.fields || !save.journals || !save.worlds || !save.memories) throw new Error('invalid_storage');
@@ -40,15 +40,12 @@ try {
 } catch { $('save-hint').textContent = '저장 자료를 읽지 못했습니다. 빈 기억으로 시작합니다.'; }
 const saves = new Map(Object.entries(persisted.saves));
 function validateStoredMemory(snapshot) {
-  if (!Array.isArray(snapshot?.journal) || snapshot.memory?.version !== 1 || !Array.isArray(snapshot.memory.records)
-    || !Array.isArray(snapshot.memory.processed)) throw new Error('invalid_storage');
-  const ids = new Set(snapshot.journal.map(e => e?.event_id));
-  if (ids.has(undefined) || ids.size !== snapshot.journal.length || (snapshot.memory.summary_boundary != null && !ids.has(snapshot.memory.summary_boundary)) || snapshot.journal.some(e => /_utterance$/.test(e.event_type) && (typeof e.text !== 'string' || !['player', 'npc'].includes(e.role)))
-    || snapshot.memory.records.some(r => typeof r.memory_id !== 'string' || typeof r.text !== 'string' || !r.text.trim() || !Number.isInteger(r.validity?.occurred_at?.sequence)
-      || !['player_claim', 'npc_statement'].includes(r.kind) || r.epistemic_status !== r.kind
-      || ![r.subject_keys, r.topic_tags].every(a => Array.isArray(a) && a.every(v => typeof v === 'string'))
-      || !Array.isArray(r.evidence_event_ids) || !r.evidence_event_ids.length || r.evidence_event_ids.some(id => !ids.has(id)))
-    || snapshot.memory.processed.some(id => !ids.has(id))) throw new Error('invalid_storage');
+  if (!Array.isArray(snapshot?.journal) || snapshot.memory?.version !== 2 || !Array.isArray(snapshot.memory.records)
+    || snapshot.memory.records.length > 64 || !snapshot.memory.records.every(validSessionSummary)
+    || new Set(snapshot.memory.records.map(r => r.session_id)).size !== snapshot.memory.records.length
+    || snapshot.journal.some(e => !['player_utterance', 'npc_utterance', 'action_result'].includes(e.event_type)
+      || /_utterance$/.test(e.event_type) && (typeof e.text !== 'string' || !['player', 'npc'].includes(e.role) || typeof e.session_id !== 'string'))
+    || new Set(snapshot.journal.filter(e => /_utterance$/.test(e.event_type)).map(e => e.session_id)).size > 1) throw new Error('invalid_storage');
 }
 function persistMemory(engine) {
   if (engine?.npcType === 'community') persisted.owners[engine.npcKey] = engine.memorySnapshot();
@@ -57,7 +54,7 @@ function persistMemory(engine) {
   catch { $('save-hint').textContent = '브라우저 저장 실패 · 현재 페이지의 기억만 유지됩니다.'; }
 }
 async function summarizeMemory(events, signal) {
-  if ($('mode').value !== 'openai' || events.length < 8) return { reply: extractLocalSummary(events), mode: 'local_extract' };
+  if ($('mode').value !== 'openai') return { reply: extractLocalSummary(events), mode: 'local_extract' };
   const summaryInput = await makeSummaryInput(events); summaryUsage.calls++;
   const response = await fetch('/api/summarize', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-ANPC-Token': bootstrap.token },
     body: JSON.stringify({ prompt: { instructions: bootstrap.memoryBase, input: [{ role: 'user', content: JSON.stringify(summaryInput) }] },
@@ -234,18 +231,17 @@ function render() {
   }
   renderCharacterProfiles($('character-profile'), [buildCharacterProfile(bundle, profileKey, settings(profileKey), engines[profileKey]?.lastSelection ? [...(engines[profileKey].lastSelection.common_fact_ids ?? []), ...engines[profileKey].lastSelection.selected_fact_ids] : undefined, engines[profileKey]?.instances.get(profileKey)?.persona.core_personality)]);
   for (const button of document.querySelectorAll('[data-relationship-key]')) button.onclick = () => { openSettings('scene'); $('phase-' + button.dataset.relationshipKey).focus(); };
-  const memoryLabels = { running: '정리 중', ready: '준비', local_extract: '원문 추출', invalid_summary: '요약 검증 실패', stale_job: '이전 작업 폐기', network_error: '연결 실패', network_blocked: '연결 차단', timeout: '시간 초과', auth_failed: 'API 키 확인 필요', busy: '다른 요청 처리 중', invalid_response: '응답 검증 실패', memory_capacity_exceeded: '기억 용량 초과', provider_refused: '요약 거절', provider_rejected: '요약 요청 거부', rate_limited: 'API 한도 초과' };
   $('memory-hint').textContent = keys.map(key => {
-    const memory = engines[key]?.longMemory, snapshot = persisted.owners[key];
-    return `${bundle.cards.find(c => c.character_key === key).display_name}: 기억 ${memory?.records.length ?? snapshot?.memory.records.length ?? 0}개 · ${memoryLabels[memory?.status] ?? memory?.status ?? '준비'}`;
-  }).join(' / ') + ` · 요약 요청 ${summaryUsage.calls}회 (입력 ${summaryUsage.input_tokens}, 출력 ${summaryUsage.output_tokens}토큰). 최근 6개 발화 유지, 8회 대화마다 정리. 실패 시 원문 유지·수동 재시도. OpenAI 요약은 추가 요금이 발생합니다.`;
+    const memory = engines[key]?.longMemory ?? persisted.owners[key]?.memory;
+    return `${bundle.cards.find(c => c.character_key === key).display_name}: 세션 요약 ${memory?.records?.length ?? 0}개${memory?.status === 'running' ? ' · 요약 중' : ''}`;
+  }).join(' · ') + (summaryUsage.calls ? ` · 요약 API ${summaryUsage.calls}회 · 입력 ${summaryUsage.input_tokens} / 출력 ${summaryUsage.output_tokens}토큰` : '');
   renderCharacters(); renderTranscript(); updateRequestDisplay();
 }
 function reset() {
   requestRun = null;
   runs.length = 0; for (const key of Object.keys(viewStarts)) delete viewStarts[key];
   sequence++; for (const engine of Object.values(engines)) { engine.end(false, '전체 초기화'); engine.clearMemory(); }
-  engines = {}; saves.clear(); persisted = { version: 1, owners: {}, saves: {} }; persistMemory(); inCombat = false; $('save-hint').textContent = '브라우저에 저장 · 새로고침 후에도 유지'; results = {}; busy = false; $('status').textContent = '시험 대화·기억·저장을 초기화했습니다.'; $('error').hidden = true; render();
+  engines = {}; saves.clear(); persisted = { version: 2, owners: {}, saves: {} }; persistMemory(); inCombat = false; $('save-hint').textContent = '브라우저에 저장 · 새로고침 후에도 유지'; results = {}; busy = false; $('status').textContent = '시험 대화·기억·저장을 초기화했습니다.'; $('error').hidden = true; render();
 }
 function changeScenario(requireEntry = false) {
   requestRun = null; results = {}; $('error').hidden = true;
@@ -292,7 +288,7 @@ for (const [buttonId, dialogId, panelId] of [['open-characters', 'character-pick
 }
 
 $('new-dialogue').onclick = () => {
-  for (const key of keys) { engines[key]?.end(false, '새 대화'); engines[key]?.clearMemory(); }
+  for (const key of keys) { engines[key]?.end(true, '새 세션'); }
   for (const key of keys) viewStarts[key] = runs.length;
   followLatest = true; requestRun = null; results = {}; $('error').hidden = true; $('input').value = ''; render();
 };
@@ -314,7 +310,7 @@ $('save-test').onclick = () => {
     saved.journals[key] = structuredClone(snapshot.journal); saved.memories[key] = structuredClone(snapshot.memory);
   }
   persistMemory();
-  $('save-hint').textContent = `슬롯 ${$('save-slot').value.toUpperCase()}에 현재 상황과 완료된 고유 인물 사건을 저장했습니다.`; render();
+  $('save-hint').textContent = `슬롯 ${$('save-slot').value.toUpperCase()}에 현재 상황·진행 중 대화·세션 요약을 저장했습니다.`; render();
 };
 $('load-test').onclick = () => {
   const saved = saves.get($('save-slot').value); if (!saved) return;

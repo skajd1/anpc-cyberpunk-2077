@@ -25,7 +25,7 @@ function fixture(key = 'judy', overrides = {}) {
   return { engine, settings, advance: ms => { now += ms; } };
 }
 
-test('쿠션어와 말줄임표를 표시 응답·원문 기억·다음 요청에 그대로 보존한다', async () => {
+test('쿠션어와 말줄임표를 표시 응답·현재 세션 최근 발화에 그대로 보존한다', async () => {
   const { engine } = fixture('judy', { relationshipStage: 'friend' });
   const lines = ['음, 그러니까… 그건 좀 어려워.', '너... 정말 멋진데?', '어… 잠깐만. 다시 말해줄래?'];
   for (const dialogue of lines) {
@@ -33,7 +33,6 @@ test('쿠션어와 말줄임표를 표시 응답·원문 기억·다음 요청�
     assert.equal(engine.lastReply.dialogue, dialogue);
     assert.equal(engine.journal.at(-1).text, dialogue);
   }
-  engine.end(); engine.start('judy');
   await engine.send('아까 이야기 이어가자.', async ({ prompt }) => {
     const context = JSON.parse(prompt.input.find(m => m.content.startsWith('현재 상황 데이터')).content.split('\n').slice(1).join('\n'));
     assert.equal(context.recent_turns, undefined);
@@ -42,28 +41,25 @@ test('쿠션어와 말줄임표를 표시 응답·원문 기억·다음 요청�
   });
 });
 
-test('표시 복장만 관찰하고 인물별 이전 목격을 유지하며 보지 못한 복장은 저장하지 않는다', async () => {
-  const { engine: judy, settings } = fixture(), { engine: panam } = fixture('panam', { outfitVisible: false });
-  await judy.send('오늘 내 차림새 어때?', generate); judy.end();
-  settings.outfitVisible = false; settings.outfitId = 'bright'; judy.start('judy');
-  await judy.send('복장 확인', generate); assert.equal(judy.context().observations.visible_outfit, null); judy.end();
-  settings.outfitVisible = true; settings.outfitId = 'nomad'; judy.start('judy');
-  const recalled = judy.context().memory.short_term.recalled_events;
-  assert.deepEqual(recalled.map(e => e.text.split(': ')[0]), ['평범한 검은 재킷', '낡은 가죽 재킷']);
-  assert.ok(recalled.every(e => !Object.hasOwn(e, 'outfit')));
-  assert.ok(recalled.every(e => e.event_kind === 'player_observation' && e.epistemic_status === 'runtime_confirmed'));
-  assert.equal(panam.journal.length, 0);
-  const context = judy.turnAdapter({ playerText: '복장' }).context;
-  assert.ok(!JSON.stringify(context).includes('visible_equipment'));
-  assert.ok(!JSON.stringify(context).includes('street_cred'));
+test('현재 복장은 전달하지만 관찰 이력을 자동 기억으로 남기지 않는다', async () => {
+  const { engine, settings } = fixture(); await engine.send('안녕', generate);
+  assert.equal(engine.context().observations.visible_outfit[0].display_name, '평범한 검은 재킷');
+  settings.outfitId = 'bright'; await engine.send('요즘 어때?', generate);
+  assert.equal(engine.context().observations.visible_outfit[0].display_name, '화려한 빨간 재킷');
+  assert.ok(engine.journal.every(e => e.event_type !== 'outfit_observation'));
+  assert.deepEqual(engine.context().memory.short_term.recalled_events, []);
+  engine.end(); engine.start('judy');
+  assert.ok(!JSON.stringify(engine.context().memory).includes('재킷'));
+  settings.outfitVisible = false; assert.equal(engine.context().observations.visible_outfit, null);
 });
 
-test('완료된 대화와 원작 기준 관계를 분리하고 진행도 변경에도 목격 기록은 남긴다', async () => {
+test('완료된 세션 요약과 인물 지식·원작 관계를 분리한다', async () => {
   const { engine, settings } = fixture();
   await engine.send('우리 이제 연인이야.', generate); engine.end();
   settings.relationship = 'cooperative'; settings.phase = bundle.cards[0].phase_labels.at(-1); engine.start('judy');
   const prepared = engine.turnAdapter({ playerText: '이제 내 연인이지?' });
-  assert.ok(prepared.context.recent_turns.some(t => t.text === '우리 이제 연인이야.'));
+  assert.deepEqual(prepared.context.recent_turns, []);
+  assert.ok(prepared.context.memory.session_summaries.some(t => t.includes('우리 이제 연인이야.')));
   assert.equal(prepared.context.canon_context.relationship_to_player.label, '가까운 친구');
   assert.equal(prepared.diagnostics.simulation.phase, settings.phase);
   assert.equal(prepared.context.memory.memory_view_version, '1.3');
@@ -148,14 +144,14 @@ test('위험 중 대기 응답은 폐기하며 완료된 기억을 유지하고 
   engine.changeWorld({ combat: true }); finish({ reply: line, mode: 'mock' });
   assert.equal((await pending).stale, true); assert.equal(engine.session, null);
   assert.throws(() => engine.start('judy')); assert.ok(!JSON.stringify(engine.journal).includes('미완료'));
-  engine.changeWorld({ combat: false }); engine.start('judy'); assert.ok(engine.context().recent_turns.some(t => t.text === '이전 완료'));
+  engine.changeWorld({ combat: false }); engine.start('judy'); assert.ok(engine.context().memory.session_summaries.some(t => t.includes('이전 완료')));
 });
 
 test('동일 군중의 추첨 특성은 유지되고 10분·재생성 경계에서 기억이 만료된다', async () => {
   const { engine, advance } = fixture('courier'); const traits = structuredClone(engine.session.persona.traits);
   await engine.send('아까 말', generate); engine.end(); engine.start('courier');
-  assert.deepEqual(engine.session.persona.traits, traits); assert.ok(engine.context().recent_turns.length);
-  engine.end(); advance(600000); engine.start('courier'); assert.equal(engine.context().recent_turns.length, 0);
+  assert.deepEqual(engine.session.persona.traits, traits); assert.ok(engine.context().memory.session_summaries.length);
+  engine.end(); advance(600000); engine.start('courier'); assert.equal(engine.context().memory.session_summaries.length, 0);
   await engine.send('새 대화', generate); engine.respawn('courier'); assert.equal(engine.journal.length, 0);
 });
 
@@ -174,76 +170,35 @@ test('직접 입력한 복장 설명을 사용하고 빈 값·한도 초과를 �
   assert.equal(resolveOutfit({ ...s, outfitDescription: '가'.repeat(501) }), null);
 });
 
-test('모의 응답은 복장 재접촉과 제스처 선택을 API 호출 없이 보여준다', async () => {
+test('모의 응답은 현재 복장과 제스처 선택을 API 호출 없이 보여준다', async () => {
   const { engine, settings } = fixture(); await engine.send('오늘 내 차림새 어때?', researchMock); engine.end();
   settings.outfitId = 'bright'; engine.start('judy'); await engine.send('전에 입은 옷이랑 비교하면?', researchMock);
-  assert.ok(engine.lastReply.dialogue.includes('검은 재킷')); assert.ok(engine.lastReply.dialogue.includes('빨간 재킷'));
+  assert.ok(!engine.lastReply.dialogue.includes('검은 재킷')); assert.ok(engine.lastReply.dialogue.includes('빨간 재킷'));
   await engine.send('제스처를 골라줘', researchMock); assert.equal(engine.lastActionSelection.execution_state, 'not_executed');
 });
 
-test('일반 질문에도 현재 복장과 과거 관찰을 전달하며 반응을 강제하거나 완료 뒤 기억을 소비하지 않는다', async () => {
-  const { engine, settings } = fixture();
-  const spec = await readFile(new URL('../../docs/prompt-specification.md', import.meta.url), 'utf8');
-  engine.base = spec.match(/```text\r?\n([\s\S]*?)\r?\n```/)[1];
-  await engine.send('안녕', researchMock);
-  assert.ok(!Object.hasOwn(engine.context().observations, 'outfit_change'));
-  settings.outfitId = 'bright';
-  await engine.send('요즘 어떻게 지내?', researchMock);
-  const input = engine.lastPrompt.input.find(i => i.content.startsWith('현재 상황 데이터'));
-  const sent = JSON.parse(input.content.slice(input.content.indexOf('\n') + 1));
-  assert.equal(sent.observations.visible_outfit[0].display_name, '화려한 빨간 재킷');
-  assert.deepEqual(sent.memory.short_term.recalled_events.map(e => e.text.split(': ')[0]), ['평범한 검은 재킷', '화려한 빨간 재킷']);
-  assert.equal(sent.recent_turns, undefined);
-  assert.equal(engine.lastPrompt.input.filter(m => m.role === 'assistant').length, 1);
-  assert.equal(sent.memory.short_term.recalled_events.length, 2);
-  assert.ok(!JSON.stringify(sent).includes('outfit_observation_ref'));
-  assert.ok(!JSON.stringify(sent).includes('outfit_change'));
-  assert.ok(!engine.lastPrompt.instructions.includes('복장 변경을 직접 묻지 않아도'));
-  assert.ok(!engine.lastReply.dialogue.includes('재킷'));
-  assert.deepEqual(engine.lastSelection.memory_input, { recent_turn_count: 2, outfit_observation_count: 2 });
-  assert.ok(engine.journal.every(e => !Object.hasOwn(e, 'outfit_observation_ref')));
-  engine.end(); engine.start('judy');
-  await engine.send('다른 이야기 해줘', researchMock);
-  assert.deepEqual(engine.context().memory.short_term.recalled_events.map(e => e.text.split(': ')[0]), ['평범한 검은 재킷', '화려한 빨간 재킷']);
-  assert.ok(!engine.lastReply.dialogue.includes('재킷'));
+test('세션 전체 요약은 종료 때만 기록하고 새 세션에 원문을 재전송하지 않는다', async () => {
+  const { engine } = fixture();
+  for (let i = 0; i < 9; i++) await engine.send(`현재 세션 이야기 ${i}`, generate);
+  assert.equal(engine.longMemory.records.length, 0);
+  assert.equal(engine.context().recent_turns.length, 6);
+  engine.end();
+  assert.equal(engine.longMemory.records.length, 1); assert.equal(engine.journal.length, 0);
+  engine.start('judy'); assert.deepEqual(engine.context().recent_turns, []);
+  assert.equal(engine.context().memory.session_summaries.length, 1);
+  await engine.send('마지막 인사', generate); engine.end(); assert.equal(engine.longMemory.records.length, 2);
 });
 
-test('실패·취소 후 확정 관찰은 유지하고 보지 못한 복장·다른 NPC·새 대화의 과거를 만들지 않는다', async () => {
-  const { engine, settings } = fixture();
-  await engine.send('안녕', generate); settings.outfitId = 'bright';
-  await assert.rejects(engine.send('요즘 어때?', async () => { throw new Error('network_error'); }), /network_error/);
-  const names = () => engine.context().memory.short_term.recalled_events.map(e => e.text.split(': ')[0]);
-  assert.deepEqual(names(), ['평범한 검은 재킷', '화려한 빨간 재킷']);
-  let finish;
-  const pending = engine.send('다시 이야기하자', () => new Promise(resolve => { finish = resolve; }));
-  engine.cancel(); finish({ reply: line, mode: 'mock' }); assert.equal((await pending).stale, true);
-  assert.deepEqual(names(), ['평범한 검은 재킷', '화려한 빨간 재킷']);
-  settings.outfitVisible = false; settings.outfitId = 'nomad';
-  await engine.send('지금 어때?', generate);
-  assert.equal(engine.context().observations.visible_outfit, null);
-  assert.deepEqual(names(), ['평범한 검은 재킷', '화려한 빨간 재킷']);
-  settings.outfitVisible = true;
-  assert.deepEqual(engine.turnAdapter({ playerText: '안녕' }).context.memory.short_term.recalled_events.map(e => e.text.split(': ')[0]), ['화려한 빨간 재킷', '낡은 가죽 재킷']);
-  const { engine: other } = fixture('panam', { outfitId: 'nomad' });
-  assert.deepEqual(other.context().memory.short_term.recalled_events.map(e => e.text.split(': ')[0]), ['낡은 가죽 재킷']);
-  engine.clearMemory(); await engine.send('새 대화', generate);
-  assert.deepEqual(names(), ['낡은 가죽 재킷']);
+ test('종료한 전체 세션을 요약기에 보내고 실패·취소된 턴은 제외한다', async () => {
+  const { engine } = fixture(); let source;
+  engine.summarize = async events => { source = events; return { reply: { summary: 'V가 두 가지 화제를 이야기했다.' }, mode: 'mock' }; };
+  await engine.send('첫 화제', generate); await engine.send('마지막 화제', generate);
+  await assert.rejects(engine.send('실패한 발화', async () => { throw new Error('network_error'); }));
+  await engine.consolidateMemory();
+  assert.equal(source.length, 4); assert.equal(source[0].text, '첫 화제'); assert.equal(source[2].text, '마지막 화제');
+  assert.ok(source.every(e => e.event_type !== 'outfit_observation'));
+  assert.equal(engine.longMemory.records[0].summary, 'V가 두 가지 화제를 이야기했다.');
 });
-
-test('같은 이름의 복장 외형 원문을 보존하고 저장 복원은 미래 관찰을 승계하지 않는다', async () => {
-  const { engine, settings } = fixture('judy', { outfitId: 'custom', outfitName: '재킷', outfitDescription: '검은 무광 재킷' });
-  await engine.send('안녕', generate);
-  const saved = captureTestSave({ judy: engine }, {});
-  settings.outfitDescription = '빨간 광택 재킷';
-  await engine.send('뭐 하고 있었어?', researchMock);
-  assert.deepEqual(engine.context().memory.short_term.recalled_events.map(e => e.text.split(': ').slice(1).join(': ')), ['검은 무광 재킷', '빨간 광택 재킷']);
-  assert.ok(!engine.lastReply.dialogue.includes('재킷'));
-  engine.restore(saved.journals.judy, saved.worlds.judy);
-  assert.deepEqual(engine.journal.filter(e => e.event_type === 'outfit_observation').map(e => e.outfit.appearance_text), ['검은 무광 재킷']);
-  engine.start('judy');
-  assert.deepEqual(engine.context().memory.short_term.recalled_events.map(e => e.text.split(': ').slice(1).join(': ')), ['검은 무광 재킷', '빨간 광택 재킷']);
-});
-
 
 test('조니에게 독립적인 신체 행동을 부여하지 않고 분리된 관계 단계에서는 대화를 막는다', () => {
   const {engine,settings}=fixture('johnny');

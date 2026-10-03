@@ -399,6 +399,12 @@
             "event_id": "e1",
             "status": "pending"
           }
+        ],
+        "session_summaries": [
+          {
+            "session_id": "session-example",
+            "summary": "V가 파란색을 좋아한다고 말했고 예시 인물과 근황을 나눈 대화였다."
+          }
         ]
       }
     },
@@ -431,7 +437,10 @@
             "temporal_scope": "이전 대화"
           }
         ],
-        "recall_constraints": []
+        "recall_constraints": [],
+        "session_summaries": [
+          "V가 파란색을 좋아한다고 말했고 예시 인물과 근황을 나눈 대화였다."
+        ]
       }
     },
     "memory.summary-input": {
@@ -987,6 +996,23 @@
         "policy_version": "memory-policy-1.2",
         "content_version": "example-1"
       }
+    },
+    "memory.session-summary": {
+      "contract": "memory.session-summary",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "session_id": "session-example",
+        "summary": "V가 파란색을 좋아한다고 말했고 예시 인물과 근황을 나눈 대화였다."
+      }
     }
   },
   "invalid": [
@@ -1155,6 +1181,20 @@
       "base": "prompt.model-input",
       "path": "/data/data_messages/2/role",
       "value": "system"
+    },
+    {
+      "name": "빈 세션 요약 금지",
+      "base": "memory.session-summary",
+      "path": "/data/summary",
+      "value": ""
+    },
+    {
+      "name": "세션 요약으로 원작 지식 수정 금지",
+      "base": "memory.session-summary",
+      "path": "/data/knowledge",
+      "value": [
+        "비공개 정보"
+      ]
     }
   ],
   "calls": [
@@ -2109,6 +2149,71 @@
           }
         ]
       }
+    },
+    {
+      "name": "세션 전체 요약 포트",
+      "value": {
+        "call_id": "call-example",
+        "port": "SessionSummarizer.propose",
+        "fence": {
+          "world_epoch": 1,
+          "snapshot_id": "snapshot-example",
+          "memory_generation": 0,
+          "memory_revision": 1,
+          "session": {
+            "session_id": "session-example",
+            "request_id": "request-example",
+            "request_sequence": 1,
+            "npc_instance_key": "instance-example",
+            "dialogue_context_revision": 1
+          }
+        },
+        "inputs": [
+          {
+            "contract": "memory.summary-input",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "source_events": [
+                {
+                  "event_id": "e1",
+                  "session_id": "session-example",
+                  "exchange_id": "exchange-example",
+                  "sequence": 1,
+                  "event_kind": "player_utterance",
+                  "speaker": "player",
+                  "epistemic_status": "player_claim",
+                  "at": {
+                    "session_id": "session-example",
+                    "sequence": 1,
+                    "game_time": null,
+                    "recorded_at_utc": null
+                  },
+                  "payload": {
+                    "text": "나는 파란색을 좋아해."
+                  }
+                }
+              ],
+              "existing_relevant_memories": [],
+              "source_digest": "example-digest",
+              "policy_version": "memory-policy-1.2",
+              "summarizer_version": "local-extract-example",
+              "local_constraints": [
+                "주장을 사실로 승격하지 않는다."
+              ]
+            }
+          }
+        ]
+      },
+      "accepted": true
     }
   ],
   "replies": [
@@ -2356,6 +2461,35 @@
         ],
         "error": null
       }
+    },
+    {
+      "name": "세션 요약 반환",
+      "port": "SessionSummarizer.propose",
+      "value": {
+        "call_id": "call-example",
+        "status": "ok",
+        "outputs": [
+          {
+            "contract": "memory.session-summary",
+            "contract_version": "1.0",
+            "scope": {
+              "game_id": "cyberpunk2077",
+              "mod_id": "anpc",
+              "save_scope": "save-example",
+              "actor": {
+                "kind": "community",
+                "key": "judy"
+              }
+            },
+            "data": {
+              "session_id": "session-example",
+              "summary": "V가 파란색을 좋아한다고 말했고 예시 인물과 근황을 나눈 대화였다."
+            }
+          }
+        ],
+        "error": null
+      },
+      "accepted": true
     }
   ]
 }

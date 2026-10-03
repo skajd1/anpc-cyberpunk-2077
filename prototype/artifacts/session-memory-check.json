@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-04",
+  "mode": "mock",
+  "checks": [
+    "한 세션 전체를 한 줄로 기록",
+    "종료 전 정리 없음",
+    "복장 자동 기억 없음",
+    "새 대화에 기존 요약 유지",
+    "모의 저장·로드에서 미래 요약 제거",
+    "새로고침 후 요약 복원",
+    "각 입력·응답 화면 갱신"
+  ],
+  "page_errors": [],
+  "paid_model_called": false,
+  "real_game_checked": false
+}

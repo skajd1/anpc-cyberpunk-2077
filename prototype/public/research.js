@@ -208,7 +208,7 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
       simulation: { phase: fields['content.phase'], relationship_stage: stage?.id ?? null,
         relationship: persona.relationship_to_player.label, requirements: stage?.requirements ?? [] },
       memory_input: { recent_turn_count: context.recent_turns?.length ?? 0,
-        outfit_observation_count: context.memory?.short_term?.recalled_events?.filter(e => e.event_kind === 'player_observation').length ?? 0 },
+        session_summary_count: context.memory?.session_summaries?.length ?? 0 },
       eligible_fact_ids: eligible.map(k => k.fact_id), selected_fact_ids: selected.map(x => x.f.id),
       common_fact_ids: baseline.map(k => k.fact_id),
       excluded_by_depth: bundle.knowledge.filter(k => owned.has(k.id) && !permitsKnowledge(card, k)).map(k => k.fact_id),
@@ -237,17 +237,13 @@ export async function researchMock({ persona, context, playerText, signal }) {
   });
   let dialogue = persona.fallback_lines.unknown;
   let action = null, intent = 'answer';
-  const outfits = context.memory?.short_term?.recalled_events?.filter(e => e.event_kind === 'player_observation') ?? [];
   if (/차림|복장|입은|옷|재킷/.test(playerText) && context.prototype_memory) {
     const now = context.observations.visible_outfit?.[0];
-    const previous = outfits.findLast(e => e.text !== `${now?.display_name}: ${now?.appearance_text}`);
-    dialogue = now ? `지금은 ${now.display_name}이네. ${previous ? `전에 내가 봤던 건 ${previous.text}이었어.` : '내가 전에 본 다른 복장 기록은 없어.'}`
-      : '지금 복장은 확인할 수 없어. 본 것처럼 말하지 않을게.';
+    dialogue = now ? `지금은 ${now.display_name}이네.` : '지금 차림은 확인할 수 없어.';
   } else if (/아까|기억/.test(playerText) && context.memory) {
-    const claim = context.memory.long_term?.findLast(t => t.kind === 'player_claim')?.text
-      ?? context.memory.short_term?.recalled_events?.findLast(t => t.speaker === 'player')?.text
-      ?? context.recent_turns.findLast(t => t.role === 'player')?.text;
-    dialogue = claim ? `네가 “${claim.slice(0, 120)}”라고 말한 기록은 있어.` : '이전에 완료된 대화 기록은 없어.';
+    const current = context.recent_turns.findLast(t => t.role === 'player')?.text;
+    const summary = context.memory.session_summaries?.at(-1);
+    dialogue = current ? `네가 “${current.slice(0, 120)}”라고 말한 기록은 있어.` : summary ? `지난 대화는 이렇게 기억하고 있어. ${summary}` : '이전에 완료된 대화 기록은 없어.';
   } else if (/(?:내|제)\s*이름|(?:나|저)(?:를|도)?\s*알아|(?:내가|제가|나는|저는)\s*유명/.test(playerText) && context.prototype_memory) {
     dialogue = context.player_identity.name_known_by_npc ? 'V라는 이름은 알고 있어. 비공개 사정까지 안다는 뜻은 아니야.' : '아직 네 이름은 몰라.';
   }

@@ -19,7 +19,7 @@ export async function generateOpenAI({ prompt, apiKey, model, reasoningEffort = 
       method: 'POST', signal: requestSignal,
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ model, store: false, instructions: prompt.instructions, input: prompt.input,
-        ...(reasoning ? { reasoning } : {}), max_output_tokens: memorySummary ? 2048 : thinking ? 8192 : 512,
+        ...(reasoning ? { reasoning } : {}), max_output_tokens: memorySummary ? 512 : thinking ? 8192 : 512,
         text: { format: { type: 'json_schema', name: memorySummary ? 'memory_summary' : 'npc_reply', strict: true, schema: memorySummary ? summarySchema() : responseSchema() } }
       })
     });

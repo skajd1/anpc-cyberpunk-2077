@@ -2,73 +2,72 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { TestMemory, extractLocalSummary, makeSummaryInput } from '../public/memory.js';
 import { generateOpenAI } from '../openai.js';
-const journal = () => Array.from({ length: 20 }, (_, i) => ({ event_id: `e${i}`, event_type: i % 2 ? 'npc_utterance' : 'player_utterance',
-  role: i % 2 ? 'npc' : 'player', text: i === 0 ? '나는 라면을 좋아해. 기억해 둬.' : `별도 화제 ${i}` }));
+const journal = (session_id = 'session-a') => Array.from({ length: 20 }, (_, i) => ({ event_id: `e${i}`, session_id,
+  event_type: i % 2 ? 'npc_utterance' : 'player_utterance', role: i % 2 ? 'npc' : 'player',
+  text: i === 0 ? '나는 파란색을 좋아해.' : i === 18 ? '이제 라면 이야기를 했네.' : `대화 내용 ${i}` }));
 
-test('최근 6개 원문을 제외한 기억을 요약·검색하며 같은 사건을 중복 전송하지 않는다', async () => {
-  const memory = new TestMemory(), events = journal();
-  assert.equal((await memory.consolidate(events)).committed, true);
-  assert.ok(memory.records.every(r => !r.evidence_event_ids.some(id => ['e14','e15','e16','e17','e18','e19'].includes(id))));
-  const recalled = memory.recall(events, '내가 좋아하는 라면 기억해?');
-  assert.equal(recalled.recent.length, 6); assert.ok(recalled.long_term.some(r => r.text.includes('라면')));
-  assert.ok(!recalled.recalled_events.some(e => e.event_ref === 'e0'));
-  assert.equal(memory.records[0].epistemic_status, 'player_claim');
-  assert.equal(events.length, 20); assert.equal(new TestMemory().recall([], '라면').long_term.length, 0);
+test('한 세션 전체를 한 요약으로 정리하고 이전 원문·세부 항목은 저장하지 않는다', async () => {
+  const memory = new TestMemory(), events = journal(); let source;
+  const result = await memory.finish('session-a', events, async input => { source = input; return { reply: { summary: 'V가 색 취향과 라면에 관해 이야기했다.' }, mode: 'mock' }; });
+  assert.equal(result.committed, true); assert.equal(source.length, 20); assert.equal(source.at(-1).event_id, 'e19');
+  assert.deepEqual(memory.records, [{ session_id: 'session-a', summary: 'V가 색 취향과 라면에 관해 이야기했다.' }]);
+  assert.deepEqual(Object.keys(memory.snapshot()).sort(), ['records', 'version']);
+  assert.equal(memory.recall([]).recent.length, 0); assert.deepEqual(memory.recall([]).session_summaries, [memory.records[0].summary]);
+  await memory.finish('session-a', events); assert.equal(memory.records.length, 1);
 });
 
-test('요약의 누락을 원문 검색으로 보완하고 실패 뒤 자동 유료 재시도를 예약하지 않는다', async () => {
-  const memory = new TestMemory(), events = journal();
-  await memory.consolidate(events, async () => ({ reply: { candidates: [] } }));
-  assert.ok(memory.recall(events, '라면').recalled_events.some(e => e.text.includes('라면')));
-  const failed = new TestMemory();
-  await failed.consolidate(events, async () => { throw new Error('network_error'); });
-  assert.equal(failed.needsSummary(events), false); assert.equal(failed.records.length, 0); assert.equal(events.length, 20);
-});
-
-test('없는 근거·다른 화자·관찰 사실 승격은 원자적으로 거부한다', async () => {
-  for (const alter of [c => c.evidence_event_ids.push('other-npc'), c => c.epistemic_status = 'runtime_confirmed',
-    c => c.evidence_event_ids.push('e1'), c => c.evidence_event_ids.push('e0'), c => c.extra = true, c => c.topic_tags = ['x'.repeat(161)]]) {
-    const memory = new TestMemory(), events = journal();
-    const reply = extractLocalSummary(events.slice(0, 2)); alter(reply.candidates[0]);
-    const result = await memory.consolidate(events, async () => ({ reply }));
-    assert.equal(result.committed, false); assert.equal(memory.records.length, 0); assert.equal(memory.processed.size, 0);
+test('요약 실패·빈 값·추가 필드·여러 줄이면 로컬 한 줄을 유지하고 재시도하지 않는다', async () => {
+  for (const reply of [{ summary: '' }, { summary: '가'.repeat(321) }, { summary: '첫 줄\n둘째 줄' }, { summary: '짧은 기억', knowledge: '새 지식' }]) {
+    const memory = new TestMemory(); let calls = 0;
+    await memory.finish('session-a', journal(), async () => { calls++; return { reply }; });
+    assert.equal(memory.records.length, 1); assert.equal(memory.records[0].summary, extractLocalSummary(journal()).summary);
+    assert.equal(calls, 1); assert.equal(memory.status, 'local_extract');
   }
+  const memory = new TestMemory(); await memory.finish('session-a', journal(), async () => { throw new Error('network_error'); });
+  assert.equal(memory.records.length, 1);
 });
 
-test('저장 복원과 삭제 후 늦게 완료한 요약은 미래 기억을 삽입하지 않는다', async () => {
-  const memory = new TestMemory(), events = journal(); await memory.consolidate(events);
-  const saved = memory.snapshot(); const other = new TestMemory(); other.restore(saved);
-  let finish; const pending = other.consolidate([...events, ...journal().map(e => ({ ...e, event_id: 'new-'+e.event_id }))],
-    async () => new Promise(resolve => { finish = resolve; }));
-  other.restore(saved); finish({ reply: extractLocalSummary(events.slice(0, 2)) });
-  assert.equal((await pending).stale, true); assert.deepEqual(other.snapshot(), saved);
-  other.records[0].text = '작업 사본 변경'; assert.notEqual(saved.records[0].text, other.records[0].text);
+test('다른 세션을 합치지 않고 요약이 진행 중이어도 다음 세션은 즉시 로컬 기록한다', async () => {
+  const memory = new TestMemory();
+  await assert.rejects(memory.finish('wrong-session', journal()), /session_scope_mismatch/);
+  let finish; const pending = memory.finish('session-a', journal(), () => new Promise(resolve => { finish = resolve; }));
+  await memory.finish('session-b', journal('session-b'), async () => { throw new Error('호출하면 안 됨'); });
+  assert.equal(memory.records.length, 2); assert.equal(memory.records[1].session_id, 'session-b');
+  finish({ reply: { summary: '첫 세션 요약이다.' }, mode: 'mock' }); await pending;
+  assert.equal(memory.records[0].summary, '첫 세션 요약이다.');
 });
 
-test('자동 정리는 최근 보존분과 무관하게 마지막 정상 정리 이후 8회 대화를 센다', async () => {
-  const memory = new TestMemory(), events = journal().slice(0, 16);
-  assert.equal(memory.needsSummary(events), true); await memory.consolidate(events);
-  assert.equal(memory.needsSummary(events), false);
-  const more = journal().map(e => ({ ...e, event_id: 'next-'+e.event_id }));
-  assert.equal(memory.needsSummary([...events, ...more.slice(0, 14)]), false);
-  assert.equal(memory.needsSummary([...events, ...more.slice(0, 16)]), true);
+test('로드·삭제 뒤 늦은 요약을 폐기하고 저장 순간의 로컬 요약을 정확히 복원한다', async () => {
+  const memory = new TestMemory(); let finish;
+  const pending = memory.finish('session-a', journal(), () => new Promise(resolve => { finish = resolve; }));
+  const saved = memory.snapshot(); memory.restore(saved);
+  finish({ reply: { summary: '저장 이후의 미래 요약' } }); assert.equal((await pending).stale, true);
+  assert.deepEqual(memory.snapshot(), saved);
+  memory.records[0].summary = '작업 사본'; assert.notEqual(saved.records[0].summary, memory.records[0].summary);
 });
 
-test('요약 입력은 공통 SourceEvent·SummaryInput 형식으로 화자·시점·digest를 보존한다', async () => {
-  const input = await makeSummaryInput(journal().slice(0, 2));
-  assert.match(input.source_digest, /^[a-f0-9]{64}$/);
-  assert.equal(input.source_events[0].epistemic_status, 'player_claim');
-  assert.equal(input.source_events[1].speaker, 'npc');
-  assert.equal(input.source_events[0].payload.text, journal()[0].text);
-  assert.equal((await makeSummaryInput(journal().slice(0, 2))).source_digest, input.source_digest);
+test('최근 세션 3개만 전달하고 빈 세션은 기록하지 않으며 보관은 64개로 제한한다', async () => {
+  const memory = new TestMemory(); await memory.finish('empty', []);
+  assert.equal(memory.records.length, 0);
+  for (let i = 0; i < 67; i++) await memory.finish(`s${i}`, journal(`s${i}`));
+  assert.equal(memory.records.length, 64); assert.equal(memory.records[0].session_id, 's3');
+  assert.equal(memory.recall([]).session_summaries.length, 3);
+  assert.equal(memory.recall(journal()).recent.length, 6);
 });
 
-test('요약 API는 대사와 다른 구조화 출력 계약을 쓰고 세션 없이 none으로 호출한다', async () => {
-  let body;
-  const reply = extractLocalSummary(journal().slice(0, 2));
-  const result = await generateOpenAI({ prompt: { instructions: '요약', input: [] }, apiKey: 'test-only', model: 'gpt-6-luna', memorySummary: true,
+test('요약 입력은 같은 세션 전체의 발화와 화자·digest만 사용한다', async () => {
+  const events = journal(); events.push({ event_id: 'outfit', session_id: 'session-a', event_type: 'outfit_observation', text: '검은 재킷' });
+  const input = await makeSummaryInput(events);
+  assert.equal(input.source_events.length, 20); assert.equal(input.source_events.at(-1).payload.text, '대화 내용 19');
+  assert.ok(input.source_events.every(e => e.session_id === 'session-a'));
+  assert.match(input.source_digest, /^[a-f0-9]{64}$/); assert.deepEqual(input.existing_relevant_memories, []);
+});
+
+test('요약 API는 한 줄 summary 구조와 512토큰·none을 사용한다', async () => {
+  let body; const reply = { summary: 'V가 색 취향과 근황을 이야기했다.' };
+  const result = await generateOpenAI({ prompt: { instructions: '세션 요약', input: [] }, apiKey: 'test-only', model: 'gpt-6-luna', memorySummary: true,
     fetchImpl: async (_url, options) => { body = JSON.parse(options.body); return Response.json({ status: 'completed', output: [{ type: 'message', content: [{ type: 'output_text', text: JSON.stringify(reply) }] }] }); } });
-  assert.equal(body.text.format.name, 'memory_summary'); assert.equal(body.max_output_tokens, 2048);
+  assert.equal(body.text.format.name, 'memory_summary'); assert.equal(body.max_output_tokens, 512);
   assert.equal(body.reasoning.effort, 'none'); assert.equal(body.store, false); assert.equal(body.previous_response_id, undefined);
-  assert.deepEqual(result.reply, reply);
+  assert.deepEqual(body.text.format.schema.required, ['summary']); assert.deepEqual(result.reply, reply);
 });
