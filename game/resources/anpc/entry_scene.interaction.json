@@ -1,0 +1,90 @@
+{
+  "Header": {
+    "WolvenKitVersion": "9.0.1",
+    "WKitJsonVersion": "0.0.9",
+    "GameVersion": 2310,
+    "DataType": "CR2W",
+    "ArchiveFileName": "anpc\\entry_scene.interaction"
+  },
+  "Data": {
+    "Version": 195,
+    "BuildVersion": 0,
+    "RootChunk": {
+      "$type": "gameinteractionsInteractionDescriptorResource",
+      "cookingPlatform": "PLATFORM_PC",
+      "definition": {
+        "$type": "gameinteractionsCHotSpotDefinition",
+        "suppressor": 0,
+        "layersDefinition": [{
+          "HandleId": "0",
+          "Data": {
+            "$type": "gameinteractionsCLinkedLayersDefinition",
+            "tag": {"$type": "CName", "$storage": "string", "$value": "ANPCEntryScene"},
+            "layersDefinitions": [{
+              "HandleId": "1",
+              "Data": {
+                "$type": "gameinteractionsCHotSpotLayerDefinition",
+                "enabled": 1,
+                "tag": {"$type": "CName", "$storage": "string", "$value": "ANPCEntryScene"},
+                "group": "EGT_default",
+                "priorityMultiplier": 5,
+                "areaFilterDefinition": {
+                  "HandleId": "2",
+                  "Data": {
+                    "$type": "gameinteractionsCHotSpotAreaFilterDefinition",
+                    "functor": {
+                      "HandleId": "3",
+                      "Data": {
+                        "$type": "gameinteractionsCFunctorDefinition",
+                        "predicate": {
+                          "$type": "gameinteractionsCPredicateDefinition",
+                          "binaryOperator": "EBinaryOperator_and",
+                          "predicateType": {
+                            "HandleId": "4",
+                            "Data": {"$type": "gameinteractionsContainedInShapesPredicate", "useCameraPosition": 0}
+                          }
+                        },
+                        "unaryOperator": "EUnaryOperator_empty"
+                      }
+                    },
+                    "shapes": [{
+                      "HandleId": "5",
+                      "Data": {"$type": "gameinteractionsCSphereDefinition", "radius": 4}
+                    }]
+                  }
+                },
+                "gameLogicFilterDefinition": {
+                  "HandleId": "6",
+                  "Data": {
+                    "$type": "gameinteractionsCHotSpotGameLogicFilterDefinition",
+                    "hotSpotPrereq": {
+                      "HandleId": "9",
+                      "Data": {"$type": "DynamicBaseClass", "$className": "ANPC.SceneEntryPrereq"}
+                    },
+                    "scriptedConditionClass": {
+                      "HandleId": "7",
+                      "Data": {"$type": "DynamicBaseClass", "$className": "ANPC.SceneEntryCondition"}
+                    }
+                  }
+                }
+              }
+            }],
+            "visualizerDefinition": {
+              "HandleId": "8",
+              "Data": {
+                "$type": "gameinteractionsvisDeviceVisualizerDefinition",
+                "displayNameOverride": "ANPC",
+                "flags": "QuestImportant",
+                "interactionType": "Proximity",
+                "useDefaultActionMapping": 1,
+                "createMappin": 0,
+                "isDynamic": 0
+              }
+            }
+          }
+        }]
+      }
+    },
+    "EmbeddedFiles": []
+  }
+}

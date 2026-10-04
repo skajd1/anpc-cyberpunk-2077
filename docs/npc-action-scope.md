@@ -11,6 +11,7 @@ execute 허용=배포 실행 지원 ∩ NPC 기능 ∩ 카드 ∩ 현재 상태.
 ### 1.1. 행동 선택과 실행 모드
 
 - 첫 게임판 기본 실제 제어: stop_and_listen, face_player, resume_walk, end_conversation.
+- 워크스팟 점유 중인 군중 대상: end_conversation만 execute. 워크스팟 동작을 끊거나 이동·회전시키는 행동은 거부하고 대사·자막만 진행.
 - 추가 행동: selection_only 기본, 지원 어댑터의 후속 execute. 항목별 ActionOption.execution_mode가 최종 권한.
 - selection_only: 검수 통과 시 로컬 selection_state=selected. 실행 상태 proposed 유지. 명령·성공 효과/기억·자막 실행 서술 없음.
 - catalog_version 변경 시 재검사. 선택 결과 자동 실행 금지. execute 전환은 새 요청+현재 권한 검사.
