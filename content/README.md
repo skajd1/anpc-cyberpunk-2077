@@ -46,3 +46,5 @@ research-0.7: 출처 51개, 사실 132개, 인물별 원작 관계 분기 47개.
 [dialogue-preparation.json](cyberpunk2077/dialogue-preparation.json)은 전체 사실의 ID 분류와 인물별 지식 참조·작성 해설을 담은 로컬 검수 색인이다. 모델에 통째로 전송하지 않는다. [crowd-archetypes.json](cyberpunk2077/crowd-archetypes.json)은 승인 전 작성 원형이며 현재 게임/웹 군중 생성기에 연결하지 않았다. 기존 명세의 승인·관찰·인지 변환과 인스턴스 보존이 필요하다.
 
 공식 웹 본문을 확인한 신규 장소 사실 4개와 지식 후보 6개를 추가했다. 기존 모든 출처·인지·한국어 문체를 재검증한 것은 아니다. 이번에 확인한 출처 범위와 PDF 접근 실패를 source_audit에 기록했다. 인물 점수는 유지하고 24개 새 상황 예시·24개 판단 규칙 및 문체/한계 지침을 작성했다. source_checked는 출처 확인, draft/runtime_enabled=false는 작성·인지·게임 적용 미승인 상태를 나타낸다. `node scripts/validate-content.mjs`로 참조·집계·군중 seed 재현을 검사한다.
+
+2026-10-05 main 리뷰에서 개발용 CET 고정 프롬프트를 최신 카드로 갱신했다. 생성기의 allowDraft=true는 자료의 비활성 플래그를 우회하는 개발 경로다. 실제 게임 상태 수집·인지 매핑·출시 승인 적용과 군중 원형 연결의 완료를 뜻하지 않는다. [리뷰·검증·잔여 결함](../docs/code-review-2026-10-05.md)을 참조한다.

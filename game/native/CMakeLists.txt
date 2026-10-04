@@ -25,3 +25,11 @@ add_library(ANPC.Native SHARED
 target_link_libraries(ANPC.Native PRIVATE RED4ext::SDK RedLib nlohmann_json::nlohmann_json winhttp advapi32)
 target_compile_options(ANPC.Native PRIVATE /W4 /utf-8 /permissive- /Zc:__cplusplus)
 set_target_properties(ANPC.Native PROPERTIES OUTPUT_NAME "ANPC.Native")
+
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(ANPC.Provider.Tests tests/Provider.test.cpp src/Provider.cpp)
+    target_include_directories(ANPC.Provider.Tests PRIVATE src)
+    target_link_libraries(ANPC.Provider.Tests PRIVATE nlohmann_json::nlohmann_json)
+    add_test(NAME provider-response COMMAND ANPC.Provider.Tests)
+endif()

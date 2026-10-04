@@ -18,6 +18,8 @@ jobs:
         run: cmake -S game/native -B build -A x64
       - name: Build
         run: cmake --build build --config Release --parallel
+      - name: Test provider responses
+        run: ctest --test-dir build -C Release --output-on-failure
       - uses: actions/upload-artifact@v4
         with:
           name: ANPC.Native

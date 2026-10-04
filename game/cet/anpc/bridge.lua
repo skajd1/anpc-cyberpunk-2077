@@ -50,11 +50,42 @@ function bridge.buildBody(character, turns, text)
 end
 
 -- 구조화 출력(npc_reply)을 자막 한 줄과 대화 종료 여부로 바꾼다. 형식이 맞지 않으면 nil.
+local function exact(value, keys)
+  if type(value) ~= "table" or value == json.null then return false end
+  local count = 0
+  for key in pairs(value) do
+    if not keys[key] then return false end
+    count = count + 1
+  end
+  local expected = 0
+  for key in pairs(keys) do
+    if value[key] == nil then return false end
+    expected = expected + 1
+  end
+  return count == expected
+end
+
+local function boundedText(value, limit)
+  if type(value) ~= "string" or not value:find("%S") then return false end
+  -- CET LuaJIT에는 utf8.len이 없다. UTF-8 연속 바이트를 제외해 코드포인트 수를 센다.
+  local _, count = value:gsub("[^\128-\191]", "")
+  return count <= limit
+end
+
+local intents = { answer = true, ask = true, refuse = true, warn = true, farewell = true }
+local emotions = { neutral = true, friendly = true, wary = true, annoyed = true, afraid = true, curious = true }
+
 function bridge.readReply(text)
   local reply = json.decode(text)
-  if type(reply) ~= "table" or type(reply.dialogue) ~= "string" or reply.dialogue == "" then return nil end
+  if not exact(reply, { dialogue = true, intent = true, emotion = true, action = true, follow_up = true })
+    or not boundedText(reply.dialogue, 600) or not intents[reply.intent] or not emotions[reply.emotion]
+    or (reply.follow_up ~= json.null and not boundedText(reply.follow_up, 150)) then return nil end
+  -- 실제 게임에서 구현된 행동은 대화 종료뿐이다. 모의 시선·이동·제스처는 실행 권한이 없다.
+  if reply.action ~= json.null and (not exact(reply.action, { action_id = true, args = true })
+    or reply.action.action_id ~= "end_conversation" or not exact(reply.action.args, {})) then return nil end
+  if reply.intent == "farewell" and reply.follow_up ~= json.null then return nil end
   local line = reply.dialogue
-  if type(reply.follow_up) == "string" and reply.follow_up ~= "" then line = line .. " " .. reply.follow_up end
+  if reply.follow_up ~= json.null then line = line .. " " .. reply.follow_up end
   local ended = reply.intent == "farewell" or (type(reply.action) == "table" and reply.action.action_id == "end_conversation")
   return line, ended
 end
@@ -208,6 +239,9 @@ function bridge.update(delta)
 end
 
 function bridge.reset()
+  for id in pairs(nativePending) do
+    pcall(function() Game.ANPCNative_Cancel(id) end)
+  end
   pending = {}
   nativePending = {}
   sessions = {}

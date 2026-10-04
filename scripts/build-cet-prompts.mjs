@@ -36,6 +36,8 @@ for (const key of KEYS) {
     engine.start(key);
   } catch (error) { blocked[key] = error.message; continue; }
   const prepared = engine.turnAdapter({ context: engine.context(''), playerText: '' });
+  // 게임의 행동 실행기에는 대화 종료만 있다. 웹의 모의 제어 후보를 내보내지 않는다.
+  prepared.context.allowed_actions = prepared.context.allowed_actions.filter(a => a.action_id === 'end_conversation');
   const prompt = assemblePrompt(engine.base, prepared.persona, prepared.context, '', prepared);
   // 마지막 항목은 빈 플레이어 입력이다. 최근 대화가 없으므로 나머지가 고정 메시지다.
   characters[key] = { instructions: prompt.instructions, messages: prompt.input.slice(0, -1).map(m => m.content) };
@@ -50,12 +52,14 @@ function long(text) {
 }
 
 const lines = [];
+const schema = responseSchema();
+schema.properties.action.anyOf = schema.properties.action.anyOf.filter(a => a.type === 'null' || a.properties?.action_id.enum[0] === 'end_conversation');
 lines.push('-- 생성 파일: scripts/build-cet-prompts.mjs. 직접 수정하지 않는다.');
 lines.push(`-- prompt_version ${PROMPT_VERSION} · story ${options.story}`);
 lines.push('return {');
 lines.push(`  prompt_version = ${JSON.stringify(PROMPT_VERSION)},`);
 lines.push(`  story = ${JSON.stringify(options.story)},`);
-lines.push(`  schema = ${long(JSON.stringify(responseSchema()))},`);
+lines.push(`  schema = ${long(JSON.stringify(schema))},`);
 lines.push('  blocked = {');
 for (const [key, reason] of Object.entries(blocked)) lines.push(`    ${key} = ${long(reason)},`);
 lines.push('  },');

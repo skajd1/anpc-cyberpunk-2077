@@ -68,6 +68,22 @@ assert(json.decode('{"a":') == nil and json.decode('{"a":1} x') == nil)
 assert(json.decode('"\\ud83d\\ude00"') == "😀")
 print("JSON 디코더 검사 통과")
 
+-- 공급자 구조화 출력 설정과 별개로 게임 경계에서 응답을 다시 검사한다.
+local validReply = '{"dialogue":"괜찮아.","intent":"answer","emotion":"neutral","action":null,"follow_up":null}'
+assert(bridge.readReply(validReply) == "괜찮아.")
+assert(bridge.readReply('{"dialogue":"필수 필드 누락"}') == nil)
+assert(bridge.readReply(validReply:gsub('"answer"', '"invented"')) == nil)
+assert(bridge.readReply(validReply:gsub('"neutral"', '"invented"')) == nil)
+assert(bridge.readReply(validReply:gsub('"괜찮아%."', '"   "')) == nil)
+assert(bridge.readReply(validReply:gsub('"괜찮아%."', '"' .. string.rep("가", 601) .. '"')) == nil)
+assert(bridge.readReply(validReply:gsub('"괜찮아%."', '"' .. string.rep("가", 600) .. '"')) ~= nil)
+assert(bridge.readReply(validReply:gsub('"follow_up":null', '"follow_up":"' .. string.rep("가", 151) .. '"')) == nil)
+assert(bridge.readReply(validReply:gsub('"action":null', '"action":{"action_id":"face_player","args":{"duration_s":2}}')) == nil)
+assert(bridge.readReply(validReply:gsub('"action":null', '"action":{"action_id":"end_conversation","args":{"extra":1}}')) == nil)
+assert(bridge.readReply(validReply:gsub('"follow_up":null', '"follow_up":null,"extra":1')) == nil)
+assert(bridge.readReply(validReply:gsub('"answer"', '"farewell"'):gsub('"follow_up":null', '"follow_up":"또?"')) == nil)
+print("게임 응답 필드·열거값·글자 수·실행 가능한 행동 검사 통과")
+
 -- 네이티브 경로: 요청 본문 조립, 완료 폴링, 응답 해석, 최근 발화 누적, 세션 종료 시 취소.
 local nativeCalls, results, cancelled = {}, {}, {}
 Game.ANPCNative_Version = function() return "0.1.0" end
@@ -124,3 +140,11 @@ queue[1] = { id = 15, kind = "say", session = 8, npcKey = "jackie", crowd = fals
 assert(bridge.update(0.3))
 assert(responses[4].id == 15 and responses[4].status == "error:story_blocked" and results[99] == nil)
 print("네이티브 요청 조립·폴링·응답 해석·취소 검사 통과 (모의 DLL)")
+
+queue[1] = { id = 16, kind = "say", session = 9, npcKey = "misty", crowd = false, text = "리로드 직전" }
+assert(bridge.update(0.3) and bridge.pendingCount() == 1)
+bridge.reset()
+assert(cancelled[#cancelled] == 16 and bridge.pendingCount() == 0)
+results[16] = { status = "ok", text = validReply }
+assert(bridge.update(0.3) and results[16] == nil and #responses == 4)
+print("재로드 시 네이티브 요청 취소·늦은 응답 폐기 검사 통과")

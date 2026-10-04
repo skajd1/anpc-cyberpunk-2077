@@ -35,7 +35,9 @@ ProviderResult ParseResponse(std::string_view aProvider, uint32_t aHttpStatus, c
     }
 
     const auto data = nlohmann::json::parse(aBody, nullptr, false);
-    if (data.is_discarded() || !data.is_object() || data.value("status", "") != "completed")
+    // JSON 텍스트가 유효해도 필드 타입은 틀릴 수 있다. value<string>의 타입 예외가
+    // 작업 스레드 밖으로 전파되어 게임을 종료하지 않도록 변환 없이 비교한다.
+    if (data.is_discarded() || !data.is_object() || !data.contains("status") || data["status"] != "completed")
     {
         result.status = "invalid_response";
         return result;
@@ -46,14 +48,14 @@ ProviderResult ParseResponse(std::string_view aProvider, uint32_t aHttpStatus, c
     {
         for (const auto& item : data["output"])
         {
-            if (!item.is_object() || item.value("type", "") != "message" || !item.contains("content") ||
+            if (!item.is_object() || !item.contains("type") || item["type"] != "message" || !item.contains("content") ||
                 !item["content"].is_array())
                 continue;
             for (const auto& part : item["content"])
             {
-                if (!part.is_object())
+                if (!part.is_object() || !part.contains("type"))
                     continue;
-                const auto type = part.value("type", "");
+                const auto& type = part["type"];
                 if (type == "refusal")
                 {
                     result.status = "provider_refused";
