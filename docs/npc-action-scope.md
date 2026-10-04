@@ -52,7 +52,7 @@ ActionProposal → 로컬 검사 → ActionRequest → ActionOutcome. 대상은 
 | guide_to_location | route_ref | 작성된 지역 경로를 따라 안내 | 경로 최대 30m·60초. 플레이어 8m 이탈 시 대기 |
 | walk_short_route | route_ref | 작성된 경유점을 순서대로 이동 | 최대 5개 경유점·30m·60초 |
 
-추격/순간이동/새 지역 제외. 종료 거리 10m 정책 우선. 안내 대기 최대 10초, 미복귀는 interrupted.
+추격/순간이동/새 지역 제외. [식별 규격](npc-identity-specification.md) 2절 종료 거리 정책 우선. 안내 대기 최대 10초, 미복귀는 interrupted.
 
 ## 5. 제스처·생활 동작 확장
 

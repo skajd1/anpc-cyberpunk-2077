@@ -23,10 +23,8 @@ routes['/personality.js'] = ['personality.js', 'text/javascript'];
 routes['/api-models.js'] = ['api-models.js', 'text/javascript'];
 routes['/memory.js'] = ['memory.js', 'text/javascript'];
 
-export async function createPrototypeServer({ apiKey = process.env.OPENAI_API_KEY, generate = generateOpenAI, generateLocal, statusLocal = codexStatus, modelsLocal } = {}) {
-  const codex = new CodexConnection();
-  generateLocal ??= args => codex.generate(args);
-  modelsLocal ??= () => codex.models();
+// 웹 시제품과 게임 브리지가 같은 프롬프트·인물·조사 자료를 쓴다.
+export async function loadPrototypeData() {
   const spec = await readFile(resolve(root, 'docs/prompt-specification.md'), 'utf8');
   const base = spec.match(/```text\r?\n([\s\S]*?)\r?\n```/)?.[1];
   const memorySpec = await readFile(resolve(root, 'docs/memory-specification.md'), 'utf8');
@@ -42,6 +40,14 @@ export async function createPrototypeServer({ apiKey = process.env.OPENAI_API_KE
   if (!playerFact?.player_identity?.display_name || !playerFact.player_identity.character_key) throw new Error('플레이어 신원 기준 사실이 없습니다.');
   const playerIdentity = { ...playerFact.player_identity, fact_id: playerFact.id, claim_limits: playerFact.claim_limits };
   research.playerIdentity = playerIdentity;
+  return { base, memoryBase, personas, research, playerIdentity };
+}
+
+export async function createPrototypeServer({ apiKey = process.env.OPENAI_API_KEY, generate = generateOpenAI, generateLocal, statusLocal = codexStatus, modelsLocal } = {}) {
+  const codex = new CodexConnection();
+  generateLocal ??= args => codex.generate(args);
+  modelsLocal ??= () => codex.models();
+  const { base, memoryBase, personas, research, playerIdentity } = await loadPrototypeData();
   const token = randomBytes(32).toString('hex');
   let activeRequests = 0;
   const server = http.createServer(async (req, res) => {

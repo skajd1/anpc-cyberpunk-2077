@@ -319,6 +319,14 @@ protected func UpdateDialogsData(const data: script_ref<DialogChoiceHubs>) -> Vo
   let player = this.GetPlayerControlledObject() as PlayerPuppet;
   let entry: ref<Entry>;
   if IsDefined(player) { entry = Entry.Get(player.GetGame()); }
+  // ANPC 대화 중 보류한 원작 허브는 그리지 않는다. 원작 장면 데이터는 그대로다.
+  if IsDefined(entry) && entry.IsHolding() {
+    let hidden = this.m_data;
+    ArrayClear(hidden.choiceHubs);
+    this.m_data = hidden;
+    this.anpcFocus = false;
+    return;
+  }
   if IsDefined(entry) && entry.OfferScene(player, ArraySize(this.m_data.choiceHubs)) {
     let decorated = this.m_data;
     let hubs = decorated.choiceHubs;
@@ -391,6 +399,8 @@ private func AnpcEnsureInput(player: ref<GameObject>) -> Void {
   player.RegisterInputListener(this, n"ChoiceScrollDown");
   player.RegisterInputListener(this, n"Choice2");
   this.anpcInputOwner = player;
+  let entry = Entry.Get(player.GetGame());
+  if IsDefined(entry) { entry.SetUIController(this); }
 }
 
 @addMethod(dialogWidgetGameController)
@@ -421,11 +431,16 @@ protected cb func OnAction(action: ListenerAction, consumer: ListenerActionConsu
     diagnostics.RecordAction(NameToString(name) + ":" + ToString(ListenerAction.GetType(action))
       + " offered=" + ToString(this.anpcOffered) + " focus=" + ToString(this.anpcFocus));
   }
-  if !this.anpcOffered || !ListenerAction.IsButtonJustPressed(action) { return false; }
   let player = this.GetPlayerControlledObject() as PlayerPuppet;
   if !IsDefined(player) { return false; }
   let entry = Entry.Get(player.GetGame());
   if !IsDefined(entry) { return false; }
+  // 보류 중에는 원작 허브 선택·스크롤 입력이 원작 장면에 전달되지 않게 소비한다.
+  if entry.IsHolding() {
+    ListenerActionConsumer.Consume(consumer);
+    return true;
+  }
+  if !this.anpcOffered || !ListenerAction.IsButtonJustPressed(action) { return false; }
   if Equals(name, n"Choice2") || (this.anpcFocus && Equals(name, n"ChoiceApply")) {
     ListenerActionConsumer.Consume(consumer);
     ListenerActionConsumer.DontSendReleaseEvent(consumer);

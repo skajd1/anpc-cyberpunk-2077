@@ -125,6 +125,24 @@ Windows에서는 Codex 앱에 포함된 `codex.exe`를 찾는다. 다른 설치�
 
 실제 연결 시험 결과와 지연 측정은 [개발 및 검증 계획](development-validation.md)에 기록한다.
 
+## 게임 실시험 브리지
+
+[게임 브리지](../prototype/game-bridge.js)는 게임 G2 대화를 이 시제품의 엔진·프롬프트·제공자로 연결하는 개발 경로다. 제품 통신(`ANPC.Native.dll`)을 대신하지 않는다. CET [브리지 모듈](../game/cet/anpc/bridge.lua)이 redscript 요청을 CET 모드 폴더 `bridge/req-<id>.json`에 쓰고, 브리지가 `bridge/res-<id>.txt`(요청 토큰·상태·대사)로 응답한다.
+
+```powershell
+npm run game-bridge -- --provider openai --env <저장소 루트의 .env 경로>
+```
+
+| 옵션 | 기본값 | 의미 |
+| --- | --- | --- |
+| `--provider` | `OPENAI_API_KEY`가 있으면 `openai`, 없으면 `codex` | `openai`·`codex`·`mock` |
+| `--model` | `openai`는 `gpt-4.1-mini`, `codex`는 CLI 기본 | 모델 ID |
+| `--story` | `late_open` | 원작 진행 프리셋. 클리어 후 자유 플레이는 엠버스 진입 전 상태로 돌아가므로 이 값을 쓴다. `none`은 진행 조건 미적용 |
+| `--env` | 저장소 루트 `.env` | 키를 읽을 `.env` 경로 |
+| `--game` | Steam 기본 설치 경로 | 게임 루트 |
+
+대표 인물은 인물 키 카드, 군중은 창작 시험 카드(`resident`)를 쓴다. 게임 세션마다 엔진 세션 하나를 유지하고 게임 대화가 끝나면 정리한다. 키·대사 원문은 파일·로그에 쓰지 않으며 로그에는 요청 번호·인물·상태·지연·토큰 수만 남긴다. 브리지를 실행하지 않으면 게임은 요청 실패(`bridge_unavailable` 또는 40초 `timeout`)를 표시한다.
+
 ## 코드 구조
 
 | 파일 | 역할 |

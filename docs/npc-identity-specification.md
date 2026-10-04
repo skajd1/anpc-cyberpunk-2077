@@ -26,7 +26,7 @@ character_key 검증 시 community, 미확인은 살아 있는 instance. 이름/
 - 차량/워크스팟 점유 없음. 명시 지원 프로필만 예외. 군중 대상의 워크스팟 점유는 대화 전용으로 허용(행동 제한은 [행동 범위](npc-action-scope.md) 1.1). 플레이어 워크스팟 점유는 거부.
 - 커뮤니티 대화 조건/단계 일치. 필수 안전 unknown은 거부.
 
-거리 기본값은 설정 가능. 진행 중 동일 조건 감시. 거리 >10m는 종료. 주변 자동 선택/발화 없음.
+거리 기본값은 설정 가능. 진행 중 동일 조건 감시. 거리 >6m 또는 보류한 원작 허브 소멸 시 자막 도중이라도 즉시 종료. 주변 자동 선택/발화 없음.
 
 결과는 TargetResolution. reason_code: invalid_target, unsupported_type, too_far, busy, combat, quest_controlled, mounted, workspot_busy, state_unknown, community_profile_missing, model_unavailable.
 
@@ -36,6 +36,7 @@ character_key 검증 시 community, 미확인은 살아 있는 instance. 이름/
 2. 군중은 원작 또는 승인 로컬 기본 반응 후 선택지. 기본 반응에 모델 호출·AI 세션·호감/관찰 기억 없음. 반응 변경은 지원 프로필 검수.
 3. 토큰: 대상 키/world_epoch/entry_source(community_option/crowd_option)/발급 시각. 1회 소비. 선택지 단계에서 AI 요청/정지/시선 없음.
 4. 선택 후 원작 안전 종료/제어 반환 확인 → 모든 시작 조건 재검사 → active. 동시 제어 금지.
+   - 예외(원작 허브 보류): 커뮤니티의 타이머 없는 원작 선택 대기 허브는 종료하지 않고 보류한다. 보류 중 원작 허브 표시·선택 입력을 ANPC가 막고, 원작 장면에 명령·선택을 보내지 않는다. 대상 NPC 정지/시선 등 행동 실행 없이 대사·자막만 진행한다. 세션 종료 시 원작 허브를 다시 표시한다. 원작 장면이 자연 종료되면 세션도 종료한다.
 5. 반환/상태 확인 불가 시 거부. 취소/대상·세계 변경 시 토큰/선택지 폐기. 종료는 ANPC UI/제어만 정리.
 
 재접촉도 동일 흐름. 선택지 미지원 시 조준 즉시 채팅으로 자동 대체 금지.

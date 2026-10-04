@@ -1,4 +1,5 @@
 local diagnostics = require("diagnostics")
+local bridge = require("bridge")
 local version = "0.1.0-g0-g1"
 local overlay, elapsed = false, 0
 local state, pinnedEpoch, mockText
@@ -86,6 +87,7 @@ registerForEvent("onOverlayClose", function()
 end)
 registerForEvent("onShutdown", function()
   overlay = false
+  bridge.reset()
   state, pinnedEpoch, mockText = nil, nil, nil
   sceneHubs, sceneChoices = nil, nil
   entryStatus = "entry_not_selected"
@@ -93,6 +95,8 @@ registerForEvent("onShutdown", function()
   pcall(function() local system = collector(); if system then system:Reset() end end)
 end)
 registerForEvent("onUpdate", function(delta)
+  -- AI 요청 전달은 진단 창과 무관하게 매 프레임 처리한다.
+  bridge.update(delta)
   if not overlay then return end
   elapsed = elapsed + delta
   if elapsed >= 0.25 then elapsed = 0; refresh(false) end
@@ -107,6 +111,7 @@ registerForEvent("onDraw", function()
     ImGui.TextWrapped("읽기 전용 개발 진단. 모의 대사는 이 창에만 표시합니다.")
     ImGui.TextWrapped("상태: " .. status)
     ImGui.TextWrapped("G2 선택 결과: " .. entryStatus)
+    ImGui.TextWrapped("AI 브리지 대기 요청: " .. bridge.pendingCount())
     if sceneHubs then
       ImGui.TextWrapped(string.format("원작 장면 허브 %d개 | 선택지 %d개", sceneHubs, sceneChoices))
       if sceneHubs > 0 then
