@@ -1,0 +1,9 @@
+[submodule "game/native/deps/RED4ext.SDK"]
+	path = game/native/deps/RED4ext.SDK
+	url = https://github.com/WopsS/RED4ext.SDK.git
+[submodule "game/native/deps/RedLib"]
+	path = game/native/deps/RedLib
+	url = https://github.com/psiberx/cp2077-red-lib.git
+[submodule "game/native/deps/json"]
+	path = game/native/deps/json
+	url = https://github.com/nlohmann/json.git
