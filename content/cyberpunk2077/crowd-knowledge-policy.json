@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "status": "설계 확정·자료 후보 검수 필요",
   "base": "공통 + 조건에 맞는 지역·직업 필수 지식 + 선택 지식",
   "optional_count": 2,
@@ -56,7 +56,8 @@
       "title": "헤이우드 생활 지식",
       "fact_ids": [
         "HEYWOOD_HOME",
-        "VALENTINOS_HEYWOOD"
+        "VALENTINOS_HEYWOOD",
+        "RECONCILIATION_PARK"
       ],
       "eligibility": "거주·직업 활동 근거 필요",
       "review_status": "draft"
@@ -66,7 +67,8 @@
       "title": "웨스트브룩 생활 지식",
       "fact_ids": [
         "JIGJIG",
-        "TIGER_JAPANTOWN"
+        "TIGER_JAPANTOWN",
+        "CHERRY_BLOSSOM_MARKET"
       ],
       "eligibility": "거주·직업 활동 근거 필요",
       "review_status": "draft"
@@ -98,7 +100,8 @@
       "fact_ids": [
         "BADLANDS",
         "ROCKY_RIDGE",
-        "ALDECALDOS"
+        "ALDECALDOS",
+        "BADLANDS_WIND_FARMS"
       ],
       "eligibility": "승인된 외곽 생활·물류·노마드 배경 필요",
       "review_status": "draft"
@@ -108,7 +111,8 @@
       "title": "도그타운 생활 지식",
       "fact_ids": [
         "DOGTOWN",
-        "DOGTOWN_MARKET"
+        "DOGTOWN_MARKET",
+        "DOGTOWN_LANDMARKS"
       ],
       "eligibility": "확장 지역 생활·활동이 확인된 프로필 필요",
       "review_status": "draft"
@@ -166,6 +170,51 @@
         "MOX"
       ],
       "eligibility": "허용 후보에서 최대 2개 추첨. 사실 오류·직접 목격 경험을 생성하지 않음",
+      "review_status": "draft"
+    },
+    {
+      "id": "courier_worker",
+      "title": "배달·물류 업무 개요",
+      "fact_ids": [
+        "TRANSIT_NCART",
+        "TRANSIT_DELAMAIN",
+        "ENERGY_CHOOH2"
+      ],
+      "eligibility": "배달·물류 업무 배경 확인. 교통 개요만, 실시간 경로·가격·배송 이력 제외",
+      "review_status": "draft"
+    },
+    {
+      "id": "mechanic_worker",
+      "title": "정비 업무 개요",
+      "fact_ids": [
+        "JOB_TECHIE",
+        "ENERGY_CHOOH2",
+        "TECH_SMART_WEAPONS",
+        "TECH_TECH_WEAPONS"
+      ],
+      "eligibility": "정비 업무 배경과 담당 장비 범위 확인. 기술 분류만, 미등록 수리 절차·무기 전문성 제외",
+      "review_status": "draft"
+    },
+    {
+      "id": "office_worker",
+      "title": "기업 근로 생활 개요",
+      "fact_ids": [
+        "CORP_ARASAKA_BRANCHES",
+        "CORP_MILITECH_NUSA",
+        "CORP_BIOTECHNICA"
+      ],
+      "eligibility": "기업 업무 배경 확인. 공개 기업 개요만, 고용주·부서·등급·보안 권한 추정 제외",
+      "review_status": "draft"
+    },
+    {
+      "id": "retail_worker",
+      "title": "상점 업무 개요",
+      "fact_ids": [
+        "EDDIES",
+        "FOOD_SYNTHETIC",
+        "FOOD_SCOP"
+      ],
+      "eligibility": "상점 업무 배경 확인. 통화·식품 개요만, 현재 상품·재고·판매·가격 제외",
       "review_status": "draft"
     }
   ]

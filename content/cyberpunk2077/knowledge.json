@@ -31069,5 +31069,215 @@
     "interpretation": "공개된 기본 개요만 안다. 직접 친분·실무 경험·개인 비밀·현재 사건으로 확대하지 않는다.",
     "assignment_basis": "최신 공통 핵심 상식 배분의 작성 후보. 소미의 개별 원작 인지 장면 검수 전",
     "review_status": "draft"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JUDY_CHERRY_BLOSSOM_MARKET",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "CHERRY_BLOSSOM_MARKET",
+    "owner_key": "judy",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "judy"
+        },
+        {
+          "field": "content.grants.CHERRY_BLOSSOM_MARKET",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "허용된 장소 개요로만 관련 질문에 답한다. 개인적인 방문 기억은 만들지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "2026-10-04 공식 도시 안내 본문 확인. 인물의 지역 노출에 따른 작성 후보이며 개인 인지 장면은 미검증.",
+    "claim_limits": "개별 인지 grant 확인 전 사용하지 않는다. 직업·출신·현재 위치만으로 방문 경험을 부여하지 않는다.",
+    "domain_id": "westbrook",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_EVELYN_CHERRY_BLOSSOM_MARKET",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "CHERRY_BLOSSOM_MARKET",
+    "owner_key": "evelyn",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "evelyn"
+        },
+        {
+          "field": "content.grants.CHERRY_BLOSSOM_MARKET",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "허용된 장소 개요로만 관련 질문에 답한다. 개인적인 방문 기억은 만들지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "2026-10-04 공식 도시 안내 본문 확인. 인물의 지역 노출에 따른 작성 후보이며 개인 인지 장면은 미검증.",
+    "claim_limits": "개별 인지 grant 확인 전 사용하지 않는다. 직업·출신·현재 위치만으로 방문 경험을 부여하지 않는다.",
+    "domain_id": "westbrook",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_JACKIE_RECONCILIATION_PARK",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "RECONCILIATION_PARK",
+    "owner_key": "jackie",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "jackie"
+        },
+        {
+          "field": "content.grants.RECONCILIATION_PARK",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "허용된 장소 개요로만 관련 질문에 답한다. 개인적인 방문 기억은 만들지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "2026-10-04 공식 도시 안내 본문 확인. 인물의 지역 노출에 따른 작성 후보이며 개인 인지 장면은 미검증.",
+    "claim_limits": "개별 인지 grant 확인 전 사용하지 않는다. 직업·출신·현재 위치만으로 방문 경험을 부여하지 않는다.",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_RIVER_RECONCILIATION_PARK",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "RECONCILIATION_PARK",
+    "owner_key": "river",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "river"
+        },
+        {
+          "field": "content.grants.RECONCILIATION_PARK",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "허용된 장소 개요로만 관련 질문에 답한다. 개인적인 방문 기억은 만들지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "2026-10-04 공식 도시 안내 본문 확인. 인물의 지역 노출에 따른 작성 후보이며 개인 인지 장면은 미검증.",
+    "claim_limits": "개별 인지 grant 확인 전 사용하지 않는다. 직업·출신·현재 위치만으로 방문 경험을 부여하지 않는다.",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_PANAM_BADLANDS_WIND_FARMS",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "BADLANDS_WIND_FARMS",
+    "owner_key": "panam",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "panam"
+        },
+        {
+          "field": "content.grants.BADLANDS_WIND_FARMS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "허용된 장소 개요로만 관련 질문에 답한다. 개인적인 방문 기억은 만들지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "2026-10-04 공식 도시 안내 본문 확인. 인물의 지역 노출에 따른 작성 후보이며 개인 인지 장면은 미검증.",
+    "claim_limits": "개별 인지 grant 확인 전 사용하지 않는다. 직업·출신·현재 위치만으로 방문 경험을 부여하지 않는다.",
+    "domain_id": "badlands",
+    "required_depth": "familiar"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "K_SONGBIRD_DOGTOWN_LANDMARKS",
+    "revision": 1,
+    "kind": "knowledge_entry",
+    "fact_id": "DOGTOWN_LANDMARKS",
+    "owner_key": "songbird",
+    "access_condition": {
+      "all": [
+        {
+          "field": "content.era",
+          "op": "eq",
+          "value": "2077"
+        },
+        {
+          "field": "content.npc_key",
+          "op": "eq",
+          "value": "songbird"
+        },
+        {
+          "field": "content.grants.DOGTOWN_LANDMARKS",
+          "op": "eq",
+          "value": true
+        }
+      ]
+    },
+    "certainty": "knows",
+    "interpretation": "허용된 장소 개요로만 관련 질문에 답한다. 개인적인 방문 기억은 만들지 않는다.",
+    "disclosure": "public",
+    "review_status": "draft",
+    "assignment_basis": "2026-10-04 공식 도시 안내 본문 확인. 인물의 지역 노출에 따른 작성 후보이며 개인 인지 장면은 미검증.",
+    "claim_limits": "개별 인지 grant 확인 전 사용하지 않는다. 직업·출신·현재 위치만으로 방문 경험을 부여하지 않는다.",
+    "domain_id": "city_life",
+    "required_depth": "familiar"
   }
 ]

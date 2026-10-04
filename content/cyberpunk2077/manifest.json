@@ -1,5 +1,5 @@
 {
-  "content_version": "research-1.2",
+  "content_version": "research-1.3",
   "identity_structure_version": "1.0",
   "status": "조사·작성 후보. 출시 승인 전",
   "runtime_enabled": false,
@@ -22,17 +22,20 @@
     "characters/johnny.json",
     "world-knowledge-policy.json",
     "characters/songbird.json",
-    "story-progression-policy.json"
+    "story-progression-policy.json",
+    "dialogue-preparation.json",
+    "crowd-archetypes.json"
   ],
   "counts": {
     "characters": 12,
-    "world_facts": 217,
-    "knowledge_entries": 881,
-    "dialogue_examples": 28,
-    "knowledge_bundles": 13,
-    "relationship_stages": 63
+    "world_facts": 221,
+    "knowledge_entries": 887,
+    "dialogue_examples": 52,
+    "knowledge_bundles": 17,
+    "relationship_stages": 63,
+    "crowd_archetypes": 9
   },
-  "scope": "원작 인물 12명·분류된 공통 핵심 상식·공개 세부 지식·인물별 개인 지식. 전체 원작·모든 퀘스트·샤드의 완전 수록은 아님; 송소미의 팬텀 리버티 스토리 분기·정체성 포함",
+  "scope": "원작 인물 12명·분류된 공통 핵심 상식·공개 세부 지식·인물별 개인 지식. 전체 원작·모든 퀘스트·샤드의 완전 수록은 아님; 송소미의 팬텀 리버티 스토리 분기·정체성 포함; 2026-10-04 대화 준비 색인·인물 판단/문체 보강·군중 Big Five 원형 후보 9개",
   "excluded_unverified": [
     "케리의 악기: 공식 안내서와 위키 표현 불일치",
     "실제 게임 내부 퀘스트·NPC 키",

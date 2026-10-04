@@ -1,0 +1,1315 @@
+{
+  "version": "1.0",
+  "review_status": "draft",
+  "runtime_enabled": false,
+  "provenance": "authored_interpretation",
+  "transmission": "로컬 조사·검수 색인. 전체 파일·작성 근거·우선 화제·성격 해설을 모델에 일괄 전송하지 않는다.",
+  "spec_refs": [
+    "docs/content-specification.md",
+    "docs/personality-specification.md",
+    "docs/npc-knowledge-specification.md",
+    "docs/dialogue-evaluation-specification.md"
+  ],
+  "character_dossiers": [
+    {
+      "character_key": "judy",
+      "card_id": "CHAR_JUDY",
+      "viewpoint": "경험을 편집하는 기술자의 정확성과 경험의 주인을 존중하는 태도. 기술 관심과 친밀한 속내를 구분한다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "JUDY_BACKGROUND",
+          "knowledge_ids": [
+            "K_JUDY_JUDY_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "JUDY_BD_LAYERS",
+          "knowledge_ids": [
+            "K_JUDY_JUDY_BD_LAYERS"
+          ]
+        },
+        {
+          "fact_id": "JUDY_BD_CALIBRATION",
+          "knowledge_ids": [
+            "K_JUDY_JUDY_BD_CALIBRATION"
+          ]
+        },
+        {
+          "fact_id": "JUDY_WORKSHOP",
+          "knowledge_ids": [
+            "K_JUDY_JUDY_WORKSHOP"
+          ]
+        },
+        {
+          "fact_id": "BD_EDITING",
+          "knowledge_ids": [
+            "K_JUDY_BD_EDITING"
+          ]
+        },
+        {
+          "fact_id": "BD_RISK",
+          "knowledge_ids": [
+            "K_JUDY_BD_RISK"
+          ]
+        },
+        {
+          "fact_id": "MOX",
+          "knowledge_ids": [
+            "K_JUDY_MOX"
+          ]
+        },
+        {
+          "fact_id": "JUDY_GRANDPARENTS",
+          "knowledge_ids": [
+            "K_JUDY_JUDY_GRANDPARENTS"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [],
+      "personality_note": "개방성 5는 기술적 대안 탐색, 외향성 2는 사생활의 절제다. 정서 민감성 4가 모든 기술 질문의 분노를 뜻하지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "BD 튜토리얼의 레이어·보정 설명과 한국어 작업 용어를 확인한다. 에블린·조부모·클라우드 화제는 개인 공개 시점을 따로 검수한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "panam",
+      "card_id": "CHAR_PANAM",
+      "viewpoint": "자유로운 선택과 클랜에 대한 책임을 함께 따진다. 반대 의견은 동료가 실제 부담할 위험에서 시작한다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "PANAM_BACKGROUND",
+          "knowledge_ids": [
+            "K_PANAM_PANAM_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "PANAM_CLAN_FRIENDS",
+          "knowledge_ids": [
+            "K_PANAM_PANAM_CLAN_FRIENDS"
+          ]
+        },
+        {
+          "fact_id": "PANAM_CORP_INDEPENDENCE",
+          "knowledge_ids": [
+            "K_PANAM_PANAM_CORP_INDEPENDENCE"
+          ]
+        },
+        {
+          "fact_id": "PANAM_CARGO_EXPERIENCE",
+          "knowledge_ids": [
+            "K_PANAM_PANAM_CARGO_EXPERIENCE"
+          ]
+        },
+        {
+          "fact_id": "PANAM_ROGUE_WORK",
+          "knowledge_ids": [
+            "K_PANAM_PANAM_ROGUE_WORK"
+          ]
+        },
+        {
+          "fact_id": "BADLANDS",
+          "knowledge_ids": [
+            "K_PANAM_BADLANDS"
+          ]
+        },
+        {
+          "fact_id": "ALDECALDOS",
+          "knowledge_ids": [
+            "K_PANAM_ALDECALDOS"
+          ]
+        },
+        {
+          "fact_id": "FIXER",
+          "knowledge_ids": [
+            "K_PANAM_FIXER"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [],
+      "personality_note": "우호성 2는 조건 없는 양보를 꺼리는 경향이다. 외향성 4와 함께 농담·교류도 가능하며 상시 적대를 뜻하지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "사울과의 의견 차이·화물 경험의 장면과 현재 클랜 상태를 구분한다. 노마드라는 이유로 모든 차량·무기 전문가로 부풀리지 않는지 확인한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "jackie",
+      "card_id": "CHAR_JACKIE",
+      "viewpoint": "큰 무대에 대한 야심을 친구·가족에 대한 충성심과 함께 표현한다. 단순한 들뜬 조수로 축소하지 않는다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "JACKIE_BACKGROUND",
+          "knowledge_ids": [
+            "K_JACKIE_JACKIE_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "JACKIE_VALENTINOS_PAST",
+          "knowledge_ids": [
+            "K_JACKIE_JACKIE_VALENTINOS_PAST"
+          ]
+        },
+        {
+          "fact_id": "JACKIE_MAMA_BAR",
+          "knowledge_ids": [
+            "K_JACKIE_JACKIE_MAMA_BAR"
+          ]
+        },
+        {
+          "fact_id": "JACKIE_MOTORCYCLES",
+          "knowledge_ids": [
+            "K_JACKIE_JACKIE_MOTORCYCLES"
+          ]
+        },
+        {
+          "fact_id": "HEYWOOD_HOME",
+          "knowledge_ids": [
+            "K_JACKIE_HEYWOOD_HOME"
+          ]
+        },
+        {
+          "fact_id": "VALENTINOS_HEYWOOD",
+          "knowledge_ids": [
+            "K_JACKIE_VALENTINOS_HEYWOOD"
+          ]
+        },
+        {
+          "fact_id": "FIXER",
+          "knowledge_ids": [
+            "K_JACKIE_FIXER"
+          ]
+        },
+        {
+          "fact_id": "AFTERLIFE",
+          "knowledge_ids": [
+            "K_JACKIE_AFTERLIFE"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [],
+      "personality_note": "외향성 5·우호성 4는 자유로운 교류와 협력 성향이다. 위험 상황에서 웃거나 매 턴 질문해야 한다는 뜻은 아니다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "습격 전 생존 구간만 사용하고 헤이우드·바이크 화제의 한국어 호칭을 확인한다. 발렌티노스의 과거 인연을 현재 갱 소속으로 고정하지 않는다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "viktor",
+      "card_id": "CHAR_VIKTOR",
+      "viewpoint": "진료의 한계까지 설명하는 실무적 돌봄. 동정만 반복하거나 확신 없는 치료를 약속하지 않는다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "VIKTOR_BACKGROUND",
+          "knowledge_ids": [
+            "K_VIKTOR_VIKTOR_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "VIKTOR_CLINIC_LOCATION",
+          "knowledge_ids": [
+            "K_VIKTOR_VIKTOR_CLINIC_LOCATION"
+          ]
+        },
+        {
+          "fact_id": "VIKTOR_PATIENT_CREDIT",
+          "knowledge_ids": [
+            "K_VIKTOR_VIKTOR_PATIENT_CREDIT"
+          ]
+        },
+        {
+          "fact_id": "VIKTOR_BOXING_TEAM",
+          "knowledge_ids": [
+            "K_VIKTOR_VIKTOR_BOXING_TEAM"
+          ]
+        },
+        {
+          "fact_id": "CYBERWARE",
+          "knowledge_ids": [
+            "K_VIKTOR_CYBERWARE"
+          ]
+        },
+        {
+          "fact_id": "RIPPERDOC",
+          "knowledge_ids": [
+            "K_VIKTOR_RIPPERDOC"
+          ]
+        },
+        {
+          "fact_id": "TT_COVERAGE",
+          "knowledge_ids": [
+            "K_VIKTOR_TT_COVERAGE"
+          ]
+        },
+        {
+          "fact_id": "RELIC_V",
+          "knowledge_ids": [
+            "K_VIKTOR_RELIC_V"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [],
+      "personality_note": "성실성 5·정서 민감성 1은 준비와 침착함의 조합이다. 환자에 대한 걱정이나 원작의 슬픔을 없애지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "진료와 렐릭 상담 장면의 설명 상한을 확인한다. 과거 외상·상환·복싱 경력과 오늘의 진료 결과를 구분한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "misty",
+      "card_id": "CHAR_MISTY",
+      "viewpoint": "불확실성을 견디며 스스로 선택하도록 돕는 상담. 상징의 해석과 실제 미래·의학적 사실을 분리한다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "MISTY_BACKGROUND",
+          "knowledge_ids": [
+            "K_MISTY_MISTY_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "MISTY_TAROT_PRACTICE",
+          "knowledge_ids": [
+            "K_MISTY_MISTY_TAROT_PRACTICE"
+          ]
+        },
+        {
+          "fact_id": "MISTY_FOOL_SYMBOL",
+          "knowledge_ids": [
+            "K_MISTY_MISTY_FOOL_SYMBOL"
+          ]
+        },
+        {
+          "fact_id": "MISTY_FOOL_JOURNEY",
+          "knowledge_ids": [
+            "K_MISTY_MISTY_FOOL_JOURNEY"
+          ]
+        },
+        {
+          "fact_id": "MISTY_SHOP_STOCK",
+          "knowledge_ids": [
+            "K_MISTY_MISTY_SHOP_STOCK"
+          ]
+        },
+        {
+          "fact_id": "WATSON_AREAS",
+          "knowledge_ids": [
+            "K_MISTY_WATSON_AREAS"
+          ]
+        },
+        {
+          "fact_id": "RIPPERDOC",
+          "knowledge_ids": [
+            "K_MISTY_RIPPERDOC"
+          ]
+        },
+        {
+          "fact_id": "RELIC_V",
+          "knowledge_ids": [
+            "K_MISTY_RELIC_V"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [],
+      "personality_note": "개방성 5·우호성 5는 여러 해석과 조정을 선호하는 경향이다. 거짓 확답이나 모든 부탁의 수락을 허용하지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "타로의 광대·여정 해석을 한국어 장면에서 확인한다. 재키와의 관계·상실·V의 선택 반응을 현재 단계별로 검수한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "rogue",
+      "card_id": "CHAR_ROGUE",
+      "viewpoint": "일의 조건과 신뢰도를 빠르게 가르는 픽서. 인맥이 넓어도 기밀과 실제 권한을 분리한다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "ROGUE_BACKGROUND",
+          "knowledge_ids": [
+            "K_ROGUE_ROGUE_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "ROGUE_SOLO_BACKGROUND",
+          "knowledge_ids": [
+            "K_ROGUE_ROGUE_SOLO_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "ROGUE_AFTERLIFE_STAFF",
+          "knowledge_ids": [
+            "K_ROGUE_ROGUE_AFTERLIFE_STAFF"
+          ]
+        },
+        {
+          "fact_id": "ROGUE_EXPERT_NETWORK",
+          "knowledge_ids": [
+            "K_ROGUE_ROGUE_EXPERT_NETWORK"
+          ]
+        },
+        {
+          "fact_id": "FIXER",
+          "knowledge_ids": [
+            "K_ROGUE_FIXER"
+          ]
+        },
+        {
+          "fact_id": "AFTERLIFE",
+          "knowledge_ids": [
+            "K_ROGUE_AFTERLIFE"
+          ]
+        },
+        {
+          "fact_id": "ARASAKA_SECURITY",
+          "knowledge_ids": [
+            "K_ROGUE_ARASAKA_SECURITY"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [
+        "STORY_ROGUE_JOHNNY"
+      ],
+      "personality_note": "성실성 5·우호성 2는 조건을 중시하는 거래 태도다. 침착함 1을 무감정으로, 전문성을 전지성으로 표현하지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "고객·전문가 인맥의 공개 범위와 조니의 과거를 구분한다. 조니와의 재회를 V의 연애나 기밀 제공 허가로 바꾸지 않는다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "goro",
+      "card_id": "CHAR_GORO",
+      "viewpoint": "충성과 책임을 포기하지 않는 경호 경력자. V와의 필요에 따른 협력이 반기업 전향을 뜻하지 않는다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "GORO_BACKGROUND",
+          "knowledge_ids": [
+            "K_GORO_GORO_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "GORO_ARASAKA_LOYALTY",
+          "knowledge_ids": [
+            "K_GORO_GORO_ARASAKA_LOYALTY"
+          ]
+        },
+        {
+          "fact_id": "GORO_ODA_CONTACT",
+          "knowledge_ids": [
+            "K_GORO_GORO_ODA_CONTACT"
+          ]
+        },
+        {
+          "fact_id": "GORO_FOOD_PREFERENCE",
+          "knowledge_ids": [
+            "K_GORO_GORO_FOOD_PREFERENCE"
+          ]
+        },
+        {
+          "fact_id": "ARASAKA_SECURITY",
+          "knowledge_ids": [
+            "K_GORO_ARASAKA_SECURITY"
+          ]
+        },
+        {
+          "fact_id": "CORP_ARASAKA_BRANCHES",
+          "knowledge_ids": [
+            "K_GORO_CORP_ARASAKA_BRANCHES"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [
+        "STORY_GORO_INVESTIGATION",
+        "STORY_GORO_SAVED"
+      ],
+      "personality_note": "개방성 2·성실성 5는 검증된 방법과 책임의 선호다. 새 증거를 무조건 거부하거나 모든 행동을 기업 선전으로 만들지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "수사 협력·구출 이후 호칭과 충성의 지속을 확인한다. 음식 취향의 장면은 편견이나 출신 발음 흉내로 대신하지 않는다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "kerry",
+      "card_id": "CHAR_KERRY",
+      "viewpoint": "명성 뒤의 독립적인 음악가. 조니와의 비교에 반응하되 자기 작업과 취향을 이야기의 중심으로 돌릴 수 있다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "KERRY_BACKGROUND",
+          "knowledge_ids": [
+            "K_KERRY_KERRY_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "KERRY_SAMURAI_MEMBERS",
+          "knowledge_ids": [
+            "K_KERRY_KERRY_SAMURAI_MEMBERS"
+          ]
+        },
+        {
+          "fact_id": "KERRY_RECORD_LABEL",
+          "knowledge_ids": [
+            "K_KERRY_KERRY_RECORD_LABEL"
+          ]
+        },
+        {
+          "fact_id": "KERRY_SOLO_SONGS",
+          "knowledge_ids": [
+            "K_KERRY_KERRY_SOLO_SONGS"
+          ]
+        },
+        {
+          "fact_id": "SAMURAI_JOHNNY",
+          "knowledge_ids": [
+            "K_KERRY_SAMURAI_JOHNNY"
+          ]
+        },
+        {
+          "fact_id": "JOB_ROCKERBOY",
+          "knowledge_ids": [
+            "K_KERRY_JOB_ROCKERBOY"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [
+        "STORY_KERRY_MUSIC",
+        "STORY_KERRY_US_CRACKS"
+      ],
+      "personality_note": "개방성 5·성실성 2는 예술적 탐색과 유연한 대응이다. 실제 계약 위반·부정직·무책임을 강제하지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "악기 종류의 출처 충돌을 해소하기 전 확정하지 않는다. 음악·US Cracks·친구/연인 분기와 한국어 유머·욕설을 따로 검수한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "river",
+      "card_id": "CHAR_RIVER",
+      "viewpoint": "증거와 사람의 피해를 함께 보는 수사 경력자. 업무 권한과 가족에 대한 걱정은 현재 단계에 맞춘다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "RIVER_BACKGROUND",
+          "knowledge_ids": [
+            "K_RIVER_RIVER_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "RIVER_HAN_PARTNER",
+          "knowledge_ids": [
+            "K_RIVER_RIVER_HAN_PARTNER"
+          ]
+        },
+        {
+          "fact_id": "RIVER_JOSS_CHILDREN",
+          "knowledge_ids": [
+            "K_RIVER_RIVER_JOSS_CHILDREN"
+          ]
+        },
+        {
+          "fact_id": "RIVER_FAMILY_SUPPORT",
+          "knowledge_ids": [
+            "K_RIVER_RIVER_FAMILY_SUPPORT"
+          ]
+        },
+        {
+          "fact_id": "NCPD",
+          "knowledge_ids": [
+            "K_RIVER_NCPD"
+          ]
+        },
+        {
+          "fact_id": "MAXTAC",
+          "knowledge_ids": [
+            "K_RIVER_MAXTAC"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [
+        "STORY_RIVER_CASE",
+        "STORY_RIVER_RANDY"
+      ],
+      "personality_note": "성실성 5·우호성 4는 근거 확인과 피해자 배려의 조합이다. 가족 사건의 강한 압력을 고정 성격 점수로 환산하지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "현재 NCPD 재직·기록 접근권·가족 사건 결과를 게임 상태로 확인한다. 증거 질문과 사적인 대화의 말투를 나눠 검수한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "evelyn",
+      "card_id": "CHAR_EVELYN",
+      "viewpoint": "조건과 공개 범위를 선택하는 협상자. 야심·매력·경계를 함께 표현하며 단순한 유혹이나 사기 역할로 축소하지 않는다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "EVELYN_BACKGROUND",
+          "knowledge_ids": [
+            "K_EVELYN_EVELYN_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "EVELYN_BD_RECORDING",
+          "knowledge_ids": [
+            "K_EVELYN_EVELYN_BD_RECORDING"
+          ]
+        },
+        {
+          "fact_id": "EVELYN_JUDY_BD_COLLAB",
+          "knowledge_ids": [
+            "K_EVELYN_EVELYN_JUDY_BD_COLLAB"
+          ]
+        },
+        {
+          "fact_id": "EVELYN_CLOUDS_CONNECTION",
+          "knowledge_ids": [
+            "K_EVELYN_EVELYN_CLOUDS_CONNECTION"
+          ]
+        },
+        {
+          "fact_id": "BD_EXPERIENCE",
+          "knowledge_ids": [
+            "K_EVELYN_BD_EXPERIENCE"
+          ]
+        },
+        {
+          "fact_id": "JIGJIG",
+          "knowledge_ids": [
+            "K_EVELYN_JIGJIG"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [
+        "STORY_EVELYN_CLIENT",
+        "STORY_EVELYN_DEX_OFFER"
+      ],
+      "personality_note": "외향성 4·우호성 2는 목적 있는 교류와 조건을 따지는 태도다. 야심이 모든 상황의 거짓말·유혹을 뜻하지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "BD 기록과 주디의 보정·편집 역할을 원작 장면에서 구분한다. 구출 후 발화 불가·사망에는 새 대화가 차단되는지 확인한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "johnny",
+      "card_id": "CHAR_JOHNNY",
+      "viewpoint": "기업의 통제를 싫어하는 로커보이 자신의 시점. 객관적 역사 설명자나 2077년 만능 안내자로 바꾸지 않는다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "SAMURAI_JOHNNY",
+          "knowledge_ids": [
+            "K_JOHNNY_SAMURAI_JOHNNY"
+          ]
+        },
+        {
+          "fact_id": "JOHNNY_RELIC_EXISTENCE",
+          "knowledge_ids": [
+            "K_JOHNNY_JOHNNY_RELIC_EXISTENCE"
+          ]
+        },
+        {
+          "fact_id": "JOHNNY_MEMORY_LIMIT",
+          "knowledge_ids": [
+            "K_JOHNNY_JOHNNY_MEMORY_LIMIT"
+          ]
+        },
+        {
+          "fact_id": "JOHNNY_OLD_FRIENDS",
+          "knowledge_ids": [
+            "K_JOHNNY_JOHNNY_OLD_FRIENDS"
+          ]
+        },
+        {
+          "fact_id": "JOHNNY_MUSIC",
+          "knowledge_ids": [
+            "K_JOHNNY_JOHNNY_MUSIC"
+          ]
+        },
+        {
+          "fact_id": "JOHNNY_ALT_PAST",
+          "knowledge_ids": [
+            "K_JOHNNY_JOHNNY_ALT_PAST"
+          ]
+        },
+        {
+          "fact_id": "HISTORY_BOMBING",
+          "knowledge_ids": [
+            "K_JOHNNY_HISTORY_BOMBING"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [
+        "STORY_JOHNNY_SECOND_CHANCE"
+      ],
+      "personality_note": "외향성 5·우호성 1은 교류의 주도성과 강한 자기 입장이다. 침묵 없는 장광설이나 무조건 폭력을 뜻하지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "생전 회고의 주관성과 V에게 보이는 엔그램의 제약을 확인한다. 초반에 공유되지 않은 2077년 상식을 기존 common_exclusions_by_stage와 대조한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    },
+    {
+      "character_key": "songbird",
+      "card_id": "CHAR_SONGBIRD",
+      "viewpoint": "국가 자산으로 취급받는 넷러너의 생존과 선택권. 작전 협력·인간적인 교류·기만의 책임을 각 단계에서 구분한다.",
+      "knowledge_focus": [
+        {
+          "fact_id": "SONGBIRD_BACKGROUND",
+          "knowledge_ids": [
+            "K_SONGBIRD_SONGBIRD_BACKGROUND"
+          ]
+        },
+        {
+          "fact_id": "SONGBIRD_NUSA_CONSTRAINT",
+          "knowledge_ids": [
+            "K_SONGBIRD_SONGBIRD_NUSA_CONSTRAINT"
+          ]
+        },
+        {
+          "fact_id": "SONGBIRD_RECRUITMENT",
+          "knowledge_ids": [
+            "K_SONGBIRD_SONGBIRD_RECRUITMENT"
+          ]
+        },
+        {
+          "fact_id": "SONGBIRD_BLACKWALL_DAMAGE",
+          "knowledge_ids": [
+            "K_SONGBIRD_SONGBIRD_BLACKWALL_DAMAGE"
+          ]
+        },
+        {
+          "fact_id": "SONGBIRD_V_CURE_PROMISE",
+          "knowledge_ids": [
+            "K_SONGBIRD_SONGBIRD_V_CURE_PROMISE"
+          ]
+        },
+        {
+          "fact_id": "SONGBIRD_MATRIX_LIMIT",
+          "knowledge_ids": [
+            "K_SONGBIRD_SONGBIRD_MATRIX_LIMIT"
+          ]
+        }
+      ],
+      "canon_reference_fact_ids": [
+        "STORY_SONGBIRD_BLACK_SAPPHIRE"
+      ],
+      "personality_note": "성실성 4·우호성 2·정서 민감성 4는 조건 확인과 경계의 조합이다. 모든 발화를 조종·불안으로 만들지 않는다.",
+      "review_status": "draft",
+      "review_tasks": [
+        "원작 경로마다 비밀을 공개한 시점을 확인한다. 열차 고백과 Cynosure 경로를 섞지 않으며 소미 호칭의 방향·발화 가능 상태를 검수한다.",
+        "해당 원작 장면의 개인 인지·공개 범위 확인",
+        "한국어 호칭·말끝·욕설·리듬 검수",
+        "게임 상태와 의미 관계 단계 매핑 확인",
+        "서로 다른 인물에게 같은 질문을 주어 판단·지식·말투 비교"
+      ]
+    }
+  ],
+  "world_index": [
+    {
+      "category_id": "people",
+      "label": "인물",
+      "layers": {
+        "common": [
+          "SAMURAI_JOHNNY",
+          "ROGUE_BACKGROUND",
+          "KERRY_BACKGROUND",
+          "PLAYER_V",
+          "PUBLIC_SMASHER",
+          "PUBLIC_BARTMOSS"
+        ],
+        "regional": [],
+        "profession": [
+          "JUDY_BD_LAYERS",
+          "JUDY_BD_CALIBRATION",
+          "JUDY_WORKSHOP",
+          "PANAM_CLAN_FRIENDS",
+          "PANAM_CARGO_EXPERIENCE",
+          "JACKIE_MAMA_BAR",
+          "VIKTOR_CLINIC_LOCATION",
+          "VIKTOR_BOXING_TEAM",
+          "MISTY_TAROT_PRACTICE",
+          "MISTY_FOOL_SYMBOL",
+          "MISTY_FOOL_JOURNEY",
+          "ROGUE_AFTERLIFE_STAFF",
+          "ROGUE_EXPERT_NETWORK",
+          "KERRY_SAMURAI_MEMBERS",
+          "KERRY_RECORD_LABEL",
+          "KERRY_SOLO_SONGS",
+          "RIVER_HAN_PARTNER"
+        ],
+        "optional": [],
+        "personal": [
+          "JUDY_BACKGROUND",
+          "PANAM_BACKGROUND",
+          "JACKIE_BACKGROUND",
+          "VIKTOR_BACKGROUND",
+          "MISTY_BACKGROUND",
+          "GORO_BACKGROUND",
+          "RIVER_BACKGROUND",
+          "EVELYN_BACKGROUND",
+          "JUDY_GRANDPARENTS",
+          "PANAM_CORP_INDEPENDENCE",
+          "JACKIE_VALENTINOS_PAST",
+          "JACKIE_MOTORCYCLES",
+          "VIKTOR_PATIENT_CREDIT",
+          "MISTY_SHOP_STOCK",
+          "ROGUE_SOLO_BACKGROUND",
+          "GORO_ARASAKA_LOYALTY",
+          "GORO_ODA_CONTACT",
+          "GORO_FOOD_PREFERENCE",
+          "RIVER_JOSS_CHILDREN",
+          "RIVER_FAMILY_SUPPORT",
+          "EVELYN_CLOUDS_CONNECTION",
+          "PANAM_ROGUE_WORK",
+          "JOHNNY_RELIC_EXISTENCE",
+          "JOHNNY_MEMORY_LIMIT",
+          "JOHNNY_OLD_FRIENDS",
+          "JOHNNY_POSSESSIONS",
+          "JOHNNY_ALT_PAST",
+          "JOHNNY_MUSIC",
+          "SONGBIRD_BACKGROUND",
+          "SONGBIRD_NUSA_CONSTRAINT"
+        ],
+        "quest": [
+          "RELIC_V",
+          "STORY_JUDY_FIRST",
+          "STORY_JUDY_RESCUE",
+          "STORY_JUDY_CLOUDS",
+          "STORY_JUDY_MAIKO_NO_PAY",
+          "STORY_JUDY_MAIKO_KILLED",
+          "STORY_JUDY_FRIEND",
+          "STORY_JUDY_PARTNER",
+          "STORY_JUDY_CUT_OFF",
+          "STORY_PANAM_FIRST",
+          "STORY_PANAM_HELLMAN",
+          "STORY_PANAM_SAUL_SAVED",
+          "STORY_PANAM_FRIEND",
+          "STORY_PANAM_PARTNER",
+          "STORY_PANAM_BETRAYED",
+          "STORY_JACKIE_PARTNER",
+          "STORY_JACKIE_DEAD",
+          "STORY_VIKTOR_FRIEND",
+          "STORY_VIKTOR_RELIC",
+          "STORY_VIKTOR_PAID",
+          "STORY_MISTY_FRIEND",
+          "STORY_MISTY_LOSS",
+          "STORY_MISTY_ROOFTOP",
+          "STORY_MISTY_ARASAKA",
+          "STORY_ROGUE_CLIENT",
+          "STORY_ROGUE_WORK",
+          "STORY_ROGUE_JOHNNY",
+          "STORY_ROGUE_AFTER_DATE",
+          "STORY_GORO_WITNESS",
+          "STORY_GORO_INVESTIGATION",
+          "STORY_GORO_PARADE",
+          "STORY_GORO_SAVED",
+          "STORY_GORO_ABANDONED",
+          "STORY_KERRY_FIRST",
+          "STORY_KERRY_MUSIC",
+          "STORY_KERRY_US_CRACKS",
+          "STORY_KERRY_FRIEND",
+          "STORY_KERRY_PARTNER",
+          "STORY_RIVER_CASE",
+          "STORY_RIVER_RANDY",
+          "STORY_RIVER_SAVED",
+          "STORY_RIVER_FRIEND",
+          "STORY_RIVER_PARTNER",
+          "STORY_RIVER_FAILED",
+          "STORY_EVELYN_CLIENT",
+          "STORY_EVELYN_DEX_OFFER",
+          "STORY_EVELYN_RECOVERED",
+          "STORY_EVELYN_DEAD",
+          "STORY_JOHNNY_FIRST",
+          "STORY_JOHNNY_COOPERATION",
+          "STORY_JOHNNY_SECOND_CHANCE",
+          "STORY_JOHNNY_REJECTED",
+          "STORY_JOHNNY_FRIEND",
+          "STORY_JOHNNY_UNAVAILABLE",
+          "SONGBIRD_RECRUITMENT",
+          "SONGBIRD_V_CURE_PROMISE",
+          "SONGBIRD_HANSEN_PLAN",
+          "SONGBIRD_FIRESTARTER_SPLIT",
+          "SONGBIRD_MOON_DEPARTURE",
+          "SONGBIRD_FIA_RETURN",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "SONGBIRD_CYNOSURE_DEATH",
+          "STORY_SONGBIRD_INTRODUCED",
+          "STORY_SONGBIRD_RESCUE_OPERATION",
+          "STORY_SONGBIRD_BLACK_SAPPHIRE",
+          "STORY_SONGBIRD_ESCAPE_PLANNING",
+          "STORY_SONGBIRD_MOON_ESCAPE",
+          "STORY_SONGBIRD_MATRIX_CONFESSION",
+          "STORY_SONGBIRD_CYNOSURE_CORE",
+          "STORY_SONGBIRD_MOON_DEPARTED",
+          "STORY_SONGBIRD_FIA_CUSTODY",
+          "STORY_SONGBIRD_DEAD"
+        ]
+      }
+    },
+    {
+      "category_id": "corporations",
+      "label": "기업",
+      "layers": {
+        "common": [
+          "ARASAKA_SECURITY",
+          "MILITECH_ARMS",
+          "TT_SERVICE",
+          "CORP_ARASAKA_BRANCHES",
+          "CORP_MILITECH_NUSA",
+          "CORP_KANG_TAO",
+          "CORP_KANG_TAO_PRODUCTS",
+          "CORP_KIROSHI",
+          "CORP_KIROSHI_OPTICS",
+          "CORP_BIOTECHNICA",
+          "CORP_NIGHT_CORP"
+        ],
+        "regional": [],
+        "profession": [],
+        "optional": [],
+        "personal": [],
+        "quest": []
+      }
+    },
+    {
+      "category_id": "occupations",
+      "label": "직업",
+      "layers": {
+        "common": [
+          "RIPPERDOC",
+          "FIXER",
+          "NETRUNNER",
+          "JOB_ROCKERBOY",
+          "JOB_MERC_TEAM",
+          "JOB_SOLO",
+          "JOB_TECHIE",
+          "JOB_MEDTECH"
+        ],
+        "regional": [],
+        "profession": [],
+        "optional": [],
+        "personal": [],
+        "quest": []
+      }
+    },
+    {
+      "category_id": "night_city",
+      "label": "나이트 시티",
+      "layers": {
+        "common": [
+          "NC_CITY",
+          "NC_DISTRICTS",
+          "CITY_MEGABUILDINGS",
+          "CITY_H10",
+          "CITY_H8"
+        ],
+        "regional": [
+          "WATSON_AREAS",
+          "KABUKI_MARKET",
+          "HEYWOOD_HOME",
+          "JIGJIG",
+          "RANCHO_HOUSING",
+          "ARROYO_WORK",
+          "PACIFICA_ABANDONED",
+          "BADLANDS",
+          "ROCKY_RIDGE",
+          "DOGTOWN",
+          "DOGTOWN_MARKET",
+          "LIZZIES",
+          "TIGER_JAPANTOWN",
+          "MAELSTROM_WATSON",
+          "VALENTINOS_HEYWOOD",
+          "SIXTH_SANTO",
+          "VOODOO_PACIFICA",
+          "AFTERLIFE",
+          "CHERRY_BLOSSOM_MARKET",
+          "RECONCILIATION_PARK",
+          "BADLANDS_WIND_FARMS",
+          "DOGTOWN_LANDMARKS"
+        ],
+        "profession": [],
+        "optional": [],
+        "personal": [],
+        "quest": []
+      }
+    },
+    {
+      "category_id": "history",
+      "label": "역사",
+      "layers": {
+        "common": [
+          "HISTORY_FOUNDING",
+          "HISTORY_BOMBING",
+          "HISTORY_BOMBING_DISPUTE",
+          "HISTORY_RED",
+          "HISTORY_RED_DATES",
+          "HISTORY_UNIFICATION",
+          "HISTORY_NC_AUTONOMY",
+          "HISTORY_DATAKRASH"
+        ],
+        "regional": [],
+        "profession": [],
+        "optional": [],
+        "personal": [],
+        "quest": []
+      }
+    },
+    {
+      "category_id": "society_culture",
+      "label": "사회·문화",
+      "layers": {
+        "common": [
+          "CULTURE_KITSCH",
+          "CULTURE_ENTROPISM",
+          "CULTURE_NEOMILITARISM",
+          "CULTURE_NEOKITSCH",
+          "CULTURE_KITSCH_DIFFERENCE",
+          "FOOD_SYNTHETIC",
+          "FOOD_SCOP",
+          "FOOD_SCOP_PROCESS",
+          "CULTURE_AFTERLIFE_DRINKS"
+        ],
+        "regional": [],
+        "profession": [],
+        "optional": [],
+        "personal": [],
+        "quest": []
+      }
+    },
+    {
+      "category_id": "technology",
+      "label": "기술·사이버웨어",
+      "layers": {
+        "common": [
+          "CYBERWARE",
+          "BD_EXPERIENCE",
+          "BLACKWALL_PUBLIC",
+          "TECH_SMART_WEAPONS",
+          "TECH_TECH_WEAPONS",
+          "BD_PLAYBACK",
+          "BD_RECORDING_SENSORY"
+        ],
+        "regional": [],
+        "profession": [
+          "BD_EDITING",
+          "BD_RISK",
+          "NET_CORP_DEFENSE",
+          "NET_BLACKWALL",
+          "EVELYN_BD_RECORDING",
+          "EVELYN_JUDY_BD_COLLAB"
+        ],
+        "optional": [],
+        "personal": [],
+        "quest": [
+          "SONGBIRD_BLACKWALL_DAMAGE",
+          "SONGBIRD_MATRIX_LIMIT"
+        ]
+      }
+    },
+    {
+      "category_id": "factions",
+      "label": "갱·노마드",
+      "layers": {
+        "common": [
+          "MOX",
+          "ALDECALDOS"
+        ],
+        "regional": [],
+        "profession": [],
+        "optional": [
+          "ANIMALS_WORK",
+          "SCAVS"
+        ],
+        "personal": [],
+        "quest": []
+      }
+    },
+    {
+      "category_id": "law_security",
+      "label": "치안·법집행",
+      "layers": {
+        "common": [
+          "NCPD",
+          "MAXTAC",
+          "TT_AV_DISPATCH",
+          "NETWATCH_PUBLIC"
+        ],
+        "regional": [],
+        "profession": [],
+        "optional": [],
+        "personal": [],
+        "quest": []
+      }
+    },
+    {
+      "category_id": "economy",
+      "label": "경제·생활",
+      "layers": {
+        "common": [
+          "EDDIES",
+          "TT_COVERAGE",
+          "TT_PLANS",
+          "TT_PLATINUM_DETAIL",
+          "ENERGY_CHOOH2",
+          "ENERGY_CHOOH2_LICENSE"
+        ],
+        "regional": [],
+        "profession": [],
+        "optional": [],
+        "personal": [],
+        "quest": []
+      }
+    },
+    {
+      "category_id": "transport",
+      "label": "교통",
+      "layers": {
+        "common": [
+          "TRANSIT_DELAMAIN",
+          "DELAMAIN_VEHICLES",
+          "TRANSIT_NCART",
+          "NCART_DETAIL"
+        ],
+        "regional": [],
+        "profession": [],
+        "optional": [],
+        "personal": [],
+        "quest": []
+      }
+    }
+  ],
+  "source_audit": {
+    "checked_at": "2026-10-04",
+    "method": "공식 웹 본문 확인 + 기존 source_checked 자료 재분류. 기존 2차 자료·과거 PDF는 이번에 재검증하지 않음.",
+    "verified_source_ids": [
+      "CDPR_GAME",
+      "CDPR_PHANTOM_LIBERTY",
+      "CDPR_TRAVEL"
+    ],
+    "verified_fact_ids": [
+      "JUDY_BACKGROUND",
+      "PANAM_BACKGROUND",
+      "JACKIE_BACKGROUND",
+      "SAMURAI_JOHNNY",
+      "SONGBIRD_BACKGROUND",
+      "SONGBIRD_NUSA_CONSTRAINT",
+      "JIGJIG",
+      "ROCKY_RIDGE",
+      "DOGTOWN",
+      "DOGTOWN_MARKET",
+      "CHERRY_BLOSSOM_MARKET",
+      "RECONCILIATION_PARK",
+      "BADLANDS_WIND_FARMS",
+      "DOGTOWN_LANDMARKS"
+    ],
+    "failed_access": [
+      {
+        "url": "https://cdn-s-cyberpunk.cdprojektred.com/CP2077-UE-Booklet-EN-1.pdf",
+        "reason": "웹 도구 본문 크기 제한",
+        "use_as_new_evidence": false
+      },
+      {
+        "url": "https://cdn-s-cyberpunk.cdprojektred.com/cosplay-guides/VIKTOR_VEKTOR_COSPLAY_GUIDE_EN.pdf",
+        "reason": "웹 도구 본문 크기 제한",
+        "use_as_new_evidence": false
+      },
+      {
+        "url": "https://cdn-s-cyberpunk.cdprojektred.com/cosplay-guides/MISTY_COSPLAY_GUIDE_EN.pdf",
+        "reason": "웹 도구 본문 크기 제한",
+        "use_as_new_evidence": false
+      },
+      {
+        "url": "https://cdn-s-cyberpunk.cdprojektred.com/cosplay-guides/GORO_TAKEMURA_COSPLAY_GUIDE_EN1.pdf",
+        "reason": "웹 도구 본문 크기 제한",
+        "use_as_new_evidence": false
+      },
+      {
+        "url": "https://cdn-s-cyberpunk.cdprojektred.com/cosplay-guides/KERRY_EURODYNE_COSPLAY_GUIDE_EN.pdf",
+        "reason": "웹 도구 본문 크기 제한",
+        "use_as_new_evidence": false
+      }
+    ],
+    "game_verified": false,
+    "korean_voice_verified": false,
+    "partial_rechecks": [
+      {
+        "fact_id": "NC_DISTRICTS",
+        "confirmed": "도시가 여섯 주요 구역으로 나뉜다는 설명",
+        "unconfirmed": "해당 기사에는 여섯 구역 이름 전체 목록이 없어 기존 이름 목록을 이번 재확인으로 표시하지 않음"
+      },
+      {
+        "fact_id": "JOHNNY_RELIC_EXISTENCE",
+        "confirmed": "2077년에 조니가 V의 머릿속에 존재한다는 소개",
+        "unconfirmed": "엔그램 기술 정의와 렐릭 동작·행동 한계 전체는 이번 소개 페이지만으로 재검증하지 않음"
+      }
+    ]
+  },
+  "individual_profession_fact_scopes": [
+    {
+      "fact_id": "JUDY_BD_LAYERS",
+      "owner_keys": [
+        "judy"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "JUDY_BD_CALIBRATION",
+      "owner_keys": [
+        "judy"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "JUDY_WORKSHOP",
+      "owner_keys": [
+        "judy"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "PANAM_CLAN_FRIENDS",
+      "owner_keys": [
+        "panam"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "PANAM_CARGO_EXPERIENCE",
+      "owner_keys": [
+        "panam"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "JACKIE_MAMA_BAR",
+      "owner_keys": [
+        "jackie"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "VIKTOR_CLINIC_LOCATION",
+      "owner_keys": [
+        "viktor"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "VIKTOR_BOXING_TEAM",
+      "owner_keys": [
+        "viktor"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "MISTY_TAROT_PRACTICE",
+      "owner_keys": [
+        "misty"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "MISTY_FOOL_SYMBOL",
+      "owner_keys": [
+        "misty"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "MISTY_FOOL_JOURNEY",
+      "owner_keys": [
+        "misty"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "ROGUE_AFTERLIFE_STAFF",
+      "owner_keys": [
+        "rogue"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "ROGUE_EXPERT_NETWORK",
+      "owner_keys": [
+        "rogue"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "KERRY_SAMURAI_MEMBERS",
+      "owner_keys": [
+        "kerry"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "KERRY_RECORD_LABEL",
+      "owner_keys": [
+        "kerry"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "KERRY_SOLO_SONGS",
+      "owner_keys": [
+        "kerry"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "RIVER_HAN_PARTNER",
+      "owner_keys": [
+        "river"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "EVELYN_BD_RECORDING",
+      "owner_keys": [
+        "evelyn"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    },
+    {
+      "fact_id": "EVELYN_JUDY_BD_COLLAB",
+      "owner_keys": [
+        "evelyn"
+      ],
+      "assignment_rule": "직업층의 개인 역할·경험. 해당 소유자와 인지·공개 조건만 사용하며 군중 직업 배분으로 일반화하지 않는다."
+    }
+  ]
+}

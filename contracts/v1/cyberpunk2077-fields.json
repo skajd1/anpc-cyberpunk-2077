@@ -3,7 +3,7 @@
   "config_version": "1.0",
   "game_id": "cyberpunk2077",
   "mod_id": "anpc",
-  "revision": 6,
+  "revision": 7,
   "fields": [
     {
       "field_id": "npc.can_observe_equipment",
@@ -1838,6 +1838,46 @@
     {
       "field_id": "content.grants.SONGBIRD_CYNOSURE_DEATH",
       "meaning": "현재 NPC의 SONGBIRD_CYNOSURE_DEATH 인지 조건 충족 여부",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.CHERRY_BLOSSOM_MARKET",
+      "meaning": "CHERRY_BLOSSOM_MARKET의 해당 NPC 인지·공개 확인 결과. 게임 수집 매핑 미검증이면 unknown 유지",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.RECONCILIATION_PARK",
+      "meaning": "RECONCILIATION_PARK의 해당 NPC 인지·공개 확인 결과. 게임 수집 매핑 미검증이면 unknown 유지",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.BADLANDS_WIND_FARMS",
+      "meaning": "BADLANDS_WIND_FARMS의 해당 NPC 인지·공개 확인 결과. 게임 수집 매핑 미검증이면 unknown 유지",
+      "value_type": "boolean",
+      "unit": "none",
+      "visibility": "internal",
+      "observation_guard": null,
+      "minimum": null,
+      "maximum": null
+    },
+    {
+      "field_id": "content.grants.DOGTOWN_LANDMARKS",
+      "meaning": "DOGTOWN_LANDMARKS의 해당 NPC 인지·공개 확인 결과. 게임 수집 매핑 미검증이면 unknown 유지",
       "value_type": "boolean",
       "unit": "none",
       "visibility": "internal",

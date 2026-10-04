@@ -8,7 +8,10 @@
       "tier": "primary",
       "access_method": "web_body",
       "locator": "Characters / Night City",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-09-30",
+      "last_rechecked_at": "2026-10-04",
+      "last_recheck_method": "web_body",
+      "last_recheck_scope": "Characters: Judy/Panam/Jackie/Johnny. 기존 모든 연결 사실의 재검증 아님."
     },
     {
       "id": "CDPR_BOOK",
@@ -26,7 +29,10 @@
       "tier": "primary",
       "access_method": "web_body",
       "locator": "2024-03-29, 장소별 항목",
-      "checked_at": "2026-09-30"
+      "checked_at": "2026-09-30",
+      "last_rechecked_at": "2026-10-04",
+      "last_recheck_method": "web_body",
+      "last_recheck_scope": "2024-03-29 도시 장소 안내 본문. 네 신규 장소 개요의 근거."
     },
     {
       "id": "WIKI_VIKTOR",
@@ -782,7 +788,10 @@
       "tier": "primary",
       "access_method": "web_body",
       "locator": "DOSSIERS: Songbird / Reed / Myers / Alex; MISSION BRIEFING",
-      "checked_at": "2026-10-03"
+      "checked_at": "2026-10-03",
+      "last_rechecked_at": "2026-10-04",
+      "last_recheck_method": "web_body",
+      "last_recheck_scope": "Dossiers: Songbird/NUSA constraint. 결말·퀘스트 비밀의 재검증 아님."
     },
     {
       "id": "WIKIPEDIA_PHANTOM_LIBERTY",

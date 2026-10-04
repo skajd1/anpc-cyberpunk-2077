@@ -7,7 +7,7 @@
 - [세계관 사실](cyberpunk2077/world-facts.json): 출처를 확인한 최소 진술·시대·주장 한도.
 - [인물별 지식](cyberpunk2077/knowledge.json): 사실 참조·인지·공개 조건과 작성 해석.
 - `cyberpunk2077/characters/`: 인물 12명의 정체성·판단 규칙·말투 방향·단계·지식 참조.
-- [대사 예시](cyberpunk2077/dialogue-examples.json): 원작 인용이 아닌 작성 초안 28개.
+- [대사 예시](cyberpunk2077/dialogue-examples.json): 원작 인용이 아닌 작성 초안 52개.
 - [군중 지식 배분](cyberpunk2077/crowd-knowledge-policy.json): 공통·지역·직업·선택 지식 묶음.
 - [출처 목록](cyberpunk2077/sources.json): 공식/2차 자료, 접근 방식·확인일.
 
@@ -38,3 +38,11 @@ research-0.7: 출처 51개, 사실 132개, 인물별 원작 관계 분기 47개.
 ## research-1.2: 퀘스트 진행과 접촉 판정
 
 `story-progression-policy.json`은 본편·확장·개인 퀘스트의 의미 후보 82개, 인물 12명의 관계 단계 63개에 대한 지원 조건, 진행 프리셋 8개를 담는다. 원작 사건은 기존 `world-facts.json`을 참조한다. 게임 내부 키는 전부 미검증이며 출시 런타임은 활성화하지 않았다. 웹 시제품에서 모의 진행·접촉·원작 장면 차단·진행 되돌림을 시험한다. 조건 필드는 공통 등록표, 검사는 `npm run check:story`, 분석·후속 작업은 [진행도 분석](../docs/story-progression-analysis.md)을 참조한다.
+
+## research-1.3: 대화 지식·인물 성향·군중 슬롯 선작업
+
+2026-10-04, main의 57ef96c에서 분리한 codex/npc-knowledge-personality 브랜치. 사실 221개·인물별 지식 887개·예시 52개·지식 묶음 17개·군중 원형 후보 9개다. [세계관 자료 지도](../docs/dialogue-world-atlas.md)는 11개 범주·6개 층의 전체 색인을 안내한다. [인물별 준비 자료](../docs/dialogue-content-preparation.md)는 12명의 우선 지식·개인 원칙·말투·판단·검수 항목을 정리한다. [군중 성향 준비](../docs/crowd-personality-preparation.md)는 Big Five 다섯 슬롯의 후보·기본 조합·배경/지식 경계를 설명한다.
+
+[dialogue-preparation.json](cyberpunk2077/dialogue-preparation.json)은 전체 사실의 ID 분류와 인물별 지식 참조·작성 해설을 담은 로컬 검수 색인이다. 모델에 통째로 전송하지 않는다. [crowd-archetypes.json](cyberpunk2077/crowd-archetypes.json)은 승인 전 작성 원형이며 현재 게임/웹 군중 생성기에 연결하지 않았다. 기존 명세의 승인·관찰·인지 변환과 인스턴스 보존이 필요하다.
+
+공식 웹 본문을 확인한 신규 장소 사실 4개와 지식 후보 6개를 추가했다. 기존 모든 출처·인지·한국어 문체를 재검증한 것은 아니다. 이번에 확인한 출처 범위와 PDF 접근 실패를 source_audit에 기록했다. 인물 점수는 유지하고 24개 새 상황 예시·24개 판단 규칙 및 문체/한계 지침을 작성했다. source_checked는 출처 확인, draft/runtime_enabled=false는 작성·인지·게임 적용 미승인 상태를 나타낸다. `node scripts/validate-content.mjs`로 참조·집계·군중 seed 재현을 검사한다.

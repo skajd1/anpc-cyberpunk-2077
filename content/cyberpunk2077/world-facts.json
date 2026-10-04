@@ -7817,5 +7817,133 @@
     "claim_limits": "선택한 단계에서 이미 확인한 사건의 최소 요약. 다른 경로·미래 사건·세부 비밀·실행 성공을 추가하지 않는다.",
     "review_status": "source_checked",
     "usage_mode": "canon_context"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "CHERRY_BLOSSOM_MARKET",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "체리 블로섬 마켓은 재팬타운의 지그지그 스트리트 맞은편에 있으며, 벚꽃 홀로그램과 등불이 있는 시장이다.",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "Jig-Jig Street",
+      "support_summary": "체리 블로섬 마켓은 재팬타운의 지그지그 스트리트 맞은편에 있으며, 벚꽃 홀로그램과 등불이 있는 시장이다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "westbrook",
+      "places"
+    ],
+    "trigger_terms": [
+      "체리 블로섬"
+    ],
+    "claim_limits": "출처의 장소 개요만. 직접 방문·거주·현재 위치·안전·영업·입장 가능·이동 실행을 보장하지 않는다. 한국어 지명 표기는 장면 검수 전이다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "RECONCILIATION_PARK",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "리컨실리에이션 파크는 헤이우드에 있는 녹지 공원으로 호수와 나무다리가 있다.",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "Reconciliation Park",
+      "support_summary": "리컨실리에이션 파크는 헤이우드에 있는 녹지 공원으로 호수와 나무다리가 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "heywood",
+      "places"
+    ],
+    "trigger_terms": [
+      "리컨실리에이션 파크"
+    ],
+    "claim_limits": "출처의 장소 개요만. 직접 방문·거주·현재 위치·안전·영업·입장 가능·이동 실행을 보장하지 않는다. 한국어 지명 표기는 장면 검수 전이다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "BADLANDS_WIND_FARMS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "배드랜드에는 풍력 터빈들이 모여 있는 풍력 발전 지대가 있다.",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "Rocky Ridge & the Surrounding Deserts",
+      "support_summary": "배드랜드에는 풍력 터빈들이 모여 있는 풍력 발전 지대가 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "badlands",
+      "places"
+    ],
+    "trigger_terms": [
+      "풍력 발전"
+    ],
+    "claim_limits": "출처의 장소 개요만. 직접 방문·거주·현재 위치·안전·영업·입장 가능·이동 실행을 보장하지 않는다. 한국어 지명 표기는 장면 검수 전이다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
+  },
+  {
+    "schema_version": "0.1",
+    "id": "DOGTOWN_LANDMARKS",
+    "revision": 1,
+    "kind": "world_fact",
+    "statement": "도그타운의 장소에는 유리 피라미드 형태의 헤비 하츠, 블랙 사파이어, 롱쇼어 스택스가 있다.",
+    "source": {
+      "source_id": "CDPR_TRAVEL",
+      "url": "https://www.cyberpunk.net/en/news/50110/your-trip-to-night-city-best-spots-for-street-photography",
+      "locator": "Dogtown",
+      "support_summary": "도그타운의 장소에는 유리 피라미드 형태의 헤비 하츠, 블랙 사파이어, 롱쇼어 스택스가 있다."
+    },
+    "validity_condition": {
+      "field": "content.era",
+      "op": "eq",
+      "value": "2077"
+    },
+    "spoiler_scope": "none",
+    "knowledge_layer": "regional",
+    "topic_tags": [
+      "dogtown",
+      "places"
+    ],
+    "trigger_terms": [
+      "도그타운 장소"
+    ],
+    "claim_limits": "출처의 장소 개요만. 직접 방문·거주·현재 위치·안전·영업·입장 가능·이동 실행을 보장하지 않는다. 한국어 지명 표기는 장면 검수 전이다.",
+    "review_status": "source_checked",
+    "usage_mode": "answer",
+    "category_id": "night_city",
+    "injection_mode": "selected"
   }
 ]
