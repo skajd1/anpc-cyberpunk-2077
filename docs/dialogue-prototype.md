@@ -127,7 +127,7 @@ Windows에서는 Codex 앱에 포함된 `codex.exe`를 찾는다. 다른 설치�
 
 ## 게임 실시험 브리지
 
-[게임 브리지](../prototype/game-bridge.js)는 게임 G2 대화를 이 시제품의 엔진·프롬프트·제공자로 연결하는 개발 경로다. 제품 통신(`ANPC.Native.dll`)을 대신하지 않는다. CET [브리지 모듈](../game/cet/anpc/bridge.lua)이 redscript 요청을 CET 모드 폴더 `bridge/req-<id>.json`에 쓰고, 브리지가 `bridge/res-<id>.txt`(요청 토큰·상태·대사)로 응답한다.
+[게임 브리지](../prototype/game-bridge.js)는 게임 G2 대화를 이 시제품의 엔진·프롬프트·제공자로 연결하는 개발 경로다. CET 설정 `transport = "auto"`에서는 `ANPC.Native`가 설치되어 있으면 네이티브 경로를 쓰고, 없을 때만 이 브리지를 쓴다. CET [브리지 모듈](../game/cet/anpc/bridge.lua)이 redscript 요청을 CET 모드 폴더 `bridge/req-<id>.json`에 쓰고, 브리지가 `bridge/res-<id>.txt`(요청 토큰·상태·대사)로 응답한다.
 
 ```powershell
 npm run game-bridge -- --provider openai --env <저장소 루트의 .env 경로>

@@ -8,7 +8,8 @@
     "test": "node --test prototype/tests/*.test.js",
     "check:contracts": "node scripts/validate-contracts.mjs",
     "check:story": "node scripts/validate-story-policy.mjs",
-    "game-bridge": "node prototype/game-bridge.js"
+    "game-bridge": "node prototype/game-bridge.js",
+    "build:cet-prompts": "node scripts/build-cet-prompts.mjs > game/cet/anpc/prompts.lua"
   },
   "engines": {
     "node": ">=22"

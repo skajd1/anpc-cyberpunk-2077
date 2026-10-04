@@ -7,6 +7,7 @@ local sceneHubs, sceneChoices
 local entryStatus = "entry_not_selected"
 local sceneEntryStatus
 local status = "초기화 대기"
+local keyInput, keyNotice = "", ""
 local cetVersion = "unknown"
 local redscriptVersion = "unknown"
 
@@ -111,7 +112,20 @@ registerForEvent("onDraw", function()
     ImGui.TextWrapped("읽기 전용 개발 진단. 모의 대사는 이 창에만 표시합니다.")
     ImGui.TextWrapped("상태: " .. status)
     ImGui.TextWrapped("G2 선택 결과: " .. entryStatus)
-    ImGui.TextWrapped("AI 브리지 대기 요청: " .. bridge.pendingCount())
+    ImGui.TextWrapped("AI 대기 요청: " .. bridge.pendingCount())
+    local native = bridge.nativeVersion()
+    ImGui.TextWrapped("AI 연결: " .. (native and ("ANPC.Native " .. native) or "개발 파일 브리지 (ANPC.Native 미설치)"))
+    if native then
+      -- 키는 입력 즉시 자격 증명 관리자에 저장하고 Lua 변수에서 지운다. 저장된 키는 다시 읽지 않는다.
+      ImGui.TextWrapped("API 키: " .. (bridge.hasKey() and "저장됨" or "없음") .. (keyNotice ~= "" and (" · " .. keyNotice) or ""))
+      keyInput = ImGui.InputText("##anpc_api_key", keyInput, 256, ImGuiInputTextFlags.Password)
+      if ImGui.Button("키 저장") then
+        keyNotice = (keyInput ~= "" and bridge.saveKey(keyInput)) and "저장했습니다" or "저장 실패"
+        keyInput = ""
+      end
+      ImGui.SameLine()
+      if ImGui.Button("키 삭제") then keyNotice = bridge.deleteKey() and "삭제했습니다" or "삭제 실패" end
+    end
     if sceneHubs then
       ImGui.TextWrapped(string.format("원작 장면 허브 %d개 | 선택지 %d개", sceneHubs, sceneChoices))
       if sceneHubs > 0 then

@@ -320,3 +320,22 @@ CLI 컴파일 통과·배포 완료, 실게임 미검증.
 원작 진행 정책상 `finale`(결말 이후) 프리셋은 모든 자유 대화를 차단한다. 클리어 후 자유 플레이는 엠버스 진입 전으로 돌아가므로 브리지 기본 프리셋은 `late_open`이다. 모의 제공자로 빅터·미스티·로그·군중 허용과 재키 사망 차단을 확인했다.
 
 검사: 모의 제공자 종단 검사(대표 인물·군중·미지원 인물 오류·작별 종료·같은 요청 1회 처리), Lua 브리지 검사(JSON 이스케이프·토큰 불일치 무시·응답 전달·폴더 없음), `npm test` 98개, redscript CLI 컴파일 통과. 실제 제공자 호출과 게임 내 왕복은 미검증이다. 군중은 게임 군중별 생성 특성 대신 창작 시험 카드 하나를 쓴다.
+
+## 15. ANPC.Native 플러그인
+
+사용자 결정으로 개발 브리지 대신 제품 통신 플러그인을 만들었다. 이 PC에는 C++ 빌드 도구가 없어 GitHub Actions(`windows-latest`)에서 빌드한다.
+
+| 구성 | 구현 |
+| --- | --- |
+| 플러그인 | [game/native](../game/native/). RED4ext.SDK 1.0.0(헤더 전용)·RedLib·nlohmann/json 3.11.3 서브모듈, C++20·정적 런타임. RED4ext 1.30 로더 호환 표기(API 1 compat 0, SDK 0.5.0 compat)와 런타임 2.31 |
+| 키 | Windows 자격 증명 관리자 일반 자격 증명 `ANPC/<provider>`. 저장·존재 확인·삭제만 노출하고 키 원문을 돌려주는 함수는 없다 |
+| HTTPS | WinHTTP 작업 스레드 1개가 순서대로 처리. 등록 엔드포인트(`openai` → `api.openai.com/v1/responses`)로만 전송, TLS 1.2 이상, 요청 256KB·응답 2MB·대기 8건 제한, 감시 스레드가 전체 마감 시간 초과·취소 시 핸들을 닫는다 |
+| 결과 | 게임 스레드가 `ANPCNative_PollId`로 완료 번호를 꺼내 상태·출력 텍스트를 읽고 해제한다. 상태 분류는 시제품 `openai.js`를 따른다 |
+| 전역 함수 | `ANPCNative_Version`·`HasKey`·`SaveKey`·`DeleteKey`·`Request`·`Cancel`·`PollId`·`ResultStatus`·`ResultText`·`Release` |
+| 로그 | RED4ext 로그에 요청 번호·상태·지연·토큰 수와 키 저장 성공 여부만 남긴다 |
+
+CET는 `config.lua`의 `transport = "auto"`에서 플러그인이 있으면 네이티브 경로를 쓴다. 요청 본문은 [생성 스크립트](../scripts/build-cet-prompts.mjs)가 시제품 `ScenarioEngine`·`assemblePrompt`로 만든 인물별 고정 지침·인물·상황 메시지(`prompts.lua`)에 세션의 최근 12발화와 입력을 붙여 만든다. 응답은 `json.lua`로 해석해 대사와 후속 질문을 자막 한 줄로 합치고, `farewell`·`end_conversation`은 세션 종료로 넘긴다. 키는 CET 창의 비밀번호 입력란에서 저장한다.
+
+제한: 고정 프롬프트는 첫 턴 기준이라 입력별 지식 선별·기억 요약은 아직 반영하지 않는다. `late_open` 기준으로 재키·에블린·송버드·케리는 진행 정책상 차단된다. 행동은 실행하지 않는다.
+
+검사: Actions 첫 빌드 성공(run 37211250324, 1분 14초), Lua 검사(JSON 디코더, 네이티브 요청 조립·폴링·응답 해석·작별 종료·세션 종료 취소·인증 실패·진행 차단, 파일 브리지), `npm test` 98개. DLL·CET 파일을 백업 후 배포했다. 실게임 플러그인 로드·키 저장·실제 호출은 미검증이다.

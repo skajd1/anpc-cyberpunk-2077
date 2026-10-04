@@ -46,7 +46,7 @@ ANPC의 첫 작업은 기존 게임 객체에 대화 UI와 상태 검사를 연�
 
 RedFileSystem 0.15.1 안내의 저장 경로는 `r6/storages/<mod>`다. RedHttpClient README에는 이전 `red4ext/plugins/RedFileSystem/storages/RedHttpClient/config.json` 경로가 남아 있다. 설치한 버전이 생성한 실제 설정 경로와 로그를 확인해야 한다. 설명의 옛 경로만 수정하고 로그 비활성을 판정하지 않는다.
 
-제품 연결은 Windows의 [WinHTTP 제한 시간](https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpsettimeouts)·[요청 핸들 종료](https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpclosehandle)·[Credential Manager](https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credwritew)를 사용하는 작은 RED4ext 플러그인으로 설계한다. WinHTTP의 단계별 timeout만으로 전체 요청 시간을 보장하지 않으므로 전체 마감 시간도 호스트에서 관리한다. 핸들 종료 후에도 도착할 수 있는 콜백은 폐기 검사를 거친다. 이는 채택 설계이며 구현·Windows 시험은 미수행이다.
+제품 연결은 Windows의 [WinHTTP 제한 시간](https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpsettimeouts)·[요청 핸들 종료](https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpclosehandle)·[Credential Manager](https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credwritew)를 사용하는 작은 RED4ext 플러그인으로 설계한다. WinHTTP의 단계별 timeout만으로 전체 요청 시간을 보장하지 않으므로 전체 마감 시간도 호스트에서 관리한다. 핸들 종료 후에도 도착할 수 있는 콜백은 폐기 검사를 거친다. 초안을 `game/native/`에 구현했고 GitHub Actions Windows 빌드를 통과했다. 실게임 로드·실제 호출 결과는 [게임 검증 기록](game-mod-validation.md)을 따른다.
 
 ## 4. 게임 저장과 문자열
 
