@@ -73,6 +73,7 @@ ANPC는 V가 먼저 시작하는 텍스트 대화·NPC 대사 자막과 상황�
 - [콘텐츠 자료 안내](content/README.md): JSON 묶음, 승인 상태, 시제품 연결 상태와 기준 문서.
 - [NPC 대사·행동 생성 프롬프트 명세](docs/prompt-specification.md): 고정 베이스, 인물·상황 주입, Big Five 변환 문구 배치·버전, 생성·예외 규칙과 예시.
 - [API 비용 및 응답 효율 규격](docs/api-cost-specification.md): 토큰 예산·문맥 선별·캐시·중복 요청·재시도·개인 사용 한도와 비용 원장.
+- [NPC 음성 출력 지연 참고 분석](docs/npc-voice-latency-analysis.md): 일본어/영어 음성 + 한국어 자막 결정, TTS 후보, Enter → 음성 지연 구성, 응답 최적화 방안.
 - [NPC 행동 범위 명세](docs/npc-action-scope.md): 행동 ID·인수, 선택 전용/실행 모드, 기존 게임·모드 어댑터, 중단·복구.
 - [외부 모드 제스처·애니메이션 조사](docs/external-animation-research.md): AMM·CyberScript 재생/중단 근거, 실제 동작 후보와 촬영용 모드의 적용 한계.
 - [NPC 대화 정체성 평가 규격](docs/dialogue-evaluation-specification.md): 오리지널·작성·군중 근거 구분, 중대 위반, 7개 품질 축·채점 앵커, 평가 데이터와 AI·사람 판정 계약.
