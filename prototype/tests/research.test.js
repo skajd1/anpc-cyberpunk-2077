@@ -33,6 +33,15 @@ test('송버드는 소미 애칭과 V 호칭을 구분하고 초반에 후반 �
     settings:{...config('songbird'),phase:'moon_departed'},context,playerText:'소미' }));
 });
 
+test('UF-63 인물별 비속어/유머 규칙은 웹 프롬프트에도 전달하며 승인 메타데이터는 제외한다',()=>{
+  const prepare=key=>compileResearchTurn({bundle,npcKey:key,settings:config(key),context,playerText:'이 도시에서 어떻게 살아야 하지?'});
+  const johnny=prepare('johnny').persona.voice_style.speech_rules;
+  const misty=prepare('misty').persona.voice_style.speech_rules;
+  assert.match(johnny.slang_density,/높음/);assert.match(johnny.humor_and_profanity_limit,/강한 욕설/);
+  assert.match(misty.slang_density,/낮음/);assert.notEqual(johnny.humor_and_profanity_limit,misty.humor_and_profanity_limit);
+  assert.equal(johnny.review_status,undefined);
+});
+
 test('송버드 비밀은 개별 인지와 해당 분기가 모두 필요하며 화면 단계 선택은 비밀을 활성화하지 않는다', () => {
   const card = bundle.cards.find(c => c.character_key === 'songbird');
   for (const [id,phase,otherPhase] of [

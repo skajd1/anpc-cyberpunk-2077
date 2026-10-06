@@ -174,7 +174,9 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
     current_goals: canon?.current_goals ?? card.goals.filter(g => evaluateCondition(g.condition, fields) === true).map(g => g.goal),
     relationship_to_player: canon?.relationship_to_player ?? { source: 'simulation', label: '처음 보는 시민',
       attitude: '원래 군중 카드의 경계와 말투를 유지한다. 반복 대화로 관계·친밀도를 올리지 않는다.', address: card.voice_style.address },
-    voice_style: clone(card.voice_style), forbidden_claims: clone(card.forbidden_claims),
+    voice_style: { ...clone(card.voice_style), ...(card.speech_rules ? { speech_rules: Object.fromEntries(
+      ['professional_vocabulary','topic_transition','explanation_level','slang_density','humor_and_profanity_limit'].map(key=>[key,clone(card.speech_rules[key])])) } : {}) },
+    forbidden_claims: clone(card.forbidden_claims),
     action_preferences: [], background: { text: card.background.summary, provenance: 'research_draft' },
     lived_context: clone(card.lived_context), fallback_lines: clone(card.fallback_lines),
     knowledge_profile: { default_depth: 'unknown', domains: card.knowledge_profile.domains.map(d => ({ domain_id: d.domain_id, depth: d.depth })),
@@ -253,8 +255,11 @@ export async function researchMock({ persona, context, playerText, signal }) {
     const common = context.common_knowledge?.flatMap(c => c.statements).find(text => keys.some(k => text.toLowerCase().includes(k.toLowerCase())));
     if (common) dialogue = common;
   }
-  if (/제스처|끄덕/.test(playerText) && context.allowed_actions.some(a => a.action_id === 'play_gesture')) {
-    dialogue = '그래, 무슨 뜻인지 알겠어.'; action = { action_id: 'play_gesture', args: { gesture_ref: 'test_nod' } };
+  if (/제스처|끄덕|손.*흔들|박수/.test(playerText) && context.allowed_actions.some(a => a.action_id === 'play_gesture')) {
+    const gesture = context.allowed_actions.find(a => a.action_id === 'play_gesture');
+    const requested = /박수/.test(playerText) ? 'amm_clap' : /손.*흔들/.test(playerText) ? 'amm_wave' : 'test_nod';
+    const ref = gesture.candidates.find(c => c.ref === requested)?.ref ?? gesture.candidates[0]?.ref;
+    if (ref) { dialogue = '그래, 무슨 뜻인지 알겠어.'; action = { action_id: 'play_gesture', args: { gesture_ref: ref } }; }
   }
   if (/잘 가|그만|끝내/.test(playerText) && context.allowed_actions.some(a => a.action_id === 'end_conversation')) {
     dialogue = '다음에 이야기하자.'; intent = 'farewell'; action = { action_id: 'end_conversation', args: {} };

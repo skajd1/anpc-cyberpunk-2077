@@ -14,7 +14,7 @@ export function loadLocalEnvironment(path = resolve(root, '.env')) {
   catch (error) { if (error.code !== 'ENOENT') throw new Error('로컬 .env 파일을 읽지 못했습니다.'); }
 }
 const json = (res, status, value) => { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(value)); };
-const routes = { '/': ['compare.html', 'text/html'], '/compare': ['compare.html', 'text/html'], '/compare.js': ['compare.js', 'text/javascript'], '/test-tools.js': ['test-tools.js', 'text/javascript'], '/profile.js': ['profile.js', 'text/javascript'], '/profile-view.js': ['profile-view.js', 'text/javascript'], '/research.js': ['research.js', 'text/javascript'], '/app.js': ['app.js', 'text/javascript'], '/core.js': ['core.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'] };
+const routes = { '/': ['compare.html', 'text/html'], '/compare': ['compare.html', 'text/html'], '/compare.js': ['compare.js', 'text/javascript'], '/test-tools.js': ['test-tools.js', 'text/javascript'], '/profile.js': ['profile.js', 'text/javascript'], '/profile-view.js': ['profile-view.js', 'text/javascript'], '/research.js': ['research.js', 'text/javascript'], '/app.js': ['app.js', 'text/javascript'], '/core.js': ['core.js', 'text/javascript'], '/motions.js': ['motions.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'] };
 
 routes['/conditions.js'] = ['conditions.js', 'text/javascript'];
 routes['/story.js'] = ['story.js', 'text/javascript'];

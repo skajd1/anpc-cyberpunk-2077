@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildQuestionPresets, requestMetrics, snapshotTestResult, conversationExchanges } from '../public/test-tools.js';
+import { buildQuestionPresets, requestMetrics, snapshotTestResult, conversationExchanges, actionResultText } from '../public/test-tools.js';
 
 test('캐릭터를 바꾸면 해당 인물의 대화만 시간순으로 표시하고 원본은 유지한다', () => {
   const runs = [{ id: 1, targets: [{ key: 'judy' }, { key: 'panam' }] }, { id: 2, targets: [{ key: 'judy' }] }];
@@ -48,4 +48,18 @@ test('다음 대화가 진행되어도 이전 답변과 주입 지식 스냅샷�
   const saved = snapshotTestResult(engine);
   engine.lastReply.dialogue = '두 번째 답변'; engine.lastSelection.knowledge[0].statement = '두 번째 근거'; engine.lastPrompt.user = '두 번째 질문';
   assert.equal(saved.reply.dialogue, '첫 답변'); assert.equal(saved.selection.knowledge[0].statement, '첫 근거'); assert.equal(saved.prompt.user, '첫 질문');
+});
+
+test('UF-65 대사별 행동 의미·없음·모의 실행을 구분하고 이전 행동 결과를 보존한다', () => {
+  assert.equal(actionResultText({ reply: { action: null } }), '행동: 없음');
+  const engine = { lastReply: { action: { action_id: 'play_gesture', args: { gesture_ref: 'amm_wave' } } }, lastActionOutcome: null };
+  const selected = snapshotTestResult(engine);
+  assert.match(actionResultText(selected), /서서 짧게 손을 흔듦 · 선택됨 · 웹에서는 재생 안 함/);
+  engine.lastReply = { action: { action_id: 'end_conversation', args: {} } };
+  engine.lastActionOutcome = { status: 'succeeded' };
+  const ended = snapshotTestResult(engine);
+  assert.match(actionResultText(ended), /대화 종료 · 모의 실행 완료/);
+  engine.lastActionOutcome.status = 'failed';
+  assert.equal(ended.actionOutcome.status, 'succeeded');
+  assert.match(actionResultText(selected), /손을 흔듦/);
 });

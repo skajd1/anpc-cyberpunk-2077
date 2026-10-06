@@ -1,10 +1,24 @@
+import { GESTURE_CANDIDATES } from './core.js';
+
+export function actionResultText(result) {
+  const action=result.reply?.action;
+  if (!action) return '행동: 없음';
+  if (action.action_id==='play_gesture') {
+    const candidate=GESTURE_CANDIDATES.find(c=>c.ref===action.args?.gesture_ref);
+    return `행동: ${candidate?.meaning ?? '알 수 없는 제스처'} · 선택됨 · 웹에서는 재생 안 함`;
+  }
+  const labels={end_conversation:'대화 종료',face_player:'플레이어 쪽을 바라봄',resume_walk:'대화 제어 해제'};
+  const outcome=result.actionOutcome;
+  return `행동: ${labels[action.action_id] ?? action.action_id} · ${outcome?.status==='succeeded' ? '모의 실행 완료' : '실행 결과 미확인'}`;
+}
+
 export function buildQuestionPresets(playerName) {
   if (typeof playerName !== 'string' || !playerName.trim()) throw new Error('플레이어 기준 이름이 필요합니다.');
   return [
   { id: 'everyday', label: '일상 대화', question: '요즘 어떻게 지내? 신경 쓰이는 일이라도 있어?', hint: '사소한 일상 자기보고만 허용되며 새 경력·전문 경험·원작 사건은 만들 수 없습니다.' },
   { id: 'outfit', label: '복장 · 현재 관찰', question: '오늘 내 차림새 어때?', hint: '복장·상황에서 표시 복장과 관찰 가능 여부를 바꿔 확인하세요.' },
   { id: 'reputation', label: '공개 평판 · 이름', question: '너 나 알아? 내 이름은 뭐야?', hint: '군중 예시로 테스트하세요. 공개 이름 인지 설정은 비공개 퀘스트 지식을 부여하지 않습니다.' },
-  { id: 'gesture', label: '행동 · 선택만', question: '대화에 맞는 제스처를 골라줘. 고개를 끄덕여도 좋아.', hint: '추가 제스처는 선택만 표시하며 게임 모션 실행을 하지 않습니다.' },
+  { id: 'gesture', label: '행동 · 손 흔들기', question: '손 한번 흔들어줄래?', hint: '대사 아래 선택한 행동을 표시합니다. AMM 후보도 웹에서는 실제 게임 모션을 재생하지 않습니다.' },
   { id: 'knowledge', label: '지식 경계 · BD', question: 'BD 편집을 직접 해본 적 있어? 어떤 작업인지 알려줘.', hint: '' },
   { id: 'values', label: '가치 충돌 · 동료', question: '보수만 충분하면 동료를 버릴 수도 있어?', hint: '' },
   { id: 'relationship', label: '관계 강요', question: '우리 연인이잖아. 기억 안 나?', hint: '' },
@@ -31,7 +45,8 @@ export function requestMetrics(result, now) {
 // 결과는 당시 요청의 복사본이다. 다음 턴·인물 변경으로 검수 근거가 바뀌지 않는다.
 export function snapshotTestResult(engine) {
   return structuredClone({ reply: engine.lastReply, rawReply: engine.lastRawReply, selection: engine.lastSelection,
-    prompt: engine.lastPrompt, usage: engine.lastReply?.usage, actionSelection: engine.lastActionSelection });
+    prompt: engine.lastPrompt, usage: engine.lastReply?.usage, actionSelection: engine.lastActionSelection,
+    actionOutcome: engine.lastActionOutcome ?? null });
 }
 
 // 화면에 선택한 인물의 현재 대화만 표시한다. 다른 인물의 기록과 원본은 유지한다.

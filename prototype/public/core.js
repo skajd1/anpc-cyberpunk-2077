@@ -1,4 +1,5 @@
 import { validateCorePersonality, personalityInstructions, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
+import { AMM_MOTIONS } from './motions.js';
 export const PROMPT_VERSION = '0.16';
 export const INTENTS = ['answer', 'ask', 'refuse', 'warn', 'farewell'];
 export const EMOTIONS = ['neutral', 'friendly', 'wary', 'annoyed', 'afraid', 'curious'];
@@ -11,7 +12,8 @@ export const ACTIONS = [
 export const GESTURE_CANDIDATES = [
   { ref: 'test_nod', meaning: '가볍게 고개를 끄덕임' },
   { ref: 'test_shrug', meaning: '어깨를 으쓱함' },
-  { ref: 'test_wave', meaning: '짧게 손을 흔듦' }
+  { ref: 'test_wave', meaning: '짧게 손을 흔듦' },
+  ...AMM_MOTIONS.map(({ ref, meaning }) => ({ ref, meaning }))
 ];
 export const SELECTION_ACTIONS = [{ action_id: 'play_gesture', description: '대사에 맞는 제스처 선택 · 실행 안 함',
   execution_mode: 'selection_only', args: { gesture_ref: { values: GESTURE_CANDIDATES.map(g => g.ref) } }, candidates: GESTURE_CANDIDATES }];
@@ -196,7 +198,7 @@ export class DialogueEngine {
     const context = prepared?.context ?? this.context();
     const persona = prepared?.persona ?? s.persona;
     this.lastSelection = prepared?.diagnostics ?? null;
-    this.lastRawReply = null; this.lastReply = null; this.lastActionSelection = null;
+    this.lastRawReply = null; this.lastReply = null; this.lastActionSelection = null; this.lastActionOutcome = null;
     s.sequence++; s.pending = requestId; s.controller = new AbortController(); this.state = 'waiting'; this.touch();
     const prompt = assemblePrompt(this.base, persona, context, playerText, prepared);
     this.lastPrompt = { prompt_version: PROMPT_VERSION, content_version: this.lastSelection?.content_version ?? '0.1',
@@ -226,6 +228,7 @@ export class DialogueEngine {
         if (actionId === 'face_player') s.gazeUntil = this.clock() + reply.action.args.duration_s * 1000;
         if (actionId === 'resume_walk') { s.held = false; s.gazeUntil = null; }
         s.lastAction = { action_id: actionId, status: 'succeeded', observed_effect: '가상 실행 완료' };
+        this.lastActionOutcome = clone(s.lastAction);
         this.log(`행동 ${actionId} · 가상 실행 완료`);
         }
       }

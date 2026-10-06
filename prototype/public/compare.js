@@ -3,7 +3,7 @@ import { researchMock } from './research.js';
 import { ScenarioEngine, OUTFITS, resolveOutfit, withTestCrowds, captureTestSave } from './scenario.js';
 import { buildCharacterProfile, testTargets, DEPTH_LABELS, PHASE_LABELS, domainLabel } from './profile.js';
 import { renderCharacterProfiles } from './profile-view.js';
-import { buildQuestionPresets, requestMetrics, snapshotTestResult, conversationExchanges } from './test-tools.js';
+import { buildQuestionPresets, requestMetrics, snapshotTestResult, conversationExchanges, actionResultText } from './test-tools.js';
 import { API_MODELS, apiModelProfile, supportsReasoningEffort } from './api-models.js';
 import { extractLocalSummary, makeSummaryInput, validSessionSummary } from './memory.js';
 const $ = id => document.getElementById(id);
@@ -197,7 +197,7 @@ function renderTranscript() {
       if (result.reply) {
         message.append(element('p', [result.reply.dialogue, result.reply.follow_up].filter(Boolean).join('\n'), 'message-text'));
         if (result.reply.warning) message.append(element('p', '허용 범위를 벗어난 답변을 안전 대사로 대체했습니다.', 'result-warning'));
-        if (result.actionSelection) message.append(element('p', '제스처 선택 · 실행되지 않음', 'action-note'));
+        message.append(element('p', actionResultText(result), 'action-note'));
       } else message.append(element('p', result.error ?? '대답을 기다리는 중…', result.error ? 'result-warning' : 'pending-response'));
       if (result.status !== 'pending') {
         const menu = element('details', null, 'message-options'), summary = element('summary', '···');
