@@ -4,7 +4,7 @@
 
 ## 1. 저장 위치와 구분
 
-content/cyberpunk2077/: world-facts.json=원작 사실, knowledge.json=인지/공개 조건, characters/*.json=정체성, dialogue-examples.json=예시, sources.json=출처, manifest.json=버전/상태/목록.
+content/cyberpunk2077/: world-facts.json=오리지널 사실, knowledge.json=인지/공개 조건, characters/*.json=정체성, dialogue-examples.json=예시, sources.json=출처, manifest.json=버전/상태/목록.
 
 사실은 ID 참조, 인물별 복제 금지. 플레이어 신원은 [고정 신원](content-specification.md#플레이어-고정-신원), NPC 이름 인지는 별도 조건. source_checked≠approved. draft는 런타임 제외. 개발용 예외: [시제품 안내](dialogue-prototype.md#인물-설정과-대화-테스트).
 
@@ -14,7 +14,7 @@ content/cyberpunk2077/: world-facts.json=원작 사실, knowledge.json=인지/�
 | --- | --- | --- | --- |
 | common | 통화·임플란트·도시 서비스 등의 상식 | 승인된 기본 목록. 인지 예외 프로필에서는 제외 | 작성된 기본 지식 목록 |
 | regional | 동네·시설·지역 집단에 대한 생활 지식 | 승인된 거주·활동 배경 조건으로 부여 | 인물의 생활·활동 근거로 작성 |
-| profession | 기술·의료·경비 등 전문 지식 | 승인된 업무 배경의 필수 지식과 선택 후보 | 원작의 전문 분야를 근거로 작성 |
+| profession | 기술·의료·경비 등 전문 지식 | 승인된 업무 배경의 필수 지식과 선택 후보 | 오리지널의 전문 분야를 근거로 작성 |
 | optional | 음악·위험 집단 등의 선택 관심 지식 | 인지 가능한 후보 중 제한 추첨 | 필요하면 카드에 명시적으로 작성 |
 | personal | 개인 배경·관계·사적 경험 | 임의 배분 금지. 생성 배경은 창작으로 별도 보관 | 해당 인물·관계·공개 조건에 따라 제공 |
 | quest | 사건 진행·비밀·렐릭·분기 결과 | 추첨 금지. 실제 인지 근거가 있는 별도 프로필만 허용 | 인물별 인지·진행·공개 조건으로 제공 |
@@ -51,13 +51,13 @@ content/cyberpunk2077/: world-facts.json=원작 사실, knowledge.json=인지/�
 | content.era | 문자열 | 해당 자료의 시대. 현재 묶음은 2077 |
 | content.npc_key | 문자열 | 승인된 실제 인물 매핑 |
 | content.npc_alive_confirmed | 불리언 | 현재 게임에서 살아 있고 대화 가능한 존재로 확인 |
-| content.npc_free_confirmed | 불리언 | 원작 대화·시네마틱·전투·퀘스트 제어 등 대화 금지 상태가 아님 |
-| content.relationship_confirmed | 불리언 | 원작의 관계 단계와 호칭 정책을 판정 가능 |
+| content.npc_free_confirmed | 불리언 | 오리지널 대화·시네마틱·전투·퀘스트 제어 등 대화 금지 상태가 아님 |
+| content.relationship_confirmed | 불리언 | 오리지널의 관계 단계와 호칭 정책을 판정 가능 |
 | content.phase | 문자열 | 카드의 phase_labels 중 매핑·검수된 현재 단계 |
 | content.grants.<fact_id> | 불리언 | 해당 인물의 승인 인지 조건을 현재 단계에서 충족 |
 | content.player_disclosure.relic | 불리언 | V의 상태를 이 인물에게 공개할 조건이 충족됨 |
 
-phase_labels는 의미 단계이며 원작 퀘스트 ID 아님. 필드값만으로 draft 활성화 금지.
+phase_labels는 의미 단계이며 오리지널 퀘스트 ID 아님. 필드값만으로 draft 활성화 금지.
 
 ## 6. 매 턴 프롬프트 주입
 
@@ -67,9 +67,9 @@ phase_labels는 의미 단계이며 원작 퀘스트 ID 아님. 필드값만으�
 
 작성 사실의 선택 필드 entity_aliases: 중복 없는 비어 있지 않은 인명 문자열 목록. 로컬 검색 전용이며 KnowledgeView/ModelInput에 전송하지 않는다. 현재 인명 일치는 일반 화제보다 우선하며 비공개 조건을 해제하지 않는다.
 
-### 6.1. 원작 기억·공개 유명세·대화 기억의 구분
+### 6.1. 오리지널 기억·공개 유명세·대화 기억의 구분
 
-원작 사건=CanonView, ANPC 경험=MemoryView. 원작 대사를 recent_turns로 복사하지 않는다. 매 요청 단계·분기·인지·관계·공개 필터.
+오리지널 사건=CanonView, ANPC 경험=MemoryView. 오리지널 대사를 recent_turns로 복사하지 않는다. 매 요청 단계·분기·인지·관계·공개 필터.
 
 공개 인지는 [평판 정책](content-specification.md#53-관계-기준과-공개-평판-반응). 비밀 권한 확대 없음. 관찰/일상 자기보고는 [기억 규격](memory-specification.md#1-기본-원칙).
 
@@ -90,7 +90,7 @@ phase_labels는 의미 단계이며 원작 퀘스트 ID 아님. 필드값만으�
 - baseline: 승인·인지·공개·시대·단계·개요 깊이 조건 통과 → CommonKnowledgeView. 화제와 무관하게 일괄 제공.
 - selected: 같은 조건 통과 → 현재 입력·직전 화제의 관련 항목 → KnowledgeView.items. 현재 웹 최대 3개.
 - 개인 경험·비밀·전문 지식은 knowledge_ids·분야 상한·접근 조건으로 명시 할당. 모델에 비밀 원문을 전달한 뒤 숨기라고 지시하는 방식 금지.
-- 공통 상식은 개요 인지이며 실무/전문 깊이를 높이지 않는다. 거주·직업·원작 경험의 예외를 프로필에서 제외 가능.
+- 공통 상식은 개요 인지이며 실무/전문 깊이를 높이지 않는다. 거주·직업·오리지널 경험의 예외를 프로필에서 제외 가능.
 - 중복: baseline에 들어간 사실은 selected에서 제외. 출처·별칭·조회 조건·전체 배분표는 모델에 보내지 않는다.
 - 현재 웹: 공통 핵심 직렬화 최대 3000자. 초과는 context_unavailable. 실제 토큰 총예산 적용은 비용 규격 참조.
 - 조니 각성 초기의 2077 시대 정보는 common_exclusions_by_stage로 제한. 렐릭·개인 관계를 공개 상식으로 승격 금지.

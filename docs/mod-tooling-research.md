@@ -46,7 +46,7 @@ ANPC의 첫 작업은 기존 게임 객체에 대화 UI와 상태 검사를 연�
 
 RedFileSystem 0.15.1 안내의 저장 경로는 `r6/storages/<mod>`다. RedHttpClient README에는 이전 `red4ext/plugins/RedFileSystem/storages/RedHttpClient/config.json` 경로가 남아 있다. 설치한 버전이 생성한 실제 설정 경로와 로그를 확인해야 한다. 설명의 옛 경로만 수정하고 로그 비활성을 판정하지 않는다.
 
-제품 연결은 Windows의 [WinHTTP 제한 시간](https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpsettimeouts)·[요청 핸들 종료](https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpclosehandle)·[Credential Manager](https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credwritew)를 사용하는 작은 RED4ext 플러그인으로 설계한다. WinHTTP의 단계별 timeout만으로 전체 요청 시간을 보장하지 않으므로 전체 마감 시간도 호스트에서 관리한다. 핸들 종료 후에도 도착할 수 있는 콜백은 폐기 검사를 거친다. 초안을 `game/native/`에 구현했고 GitHub Actions Windows 빌드를 통과했다. 실게임 로드·실제 호출 결과는 [게임 검증 기록](game-mod-validation.md)을 따른다.
+제품 연결은 Windows의 [WinHTTP 제한 시간](https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpsettimeouts)·[요청 핸들 종료](https://learn.microsoft.com/en-us/windows/win32/api/winhttp/nf-winhttp-winhttpclosehandle)·[Credential Manager](https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credwritew)를 사용하는 작은 RED4ext 플러그인으로 설계한다. WinHTTP의 단계별 timeout만으로 전체 요청 시간을 보장하지 않으므로 전체 마감 시간도 호스트에서 관리한다. 핸들 종료 후에도 도착할 수 있는 콜백은 폐기 검사를 거친다. 초안을 `game/native/`에 구현했고 GitHub Actions Windows 빌드를 통과했다. 배포 파일 변경은 [배포 변경 이력](game-mod-validation.md), 현재 검증 상태는 [명세 대조 리뷰](game-mod-spec-review-2026-10-05.md)를 따른다.
 
 ## 4. 게임 저장과 문자열
 
@@ -70,9 +70,9 @@ RedFileSystem 0.15.1 안내의 저장 경로는 `r6/storages/<mod>`다. RedHttpC
 | 코드 | 확인한 후보 API/문제 | ANPC 판단 |
 | --- | --- | --- |
 | [RealTalkTarget.reds](https://github.com/swillunderscore/realtalk/blob/1eea7f3611b4601c9b025702ce0d0226d12c431e/r6/scripts/RealTalk/RealTalkTarget.reds) | TargetingSystem.GetLookAtObject·NPC 상태/거리 판정 | 군중 시선 대상의 첫 실증 후보 |
-| [RealTalkActions.reds](https://github.com/swillunderscore/realtalk/blob/1eea7f3611b4601c9b025702ce0d0226d12c431e/r6/scripts/RealTalk/RealTalkActions.reds) | AIHoldPositionCommand·LookAtAddEvent·해제 | ANPC 소유 제어만 실행/해제. 자연스러운 회전·원작 복구는 별도 시험 |
-| [RealTalkDialog.reds](https://github.com/swillunderscore/realtalk/blob/1eea7f3611b4601c9b025702ce0d0226d12c431e/r6/scripts/RealTalk/RealTalkDialog.reds) | InteractionUIBase.OnDialogsData를 감싸 대화 목록을 비우는 방식 | 원작 선택지 보존 요구와 다름. 추가 선택지 삽입이 검증된 근거로 사용하지 않음 |
-| [RealTalkInput.reds](https://github.com/swillunderscore/realtalk/blob/1eea7f3611b4601c9b025702ce0d0226d12c431e/r6/scripts/RealTalk/RealTalkInput.reds) | 입력 중 원작 선택 중복 실행·UIInteractions.DialogChoiceHubs 복원 문제 | 입력 소유·종료/로드·원작 제어 복귀를 첫 실증 항목으로 둠 |
+| [RealTalkActions.reds](https://github.com/swillunderscore/realtalk/blob/1eea7f3611b4601c9b025702ce0d0226d12c431e/r6/scripts/RealTalk/RealTalkActions.reds) | AIHoldPositionCommand·LookAtAddEvent·해제 | ANPC 소유 제어만 실행/해제. 자연스러운 회전·오리지널 복구는 별도 시험 |
+| [RealTalkDialog.reds](https://github.com/swillunderscore/realtalk/blob/1eea7f3611b4601c9b025702ce0d0226d12c431e/r6/scripts/RealTalk/RealTalkDialog.reds) | InteractionUIBase.OnDialogsData를 감싸 대화 목록을 비우는 방식 | 오리지널 선택지 보존 요구와 다름. 추가 선택지 삽입이 검증된 근거로 사용하지 않음 |
+| [RealTalkInput.reds](https://github.com/swillunderscore/realtalk/blob/1eea7f3611b4601c9b025702ce0d0226d12c431e/r6/scripts/RealTalk/RealTalkInput.reds) | 입력 중 오리지널 선택 중복 실행·UIInteractions.DialogChoiceHubs 복원 문제 | 입력 소유·종료/로드·오리지널 제어 복귀를 첫 실증 항목으로 둠 |
 | [RealTalkMemory.reds](https://github.com/swillunderscore/realtalk/blob/1eea7f3611b4601c9b025702ce0d0226d12c431e/r6/scripts/RealTalk/RealTalkMemory.reds) | 단일 memory.json·인물 식별을 이용한 지속 기억 | 게임 저장 시점의 기억 복원을 자동 보장하지 않음 |
 
 퀘스트 변화 관찰은 [Quests](https://wiki.redmodding.org/scripting-cyberpunk/scripting-cyberpunk/observables/quests.md)의 JournalManager/QuestTracker 이벤트를 후보로 사용한다. 일지 변화와 세부 선택·실제 NPC 인지는 별도다. NativeDB·사용자 설치 빌드의 디컴파일 자료·전후 저장을 함께 확인해 실제 필드를 연결한다. 검색 발췌나 다른 모드의 문자열만으로 ANPC의 82개 후보를 verified로 바꾸지 않는다.

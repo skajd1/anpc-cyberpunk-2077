@@ -19,7 +19,7 @@
 | [M.P.A.F.](https://www.nexusmods.com/cyberpunk2077/mods/6227) | 여러 대응 포즈·애니메이션 팩을 Photo Mode에서 함께 사용하고 일부 NPC 모션을 Photo Mode V에 적용하는 프레임워크다. | **촬영·모션 비교용.** 자유 탐험 NPC의 재생·중단 API로 확인된 것은 아니다. ANPC 동작 실행 때문에 필수로 추가하지 않는다. |
 | [Animated poses for MascV](https://www.nexusmods.com/cyberpunk2077/mods/4816) | 제작자 설명상 Photo Mode의 일반 남성 V용이며 Spawned V용이 아니다. 사용자 포즈 팩이 필요하고 한 번에 파일 하나만 사용한다. | **대상 불일치로 제외.** NPC 동작 후보와 혼동하지 않는다. |
 | [Poses - Quality Time - 2.31](https://www.nexusmods.com/cyberpunk2077/mods/8357) | 양쪽 체형의 포즈 12개, AMM/Photo Mode 등록. 짝 포즈는 두 NPC를 따로 생성·배치하고 각각 적용하는 절차다. | **장면 참고용으로 보류.** 자동으로 두 배우를 동기화·복구하는 대화 제스처 API는 아니다. |
-| [(POSES REPLACER) Generic Average Female](https://www.nexusmods.com/cyberpunk2077/mods/4755?tab=posts) | 제작자가 같은 locomotion을 쓰는 모든 인물의 idle을 바꾸는 방식이라고 설명하고, 이를 피하려면 AMM Pose 방식을 쓰라고 권한다. | **전역 idle 교체 방식 제외.** 대화하지 않는 NPC와 원작 장면까지 바뀔 수 있다. |
+| [(POSES REPLACER) Generic Average Female](https://www.nexusmods.com/cyberpunk2077/mods/4755?tab=posts) | 제작자가 같은 locomotion을 쓰는 모든 인물의 idle을 바꾸는 방식이라고 설명하고, 이를 피하려면 AMM Pose 방식을 쓰라고 권한다. | **전역 idle 교체 방식 제외.** 대화하지 않는 NPC와 오리지널 장면까지 바뀔 수 있다. |
 
 ### 확인된 버전과 의존성
 
@@ -45,7 +45,7 @@
 - [anims.lua 중단](https://github.com/MaximiliumM/appearancemenumod/blob/54272353d7e4a5c85ab32248eff3c2d8d2541cd7/Release/bin/x64/plugins/cyber_engine_tweaks/mods/AppearanceMenuMod/Modules/anims.lua#L394): `Poses:StopAnimation`이 `StopInDevice`를 호출한다. `shouldKeep`이 거짓이면 보조 엔티티 제거·Dispose와 활성 목록 제거가 이어진다. 단순 정지와 정리를 구별해야 한다.
 - [Collab 템플릿](https://github.com/MaximiliumM/appearancemenumod/blob/54272353d7e4a5c85ab32248eff3c2d8d2541cd7/Release/bin/x64/plugins/cyber_engine_tweaks/mods/AppearanceMenuMod/Collabs/Custom%20Poses/pose_template.lua): 제작자·분류·엔티티 경로와 골격별 동작 이름을 등록한다. 남녀 구분만으로 모든 인물의 호환을 보장하지 않는다.
 
-따라서 수동 UI만 확인한 상태에서 한 단계 진전해 **배포 코드의 내부 호출·중단 구현 근거**를 확보했다. 외부 호출 진입점, 비동기 생성 중 취소, 정상 완료 판정과 원작 제어 복구는 여전히 ANPC 실험 대상이다.
+따라서 수동 UI만 확인한 상태에서 한 단계 진전해 **배포 코드의 내부 호출·중단 구현 근거**를 확보했다. 외부 호출 진입점, 비동기 생성 중 취소, 정상 완료 판정과 오리지널 제어 복구는 여전히 ANPC 실험 대상이다.
 
 ### CyberScript
 
@@ -84,7 +84,7 @@
 ## 도입 전에 남은 확인
 
 1. 실제 설치 게임·정식 모드 버전과 골격을 고정하고 후보별 재생 영상·길이·반복·종료 자세를 확인한다. 목록에 이름이 있는 것과 정상 재생을 구별한다.
-2. 대상 한 명만 제어하는지, 원작 워크스팟·장면을 덮어쓰지 않는지 확인한다. 이동·전투·거리 이탈·NPC 소멸·생성 대기 중 취소에서 ANPC 소유 객체만 정리하는지 시험한다.
+2. 대상 한 명만 제어하는지, 오리지널 워크스팟·장면을 덮어쓰지 않는지 확인한다. 이동·전투·거리 이탈·NPC 소멸·생성 대기 중 취소에서 ANPC 소유 객체만 정리하는지 시험한다.
 3. 의자·벽·난간·소품 슬롯이 필요한 동작은 해당 상황에서만 허용한다. 종료 뒤 기존 장비·자세·AI 제어를 복구하고 실제 완료만 결과로 기록한다.
 4. 코드·자산을 복사하거나 재배포할 때 각 제작자의 조건을 확인한다. Swaps·MascV·M.P.A.F. 페이지는 수정·자산 사용에 제작자 허락을 요구한다. Mega Pack은 크레딧 조건의 사용·수정을 허용하는 항목이 있으나 모드 자체 재배포 금지도 명시하므로 원본 팩을 ANPC에 묶지 않는다. Quality Time은 일반 권한 표와 추가 저자 안내가 달라 구체 재사용 범위를 확인해야 한다.
 

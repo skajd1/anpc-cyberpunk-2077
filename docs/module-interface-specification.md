@@ -75,7 +75,7 @@
 | 원본/입력 | 전송/결과 | 용도 |
 | --- | --- | --- |
 | IdentityProfile | PersonaView | 다섯 성격 지침·개인 원칙·말투·배경 |
-| StateSnapshot / ObservedField | ObservationView / CanonView | 공개 관찰·현재 목표·원작 관계 |
+| StateSnapshot / ObservedField | ObservationView / CanonView | 공개 관찰·현재 목표·오리지널 관계 |
 | 승인 지식 자료 | KnowledgeView | 관련 진술·확실성·공개/분야 제한 |
 | SourceEvent / MemoryRecord / MemorySnapshot | MemoryView | 활성 문맥·관련 과거 원문/요약·조회 제약 |
 | SummaryInput | SummaryCandidates | 고정 근거 범위의 정리 후보 |
@@ -205,10 +205,10 @@ ModuleManifest/ModulePlan은 호스트 구성 자료이며 Envelope·LLM 입력�
 | --- | --- | --- |
 | engine.saveScope/worldEpoch/session/instances | Scope·ActorRef·SessionRef·Fence | 호스트에서 game_id/mod_id/휘발 저장 범위와 실제 인스턴스 키 지정. 표시 이름 사용 금지. 없는 기억 revision/generation은 신규 테스트 저장소에서 발급 |
 | persona 핵심 성격·원칙·말투·금기·fallback | IdentityProfile → PersonaView | 카드 revision/묶음 content_version 보존. 성격은 등록된 25문구 중 다섯 지침으로 변환. fallback·검수·원점수는 뷰 제외 |
-| persona.background.provenance=research_draft | IdentityProfile.background | 작성 요약은 authored로 분류하고 review_status=draft 유지. 원작 승인으로 승격 금지. 개발용 테스트 예외에만 연결 |
+| persona.background.provenance=research_draft | IdentityProfile.background | 작성 요약은 authored로 분류하고 review_status=draft 유지. 오리지널 승인으로 승격 금지. 개발용 테스트 예외에만 연결 |
 | persona.lived_context 객체 | lived_context:string[] | 확인된 occupation·concerns·interests의 문자열을 작성 순서로 추출. provenance는 로컬 보존. 모르는 키/다른 타입은 보류, 객체 전체 직렬화 금지 |
 | persona.current_goals/relationship_to_player | CanonView | 정적 인물에서 제거. 관계 단계의 label/attitude/address와 목표를 한 번 전달. 시험 source=simulation. 현재 context와 중복 값이 다르면 거부 |
-| research.canon_context | CanonView | 관계 단계의 current_goals·관계·유효한 원작 사건·적용 규칙만 제공. 선택 조건/전체 분기/출처 전문/phase/notice는 전송 제외. 원작 확인 없는 항목 생성 금지 |
+| research.canon_context | CanonView | 관계 단계의 current_goals·관계·유효한 오리지널 사건·적용 규칙만 제공. 선택 조건/전체 분기/출처 전문/phase/notice는 전송 제외. 오리지널 확인 없는 항목 생성 금지 |
 | everyday_fiction_policy | CanonView.everyday_fiction_policy | allowed/scope/prohibited만 제공. development_draft 상태는 로컬 구성에 유지 |
 | 카드 identity_rules/action_preferences | CanonView.applied_rules·행동 선택 정책 | 조건을 통과한 규칙의 우선 가치·응답 방향·금지만 문자열로 투영. 행동 선호는 persona_id로 로컬 카탈로그 조회. 초안은 개발 구성에서만 허용 |
 | world 거리·무기·레벨·평판·지역·안전 | StateSnapshot.fields | distance→npc.distance_m, weapon_drawn→player.weapon_drawn, level/street_cred→player.*, location→location, combat/quest_controlled→safety.*. 각각 모의 출처 보존 |
@@ -228,7 +228,7 @@ ModuleManifest/ModulePlan은 호스트 구성 자료이며 Envelope·LLM 입력�
 | 모의 captureTestSave | 테스트 전용 저장 자료 | 확인된 game_save_ref가 없어 SaveBundle로 변환 금지. 실게임 저장/로드에 적용 금지 |
 | diagnostics/prototype_memory/seed/traits | 로컬 정책·진단 | 허용 전송 필드가 아님. 생성/정책 입력은 해당 모듈 구성에서만 참조 |
 
-필수 프로필/원작 맥락을 구성할 자료가 없으면 요청 보류. 플레이어 신원 미제공은 name=null/name_known_by_npc=null/known_facts=[]; 검증된 마지막 실행 결과가 없으면 last_action_result=null. 출력 언어·토큰 상한은 호스트 요청 설정에서 주입한다.
+필수 프로필/오리지널 맥락을 구성할 자료가 없으면 요청 보류. 플레이어 신원 미제공은 name=null/name_known_by_npc=null/known_facts=[]; 검증된 마지막 실행 결과가 없으면 last_action_result=null. 출력 언어·토큰 상한은 호스트 요청 설정에서 주입한다.
 
 전환 수용 조건: 같은 입력의 허용 진술·대화/게임 사실 구분·행동 후보가 일치하고, 소유자/초안/모의 출처와 선택 전용 권한이 보존되어야 한다. 불일치·잘못된 형태는 거부, 원본 근거 부족은 보류한다. 두 경로를 동시에 실행·저장·유료 호출하지 않는다.
 
