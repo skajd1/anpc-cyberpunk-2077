@@ -278,6 +278,15 @@ public class HangulTextInput extends HubTextInput {
 
   protected func ProcessInputEvent(event: ref<inkKeyInputEvent>) {
     let key = event.GetKey();
+    // UF-62: Tab은 입력 문자/커서 이동이 아니라 개인 메뉴 요청으로 전달한다.
+    if Equals(key, EInputKey.IK_Tab) && !event.IsShiftDown() && !event.IsControlDown() && !event.IsAltDown() {
+      this.FinishComposition();
+      return;
+    }
+    // Shift는 다음 자모의 배열만 바꾼다. 현재 초성/중성/받침을 확정하면 얘·있 같은 조합이 깨진다.
+    if Equals(key, EInputKey.IK_Shift) || Equals(key, EInputKey.IK_LShift) || Equals(key, EInputKey.IK_RShift) {
+      return;
+    }
     if Equals(key, EInputKey.IK_Unknown15) || (Equals(key, EInputKey.IK_Space) && event.IsShiftDown()) {
       this.FinishComposition();
       this.hangulMode = !this.hangulMode;

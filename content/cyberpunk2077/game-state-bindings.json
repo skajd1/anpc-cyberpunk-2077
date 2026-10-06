@@ -1,0 +1,3409 @@
+{
+  "schema_version": "0.1",
+  "status": "static_research",
+  "runtime_enabled": false,
+  "game_version": "2.31",
+  "scope": {
+    "characters": 12,
+    "policy_quests": 82,
+    "main_progress": "개별 일지 상태와 본편 구간·독립 수사 경로. 전체 퀘스트 수를 분모로 진행률을 만들지 않음."
+  },
+  "coverage": {
+    "resources": 3062,
+    "distinct_facts": 7613,
+    "choice_nodes": 15182,
+    "journal_mutations": 24557,
+    "journal_quests": 415
+  },
+  "read_apis": [
+    "QuestsSystem.GetFact",
+    "JournalManager.GetEntryByString",
+    "JournalManager.GetEntryState"
+  ],
+  "excluded_write_apis": [
+    "SetFact",
+    "SetFactStr",
+    "ChangeEntryState"
+  ],
+  "knowledge_dimensions": [
+    "heist_target",
+    "relic_implanted",
+    "johnny_presence",
+    "diagnosis",
+    "treatment_plan",
+    "treatment_limits"
+  ],
+  "unknown_rules": [
+    "미기록 0과 명시적 거절을 동일시하지 않음",
+    "상충하는 분기는 unknown",
+    "선택지 ID를 저장된 선택 로그로 간주하지 않음"
+  ],
+  "quest_bindings": [
+    {
+      "policy_id": "nomad",
+      "title": "The Nomad",
+      "track": "lifepath",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q000_nomad",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9462",
+        "title": "The Nomad",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "streetkid",
+      "title": "The Streetkid",
+      "track": "lifepath",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q000_street_kid",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9463",
+        "title": "The Streetkid",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "corporate",
+      "title": "The Corpo-Rat",
+      "track": "lifepath",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q000_corpo",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9461",
+        "title": "The Corpo-Rat",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "rescue",
+      "title": "The Rescue",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q001_intro",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9466",
+        "title": "The Rescue",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "ripperdoc",
+      "title": "The Ripperdoc",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q001_01_victor",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9464",
+        "title": "The Ripperdoc",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "ride",
+      "title": "The Ride",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q001_02_dex",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9465",
+        "title": "The Ride",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "information",
+      "title": "The Information",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q004_braindance",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9469",
+        "title": "The Information",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "pickup",
+      "title": "The Pickup",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q003_maelstrom",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9467",
+        "title": "The Pickup",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "heist",
+      "title": "The Heist",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/prologue/q005_heist",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9470",
+        "title": "The Heist",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "love_like_fire",
+      "title": "Love Like Fire",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q101_01_firestorm",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8508",
+        "title": "Love Like Fire",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "playing_for_time",
+      "title": "Playing for Time",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q101_resurrection",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8529",
+        "title": "Playing for Time",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "automatic_love",
+      "title": "Automatic Love",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q105_dollhouse",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8627",
+        "title": "Automatic Love",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "space_in_between",
+      "title": "The Space in Between",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q105_02_jigjig",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8628",
+        "title": "The Space in Between",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "disasterpiece",
+      "title": "Disasterpiece",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q105_03_braindance_studio",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8629",
+        "title": "Disasterpiece",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "double_life",
+      "title": "Double Life",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q105_04_judys",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8630",
+        "title": "Double Life",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "map_tann_pelen",
+      "title": "M’ap Tann Pèlen",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q110_01_voodooboys",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8632",
+        "title": "M'ap Tann Pèlen",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "walk_the_line",
+      "title": "I Walk the Line",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q110_voodoo",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8633",
+        "title": "I Walk the Line",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "transmission",
+      "title": "Transmission",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q110_03_cyberspace",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8634",
+        "title": "Transmission",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "never_fade_away",
+      "title": "Never Fade Away",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q108_johnny",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8631",
+        "title": "Never Fade Away",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "ghost_town",
+      "title": "Ghost Town",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q103_warhead",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8554",
+        "title": "Ghost Town",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "lightning_breaks",
+      "title": "Lightning Breaks",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q104_01_sabotage",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8625",
+        "title": "Lightning Breaks",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "life_during_wartime",
+      "title": "Life During Wartime",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q104_02_av_chase",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8626",
+        "title": "Life During Wartime",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "down_on_the_street",
+      "title": "Down on the Street",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q112_01_old_friend",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#18011",
+        "title": "Down on the Street",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "gimme_danger",
+      "title": "Gimme Danger",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q112_02_industrial_park",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#18013",
+        "title": "Gimme Danger",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "play_it_safe",
+      "title": "Play It Safe",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q112_03_dashi_parade",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#18014",
+        "title": "Play It Safe",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "search_and_destroy",
+      "title": "Search and Destroy",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q112_04_hideout",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8641",
+        "title": "Search and Destroy",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "nocturne",
+      "title": "Nocturne Op55N1",
+      "track": "main",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/meta/02_sickness",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9860",
+        "title": "Nocturne Op55N1",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "both_sides_now",
+      "title": "Both Sides, Now",
+      "track": "judy",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq026_01_suicide",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12130",
+        "title": "Both Sides, Now",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "ex_factor",
+      "title": "Ex-Factor",
+      "track": "judy",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq026_02_maiko",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12145",
+        "title": "Ex-Factor",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "talkin_revolution",
+      "title": "Talkin’ ’Bout a Revolution",
+      "track": "judy",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq026_03_pizza",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12164",
+        "title": "Talkin' 'bout a Revolution",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "pisces",
+      "title": "Pisces",
+      "track": "judy",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq026_04_hiromi",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12180",
+        "title": "Pisces",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "pyramid_song",
+      "title": "Pyramid Song",
+      "track": "judy",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq030_judy_romance",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12315",
+        "title": "Pyramid Song",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "riders_storm",
+      "title": "Riders on the Storm",
+      "track": "panam",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq004_riders_on_the_storm",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#10122",
+        "title": "Riders on the Storm",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "little_help",
+      "title": "With a Little Help from My Friends",
+      "track": "panam",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq027_01_basilisk_convoy",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12204",
+        "title": "With a Little Help from My Friends",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "queen_highway",
+      "title": "Queen of the Highway",
+      "track": "panam",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq027_02_raffen_shiv_attack",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12237",
+        "title": "Queen of the Highway",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "fought_law",
+      "title": "I Fought the Law",
+      "track": "river",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq012_lost_girl",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#11686",
+        "title": "I Fought the Law",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "hunt",
+      "title": "The Hunt",
+      "track": "river",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq021_sick_dreams",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#11821",
+        "title": "The Hunt",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "following_river",
+      "title": "Following the River",
+      "track": "river",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq029_sobchak_romance",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12274",
+        "title": "Following the River",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "tapeworm",
+      "title": "Tapeworm",
+      "track": "johnny",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq032_tapeworm",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#12429",
+        "title": "Tapeworm",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "chippin_in",
+      "title": "Chippin’ In",
+      "track": "johnny",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq031_rogue",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12380",
+        "title": "Chippin' In",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "blistering_love",
+      "title": "Blistering Love",
+      "track": "johnny",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq031_cinema",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12359",
+        "title": "Blistering Love",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "holdin_on",
+      "title": "Holdin’ On",
+      "track": "kerry",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq011_kerry",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#17856",
+        "title": "Holdin' On",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "second_conflict",
+      "title": "Second Conflict",
+      "track": "kerry",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq011_johnny",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#11632",
+        "title": "Second Conflict",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "like_supreme",
+      "title": "A Like Supreme",
+      "track": "kerry",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq011_concert",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#17855",
+        "title": "A Like Supreme",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "rebel_rebel",
+      "title": "Rebel! Rebel!",
+      "track": "kerry",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq017_kerry",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#19157",
+        "title": "Rebel! Rebel!",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "dont_hear_it",
+      "title": "I Don’t Wanna Hear It",
+      "track": "kerry",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq017_01_riot_club",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#11742",
+        "title": "I Don't Wanna Hear It",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "off_leash",
+      "title": "Off the Leash",
+      "track": "kerry",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq017_02_lounge",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#11757",
+        "title": "Off the Leash",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "boat_drinks",
+      "title": "Boat Drinks",
+      "track": "kerry",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/side_quest/sq028_kerry_romance",
+        "class_name": "gameJournalQuest",
+        "type": "SideQuest",
+        "title_key": "LocKey#12258",
+        "title": "Boat Drinks",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "paid_full",
+      "title": "Paid in Full",
+      "track": "viktor",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/minor_quest/mq045_victor_debt",
+        "class_name": "gameJournalQuest",
+        "type": "MinorQuest",
+        "title_key": "LocKey#77679",
+        "title": "Paid in Full",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "dog_eat_dog",
+      "title": "Dog Eat Dog",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q301_crash",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#81863",
+        "title": "Dog Eat Dog",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "hole_sky",
+      "title": "Hole in the Sky",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q301_finding_myers",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#85479",
+        "title": "Hole in the Sky",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "spider_fly",
+      "title": "Spider and the Fly",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q301_q302_rescue_myers",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#83352",
+        "title": "Spider and the Fly",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "lucretia",
+      "title": "Lucretia My Reflection",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q302_reed",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#91247",
+        "title": "Lucretia My Reflection",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "damned",
+      "title": "The Damned",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q303_baron",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#85174",
+        "title": "The Damned",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "get_it_together",
+      "title": "Get It Together",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q303_hands",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#85175",
+        "title": "Get It Together",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "know_my_name",
+      "title": "You Know My Name",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q303_songbird",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#84755",
+        "title": "You Know My Name",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "birds_broken",
+      "title": "Birds with Broken Wings",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q304_stadium",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#79421",
+        "title": "Birds with Broken Wings",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "seen_face",
+      "title": "I’ve Seen That Face Before",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q304_netrunners",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#86831",
+        "title": "I've Seen That Face Before",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "firestarter",
+      "title": "Firestarter",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q304_deal",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#86832",
+        "title": "Firestarter",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "killing_moon",
+      "title": "The Killing Moon",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q306_devils_bargain",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#82239",
+        "title": "The Killing Moon",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "run_this_town",
+      "title": "Run This Town",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/minor_quest/mq304_succession",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#84926",
+        "title": "Run This Town",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "black_steel",
+      "title": "Black Steel in the Hour of Chaos",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q305_prison_convoy",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#86730",
+        "title": "Black Steel In The Hour of Chaos",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "somewhat_damaged",
+      "title": "Somewhat Damaged",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q305_bunker",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#86785",
+        "title": "Somewhat Damaged",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "leave_silence",
+      "title": "Leave in Silence",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q305_border_crossing",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#86784",
+        "title": "Leave in Silence",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "four_score",
+      "title": "Four Score and Seven",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q305_reed_epilogue",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#86786",
+        "title": "Four Score and Seven",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "from_her_eternity",
+      "title": "From Her to Eternity",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q306_postcontent",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#83937",
+        "title": "From Her to Eternity",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "through_pain",
+      "title": "Through Pain to Heaven",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q306_reed_epilogue",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#83934",
+        "title": "Through Pain to Heaven",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "who_wants_live",
+      "title": "Who Wants to Live Forever",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q307_before_tomorrow",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#86436",
+        "title": "Who Wants to Live Forever",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "things_done",
+      "title": "Things Done Changed",
+      "track": "phantom_liberty",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "ep1/quests/main_quest/q307_tomorrow",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#81593",
+        "title": "Things Done Changed",
+        "resource": "ep1/journal/cooked_journal.journal",
+        "sha256": "1b85cf3d05431c628a03a4d5824fa2d052c48034147550ea0720df977f4aa7d3"
+      }
+    },
+    {
+      "policy_id": "last_caress",
+      "title": "Last Caress",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q113_rescuing_hanako",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8642",
+        "title": "Last Caress",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "totalimmortal",
+      "title": "Totalimmortal",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q113_corpo",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8643",
+        "title": "Totalimmortal",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "where_mind",
+      "title": "Where Is My Mind?",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/epilogues/q201_heir",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9306",
+        "title": "Where is My Mind?",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "we_gotta_live",
+      "title": "We Gotta Live Together",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q114_01_nomad_initiation",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8644",
+        "title": "We Gotta Live Together",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "forward_death",
+      "title": "Forward to Death",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q114_02_maglev_line_assault",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8645",
+        "title": "Forward to Death",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "belly_beast",
+      "title": "Belly of the Beast",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q114_03_attack_on_arasaka_tower",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8646",
+        "title": "Belly of the Beast",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "knockin_heaven",
+      "title": "Knockin’ on Heaven’s Door",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q115_rogues_last_flight",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8648",
+        "title": "Knockin' on Heaven's Door",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "for_whom_bell",
+      "title": "For Whom the Bell Tolls",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q115_afterlife",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#8647",
+        "title": "For Whom the Bell Tolls",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "dont_fear_reaper",
+      "title": "(Don’t Fear) The Reaper",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/meta/09_solo",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9867",
+        "title": "(Don't Fear) The Reaper",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "changes",
+      "title": "Changes",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/act_01/q116_cyberspace",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#34375",
+        "title": "Changes",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "path_glory",
+      "title": "Path of Glory",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/epilogues/q203_legend",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9308",
+        "title": "Path of Glory",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "new_dawn",
+      "title": "New Dawn Fades",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/epilogues/q204_reborn",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9309",
+        "title": "New Dawn Fades",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    },
+    {
+      "policy_id": "all_watchtower",
+      "title": "All Along the Watchtower",
+      "track": "ending",
+      "file_status": "journal_path_confirmed",
+      "runtime_verified": false,
+      "journal": {
+        "path": "quests/main_quest/epilogues/q202_nomads",
+        "class_name": "gameJournalQuest",
+        "type": "MainQuest",
+        "title_key": "LocKey#9307",
+        "title": "All Along the Watchtower",
+        "resource": "base/journal/cooked_journal.journal",
+        "sha256": "55b6e39e338a1b3c116af074b00cfb9d5745f7d495f59541f8ea49d0b182832b"
+      }
+    }
+  ],
+  "fact_bindings": [
+    {
+      "fact": "judy_knows_johnny",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 2,
+      "read_count": 7,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_08_plan.scene",
+          "pointer": "/sceneGraph/Data/graph/327/Data/questNode/Data/type/Data",
+          "scene_node": 2696,
+          "quest_node": 2696,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "984ea5b1abc0ce8abc93697d8b66e469633a36ed4a06ea4add0212357a63c829"
+        },
+        {
+          "resource": "base/quest/side_quests/sq030/scenes/sq030_09_pier.scene",
+          "pointer": "/sceneGraph/Data/graph/93/Data/questNode/Data/type/Data",
+          "scene_node": 1271,
+          "quest_node": 1271,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "d5d2f12f679528a7b2f34981fae645c40ec1d0c4af633784aa1d885f7295a073"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_08_plan.scene",
+          "pointer": "/sceneGraph/Data/graph/59/Data/options/1/questCondition/Data/type/Data",
+          "scene_node": 1180,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "984ea5b1abc0ce8abc93697d8b66e469633a36ed4a06ea4add0212357a63c829"
+        },
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_08_plan.scene",
+          "pointer": "/sceneGraph/Data/graph/59/Data/options/2/questCondition/Data/type/Data",
+          "scene_node": 1180,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "LessOrEqual",
+          "source_layer": 0,
+          "sha256": "984ea5b1abc0ce8abc93697d8b66e469633a36ed4a06ea4add0212357a63c829"
+        },
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_08_plan.scene",
+          "pointer": "/sceneGraph/Data/graph/64/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 1192,
+          "quest_node": 1192,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "984ea5b1abc0ce8abc93697d8b66e469633a36ed4a06ea4add0212357a63c829"
+        }
+      ],
+      "other_occurrences": 21
+    },
+    {
+      "fact": "q105_02_judy_truth_told",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 2,
+      "read_count": 2,
+      "writers": [
+        {
+          "resource": "base/quest/main_quests/part1/q105/scenes/q105_02_lizzy_meet_judy.scene",
+          "pointer": "/sceneGraph/Data/graph/138/Data/questNode/Data/type/Data",
+          "scene_node": 2498,
+          "quest_node": 2498,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "f254a6a3ea81c0303e558f7ce824cf8122db4c820253af54f70b12a31af3d717"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q105/scenes/q105_02_lizzy_meet_judy.scene",
+          "pointer": "/sceneGraph/Data/graph/139/Data/questNode/Data/type/Data",
+          "scene_node": 2501,
+          "quest_node": 2501,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "f254a6a3ea81c0303e558f7ce824cf8122db4c820253af54f70b12a31af3d717"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/part1/q105/scenes/q105_02_lizzy_meet_judy.scene",
+          "pointer": "/sceneGraph/Data/graph/100/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 2114,
+          "quest_node": 2114,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "f254a6a3ea81c0303e558f7ce824cf8122db4c820253af54f70b12a31af3d717"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q105/scenes/q105_07_judy_braindance.scene",
+          "pointer": "/sceneGraph/Data/graph/30/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 387,
+          "quest_node": 387,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "a6e6a6456faa8fd5c61fefd26ac353d15d3220b095d9b7fb889cad5762940f20"
+        }
+      ],
+      "other_occurrences": 12
+    },
+    {
+      "fact": "sq027_panam_knows_about_chip",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 7,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq027/scenes/sq027_09_new_camp_wakeup.scene",
+          "pointer": "/sceneGraph/Data/graph/53/Data/questNode/Data/type/Data",
+          "scene_node": 1004,
+          "quest_node": 1004,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "5cca608d7a3162d361705447d24bce7b1de3257968241a0889505771abd8686f"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/part1/q114/phases/messages/q114_msg_panam_ending_hook.questphase",
+          "pointer": "/graph/Data/nodes/3/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 3,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "c7d2015c8546178f5ef690d027330f40e480078ee78f3a7be60b54c5a08a796d"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q114/phases/messages/q114_msg_panam_ending_hook.questphase",
+          "pointer": "/graph/Data/nodes/30/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 37,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "c7d2015c8546178f5ef690d027330f40e480078ee78f3a7be60b54c5a08a796d"
+        },
+        {
+          "resource": "base/quest/minor_quests/mq055/scenes/mq055_01_megabuilding.scene",
+          "pointer": "/sceneGraph/Data/graph/531/Data/options/2/questCondition/Data/conditions/0/Data/type/Data",
+          "scene_node": 3149,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "774026bb3c8c0768fe87ddb0bec4229f2c4993dfb9f0fa63104f61825d80763a"
+        }
+      ],
+      "other_occurrences": 8
+    },
+    {
+      "fact": "sq027_panam_doesnt_know_about_johnny",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 1,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq027/scenes/sq027_09_new_camp_wakeup.scene",
+          "pointer": "/sceneGraph/Data/graph/343/Data/questNode/Data/type/Data",
+          "scene_node": 3205,
+          "quest_node": 3205,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "5cca608d7a3162d361705447d24bce7b1de3257968241a0889505771abd8686f"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/side_quests/sq027/phases/messages/sq027_msg_panam_romance_extension.questphase",
+          "pointer": "/graph/Data/nodes/5/Data/phaseGraph/Data/nodes/102/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 147,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "d9edd76706d9476870e71bd881023926d850e1e73f58c406b86128d19b5e178e"
+        }
+      ],
+      "other_occurrences": 0
+    },
+    {
+      "fact": "sq029_river_knows_johnny",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 5,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq029/scenes/sq029_05_morning_after.scene",
+          "pointer": "/sceneGraph/Data/graph/10/Data/questNode/Data/type/Data",
+          "scene_node": 32,
+          "quest_node": 32,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "5000f6f173b9284043830e51e12a8ca8891129b6d29545138754861574e87e1b"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/side_quests/sq029/phases/sq029_messages.questphase",
+          "pointer": "/graph/Data/nodes/38/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 112,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "2dc819819aa4c48babf8a298d357fbb426f873c39c70ea42a607bcf52da58841"
+        },
+        {
+          "resource": "base/quest/side_quests/sq029/phases/sq029_messages.questphase",
+          "pointer": "/graph/Data/nodes/83/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 183,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "2dc819819aa4c48babf8a298d357fbb426f873c39c70ea42a607bcf52da58841"
+        },
+        {
+          "resource": "base/quest/side_quests/sq029/phases/sq029_msg_river_romance_extension.questphase",
+          "pointer": "/graph/Data/nodes/5/Data/phaseGraph/Data/nodes/34/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 40,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "678fca1ce08eb9f22853ba182d336b75bf7d2f2fd6274febb927cc1011669622"
+        }
+      ],
+      "other_occurrences": 4
+    },
+    {
+      "fact": "sq031_rogue_met_johnny",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 3,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq031/scenes/sq031_01d_smack_rogue.scene",
+          "pointer": "/sceneGraph/Data/graph/56/Data/questNode/Data/type/Data",
+          "scene_node": 806,
+          "quest_node": 806,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "b9542e945e13d006a29a4628f8fd724a06101671b515f51f58e35ec63b8811e3"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/7/Data/phaseGraph/Data/nodes/5/Data/phaseGraph/Data/nodes/40/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 40,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        },
+        {
+          "resource": "base/quest/main_quests/epilogue/q203/scenes/q203_05_afterlife.scene",
+          "pointer": "/sceneGraph/Data/graph/123/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 824,
+          "quest_node": 824,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "a2cd31fed857345a43250750509947b544fae7d6241aca9e595ba11b663b82f4"
+        },
+        {
+          "resource": "ep1/quest/main_quests/q307/scenes/final_boards/q307_ending_01_rogue.scene",
+          "pointer": "/sceneGraph/Data/graph/18/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 95,
+          "quest_node": 95,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 1,
+          "sha256": "66f26958ea73ecdf16bf13b7571943f65c395dbaf316f9697a22af1d01fef08f"
+        }
+      ],
+      "other_occurrences": 5
+    },
+    {
+      "fact": "q303_somi_told_about_cure",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 0,
+      "writers": [
+        {
+          "resource": "ep1/quest/main_quests/q303/scenes/q303_06_paradise.scene",
+          "pointer": "/sceneGraph/Data/graph/189/Data/questNode/Data/type/Data",
+          "scene_node": 3661,
+          "quest_node": 3661,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "44c7af770625f4b199885036f76888d06d78f15a67f3ba9e5a524fc6d2db9483"
+        }
+      ],
+      "readers": [],
+      "other_occurrences": 1
+    },
+    {
+      "fact": "ep1_songbird_known",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 9,
+      "read_count": 0,
+      "writers": [
+        {
+          "resource": "ep1/quest/main_quests/q301/q301.questphase",
+          "pointer": "/graph/Data/nodes/9/Data/phaseGraph/Data/nodes/51/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 81,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "c459fc4746745d8437e30a5ba075b50f55fb06295b49a5ff2a2bc7348d3216d1"
+        },
+        {
+          "resource": "ep1/quest/main_quests/q301/q301.questphase",
+          "pointer": "/graph/Data/nodes/11/Data/phaseGraph/Data/nodes/25/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 35,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "c459fc4746745d8437e30a5ba075b50f55fb06295b49a5ff2a2bc7348d3216d1"
+        },
+        {
+          "resource": "ep1/quest/main_quests/q301/q301.questphase",
+          "pointer": "/graph/Data/nodes/13/Data/phaseGraph/Data/nodes/62/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 112,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "c459fc4746745d8437e30a5ba075b50f55fb06295b49a5ff2a2bc7348d3216d1"
+        }
+      ],
+      "readers": [],
+      "other_occurrences": 1
+    },
+    {
+      "fact": "sq030_judy_lover",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 23,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq030/phases/sq030_hut.questphase",
+          "pointer": "/graph/Data/nodes/25/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 78,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "418976828c6f86bf6a67621a5af9e71a30ffe24283b1111084ad344ba72096dd"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/q201/scenes/q201_05_cabin_day_7.scene",
+          "pointer": "/sceneGraph/Data/graph/55/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 2299,
+          "quest_node": 2299,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "c351382e9b2b3e0ae9bf0672a2f09890e1bfa6b941d10f4660c11fc08d08e0c0"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q103/scenes/q103_07_ghost_town_drive.scene",
+          "pointer": "/sceneGraph/Data/graph/6/Data/options/1/questCondition/Data/conditions/0/Data/type/Data",
+          "scene_node": 92,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "51595029a037954785c535dee64587509dd8bf2d387938ab30543be3faed4f97"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_02b_ripperdoc_roof.scene",
+          "pointer": "/sceneGraph/Data/graph/46/Data/options/2/questCondition/Data/type/Data",
+          "scene_node": 201,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "0506831be23656c51947cf3bf920a95700235d4cc52065dc18e91a09c337dd83"
+        }
+      ],
+      "other_occurrences": 33
+    },
+    {
+      "fact": "sq027_panam_lover",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 23,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq027/scenes/sq027_06_panzer.scene",
+          "pointer": "/sceneGraph/Data/graph/125/Data/questNode/Data/type/Data",
+          "scene_node": 1184,
+          "quest_node": 1184,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "2e9029faf8b8c8efe612d97bc5ffe7b900a79235e3237c0b9b087bad4ceae68d"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/q201/scenes/q201_05_cabin_day_7.scene",
+          "pointer": "/sceneGraph/Data/graph/61/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 2402,
+          "quest_node": 2402,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "c351382e9b2b3e0ae9bf0672a2f09890e1bfa6b941d10f4660c11fc08d08e0c0"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q114/phases/messages/q114_msg_panam_ending_hook.questphase",
+          "pointer": "/graph/Data/nodes/1/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 1,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "c7d2015c8546178f5ef690d027330f40e480078ee78f3a7be60b54c5a08a796d"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_00_johnny.scene",
+          "pointer": "/sceneGraph/Data/graph/15/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 1863,
+          "quest_node": 1863,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "aee544c6cc434ac5af2256f8b73db5bee8ec3b5d9502d0d1a25ab1c2483f1b23"
+        }
+      ],
+      "other_occurrences": 45
+    },
+    {
+      "fact": "sq029_river_lover",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 27,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq029/scenes/sq029_05_morning_after.scene",
+          "pointer": "/sceneGraph/Data/graph/8/Data/questNode/Data/type/Data",
+          "scene_node": 28,
+          "quest_node": 28,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "5000f6f173b9284043830e51e12a8ca8891129b6d29545138754861574e87e1b"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/q201/scenes/q201_05_cabin_day_7.scene",
+          "pointer": "/sceneGraph/Data/graph/64/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 2441,
+          "quest_node": 2441,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "c351382e9b2b3e0ae9bf0672a2f09890e1bfa6b941d10f4660c11fc08d08e0c0"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q103/scenes/q103_07_ghost_town_drive.scene",
+          "pointer": "/sceneGraph/Data/graph/6/Data/options/1/questCondition/Data/conditions/2/Data/type/Data",
+          "scene_node": 92,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "51595029a037954785c535dee64587509dd8bf2d387938ab30543be3faed4f97"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_02b_ripperdoc_roof.scene",
+          "pointer": "/sceneGraph/Data/graph/46/Data/options/0/questCondition/Data/type/Data",
+          "scene_node": 201,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "0506831be23656c51947cf3bf920a95700235d4cc52065dc18e91a09c337dd83"
+        }
+      ],
+      "other_occurrences": 27
+    },
+    {
+      "fact": "sq028_kerry_relationship",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 20,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq028/scenes/sq028_07_trashy_beach.scene",
+          "pointer": "/sceneGraph/Data/graph/18/Data/questNode/Data/type/Data",
+          "scene_node": 66,
+          "quest_node": 66,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "1bb663aabc3292a2789b1bc6e8c2ce20ff81242a9b2d66c91ecf4a97bd2c2cbe"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/q201/scenes/q201_05_cabin_day_7.scene",
+          "pointer": "/sceneGraph/Data/graph/58/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 2351,
+          "quest_node": 2351,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "c351382e9b2b3e0ae9bf0672a2f09890e1bfa6b941d10f4660c11fc08d08e0c0"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_02b_ripperdoc_roof.scene",
+          "pointer": "/sceneGraph/Data/graph/46/Data/options/1/questCondition/Data/type/Data",
+          "scene_node": 201,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "0506831be23656c51947cf3bf920a95700235d4cc52065dc18e91a09c337dd83"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_02b_ripperdoc_roof.scene",
+          "pointer": "/sceneGraph/Data/graph/47/Data/questNode/Data/condition/Data/conditions/2/Data/type/Data",
+          "scene_node": 203,
+          "quest_node": 203,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "0506831be23656c51947cf3bf920a95700235d4cc52065dc18e91a09c337dd83"
+        }
+      ],
+      "other_occurrences": 23
+    },
+    {
+      "fact": "sq028_kerry_friend",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 1,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq028/scenes/sq028_07_trashy_beach.scene",
+          "pointer": "/sceneGraph/Data/graph/31/Data/questNode/Data/type/Data",
+          "scene_node": 115,
+          "quest_node": 115,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "1bb663aabc3292a2789b1bc6e8c2ce20ff81242a9b2d66c91ecf4a97bd2c2cbe"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/side_quests/sq028/phases/sq028_kerrys_sms.questphase",
+          "pointer": "/graph/Data/nodes/2/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 38,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "c66281507208ab595036dbf155d16a1bef35bd267a8dd0d65c63a70053b97e79"
+        }
+      ],
+      "other_occurrences": 4
+    },
+    {
+      "fact": "sq028_kerry_sex",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 3,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq028/scenes/sq028_05_sex.scene",
+          "pointer": "/sceneGraph/Data/graph/6/Data/questNode/Data/type/Data",
+          "scene_node": 35,
+          "quest_node": 35,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "8ee74e0984e4fc7055a4e60b55c3e82940a9617e018e410de6089815b1bc082d"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/side_quests/sq028/phases/sq028_02_cruiser.questphase",
+          "pointer": "/graph/Data/nodes/37/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 108,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "8ee33bb761a2d873acc79004474d5b409ab32fcb43b6cb9fbd785f7b9e8d7c5c"
+        },
+        {
+          "resource": "base/quest/side_quests/sq028/scenes/sq028_07_trashy_beach.scene",
+          "pointer": "/sceneGraph/Data/graph/24/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 92,
+          "quest_node": 92,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "1bb663aabc3292a2789b1bc6e8c2ce20ff81242a9b2d66c91ecf4a97bd2c2cbe"
+        },
+        {
+          "resource": "ep1/quest/main_quests/q306/scenes/q306_01_ride_to_spaceport.scene",
+          "pointer": "/sceneGraph/Data/graph/101/Data/options/7/questCondition/Data/conditions/1/Data/type/Data",
+          "scene_node": 4566,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 1,
+          "sha256": "74782a8950770a4146c0e457ed786e0241c0e2ba4179dba93a64d6dffabd8296"
+        }
+      ],
+      "other_occurrences": 7
+    },
+    {
+      "fact": "sq029_river_had_sex",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 3,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq029/scenes/sq029_04a_dinner.scene",
+          "pointer": "/sceneGraph/Data/graph/154/Data/questNode/Data/type/Data",
+          "scene_node": 1753,
+          "quest_node": 1753,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "508b2e56398f74397197ab579f08190649dd5d8349c39585612cb41f7242cdc6"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/side_quests/sq029/phases/sq029_messages.questphase",
+          "pointer": "/graph/Data/nodes/53/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 133,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "2dc819819aa4c48babf8a298d357fbb426f873c39c70ea42a607bcf52da58841"
+        },
+        {
+          "resource": "base/quest/side_quests/sq029/phases/sq029_messages.questphase",
+          "pointer": "/graph/Data/nodes/54/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 134,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "NotEqual",
+          "source_layer": 0,
+          "sha256": "2dc819819aa4c48babf8a298d357fbb426f873c39c70ea42a607bcf52da58841"
+        },
+        {
+          "resource": "ep1/quest/main_quests/q306/scenes/q306_01_ride_to_spaceport.scene",
+          "pointer": "/sceneGraph/Data/graph/101/Data/options/5/questCondition/Data/conditions/1/Data/type/Data",
+          "scene_node": 4566,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 1,
+          "sha256": "74782a8950770a4146c0e457ed786e0241c0e2ba4179dba93a64d6dffabd8296"
+        }
+      ],
+      "other_occurrences": 4
+    },
+    {
+      "fact": "sq032_johnny_friend",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 30,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq031/scenes/sq031_05_grave.scene",
+          "pointer": "/sceneGraph/Data/graph/213/Data/questNode/Data/type/Data",
+          "scene_node": 1483,
+          "quest_node": 1483,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "9425bde9137417b96a9a6f42f9b534f5197be0e2ec5203ecb7546af15ad5d5de"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/part1/q110/scenes/q110_14_alt.scene",
+          "pointer": "/sceneGraph/Data/graph/49/Data/options/1/questCondition/Data/type/Data",
+          "scene_node": 1020,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "e9f18b5a26beb061f6e8822b76b53f310867c90218e59eed181ab211bce3398f"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q110/scenes/q110_14_alt.scene",
+          "pointer": "/sceneGraph/Data/graph/49/Data/options/2/questCondition/Data/type/Data",
+          "scene_node": 1020,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "e9f18b5a26beb061f6e8822b76b53f310867c90218e59eed181ab211bce3398f"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q112/scenes/q112_00b_secret_meeting.scene",
+          "pointer": "/sceneGraph/Data/graph/97/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 1374,
+          "quest_node": 1374,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "0bdcd3020814be29bfe696d7cd13ae8518192aadee451fb7199d9417d775d685"
+        }
+      ],
+      "other_occurrences": 65
+    },
+    {
+      "fact": "sq031_rogue_lover",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 3,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq031/scenes/sq031_08_movie.scene",
+          "pointer": "/sceneGraph/Data/graph/32/Data/questNode/Data/type/Data",
+          "scene_node": 721,
+          "quest_node": 721,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "33be817d6b9243891ac5f43dd64df1b5c67706042d5eceed68af3e52f924b260"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/part1/q103/scenes/q103_07_ghost_town_drive.scene",
+          "pointer": "/sceneGraph/Data/graph/6/Data/options/1/questCondition/Data/conditions/1/Data/type/Data",
+          "scene_node": 92,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "51595029a037954785c535dee64587509dd8bf2d387938ab30543be3faed4f97"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_02_ripperdoc.scene",
+          "pointer": "/sceneGraph/Data/graph/64/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 2082,
+          "quest_node": 2082,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "0b9a20ce1c69feb784a8a11b71b0af6015c9fcdd60e9b4174b49bd2ed7037876"
+        },
+        {
+          "resource": "base/quest/side_quests/sq031/scenes/sq031_08_movie.scene",
+          "pointer": "/sceneGraph/Data/graph/54/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 857,
+          "quest_node": 857,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "33be817d6b9243891ac5f43dd64df1b5c67706042d5eceed68af3e52f924b260"
+        }
+      ],
+      "other_occurrences": 14
+    },
+    {
+      "fact": "sq026_13_maiko_money",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 2,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_13_hiromi.scene",
+          "pointer": "/sceneGraph/Data/graph/28/Data/questNode/Data/type/Data",
+          "scene_node": 367,
+          "quest_node": 367,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "aff390a98440a284e68f26cf0e3ff43ec2c1f160f8a4715337c5577668f79048"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_15_end.scene",
+          "pointer": "/sceneGraph/Data/graph/25/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 107,
+          "quest_node": 107,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "0379d823e4a6c86eaa64ebf11ae3e45a34044c342c443042c0190310a96a0f84"
+        },
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_15_end.scene",
+          "pointer": "/sceneGraph/Data/graph/35/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 186,
+          "quest_node": 186,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "0379d823e4a6c86eaa64ebf11ae3e45a34044c342c443042c0190310a96a0f84"
+        }
+      ],
+      "other_occurrences": 5
+    },
+    {
+      "fact": "sq026_side_maiko",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 4,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_13_hiromi.scene",
+          "pointer": "/sceneGraph/Data/graph/18/Data/questNode/Data/type/Data",
+          "scene_node": 285,
+          "quest_node": 285,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "aff390a98440a284e68f26cf0e3ff43ec2c1f160f8a4715337c5577668f79048"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/part1/q105/phases/q105_dollhouse_persistent.questphase",
+          "pointer": "/graph/Data/nodes/13/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 13,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "a1f1bcc0785aa81619ffaa8fe6b58fa9c1b33446999de390e6f91c53314403da"
+        },
+        {
+          "resource": "base/quest/side_quests/sq026/phases/sq026.questphase",
+          "pointer": "/graph/Data/nodes/16/Data/phaseGraph/Data/nodes/3/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 3,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "1a96883fe28e779f7cecc8df9ff541ba9452f7e11f4c60b8634d2d902394c8dc"
+        },
+        {
+          "resource": "base/quest/side_quests/sq026/phases/sq026_pc_judys_apartment.questphase",
+          "pointer": "/graph/Data/nodes/1/Data/phaseGraph/Data/nodes/5/Data/phaseGraph/Data/nodes/12/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 23,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "b7319a3442c863fdafe3ace06ed157913f4effcf8b7e60cb5daf2413b34b5a95"
+        }
+      ],
+      "other_occurrences": 5
+    },
+    {
+      "fact": "sq026_maiko_dead",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 5,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq026/phases/sq026_hiromi_penthouse.questphase",
+          "pointer": "/graph/Data/nodes/48/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 99,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "caaf8cab102da10393fc1d0c01f2dac0a7c1779bb09538a8276c98d731779044"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/q204/phases/q204_columbarium_holograms.questphase",
+          "pointer": "/graph/Data/nodes/2/Data/phaseGraph/Data/nodes/3/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 28,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "12bb2e3d6ae2fdd7bf67e0bae1ad94c0ad30533773674f73caa21b8672c1a8f2"
+        },
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_15_end.scene",
+          "pointer": "/sceneGraph/Data/graph/24/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 106,
+          "quest_node": 106,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "0379d823e4a6c86eaa64ebf11ae3e45a34044c342c443042c0190310a96a0f84"
+        },
+        {
+          "resource": "base/quest/side_quests/sq030/scenes/sq030_00_holocall.scene",
+          "pointer": "/sceneGraph/Data/graph/30/Data/options/2/questCondition/Data/type/Data",
+          "scene_node": 239,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "02f5a6ca1f0327b4704da132ea32999767003bad10ed0ea61bb8280f097da049"
+        }
+      ],
+      "other_occurrences": 7
+    },
+    {
+      "fact": "sq026_maiko_boss",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 2,
+      "read_count": 1,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_13_hiromi.scene",
+          "pointer": "/sceneGraph/Data/graph/67/Data/questNode/Data/type/Data",
+          "scene_node": 534,
+          "quest_node": 534,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "aff390a98440a284e68f26cf0e3ff43ec2c1f160f8a4715337c5577668f79048"
+        },
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_13_hiromi.scene",
+          "pointer": "/sceneGraph/Data/graph/102/Data/questNode/Data/type/Data",
+          "scene_node": 972,
+          "quest_node": 972,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": -1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "aff390a98440a284e68f26cf0e3ff43ec2c1f160f8a4715337c5577668f79048"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/side_quests/sq026/scenes/sq026_13_hiromi.scene",
+          "pointer": "/sceneGraph/Data/graph/52/Data/options/2/questCondition/Data/type/Data",
+          "scene_node": 466,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "aff390a98440a284e68f26cf0e3ff43ec2c1f160f8a4715337c5577668f79048"
+        }
+      ],
+      "other_occurrences": 3
+    },
+    {
+      "fact": "sq026_refused_maiko",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 2,
+      "read_count": 0,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq026/phases/sq026_dollhouse.questphase",
+          "pointer": "/graph/Data/nodes/12/Data/phaseGraph/Data/nodes/12/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 15,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "e629a5ba580c9f91ae75d5758d3966bbcb3ed6bd5867292163025fb7a180f4d5"
+        },
+        {
+          "resource": "base/quest/side_quests/sq026/phases/sq026_dollhouse.questphase",
+          "pointer": "/graph/Data/nodes/12/Data/phaseGraph/Data/nodes/19/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 23,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 0,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "e629a5ba580c9f91ae75d5758d3966bbcb3ed6bd5867292163025fb7a180f4d5"
+        }
+      ],
+      "readers": [],
+      "other_occurrences": 0
+    },
+    {
+      "fact": "sq027_failed",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 10,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq027/sq027_queen_of_the_highway.questphase",
+          "pointer": "/graph/Data/nodes/24/Data/phaseGraph/Data/nodes/18/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 43,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "16d6a1fb4a730858dd43e605ca30b36d6b702e4d950f7a51f75c4964830843a4"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_00_johnny.scene",
+          "pointer": "/sceneGraph/Data/graph/27/Data/options/1/questCondition/Data/conditions/3/Data/type/Data",
+          "scene_node": 1921,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "aee544c6cc434ac5af2256f8b73db5bee8ec3b5d9502d0d1a25ab1c2483f1b23"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_00_johnny.scene",
+          "pointer": "/sceneGraph/Data/graph/27/Data/options/2/questCondition/Data/conditions/3/Data/type/Data",
+          "scene_node": 1921,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "aee544c6cc434ac5af2256f8b73db5bee8ec3b5d9502d0d1a25ab1c2483f1b23"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/scenes/q115_00_johnny.scene",
+          "pointer": "/sceneGraph/Data/graph/33/Data/options/1/questCondition/Data/conditions/3/Data/type/Data",
+          "scene_node": 2160,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "aee544c6cc434ac5af2256f8b73db5bee8ec3b5d9502d0d1a25ab1c2483f1b23"
+        }
+      ],
+      "other_occurrences": 0
+    },
+    {
+      "fact": "sq021_randy_saved",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 2,
+      "read_count": 14,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq021/scenes/sq021_11_finale.scene",
+          "pointer": "/sceneGraph/Data/graph/120/Data/questNode/Data/type/Data",
+          "scene_node": 764,
+          "quest_node": 764,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "10100586e576735c5d378a930a6fbceced636174117b4fb42ab51312cff7c9f1"
+        },
+        {
+          "resource": "base/quest/side_quests/sq021/sq021.questphase",
+          "pointer": "/graph/Data/nodes/32/Data/phaseGraph/Data/nodes/14/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 16,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "3d290fcb28740f23ce525331b66da7ef978208d5ea113c1c5acfc3bba49ba44b"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/4/Data/phaseGraph/Data/nodes/7/Data/phaseGraph/Data/nodes/43/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 125,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        },
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/5/Data/phaseGraph/Data/nodes/6/Data/phaseGraph/Data/nodes/34/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 79,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        },
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/6/Data/phaseGraph/Data/nodes/6/Data/phaseGraph/Data/nodes/40/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 40,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        }
+      ],
+      "other_occurrences": 28
+    },
+    {
+      "fact": "sq021_randy_kaputt",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 0,
+      "writers": [
+        {
+          "resource": "base/quest/side_quests/sq021/scenes/sq021_11_finale.scene",
+          "pointer": "/sceneGraph/Data/graph/329/Data/questNode/Data/type/Data",
+          "scene_node": 1782,
+          "quest_node": 1782,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "10100586e576735c5d378a930a6fbceced636174117b4fb42ab51312cff7c9f1"
+        }
+      ],
+      "readers": [],
+      "other_occurrences": 4
+    },
+    {
+      "fact": "q112_takemura_dead",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 4,
+      "read_count": 121,
+      "writers": [
+        {
+          "resource": "base/quest/main_quests/part1/q112/scenes/q112_000_setup.scene",
+          "pointer": "/sceneGraph/Data/graph/31/Data/questNode/Data/type/Data",
+          "scene_node": 285,
+          "quest_node": 285,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "fbb5b46d8caca1d9d21eef32b33c668512acc379ef964b1ab680ea911811a4c6"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q112/scenes/q112_10_safe_house.scene",
+          "pointer": "/sceneGraph/Data/graph/71/Data/questNode/Data/type/Data",
+          "scene_node": 534,
+          "quest_node": 534,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "327076165157bbfc1755a4e0df0b2d864493eefa83951d08ff9a2aa5c9f70ebb"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q112/scenes/q112_10_safe_house.scene",
+          "pointer": "/sceneGraph/Data/graph/199/Data/questNode/Data/type/Data",
+          "scene_node": 1588,
+          "quest_node": 1588,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 0,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "327076165157bbfc1755a4e0df0b2d864493eefa83951d08ff9a2aa5c9f70ebb"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/5/Data/phaseGraph/Data/nodes/6/Data/phaseGraph/Data/nodes/14/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 58,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        },
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/6/Data/phaseGraph/Data/nodes/6/Data/phaseGraph/Data/nodes/16/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 16,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        },
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/7/Data/phaseGraph/Data/nodes/5/Data/phaseGraph/Data/nodes/17/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 17,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 1,
+          "comparison": "GreaterOrEqual",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        }
+      ],
+      "other_occurrences": 192
+    },
+    {
+      "fact": "q306_somi_betrayed",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 1,
+      "writers": [
+        {
+          "resource": "ep1/quest/main_quests/q306/phases/q306_05_launchpad.questphase",
+          "pointer": "/graph/Data/nodes/6/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 20,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "81f52ef6d75400b98cbc7ec4307214340f349b6d21e190738d935698edcf1854"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "ep1/quest/main_quests/q306/phases/external/q306_persistent.questphase",
+          "pointer": "/graph/Data/nodes/6/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 19,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 1,
+          "sha256": "f2b9a670c19135ddb747796eeb5b1727fae88e6e92458b051c0196ca3d39751e"
+        }
+      ],
+      "other_occurrences": 2
+    },
+    {
+      "fact": "q305_fact_songbird_dead",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 58,
+      "writers": [
+        {
+          "resource": "ep1/quest/main_quests/q305/scenes/q305_10_songbird_finale.scene",
+          "pointer": "/sceneGraph/Data/graph/9/Data/questNode/Data/type/Data",
+          "scene_node": 32,
+          "quest_node": 32,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "b56156e2a426eef392720d4a52b14327a64602be70980d35a7d8a2466baf2294"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/minor_quests/mq001/scenes/mq001_01_funeral_aftermath.scene",
+          "pointer": "/sceneGraph/Data/graph/38/Data/options/1/questCondition/Data/type/Data",
+          "scene_node": 175,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "2474dc9784d977c47fb704c786bb2d4ae7f881e4e6031ac95fde01052e18214c"
+        },
+        {
+          "resource": "base/quest/minor_quests/mq055/scenes/mq055_01_megabuilding.scene",
+          "pointer": "/sceneGraph/Data/graph/531/Data/options/2/questCondition/Data/conditions/1/Data/conditions/1/Data/type/Data",
+          "scene_node": 3149,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "LessOrEqual",
+          "source_layer": 0,
+          "sha256": "774026bb3c8c0768fe87ddb0bec4229f2c4993dfb9f0fa63104f61825d80763a"
+        },
+        {
+          "resource": "base/quest/minor_quests/mq055/scenes/mq055_01_megabuilding.scene",
+          "pointer": "/sceneGraph/Data/graph/610/Data/options/2/questCondition/Data/conditions/1/Data/type/Data",
+          "scene_node": 3579,
+          "quest_node": null,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "774026bb3c8c0768fe87ddb0bec4229f2c4993dfb9f0fa63104f61825d80763a"
+        }
+      ],
+      "other_occurrences": 20
+    },
+    {
+      "fact": "q305_songbird_alive",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 6,
+      "writers": [
+        {
+          "resource": "ep1/quest/main_quests/q305/scenes/q305_10_songbird_finale.scene",
+          "pointer": "/sceneGraph/Data/graph/108/Data/questNode/Data/type/Data",
+          "scene_node": 659,
+          "quest_node": 659,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "b56156e2a426eef392720d4a52b14327a64602be70980d35a7d8a2466baf2294"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/4/Data/phaseGraph/Data/nodes/7/Data/phaseGraph/Data/nodes/50/Data/conditions/0/condition/Data/conditions/0/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 133,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        },
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/5/Data/phaseGraph/Data/nodes/6/Data/phaseGraph/Data/nodes/39/Data/conditions/0/condition/Data/conditions/0/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 85,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        },
+        {
+          "resource": "base/quest/main_quests/epilogue/final_boards.questphase",
+          "pointer": "/graph/Data/nodes/6/Data/phaseGraph/Data/nodes/6/Data/phaseGraph/Data/nodes/46/Data/conditions/0/condition/Data/conditions/0/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 46,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "ab38062475447badfdadb9b294522b4a5407c89def118026d3009a3256d47738"
+        }
+      ],
+      "other_occurrences": 0
+    },
+    {
+      "fact": "q101_done",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 5,
+      "read_count": 8,
+      "writers": [
+        {
+          "resource": "base/quest/main_quests/part1/q101/phases/q101_cleanup.questphase",
+          "pointer": "/graph/Data/nodes/6/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 6,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "ecd51ce62d9c8f59487f364503a391e8c66dc545f1af9bf544270700d95f1e31"
+        },
+        {
+          "resource": "base/quest/minor_quests/mq055/mq055.quest",
+          "pointer": "/graph/Data/nodes/5/Data/phaseGraph/Data/nodes/5/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 5,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "e240ece14eba3138d2fc1500895b8866a02f0bfa0c69b5b10faf59c92ce08a86"
+        },
+        {
+          "resource": "base/quest/side_quests/sq006/sq006.quest",
+          "pointer": "/graph/Data/nodes/7/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 15,
+          "type": "questSetVar_NodeType",
+          "operation": "add",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "e402589e41e8396555681e054b1a79c044ea368060af7e2f2c7603c1c4abd380"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/prologue/q003/phases/q003_stout.questphase",
+          "pointer": "/graph/Data/nodes/1/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 7,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "15c36254f3dcdf65064d6dd50de2d88f1d3f4c2e9a3ff90e2cdd3af3046e0293"
+        },
+        {
+          "resource": "base/quest/minor_quests/mq000/phases/mq000_thank_you.questphase",
+          "pointer": "/graph/Data/nodes/5/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 7,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "e88b6ad66b61744f1a5b2cfbf0be7d8a13867c86911251c630d8653dce8391b6"
+        },
+        {
+          "resource": "base/quest/minor_quests/mq000/scenes/mq000_01_apartment.scene",
+          "pointer": "/sceneGraph/Data/graph/18/Data/questNode/Data/condition/Data/type/Data",
+          "scene_node": 172,
+          "quest_node": 172,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Equal",
+          "source_layer": 0,
+          "sha256": "bec5ad07a4fcdb0515bf749392f5634d359c2f7688ebfee2bd4a26ad9edb2188"
+        }
+      ],
+      "other_occurrences": 16
+    },
+    {
+      "fact": "q115_point_of_no_return",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 5,
+      "read_count": 26,
+      "writers": [
+        {
+          "resource": "base/quest/main_quests/epilogue/q204/q204_reborn.quest",
+          "pointer": "/graph/Data/nodes/6/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 7,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "ce9790f752808d96e0c491e7093987aa85595ca3be0be973c8241128276f9533"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/act_1.questphase",
+          "pointer": "/graph/Data/nodes/29/Data/phaseGraph/Data/nodes/8/Data/phaseGraph/Data/nodes/52/Data/phaseGraph/Data/nodes/5/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 46,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "3259983b6e1a5e1127fc580d34d1b3f2c53619e4db09047791603a785c10c661"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q115/phases/q115_00_hanako.questphase",
+          "pointer": "/graph/Data/nodes/3/Data/phaseGraph/Data/nodes/18/Data/phaseGraph/Data/nodes/2/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 46,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 0,
+          "sha256": "92da5707211a6c2e9c8d022f5ef374ad5c99a5da5c4f0129b4e6b537d30baedb"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "base/quest/main_quests/part1/q103/phases/q103_emmerick_routine.questphase",
+          "pointer": "/graph/Data/nodes/3/Data/phaseGraph/Data/nodes/8/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 9,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "38288ca96bedb676cd55c28c1a4aacb923a8534ce1b03cb71f86381a7e81459a"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q112/phases/q112_text_messages.questphase",
+          "pointer": "/graph/Data/nodes/28/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 63,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "b817eee7c4340ca3ee4d09d9529cfeb21bfde04e0cb2d6fa7120748545204464"
+        },
+        {
+          "resource": "base/quest/main_quests/part1/q114/phases/messages/q114_msg_panam_ending_hook.questphase",
+          "pointer": "/graph/Data/nodes/52/Data/condition/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 60,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Greater",
+          "source_layer": 0,
+          "sha256": "c7d2015c8546178f5ef690d027330f40e480078ee78f3a7be60b54c5a08a796d"
+        }
+      ],
+      "other_occurrences": 4
+    },
+    {
+      "fact": "q307_start",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 1,
+      "writers": [
+        {
+          "resource": "ep1/quest/main_quests/q307/q307.questphase",
+          "pointer": "/graph/Data/nodes/13/Data/phaseGraph/Data/nodes/3/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 6,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "8b5330673e65cd605fd4967a60d4ed4817472a5d070385707178b232b5b202dc"
+        }
+      ],
+      "readers": [
+        {
+          "resource": "ep1/quest/main_quests/ep1_main_quests.questphase",
+          "pointer": "/graph/Data/nodes/31/Data/condition/Data/conditions/1/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 50,
+          "type": "questVarComparison_ConditionType",
+          "operation": "read",
+          "value": 0,
+          "comparison": "Equal",
+          "source_layer": 1,
+          "sha256": "bdd4f473c0785093cc4e938f468ad641c1a2c78816855442a0e7879499573d99"
+        }
+      ],
+      "other_occurrences": 0
+    },
+    {
+      "fact": "q307_done",
+      "file_status": "non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 1,
+      "read_count": 0,
+      "writers": [
+        {
+          "resource": "ep1/quest/main_quests/q307/phases/q307_cleanup.questphase",
+          "pointer": "/graph/Data/nodes/12/Data/type/Data",
+          "scene_node": null,
+          "quest_node": 19,
+          "type": "questSetVar_NodeType",
+          "operation": "set",
+          "value": 1,
+          "comparison": null,
+          "source_layer": 1,
+          "sha256": "5682694a97d5fed81f006f10cb006a51a9697f7a37776baccdffc491df914773"
+        }
+      ],
+      "readers": [],
+      "other_occurrences": 0
+    },
+    {
+      "fact": "sq028_kerry_lover",
+      "file_status": "no_non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 0,
+      "read_count": 0,
+      "writers": [],
+      "readers": [],
+      "other_occurrences": 2
+    },
+    {
+      "fact": "judy_relationship",
+      "file_status": "no_non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 0,
+      "read_count": 0,
+      "writers": [],
+      "readers": [],
+      "other_occurrences": 2
+    },
+    {
+      "fact": "panam_relationship",
+      "file_status": "no_non_test_writer_found",
+      "runtime_verified": false,
+      "write_count": 0,
+      "read_count": 0,
+      "writers": [],
+      "readers": [],
+      "other_occurrences": 6
+    }
+  ],
+  "npc_scopes": [
+    {
+      "character_key": "viktor",
+      "facts": [],
+      "quests": [
+        "ripperdoc",
+        "playing_for_time",
+        "paid_full"
+      ],
+      "limits": "진단·기존 안면·상환을 각각 분리. 진단 장면 완료의 인지 연결은 추가 경로 검토.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "misty",
+      "facts": [],
+      "quests": [
+        "playing_for_time"
+      ],
+      "limits": "재키 상실과 V 진단·조니 인지를 분리. 관련 장면 경로 검토.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "judy",
+      "facts": [
+        "judy_knows_johnny",
+        "q105_02_judy_truth_told",
+        "sq030_judy_lover",
+        "sq026_13_maiko_money",
+        "sq026_maiko_dead"
+      ],
+      "quests": [
+        "information",
+        "double_life",
+        "talkin_revolution",
+        "pisces",
+        "pyramid_song"
+      ],
+      "limits": "습격 의뢰 정보·조니 인지·연인·보수 수령 단절을 분리.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "panam",
+      "facts": [
+        "sq027_panam_knows_about_chip",
+        "sq027_panam_doesnt_know_about_johnny",
+        "sq027_panam_lover",
+        "sq027_failed"
+      ],
+      "quests": [
+        "ghost_town",
+        "life_during_wartime",
+        "riders_storm",
+        "little_help",
+        "queen_highway"
+      ],
+      "limits": "칩 설명과 조니 설명을 분리. 조니 비인지 fact=0만으로 인지를 확정하지 않음. 실패 원인의 사울 공개 분기는 추가 검토.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "river",
+      "facts": [
+        "sq029_river_knows_johnny",
+        "sq029_river_lover",
+        "sq029_river_had_sex",
+        "sq021_randy_saved",
+        "sq021_randy_kaputt"
+      ],
+      "quests": [
+        "fought_law",
+        "hunt",
+        "following_river"
+      ],
+      "limits": "구출 결과·성관계·연인 관계·조니 공개는 별개.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "kerry",
+      "facts": [
+        "sq028_kerry_friend",
+        "sq028_kerry_relationship",
+        "sq028_kerry_sex"
+      ],
+      "quests": [
+        "holdin_on",
+        "second_conflict",
+        "like_supreme",
+        "boat_drinks"
+      ],
+      "limits": "친구/관계 선택과 성관계를 분리. sq028_kerry_lover는 현재 조사에서 테스트 쓰기만 발견하여 실행 후보 제외.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "goro",
+      "facts": [
+        "q112_takemura_dead"
+      ],
+      "quests": [
+        "down_on_the_street",
+        "gimme_danger",
+        "play_it_safe",
+        "search_and_destroy"
+      ],
+      "limits": "구출 분기 해결 전 dead=0을 saved로 판정하지 않음. 조니 인지의 별도 공개 근거 검토.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "rogue",
+      "facts": [
+        "sq031_rogue_met_johnny",
+        "sq031_rogue_lover"
+      ],
+      "quests": [
+        "ghost_town",
+        "chippin_in",
+        "blistering_love"
+      ],
+      "limits": "조니에게 몸을 빌린 사건과 V 자신의 관계를 분리. 조니의 데이트를 V의 연인 관계로 투영하지 않음.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "johnny",
+      "facts": [
+        "sq032_johnny_friend"
+      ],
+      "quests": [
+        "playing_for_time",
+        "tapeworm",
+        "chippin_in",
+        "changes"
+      ],
+      "limits": "유전의 두 번째 기회 분기와 렐릭 접촉·분리를 분리. 수치 호감도로 변환하지 않음.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "jackie",
+      "facts": [],
+      "quests": [
+        "rescue",
+        "heist"
+      ],
+      "limits": "습격 대상 칩 지식과 이식 후 상태를 분리. 습격 이후 생존한 자유 NPC로 처리하지 않음.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "evelyn",
+      "facts": [],
+      "quests": [
+        "information",
+        "heist",
+        "disasterpiece"
+      ],
+      "limits": "습격 대상 칩 지식과 V의 후반 진단을 분리. 덱스 제외 제안의 실제 분기 추가 검토.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    },
+    {
+      "character_key": "songbird",
+      "facts": [
+        "ep1_songbird_known",
+        "q303_somi_told_about_cure",
+        "q306_somi_betrayed",
+        "q305_fact_songbird_dead",
+        "q305_songbird_alive"
+      ],
+      "quests": [
+        "dog_eat_dog",
+        "know_my_name",
+        "firestarter",
+        "killing_moon",
+        "somewhat_damaged",
+        "things_done"
+      ],
+      "limits": "소미 자신의 지식·V에게 공개한 내용·치료 한계·경로/생존을 분리. 달 출발/FIA 인계는 별도 경로 검토.",
+      "semantic_review": "pending",
+      "runtime_verified": false
+    }
+  ],
+  "choice_trace_examples": [
+    {
+      "resource": "base/quest/side_quests/sq026/scenes/sq026_08_plan.scene",
+      "choice_node": 1180,
+      "option_id": 5378,
+      "caption": "doesnt know",
+      "output_socket": {
+        "name": 0,
+        "ordinal": 2
+      },
+      "route": [
+        1180,
+        1185,
+        2696
+      ],
+      "writer": {
+        "fact": "judy_knows_johnny",
+        "operation": "set",
+        "value": 1
+      },
+      "status": "graph_route_confirmed",
+      "runtime_verified": false
+    }
+  ],
+  "cautions": [
+    "동명 fact 후보·테스트 전용·구버전·동명 메타 일지/실제 퀘스트를 구분",
+    "정적 경로와 실행 중 저장 상태는 별도로 검증"
+  ]
+}

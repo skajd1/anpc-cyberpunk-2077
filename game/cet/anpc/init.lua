@@ -1,5 +1,6 @@
 local diagnostics = require("diagnostics")
 local bridge = require("bridge")
+local config = require("config")
 local version = "0.1.0-g0-g1"
 local overlay, elapsed = false, 0
 local state, pinnedEpoch, mockText
@@ -104,6 +105,19 @@ registerForEvent("onUpdate", function(delta)
 end)
 
 registerForEvent("onDraw", function()
+  local actions = bridge.actionText()
+  if actions then
+    ImGui.SetNextWindowPos(32, 320, ImGuiCond.Always)
+    ImGui.SetNextWindowSize(420, 0, ImGuiCond.Always)
+    ImGui.SetNextWindowBgAlpha(0.75)
+    local flags = ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove
+      + ImGuiWindowFlags.NoInputs + ImGuiWindowFlags.NoSavedSettings + ImGuiWindowFlags.AlwaysAutoResize
+    if ImGui.Begin("ANPC 행동##anpc_actions", flags) then
+      ImGui.Text("행동")
+      ImGui.TextWrapped("• " .. actions)
+    end
+    ImGui.End()
+  end
   if not overlay then return end
   local expanded = ImGui.Begin("ANPC G0/G1 진단")
   if expanded then
@@ -115,6 +129,7 @@ registerForEvent("onDraw", function()
     ImGui.TextWrapped("AI 대기 요청: " .. bridge.pendingCount())
     local native = bridge.nativeVersion()
     ImGui.TextWrapped("AI 연결: " .. (native and ("ANPC.Native " .. native) or "개발 파일 브리지 (ANPC.Native 미설치)"))
+    ImGui.TextWrapped("모델: " .. config.model)
     if native then
       -- 키는 입력 즉시 자격 증명 관리자에 저장하고 Lua 변수에서 지운다. 저장된 키는 다시 읽지 않는다.
       ImGui.TextWrapped("API 키: " .. (bridge.hasKey() and "저장됨" or "없음") .. (keyNotice ~= "" and (" · " .. keyNotice) or ""))

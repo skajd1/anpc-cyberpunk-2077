@@ -1,6 +1,6 @@
 // 게임 실시험용 로컬 브리지. 제품 통신(ANPC.Native.dll)을 대신하는 개발 경로다.
 // CET가 모드 폴더의 bridge/req-<id>.json을 쓰면 웹 시제품과 같은 엔진·프롬프트로 응답을 만들어
-// bridge/res-<id>.txt에 쓴다. 1줄 요청 토큰, 2줄 ok | ok:end | error:<code>, 나머지는 NPC 대사다.
+// bridge/res-<id>.txt에 쓴다. 1줄 요청 토큰, 2줄 ok:reply | error:<code>, 나머지는 구조화된 NPC 응답 JSON이다.
 // 토큰은 게임 재시작으로 요청 번호가 겹칠 때 이전 응답을 잘못 읽지 않게 한다.
 // API 키는 .env 또는 환경 변수의 OPENAI_API_KEY만 읽고 파일·로그에 쓰지 않는다. 대사 원문도 로그에 남기지 않는다.
 import { mkdir, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
@@ -24,7 +24,7 @@ loadLocalEnvironment(...(options.env ? [options.env] : []));
 const provider = options.provider ?? (process.env.OPENAI_API_KEY ? 'openai' : 'codex');
 if (!['openai', 'codex', 'mock'].includes(provider)) throw new Error('--provider는 openai, codex, mock 중 하나입니다.');
 if (provider === 'openai' && !process.env.OPENAI_API_KEY) throw new Error('OPENAI_API_KEY가 없습니다. .env 또는 환경 변수에 설정하세요.');
-const model = options.model ?? (provider === 'openai' ? 'gpt-4.1-mini' : '');
+const model = options.model ?? (provider === 'openai' ? 'gpt-6-luna' : '');
 const dir = join(options.game, 'bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge');
 
 const data = await loadPrototypeData();
@@ -42,7 +42,7 @@ function settingsFor(card) {
   return () => ({ allowDraft: true, storyState: preset ? { fields: preset.fields } : null, configuration: 'full',
     phase: card.phase_labels[0], relationshipStage: preset?.relationship_stages?.[card.character_key] ?? card.relationship_stages?.[0]?.id,
     alive: true, free: true, basicKnowledge: true, relicKnown: false, relicDisclosed: false, outfitId: 'plain', outfitVisible: false,
-    publicRecognition: false, minorFiction: false, selectActions: false });
+    publicRecognition: false, minorFiction: false, selectActions: true });
 }
 
 const sessions = new Map();
@@ -53,6 +53,8 @@ function engineFor(request) {
   const card = bundle.cards.find(c => c.character_key === key);
   if (!card) throw new ProviderError('community_profile_missing');
   const engine = new ScenarioEngine({ bundle, npcKey: key, settings: settingsFor(card), base: data.base, notify: () => {} });
+  const allowed = engine.allowed.bind(engine);
+  engine.allowed = () => allowed().filter(a => a.action_id === 'end_conversation' || a.execution_mode === 'selection_only');
   try { engine.start(key); } catch { throw new ProviderError('story_blocked'); }
   sessions.set(request.session, engine);
   return engine;
@@ -72,12 +74,23 @@ async function handle(request) {
   }
   const started = Date.now();
   try {
+    // 현 CET는 게임에서 선별한 현재 관찰과 최근 발화를 포함한 본문을 보낸다.
+    // 아래 ScenarioEngine 경로는 이전 CET의 개발용 요청에만 적용한다.
+    if (request.body) {
+      const prompt = { instructions: request.body.instructions, input: request.body.input };
+      if (typeof prompt.instructions !== 'string' || !Array.isArray(prompt.input)) throw new ProviderError('invalid_request');
+      if (provider === 'mock') throw new ProviderError('live_context_mock_unsupported');
+      const result = await generate({ prompt });
+      await respond(request, 'ok:reply', JSON.stringify(result.reply));
+      console.log(`#${request.id} ${request.crowd ? 'crowd' : request.npc_key} ok ${Date.now() - started}ms`);
+      return;
+    }
     const engine = engineFor(request);
     const result = await engine.send(request.text, generate);
     if (result.stale) throw new ProviderError('stale');
     const reply = result.reply;
     const ended = reply.intent === 'farewell' || reply.action?.action_id === 'end_conversation';
-    await respond(request, ended ? 'ok:end' : 'ok', [reply.dialogue, reply.follow_up].filter(Boolean).join(' '));
+    await respond(request, 'ok:reply', JSON.stringify(reply));
     if (ended) sessions.delete(request.session);
     const usage = engine.lastReply?.usage;
     console.log(`#${request.id} ${request.crowd ? 'crowd' : request.npc_key} ok ${Date.now() - started}ms${usage ? ` in=${usage.input_tokens} out=${usage.output_tokens}` : ''}`);

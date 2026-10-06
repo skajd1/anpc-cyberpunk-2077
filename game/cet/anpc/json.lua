@@ -1,6 +1,9 @@
 -- 모델 응답 해석용 최소 JSON 디코더와 문자열 인코더. 객체·배열·문자열(\u 이스케이프·서로게이트 포함)·
 -- 숫자·true/false/null을 지원한다. 잘못된 입력은 nil, 오류 메시지를 돌려준다.
 local json = {}
+local arrayMeta = { __json_array = true }
+function json.array(values) return setmetatable(values or {}, arrayMeta) end
+function json.isArray(value) return type(value) == "table" and getmetatable(value) == arrayMeta end
 
 local escapes = { ['"'] = '"', ["\\"] = "\\", ["/"] = "/", b = "\b", f = "\f", n = "\n", r = "\r", t = "\t" }
 
@@ -55,7 +58,7 @@ local function parseString(text, pos)
 end
 
 local function parseArray(text, pos)
-  local result, i = {}, skip(text, pos + 1)
+  local result, i = json.array(), skip(text, pos + 1)
   if text:sub(i, i) == "]" then return result, i + 1 end
   while true do
     local value
@@ -123,6 +126,29 @@ function json.string(value)
     if c == "\t" then return "\\t" end
     return string.format("\\u%04x", c:byte())
   end) .. '"'
+end
+
+-- 로컬 정체성 조립용. 빈 배열/객체를 구별하며 객체 키 순서를 고정한다.
+function json.encode(value)
+  if value == nil or value == json.null then return "null" end
+  local kind = type(value)
+  if kind == "string" then return json.string(value) end
+  if kind == "boolean" then return tostring(value) end
+  if kind == "number" then
+    assert(value == value and value ~= math.huge and value ~= -math.huge, "invalid JSON number")
+    return tostring(value)
+  end
+  assert(kind == "table", "invalid JSON value")
+  local parts = {}
+  if getmetatable(value) == arrayMeta then
+    for _, item in ipairs(value) do parts[#parts + 1] = json.encode(item) end
+    return '[' .. table.concat(parts, ',') .. ']'
+  end
+  local keys = {}
+  for key in pairs(value) do assert(type(key) == "string", "object key must be string"); keys[#keys + 1] = key end
+  table.sort(keys)
+  for _, key in ipairs(keys) do parts[#parts + 1] = json.string(key) .. ':' .. json.encode(value[key]) end
+  return '{' .. table.concat(parts, ',') .. '}'
 end
 
 return json

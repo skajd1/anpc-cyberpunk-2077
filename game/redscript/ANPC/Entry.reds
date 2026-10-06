@@ -59,13 +59,48 @@ public class Entry extends ScriptableSystem {
   private let requestSeq: Int32;
   // CET 브리지가 매 프레임 꺼내 가는 AI 요청 대기열.
   private let outbox: array<ref<AnpcRequest>>;
+  private let worldToken: String;
+  private let identitySeq: Int32;
+  private let identityInstances: array<ref<IdentityInstance>>;
+  private let identityTravelListener: ref<CallbackHandle>;
+  private let menuListener: ref<CallbackHandle>;
 
-  private func OnAttach() -> Void { this.Reset(); }
-  private func OnRestored(saveVersion: Int32, gameVersion: Int32) -> Void { this.Reset(); }
-  private func OnDetach() -> Void { this.Reset(); }
+  private func OnAttach() -> Void { this.Reset(); this.RegisterIdentityTravel(); }
+  private func OnRestored(saveVersion: Int32, gameVersion: Int32) -> Void { this.Reset(); this.RegisterIdentityTravel(); }
+  private func OnDetach() -> Void {
+    let bb = GameInstance.GetBlackboardSystem(this.GetGameInstance()).Get(GetAllBlackboardDefs().FastTRavelSystem);
+    if IsDefined(bb) && IsDefined(this.identityTravelListener) {
+      bb.UnregisterListenerBool(GetAllBlackboardDefs().FastTRavelSystem.FastTravelLoadingScreenFinished, this.identityTravelListener);
+    }
+    this.identityTravelListener = null;
+    let menus = GameInstance.GetBlackboardSystem(this.GetGameInstance()).Get(GetAllBlackboardDefs().UI_System);
+    if IsDefined(menus) && IsDefined(this.menuListener) {
+      menus.UnregisterListenerBool(GetAllBlackboardDefs().UI_System.IsInMenu, this.menuListener);
+    }
+    this.menuListener = null;
+    this.Reset();
+  }
+
+  private func RegisterIdentityTravel() -> Void {
+    let menus = GameInstance.GetBlackboardSystem(this.GetGameInstance()).Get(GetAllBlackboardDefs().UI_System);
+    if IsDefined(menus) && !IsDefined(this.menuListener) {
+      this.menuListener = menus.RegisterListenerBool(GetAllBlackboardDefs().UI_System.IsInMenu, this, n"OnChatMenuChanged");
+    }
+    let bb = GameInstance.GetBlackboardSystem(this.GetGameInstance()).Get(GetAllBlackboardDefs().FastTRavelSystem);
+    if IsDefined(bb) && !IsDefined(this.identityTravelListener) {
+      this.identityTravelListener = bb.RegisterListenerBool(GetAllBlackboardDefs().FastTRavelSystem.FastTravelLoadingScreenFinished, this, n"OnIdentityTravel");
+    }
+  }
+
+  private func OnIdentityTravel(finished: Bool) -> Void {
+    if finished { this.Reset(); }
+  }
 
   private func Reset() -> Void {
     this.epoch += 1;
+    this.worldToken = ToString(RandRange(1, 2147483646)) + ":" + ToString(this.epoch);
+    ArrayClear(this.identityInstances);
+    ArrayClear(this.outbox);
     this.sequence = 0;
     this.status = new EntryStatus();
     this.status.reason = "entry_not_selected";
@@ -378,6 +413,93 @@ public class Entry extends ScriptableSystem {
     return IsDefined(this.session);
   }
 
+  // 행동 결과 표시의 유효성 검사. 새 입력·종료·로드 뒤의 결과는 CET가 버린다.
+  public func GetLatestRequestId() -> Int32 {
+    return IsDefined(this.session) ? this.session.latestRequest : -1;
+  }
+
+  public func IsWaitingForReply(requestId: Int32) -> Bool {
+    return IsDefined(this.session) && this.session.pendingRequest == requestId
+      && Equals(this.SessionEndReason(this.session), "");
+  }
+
+  public func GetContext() -> ref<ContextSnapshot> {
+    if !IsDefined(this.session) { return null; }
+    return GameContext.Collect(this.session.player, this.session.npc);
+  }
+
+  public func GetWorldToken() -> String { return this.worldToken; }
+
+  // Lua는 시선 대상으로 재탐색하지 않고 이 요청의 같은 군중만 받는다.
+  public func GetMotionTarget(requestId: Int32) -> ref<NPCPuppet> {
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId || !session.crowd
+      || session.holdHubId >= 0 || session.menuSuspended || NotEquals(this.SessionEndReason(session), "") {
+      return null;
+    }
+    let npc: ref<NPCPuppet> = session.npc;
+    let player: ref<PlayerPuppet> = session.player;
+    if NotEquals(Entry.SafeReason(npc, player), "") || IsDefined(GameObject.GetActiveWeapon(npc)) { return null; }
+    return npc;
+  }
+
+  public func EndForContextLimit(requestId: Int32) -> Void {
+    if !this.IsWaitingForReply(requestId) { return; }
+    Entry.ShowMessage(this.GetGameInstance(), "[ANPC] 긴 대화를 정리했습니다. 새 대화를 시작해주세요.");
+    this.EndSession(this.session, "session_context_limit");
+  }
+
+  public func IsIdentityReusable(token: String) -> Bool {
+    let player = GetPlayer(this.GetGameInstance());
+    let i = 0;
+    while i < ArraySize(this.identityInstances) {
+      let item = this.identityInstances[i];
+      if Equals(item.token, token) {
+        return IsDefined(player) && IsDefined(item.npc) && item.npc.IsAttached() && !item.npc.IsDead()
+          && Vector4.Distance(player.GetWorldPosition(), item.npc.GetWorldPosition()) <= 10.0;
+      }
+      i += 1;
+    }
+    return false;
+  }
+
+  public func IsIdentityAlive(token: String) -> Bool {
+    let i = 0;
+    while i < ArraySize(this.identityInstances) {
+      let item = this.identityInstances[i];
+      if Equals(item.token, token) { return IsDefined(item.npc) && item.npc.IsAttached() && !item.npc.IsDead(); }
+      i += 1;
+    }
+    return false;
+  }
+
+  private func IdentityToken(npc: ref<NPCPuppet>) -> String {
+    let now = EngineTime.ToFloat(GameInstance.GetSimTime(this.GetGameInstance()));
+    let i = ArraySize(this.identityInstances) - 1;
+    while i >= 0 {
+      let item = this.identityInstances[i];
+      if !IsDefined(item.npc) || !item.npc.IsAttached() || item.npc.IsDead() || now - item.touchedAt > 600.0 {
+        ArrayErase(this.identityInstances, i);
+      } else {
+        if item.npc == npc {
+          item.touchedAt = now;
+          ArrayErase(this.identityInstances, i);
+          ArrayPush(this.identityInstances, item);
+          return item.token;
+        }
+      }
+      i -= 1;
+    }
+    while ArraySize(this.identityInstances) >= 16 { ArrayErase(this.identityInstances, 0); }
+    let item = new IdentityInstance();
+    this.identitySeq += 1;
+    item.npc = npc;
+    item.token = this.worldToken + ":" + ToString(this.identitySeq);
+    item.touchedAt = now;
+    ArrayPush(this.identityInstances, item);
+    return item.token;
+  }
+
   private func StartSession(npc: ref<NPCPuppet>, player: ref<PlayerPuppet>, characterKey: String, crowd: Bool, holdHubId: Int32) -> Void {
     if IsDefined(this.session) || !IsDefined(npc) || !IsDefined(player) { return; }
     if !IsDefined(this.uiController) {
@@ -390,13 +512,15 @@ public class Entry extends ScriptableSystem {
     session.player = player;
     session.characterKey = characterKey;
     session.crowd = crowd;
+    session.instanceToken = crowd ? this.IdentityToken(npc) : this.worldToken + ":community:" + characterKey;
     session.holdHubId = holdHubId;
     session.epoch = this.epoch;
     session.hangulMode = true;
     this.sessionSeq += 1;
     session.id = this.sessionSeq;
     session.pendingRequest = -1;
-    // 군중 표시 이름은 현지화되지 않은 내부 이름일 수 있어 자막 화자 이름을 비운다.
+    session.latestRequest = -1;
+    // 군중 화자 이름은 각 입력에서 모델과 같은 스캔 신원 스냅샷으로 갱신한다.
     session.name = crowd ? "" : GetLocalizedText(npc.GetDisplayName());
     this.session = session;
     this.status.reason = "session_active";
@@ -406,21 +530,78 @@ public class Entry extends ScriptableSystem {
 
   // V 차례에만 입력칸을 연다. 입력칸이 닫혀 있는 동안 자막은 흐림 없는 화면에 표시된다.
   private func OpenInput(session: ref<ChatSession>) -> Void {
+    if session.menuSuspended { session.resumeInputAfterMenu = true; return; }
+    if session.pendingRequest >= 0 { return; }
     if IsDefined(session.popup) || !IsDefined(this.uiController) { return; }
-    session.popup = ChatPopup.Create(this, session.hangulMode);
+    session.popup = ChatPopup.Create(this, session.hangulMode, session.inputDraft, session.inputDraftCaret);
+    session.inputDraft = "";
+    session.inputDraftCaret = 0;
     session.popup.Open(this.uiController);
   }
 
   // 대화 종료 거리. 시작 거리 4m보다 여유를 두며 원작처럼 멀어지면 바로 끊는다.
   public static func LeaveDistance() -> Float { return 6.0; }
 
+  public func IsChatMenuOpen() -> Bool {
+    return IsDefined(this.session) && this.session.menuSuspended;
+  }
+
+  public func PrepareGameMenu() -> Void {
+    let session = this.session;
+    if !IsDefined(session) || session.menuSuspended { return; }
+    let reason = this.SessionEndReason(session);
+    if NotEquals(reason, "") { this.EndSession(session, reason); return; }
+    session.menuSuspended = true;
+    session.menuObservedOpen = false;
+    session.menuResumeScheduled = false;
+    session.menuRequestedAt = EngineTime.ToFloat(GameInstance.GetSimTime(this.GetGameInstance()));
+    if IsDefined(session.popup) {
+      let popup = session.popup;
+      session.inputDraft = popup.GetDraft();
+      session.inputDraftCaret = popup.GetDraftCaret();
+      session.hangulMode = popup.IsHangulMode();
+      session.resumeInputAfterMenu = true;
+      // OnHidden이 일반 Esc 종료로 처리하지 않도록 먼저 소유 참조를 해제한다.
+      session.popup = null;
+      popup.Close();
+    }
+  }
+
+  public func OpenGameMenu(popup: ref<ChatPopup>) -> Void {
+    if !IsDefined(this.session) || this.session.popup != popup { return; }
+    this.PrepareGameMenu();
+    if !IsDefined(this.session) || !this.session.menuSuspended { return; }
+    if !GameMenu.Request(this.GetGameInstance()) { this.QueueMenuResume(this.session); }
+  }
+
+  private func QueueMenuResume(session: ref<ChatSession>) -> Void {
+    if session != this.session || session.menuResumeScheduled { return; }
+    session.menuResumeScheduled = true;
+    this.ScheduleSubtitle(this.GetGameInstance(), AnpcSubtitleCallback.ResumeMenu(), this.NextSubtitleId(), 0.1);
+  }
+
+  protected cb func OnChatMenuChanged(inMenu: Bool) {
+    let session = this.session;
+    if !IsDefined(session) || !session.menuSuspended { return; }
+    if inMenu { session.menuObservedOpen = true; session.menuResumeScheduled = false; }
+    else {
+      if session.menuObservedOpen {
+        session.menuObservedOpen = false;
+        this.QueueMenuResume(session);
+      }
+    }
+  }
+
   // 세션을 끝낼 사유. 빈 문자열이면 유지한다. 보류한 원작 허브가 사라지면 원작 장면이 끝난 것으로 본다.
   private func SessionEndReason(session: ref<ChatSession>) -> String {
     let npc: ref<NPCPuppet> = session.npc;
     let player: ref<PlayerPuppet> = session.player;
     if session.epoch != this.epoch || !IsDefined(npc) || !IsDefined(player) { return "session_target_lost"; }
+    if !npc.IsAttached() || !player.IsAttached() { return "session_target_lost"; }
     if npc.IsDead() || player.IsDead() || player.IsInCombat() || NPCPuppet.IsInCombat(npc) { return "session_state_blocked"; }
     if Vector4.Distance(npc.GetWorldPosition(), player.GetWorldPosition()) > Entry.LeaveDistance() { return "session_left"; }
+    // 개인 메뉴 중에는 숨겨진 오리지널 대화 선택지의 표시 여부를 종료 근거로 삼지 않는다.
+    if session.menuSuspended { return ""; }
     if session.holdHubId >= 0 {
       let hubs = SceneEntry.NativeHubs(player.GetGame());
       let found = false;
@@ -463,6 +644,7 @@ public class Entry extends ScriptableSystem {
     ArrayPush(session.subtitles, playerLine);
     this.requestSeq += 1;
     session.pendingRequest = this.requestSeq;
+    session.latestRequest = this.requestSeq;
     let request = new AnpcRequest();
     request.id = this.requestSeq;
     request.kind = "say";
@@ -470,6 +652,13 @@ public class Entry extends ScriptableSystem {
     request.npcKey = session.characterKey;
     request.crowd = session.crowd;
     request.text = text;
+    request.context = GameContext.Collect(player, session.npc);
+    if session.crowd && IsDefined(request.context.npcIdentity) {
+      let identity = request.context.npcIdentity;
+      session.name = StrLen(identity.displayName) > 0 ? identity.displayName : identity.role;
+    }
+    request.instanceToken = session.instanceToken;
+    request.worldToken = this.worldToken;
     ArrayPush(this.outbox, request);
     let timeout = new AnpcSubtitleCallback();
     timeout.entry = this;
@@ -500,7 +689,8 @@ public class Entry extends ScriptableSystem {
     this.HideSubtitles(session);
     let npc: ref<NPCPuppet> = session.npc;
     if !StrBeginsWith(status, "ok") || StrLen(text) == 0 || !IsDefined(npc) {
-      Entry.ShowMessage(game, "[ANPC] AI 응답 실패: " + (StrBeginsWith(status, "error:") ? StrAfterFirst(status, ":") : "empty_reply"));
+      Entry.ShowMessage(game, Equals(status, "error:context_changed") ? "[ANPC] 대기 중 상태가 바뀌었습니다. 다시 입력해주세요."
+        : "[ANPC] AI 응답 실패: " + (StrBeginsWith(status, "error:") ? StrAfterFirst(status, ":") : "empty_reply"));
       this.ScheduleSubtitle(game, AnpcSubtitleCallback.Reopen(), this.NextSubtitleId(), 0.5);
       return;
     }
@@ -538,8 +728,22 @@ public class Entry extends ScriptableSystem {
     }
     let session = this.session;
     if !IsDefined(session) || session != callback.session || callback.epoch != this.epoch { return; }
+    if callback.kind == AnpcSubtitleCallback.ResumeMenu() {
+      if !session.menuSuspended || !session.menuResumeScheduled || GameMenu.IsOpen(game) { return; }
+      session.menuSuspended = false;
+      session.menuResumeScheduled = false;
+      let reason = this.SessionEndReason(session);
+      if NotEquals(reason, "") { this.EndSession(session, reason); return; }
+      if session.resumeInputAfterMenu && session.pendingRequest < 0 { this.OpenInput(session); }
+      session.resumeInputAfterMenu = false;
+      return;
+    }
     if callback.kind == AnpcSubtitleCallback.Timeout() {
       if session.pendingRequest == callback.requestId {
+        if session.menuSuspended {
+          GameInstance.GetDelaySystem(game).DelayCallback(callback, 1.0, false);
+          return;
+        }
         this.OnAIResponse(callback.requestId, "error:timeout", "");
       }
       return;
@@ -559,6 +763,11 @@ public class Entry extends ScriptableSystem {
     }
     // 대화 중 0.3초마다 감시해 멀어지거나 원작 장면이 끝나면 자막 도중이라도 바로 끊는다.
     if callback.kind == AnpcSubtitleCallback.Watch() {
+      // 오리지널이 메뉴 열기를 거부한 경우에도 입력을 영구히 숨기지 않는다.
+      if session.menuSuspended && !session.menuObservedOpen && !session.menuResumeScheduled
+        && EngineTime.ToFloat(GameInstance.GetSimTime(game)) - session.menuRequestedAt >= 2.0 {
+        this.QueueMenuResume(session);
+      }
       let watchReason = this.SessionEndReason(session);
       if NotEquals(watchReason, "") {
         this.EndSession(session, watchReason);
@@ -600,6 +809,17 @@ public class Entry extends ScriptableSystem {
     request.id = this.requestSeq;
     request.kind = "end";
     request.session = session.id;
+    request.instanceToken = session.instanceToken;
+    request.worldToken = this.worldToken;
+    request.crowd = session.crowd;
+    request.npcKey = session.characterKey;
+    let i = 0;
+    while i < ArraySize(this.identityInstances) {
+      if Equals(this.identityInstances[i].token, session.instanceToken) {
+        this.identityInstances[i].touchedAt = EngineTime.ToFloat(GameInstance.GetSimTime(this.GetGameInstance()));
+      }
+      i += 1;
+    }
     ArrayPush(this.outbox, request);
     if IsDefined(session.popup) {
       let popup = session.popup;

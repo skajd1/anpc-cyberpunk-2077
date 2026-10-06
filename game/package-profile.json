@@ -1,0 +1,44 @@
+{
+  "package_id": "ANPC",
+  "version": "0.1.0-dev",
+  "platform": "windows-x64",
+  "candidate_game_version": "2.31",
+  "required_dependencies": [
+    "RED4ext",
+    "redscript",
+    "Cyber Engine Tweaks",
+    "Codeware"
+  ],
+  "optional_dependencies": [
+    {
+      "name": "Appearance Menu Mod",
+      "candidate_version": "2.12.5",
+      "purpose": "UF-64 외부 모션",
+      "bundled": false,
+      "game_verified": false
+    }
+  ],
+  "public_release_ready": false,
+  "release_blockers": [
+    "SR-01",
+    "SR-02",
+    "SR-03",
+    "SR-04",
+    "SR-05",
+    "SR-06",
+    "SR-07",
+    "SR-08",
+    "SR-09",
+    "SR-10",
+    "SR-11",
+    "SR-12",
+    "SR-13",
+    "SR-14",
+    "SR-15"
+  ],
+  "spec_refs": [
+    "docs/gameplay-functional-specification.md",
+    "docs/mod-distribution-specification.md",
+    "docs/game-mod-spec-review-2026-10-05.md"
+  ]
+}

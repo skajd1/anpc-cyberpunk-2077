@@ -11,22 +11,34 @@ public class AnpcRequest extends IScriptable {
   public let npcKey: String;
   public let crowd: Bool;
   public let text: String;
+  public let context: ref<ContextSnapshot>;
+  public let instanceToken: String;
+  public let worldToken: String;
 }
 
 public class ChatSession extends IScriptable {
   public let id: Int32;
   // 응답을 기다리는 요청 ID. 없으면 -1.
   public let pendingRequest: Int32;
+  public let latestRequest: Int32;
   public let npc: wref<NPCPuppet>;
   public let player: wref<PlayerPuppet>;
   public let characterKey: String;
   public let crowd: Bool;
+  public let instanceToken: String;
   // 보류 중인 원작 허브 ID. 군중은 -1.
   public let holdHubId: Int32;
   public let epoch: Int32;
   public let name: String;
   public let popup: ref<ChatPopup>;
   public let hangulMode: Bool;
+  public let inputDraft: String;
+  public let inputDraftCaret: Int32;
+  public let menuSuspended: Bool;
+  public let menuObservedOpen: Bool;
+  public let menuResumeScheduled: Bool;
+  public let resumeInputAfterMenu: Bool;
+  public let menuRequestedAt: Float;
   // 현재 표시 중인 ANPC 자막 ID. 세션 종료 시 숨긴다.
   public let subtitles: array<CRUID>;
 }
@@ -75,6 +87,7 @@ public class AnpcSubtitleCallback extends DelayCallback {
   public static func Watch() -> Int32 { return 3; }
   public static func Timeout() -> Int32 { return 4; }
   public static func EndAfter() -> Int32 { return 5; }
+  public static func ResumeMenu() -> Int32 { return 6; }
 
   public func Call() -> Void {
     if IsDefined(this.entry) { this.entry.OnSubtitleTimer(this); }
@@ -89,17 +102,28 @@ public class ChatPopup extends InGamePopup {
   private let input: ref<HangulTextInput>;
   private let entry: wref<Entry>;
   private let startHangul: Bool;
+  private let startText: String;
+  private let startCaret: Int32;
   private let submitted: Bool;
   private let closing: Bool;
 
-  public static func Create(entry: ref<Entry>, hangulMode: Bool) -> ref<ChatPopup> {
+  public static func Create(entry: ref<Entry>, hangulMode: Bool, opt draft: String, opt caret: Int32) -> ref<ChatPopup> {
     let popup = new ChatPopup();
     popup.entry = entry;
     popup.startHangul = hangulMode;
+    popup.startText = draft;
+    popup.startCaret = caret;
     return popup;
   }
 
   public func WasSubmitted() -> Bool { return this.submitted; }
+
+  public func GetDraft() -> String {
+    this.input.FinishComposition();
+    return this.input.GetText();
+  }
+
+  public func GetDraftCaret() -> Int32 { return this.input.GetCaretPosition(); }
 
   public func IsHangulMode() -> Bool {
     return IsDefined(this.input) ? this.input.IsHangulMode() : this.startHangul;
@@ -160,6 +184,8 @@ public class ChatPopup extends InGamePopup {
     this.input.SetWidth(1100.0);
     this.input.SetMaxLength(200);
     this.input.SetHangulMode(this.startHangul);
+    this.input.SetText(this.startText);
+    this.input.SetCaretPosition(this.startCaret);
     this.input.Reparent(row);
     this.input.RegisterToCallback(n"OnInputKey", this, n"OnChatKey");
     this.input.RegisterToCallback(n"OnModeChanged", this, n"OnModeChanged");
@@ -174,7 +200,7 @@ public class ChatPopup extends InGamePopup {
     hint.SetOpacity(0.7);
     hint.SetStyle(r"base\\gameplay\\gui\\common\\main_colors.inkstyle");
     hint.BindProperty(n"tintColor", n"MainColors.Red");
-    hint.SetText("Enter 보내기 · Esc 종료 · 한/영 또는 Shift+Space 전환");
+    hint.SetText("Enter 보내기 · Esc 종료 · Tab 캐릭터/인벤토리 · 한/영 또는 Shift+Space 전환");
     hint.Reparent(column);
     this.UpdateMode();
   }
@@ -211,7 +237,12 @@ public class ChatPopup extends InGamePopup {
   }
 
   protected cb func OnChatKey(event: ref<inkKeyInputEvent>) {
+    if this.closing { return; }
     if NotEquals(event.GetAction(), EInputAction.IACT_Release) { return; }
+    if Equals(event.GetKey(), EInputKey.IK_Tab) && !event.IsShiftDown() && !event.IsControlDown() && !event.IsAltDown() {
+      if IsDefined(this.entry) { this.entry.OpenGameMenu(this); }
+      return;
+    }
     if Equals(event.GetKey(), EInputKey.IK_Enter) {
       this.input.FinishComposition();
       let text = this.input.GetText();
