@@ -1,50 +1,30 @@
 # ANPC 콘텐츠 자료
 
-`cyberpunk2077/`은 대표 인물 12명과 기본 세계관의 출처 기반 초기 자료 묶음이다. UTF-8 JSON으로 저장한다. 파일·집계·활성 상태는 [목록](cyberpunk2077/manifest.json)이 기준이다.
+`cyberpunk2077/`은 대표 인물 12명·세계관·군중 생성 자료를 UTF-8 JSON으로 관리한다. 현재 버전/집계/승인 상태의 기준은 [manifest](cyberpunk2077/manifest.json)다. research-1.4 기준 사실 221개·인지 항목 887개·작성 예시 52개·지식 묶음 17개·관계 단계 63개·군중 원형 9개다.
 
-2026-10-02 보강: research-0.5, 출처 43개·사실 85개·인물별 지식 후보 186개. 10명의 업무·직접 경험 32개를 추가했다. 미스티의 타로와 빅터의 복싱 분야, 에블린의 BD 기록 경험을 연결했다. 에블린의 기존 편집 실무 후보는 근거가 없어 제공을 보류한다. 개인 배경 일부는 대화 단계로 제한하며 실제 게임 단계 매핑·한국어 장면 검수는 남아 있다.
+## 기준 자료
 
-- [세계관 사실](cyberpunk2077/world-facts.json): 출처를 확인한 최소 진술·시대·주장 한도.
-- [인물별 지식](cyberpunk2077/knowledge.json): 사실 참조·인지·공개 조건과 작성 해석.
-- `cyberpunk2077/characters/`: 인물 12명의 정체성·판단 규칙·말투 방향·단계·지식 참조.
-- [대사 예시](cyberpunk2077/dialogue-examples.json): 원작 인용이 아닌 작성 초안 52개.
-- [군중 지식 배분](cyberpunk2077/crowd-knowledge-policy.json): 공통·지역·직업·선택 지식 묶음.
-- [출처 목록](cyberpunk2077/sources.json): 공식/2차 자료, 접근 방식·확인일.
+| 자료 | 역할 |
+| --- | --- |
+| [sources.json](cyberpunk2077/sources.json) | 공식/2차 출처·확인일·접근 방식·열람 한계 |
+| [world-facts.json](cyberpunk2077/world-facts.json) | 최소 사실 진술·근거·시대·인지/사용 범위 |
+| [knowledge.json](cyberpunk2077/knowledge.json) | 인물별 사실 참조·분야 깊이·인지/공개 조건 |
+| [dialogue-examples.json](cyberpunk2077/dialogue-examples.json) | 오리지널 대사 인용과 구분한 작성 예시 |
+| [world-knowledge-policy.json](cyberpunk2077/world-knowledge-policy.json) | 공통 지식 11개 범주·기본/상세 주입 한도 |
+| [dialogue-preparation.json](cyberpunk2077/dialogue-preparation.json) | 세계관 분류·인물별 우선 지식·근거/검수 색인 |
+| [crowd-archetypes.json](cyberpunk2077/crowd-archetypes.json) | 원형별 Big Five 생성·원칙·말투 후보·배경/지식 경계 |
+| [crowd-knowledge-policy.json](cyberpunk2077/crowd-knowledge-policy.json) | 군중의 공통·지역·직업·선택 지식 묶음 |
+| [story-progression-policy.json](cyberpunk2077/story-progression-policy.json) | 진행 의미 후보 82개·지원/관계 조건·모의 진행 프리셋 |
+| [game-state-bindings.json](cyberpunk2077/game-state-bindings.json) | 게임 2.31 파일에서 찾은 일지 82개 경로·fact 후보 36개·인물별 인지/관계 조사 범위와 근거. 런타임 미활성 |
 
-`source_checked`는 원작 출처의 진술을 확인한 상태이고 `approved`는 출시용 검수 상태다. 현재 카드는 `draft`, `runtime_enabled=false`다. 판단·욕구·두려움·문체·예시는 작성 해석을 포함하며 원작 문장으로 취급하지 않는다. 일부 팬 위키는 본문 접근이 제한되어 검색 도구가 제공한 설명·Database Entry 발췌만 확인했다. 공식 안내 PDF는 웹 도구 크기 제한 이후 별도로 텍스트를 추출해 읽었다. PDF 원문과 전체 추출 텍스트는 저장소에 넣지 않는다.
+`characters/`의 카드가 인물별 고정 성격·원칙·말투·관계 단계·지식 참조의 기준이다. [송버드 카드](cyberpunk2077/characters/songbird.json)의 분기/호칭과 `SONGBIRD_*`/`K_SONGBIRD_*`/`EX_SONGBIRD_*`의 사실·인지·예시도 해당 JSON에서 조회한다. 중복 인물 설명·세계관 지도·성향 준비 문서는 별도로 유지하지 않는다.
 
-기존 `prototype/personas.json`과 형식이 다르다. 대표 12명은 [개발용 인물 설정·테스트 화면](../docs/dialogue-prototype.md#인물-설정과-대화-테스트)의 정규화기를 통해 명시적인 초안 사용 상태에서만 시험한다. 게임 어댑터는 연결하지 않았다. 출시용 사용은 원작 장면·한국어 문체·게임 상태 매핑 검수 후 승인한다. [정체성·콘텐츠 규격](../docs/content-specification.md), [지식 부여 규격](../docs/npc-knowledge-specification.md), [인물 조사 안내](../docs/community-npc-catalog.md)를 따른다.
+## 승인과 실행 경계
 
-## 최신 명세와 자료 상태
+`source_checked`는 출처 진술의 확인이며 출시 승인인 `approved`와 다르다. 현재 조사/작성 자료의 draft/runtime_enabled=false를 유지한다. Big Five 수치·판단·말투·태도·예시는 작성 해석이며 공식 심리검사값·오리지널 대사로 표시하지 않는다. PDF 전체 원문이나 추출 텍스트를 이 저장소에 복제하지 않는다. 개별 접근 제한·검색 발췌·본문 확인 여부는 sources와 source_audit에 보존한다.
 
-research-0.9: 사실 133개·인물별 지식 후보 214개. 로그·케리·조니의 공개 이름/직업/명성을 10명에게 배분하고 팬앰의 로그 의뢰 경험은 팬앰에게만 연결했다. 공개 인지는 작성 배분 초안이며 NPC별 원작 인지 장면을 모두 검수한 것은 아니다. 테스트 군중은 common의 개요 15개를 사용하며 지역/직업/선택 지식 추첨은 미구현이다. 인명 별칭 검색을 적용하고 직접 친분·사생활·렐릭은 공통 배분에서 제외한다.
+게임/웹의 명시적인 개발 초안 허용 경로에서만 시험한다. 실제 게임 인물 식별·진행/인지·한국어 문체 검수와 출시 승인은 별도다. 자료 12명 보유는 게임 진입 12명 지원을 뜻하지 않는다. 현재 구현·검증·공백은 [명세 대조 리뷰](../docs/game-mod-spec-review-2026-10-05.md), 실제 배포 파일 변경은 [배포 변경 이력](../docs/game-mod-validation.md)에서 구분한다.
 
-research-0.8은 인물 10명의 voice_style.direction에 조건부 말 리듬을 추가했다. 멈춤·쿠션어는 작성 문체 지침이며 원작 음성의 억양을 재현하거나 실제 발화 속도를 제어하지 않는다.
+정책은 [콘텐츠 규격](../docs/content-specification.md), [Big Five 규격](../docs/personality-specification.md), [지식 규격](../docs/npc-knowledge-specification.md), [프롬프트 규격](../docs/prompt-specification.md)을 따른다. 코드 매핑 전의 진행/접촉 근거는 [진행도 분석](../docs/story-progression-analysis.md)에 남긴다. 원형 생성·대화 기억·성인 유머가 인지/관계/행동 권한을 추가하지 않는다.
 
-research-0.7: 출처 51개, 사실 132개, 인물별 원작 관계 분기 47개. 선택 분기의 관계·목표·알려진 과거 사건을 테스트 웹에 연결했다. 사건은 world_fact 참조, 태도·호칭·목표는 작성 해석이다. 친구/연인·갈등·연락 단절을 구별하며 사망·발화 불가 분기는 호출 전 차단한다. 실제 게임 상태 매핑과 출시 검수는 미완료다. 형식은 [관계 단계 규격](../docs/content-specification.md#21-원작-관계-단계)을 따른다.
-
-신규 핵심 성격은 [Big Five 규격](../docs/personality-specification.md)을 따른다. research-0.6의 인물 10명은 독립적으로 작성한 core_personality와 personal_principles를 사용한다. 수치는 공식 설정·심리검사값이 아닌 개발용 작성 초안이다. identity·구조 1.0은 이전 조사 자료로 보존하며 테스트 웹은 이 다섯 슬롯을 전송하지 않는다. 카드 승인·게임 단계 매핑은 완료되지 않았다.
-
-사소한 일상 창작과 원작 관계/공개 평판의 기준은 [콘텐츠 규격](../docs/content-specification.md#91-사소한-일상-창작-정책)에 있다. 정책·카드의 출시 검수는 남아 있다. 복장 관찰은 현재 요청에만 제공하고 별도 기억 이력으로 등록하지 않는다. 생성 일상 자기보고는 정적 세계관 사실 JSON에 넣지 않으며 전체 대화의 중심 주제라면 [세션 요약](../docs/memory-specification.md#1-기본-원칙)에 포함할 수 있다. 진행도별 원작 사건 요약은 승인 자료와 게임 조건에서 조회한다. 출처 확인과 출시 승인 상태를 유지하며 허용된 창작을 원작 사실로 표시하지 않는다.
-
-## research-1.0
-
-원작 인물 11명(조니 포함), 사실 195개, 지식 배분 834개, 문체 예시 24개, 관계 분기 53개. 공통 지식은 world-knowledge-policy의 11개 범주·35개 기본 사실과 관련 세부 자료로 구분한다. 인물별 배분은 작성 초안이며 runtime_enabled=false 유지. 신규 위키 자료는 검색 발췌로 확인했고 출처에 해당 인게임 Database/퀘스트/샤드 위치와 접근 한계를 기록했다.
-
-## research-1.1: 송버드 추가
-
-2026-10-03에 [송소미(송버드)](cyberpunk2077/characters/songbird.json)를 추가했다. V가 부르는 애칭은 소미다. [스토리라인·정체성 조사](../docs/songbird-storyline-identity.md)에 팬텀 리버티 분기·결말·원작 사실과 작성 해석·호칭 방향·비밀 공개 제한을 정리했다. 최신 Big Five 변환·관계 단계·공통 상식 형식에 맞춰 개발용으로 연결했다. 신규 퀘스트 지식의 개별 인지·공개 UI는 미연결이며 단계별 canon_context는 이미 확인한 사건의 최소 요약만 제공한다. 자료 집계는 manifest를 따른다.
-
-## research-1.2: 퀘스트 진행과 접촉 판정
-
-`story-progression-policy.json`은 본편·확장·개인 퀘스트의 의미 후보 82개, 인물 12명의 관계 단계 63개에 대한 지원 조건, 진행 프리셋 8개를 담는다. 원작 사건은 기존 `world-facts.json`을 참조한다. 게임 내부 키는 전부 미검증이며 출시 런타임은 활성화하지 않았다. 웹 시제품에서 모의 진행·접촉·원작 장면 차단·진행 되돌림을 시험한다. 조건 필드는 공통 등록표, 검사는 `npm run check:story`, 분석·후속 작업은 [진행도 분석](../docs/story-progression-analysis.md)을 참조한다.
-
-## research-1.3: 대화 지식·인물 성향·군중 슬롯 선작업
-
-2026-10-04, main의 57ef96c에서 분리한 codex/npc-knowledge-personality 브랜치. 사실 221개·인물별 지식 887개·예시 52개·지식 묶음 17개·군중 원형 후보 9개다. [세계관 자료 지도](../docs/dialogue-world-atlas.md)는 11개 범주·6개 층의 전체 색인을 안내한다. [인물별 준비 자료](../docs/dialogue-content-preparation.md)는 12명의 우선 지식·개인 원칙·말투·판단·검수 항목을 정리한다. [군중 성향 준비](../docs/crowd-personality-preparation.md)는 Big Five 다섯 슬롯의 후보·기본 조합·배경/지식 경계를 설명한다.
-
-[dialogue-preparation.json](cyberpunk2077/dialogue-preparation.json)은 전체 사실의 ID 분류와 인물별 지식 참조·작성 해설을 담은 로컬 검수 색인이다. 모델에 통째로 전송하지 않는다. [crowd-archetypes.json](cyberpunk2077/crowd-archetypes.json)은 승인 전 작성 원형이며 현재 게임/웹 군중 생성기에 연결하지 않았다. 기존 명세의 승인·관찰·인지 변환과 인스턴스 보존이 필요하다.
-
-공식 웹 본문을 확인한 신규 장소 사실 4개와 지식 후보 6개를 추가했다. 기존 모든 출처·인지·한국어 문체를 재검증한 것은 아니다. 이번에 확인한 출처 범위와 PDF 접근 실패를 source_audit에 기록했다. 인물 점수는 유지하고 24개 새 상황 예시·24개 판단 규칙 및 문체/한계 지침을 작성했다. source_checked는 출처 확인, draft/runtime_enabled=false는 작성·인지·게임 적용 미승인 상태를 나타낸다. `node scripts/validate-content.mjs`로 참조·집계·군중 seed 재현을 검사한다.
-
-2026-10-05 main 리뷰에서 개발용 CET 고정 프롬프트를 최신 카드로 갱신했다. 생성기의 allowDraft=true는 자료의 비활성 플래그를 우회하는 개발 경로다. 실제 게임 상태 수집·인지 매핑·출시 승인 적용과 군중 원형 연결의 완료를 뜻하지 않는다. [리뷰·검증·잔여 결함](../docs/code-review-2026-10-05.md)을 참조한다.
+참조·조건·집계·seed 검사는 `node scripts/validate-content.mjs`, 진행 후보 검사는 `npm run check:story`로 수행한다. 원본 JSON·출처·기준 스펙을 보존하며 문서 정리를 콘텐츠 승인이나 게임 검증으로 처리하지 않는다.
