@@ -1,6 +1,6 @@
 # NPC 대사·행동 생성 프롬프트 명세
 
-규격 버전: 0.18 (2026-10-08). 입출력: [공통 규격](module-interface-specification.md)의 PromptAssembly → ModelInput → DialogueReply. 구현 상태: [개발·검증 계획](development-validation.md).
+규격 버전: 0.19 (2026-10-08). 입출력: [공통 규격](module-interface-specification.md)의 PromptAssembly → ModelInput → DialogueReply. 구현 상태: [개발·검증 계획](development-validation.md).
 
 하위 규격: [프롬프트 캐싱 적용 규격](prompt-caching-specification.md) 1.1 (2026-10-05). 기본 OpenAI 대사 경로는 공통 developer 지침 끝·user 인물 데이터 끝 두 경계의 explicit 캐싱을 적용한다. 가변 상황·기억·최근 대화는 경계 뒤에 배치한다. 요청 옵션·모델 호환·갱신·정산·파일별 적용 규칙은 하위 문서를 단일 기준으로 한다. 구현 순서는 [개발·검증 계획 6.2](development-validation.md#62-프롬프트-캐싱)에 둔다.
 

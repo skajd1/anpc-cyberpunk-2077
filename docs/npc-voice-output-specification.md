@@ -25,7 +25,7 @@ DialogueReply의 구조화 출력 필드 순서는 `emotion → delivery → dia
 
 | 필드 | 형식 | 규칙 |
 | --- | --- | --- |
-| emotion | 기존 열거값 | neutral·friendly·wary·annoyed·afraid·curious. 변경 없음. 응답 하나에 값 하나이며 참조 음성 선택 키로 쓴다 |
+| emotion | 열거값 | neutral·friendly·wary·annoyed·afraid·sad·curious. 응답 하나에 값 하나이며 참조 음성 선택 키로 쓴다 |
 | delivery | `normal`·`fast`·`slow` | 말하는 빠르기. 속삭임·외침 같은 발성 지시는 값으로 두지 않는다 |
 | speech_text | 문자열 1~600자 | dialogue와 follow_up을 같은 순서·같은 의미로 옮긴 일본어 구어 대사 |
 

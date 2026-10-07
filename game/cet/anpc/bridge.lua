@@ -91,7 +91,7 @@ local function boundedText(value, limit)
 end
 
 local intents = { answer = true, ask = true, refuse = true, warn = true, farewell = true }
-local emotions = { neutral = true, friendly = true, wary = true, annoyed = true, afraid = true, curious = true }
+local emotions = { neutral = true, friendly = true, wary = true, annoyed = true, afraid = true, sad = true, curious = true }
 local deliveries = { normal = true, fast = true, slow = true }
 local textKeys = { dialogue = true, intent = true, emotion = true, action = true, follow_up = true }
 local voiceKeys = { dialogue = true, intent = true, emotion = true, action = true, follow_up = true, delivery = true, speech_text = true }
