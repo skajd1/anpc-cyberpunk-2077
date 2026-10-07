@@ -36,7 +36,7 @@
 
 UI: 이름·기록·입력·대기·취소/종료·오류. 입력 포커스의 게임 키 중복 차단. 서비스 오류/NPC 대사 분리.
 
-플레이어 행동별 조건·반응·관찰 결과는 [게임 기능 명세](gameplay-functional-specification.md)의 UF-01~63을 기준으로 한다. 설치/업데이트/백업/복원/제거는 [배포 규격](mod-distribution-specification.md)을 따른다. 현재 코드와의 차이는 [명세 대조 리뷰](game-mod-spec-review-2026-10-05.md)에 기록한다.
+플레이어 행동별 조건·반응·관찰 결과는 [게임 기능 명세](gameplay-functional-specification.md)의 UF-01~63을 기준으로 한다. 설치/업데이트/백업/복원/제거는 [배포 규격](mod-distribution-specification.md)을 따른다. 현재 코드와의 차이는 [개발·검증 계획](development-validation.md#2-출시-전-남은-결함)에 기록한다.
 
 ## 4. 분야별 기준 문서
 
@@ -62,7 +62,7 @@ UI: 이름·기록·입력·대기·취소/종료·오류. 입력 포커스의 �
 
 공통 형태는 스키마/등록표, 정책은 해당 문서 한 곳에서 정의한다.
 
-실제 도구·언어별 배치·설치·게임 실증의 순서는 [게임 모드 구현 계획](game-mod-implementation-plan.md)을 따른다.
+개발 도구·구현 배치·게임 실증 순서는 [개발·검증 계획](development-validation.md#3-개발-순서)에 둔다.
 
 ## 5. 단계별 기능 경계
 

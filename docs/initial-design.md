@@ -34,7 +34,7 @@
 
 게임 내부 모듈+로컬 설정/콘텐츠/기억. 별도 C#/제작자 서버 필수 없음. 세부 계약: [전체 명세](full-specification.md).
 
-실제 모딩 도구와 첫 게임판 개발은 [게임 모드 구현 계획](game-mod-implementation-plan.md)의 G0~G7을 따른다.
+첫 게임판 개발 단계(G0~G7)는 [개발·검증 계획](development-validation.md#3-개발-순서)에 둔다.
 
 ## 5. 후속 확장 및 제외 범위
 

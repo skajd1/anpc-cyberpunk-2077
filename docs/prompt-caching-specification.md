@@ -1,6 +1,6 @@
 # 프롬프트 캐싱 적용 규격
 
-규격 버전: 1.1 (2026-10-05). 상위 문서: [NPC 대사·행동 생성 프롬프트 명세](prompt-specification.md). 공통 입출력은 [모듈 규격](module-interface-specification.md)의 PromptAssembly → ModelInput → ProviderResult를 따른다. 근거: [참고 분석](prompt-caching-analysis.md). 구현·시험 상태: [개발·검증 계획](development-validation.md#프롬프트-캐싱-적용-계획). 이 문서는 적용할 목표를 확정하며, 실행 코드와 계약 스키마는 아직 변경하지 않았다.
+규격 버전: 1.1 (2026-10-05). 상위 문서: [NPC 대사·행동 생성 프롬프트 명세](prompt-specification.md). 공통 입출력은 [모듈 규격](module-interface-specification.md)의 PromptAssembly → ModelInput → ProviderResult를 따른다. 구현 순서: [개발·검증 계획 6.2](development-validation.md#62-프롬프트-캐싱).
 
 ## 1. 적용 결정
 

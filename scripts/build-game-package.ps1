@@ -12,7 +12,7 @@ $anpcProfile = Get-Content (Join-Path $anpcRepo 'game/package-profile.json') -Ra
 $anpcContent = Get-Content (Join-Path $anpcRepo 'content/cyberpunk2077/manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 # DIST-06: 현재 개발판을 명령 옵션만으로 공개판으로 만들지 못한다.
 if ($Channel -eq 'public') {
-  if (!$anpcProfile.public_release_ready -or @($anpcProfile.release_blockers).Count -gt 0) { throw '공개 배포 수용 미완료: 명세 대조 리뷰의 출시 차단 항목을 먼저 해결하세요.' }
+  if (!$anpcProfile.public_release_ready -or @($anpcProfile.release_blockers).Count -gt 0) { throw '공개 배포 수용 미완료: 개발·검증 계획의 출시 전 결함을 먼저 해결하세요.' }
   if (!$anpcContent.runtime_enabled -or !(Test-Path (Join-Path $anpcRepo 'LICENSE'))) { throw '콘텐츠 활성/프로젝트 라이선스가 미완료입니다.' }
   if ((Get-Content (Join-Path $anpcRepo 'game/cet/anpc/config.lua') -Raw -Encoding UTF8) -match 'allow_draft_content\s*=\s*true') { throw '초안 허용 설정은 공개 패키지에 포함할 수 없습니다.' }
 }

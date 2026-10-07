@@ -77,7 +77,7 @@ dialogue_context_revision은 세션별 1에서 시작. 표시/실행 직전 대�
 
 ## 퀘스트 대화 정책 참조
 
-지원 구간·NPC별 현재 접촉·오리지널 사건 인지의 정책은 [진행도 분석](story-progression-analysis.md)과 [진행 정책 자료](../content/cyberpunk2077/story-progression-policy.json)를 참조한다. 정규화 의미 필드는 공통 필드 등록표를 따른다. 실제 게임 키가 검증되기 전에는 후보 제목을 실행용 내부 키로 사용하지 않는다.
+지원 구간·NPC별 현재 접촉·오리지널 사건 인지의 정책은 [진행 정책 자료](../content/cyberpunk2077/story-progression-policy.json)를 기준으로 한다. 정규화 의미 필드는 공통 필드 등록표를 따른다. 실제 게임 키가 검증되기 전에는 후보 제목을 실행용 내부 키로 사용하지 않는다.
 
 ### 주디·팬앰·조니의 우선 개발 연결
 
