@@ -1,6 +1,6 @@
 # 기술 구조 및 AI 통신 규격
 
-규격 버전: 0.5 (2026-10-04). 목표 계약. 타입/포트: [공통 규격](module-interface-specification.md). 구현/시험: [개발·검증 계획](development-validation.md).
+규격 버전: 0.6 (2026-10-07). 목표 계약. 타입/포트: [공통 규격](module-interface-specification.md). 구현/시험: [개발·검증 계획](development-validation.md).
 
 ## 1. 실행 구조
 
@@ -10,7 +10,7 @@
 | 대화 | 콘텐츠·기억·프롬프트·응답 검사 |
 | 통신 어댑터 | 비동기 HTTPS·개인 키 접근·제공자 변환 |
 
-기본: 게임 내부 모드+로컬 설정/콘텐츠. UI/대화 정책=CET Lua, 실제 수집/제어/자막/저장 연결=redscript+Codeware. 제품 HTTPS/키 보관은 RED4ext 플러그인 ANPC.Native.dll의 WinHTTP/Credential Manager로 구현한다. 작업 완료 큐를 CET onUpdate에서 읽고 현재 세션 검사 후 게임에 적용한다. 별도 C#·제작자 서버 필수 없음. 로컬 모델/음성은 후속.
+기본: 게임 내부 모드+로컬 설정/콘텐츠. UI/대화 정책=CET Lua, 실제 수집/제어/자막/저장 연결=redscript+Codeware. 제품 HTTPS/키 보관은 RED4ext 플러그인 ANPC.Native.dll의 WinHTTP/Credential Manager로 구현한다. 작업 완료 큐를 CET onUpdate에서 읽고 현재 세션 검사 후 게임에 적용한다. 별도 C#·제작자 서버 필수 없음. NPC 음성은 ANPC.Native가 관리하는 로컬 TTS 보조 프로세스로 [음성 출력 규격](npc-voice-output-specification.md)을 따른다. 로컬 대사 모델은 후속.
 
 도구 버전·설치/소스 배치·선택지/저장 실증은 [게임 모드 구현 계획](game-mod-implementation-plan.md)을 따른다. RedHttpClient는 초기 통신 실증용이며 제품의 취소·제한 시간·키 보관 완료를 대신하지 않는다. 현재 어댑터의 구현/검증 상태와 목표 계약의 공백은 [명세 대조 리뷰](game-mod-spec-review-2026-10-05.md), 실제 배포 파일 변경은 [배포 변경 이력](game-mod-validation.md)에 둔다.
 
@@ -56,7 +56,7 @@
 
 PromptAssembly → ModelInput → ProviderResult → DialogueReply. 공통 스키마의 필드/길이/열거값 적용. 오리지널 canon_context와 ANPC MemoryView 분리. 로컬 ID·세대·저장/작업 정보는 외부 전송/모델 생성 금지.
 
-- 모델 출력은 dialogue/intent/emotion/action/follow_up만. 봉투/식별자는 호스트 부여. action은 제안이며 완료 아님.
+- 모델 출력은 dialogue/intent/emotion/action/follow_up만. 음성 활성 시 delivery/speech_text를 더하며 필드 순서·검사는 [음성 출력 규격 2절](npc-voice-output-specification.md#2-응답-계약-추가)을 따른다. 봉투/식별자는 호스트 부여. action은 제안이며 완료 아님.
 - 빈 대사·미등록 필드/열거·잘못된 인수 거부. 금기/대사 형식 위반은 전체 거부.
 - 잘못된 행동은 제거. 대사가 독립적일 때만 유지, 불명이면 안전 대체 대사. 정적 검사+지원 품질 프로필 적용.
 - execution_mode/candidate는 ActionOption, catalog_version은 ActionRequest. 모델의 모드/어댑터/자산 경로 변경 금지.
@@ -78,7 +78,7 @@ PromptAssembly → ModelInput → ProviderResult → DialogueReply. 공통 스�
 
 - text는 수용된 dialogue+중복 없는 follow_up. 폐기 응답/선택 행동 설명/서비스 오류 제외. 화자/요청 중복 차단.
 - 다음 수용 대사/세션 종료까지 유지. 활성 기록 열람 가능. 긴 대사는 동일 발화 순서로 분할.
-- 후속 음성은 같은 subtitle_id에 연결. 재생 중 자막 유지, 실패 시 텍스트 유지. 종료/전투/대상 변경 시 중단.
+- NPC 음성은 같은 subtitle_id에 연결. 재생 중 자막 유지, 실패 시 텍스트 유지. 자막 동기·중단은 [음성 출력 규격](npc-voice-output-specification.md#43-자막-동기).
 - 입력 포커스는 게임 키 중복 차단, 세계 시간 정지 없음. 전투·위험·오리지널 제어·소멸 시 세션/자막/행동 정리.
 - UF-62의 Tab/오리지널 캐릭터·인벤토리 메뉴는 입력 차단 예외다. 작성 중 텍스트/한영 상태를 보관하고 메뉴 중 출력/입력 복귀를 보류한다. 메뉴 종료 후 동일 세션/세계/대상·안전·현재 관찰을 재검사한다. 메뉴 열기 자체로 추가 생성 요청하지 않는다.
 - 기본 멈춤/시선은 세션 제어. 추가 행동 선택 모드와 분리. 오리지널 대사/퀘스트 결과 변경 금지.

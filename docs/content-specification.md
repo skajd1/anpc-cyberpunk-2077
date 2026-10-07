@@ -1,6 +1,6 @@
 # 콘텐츠 데이터 규격
 
-규격 버전: 0.5 (2026-10-02). 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
+규격 버전: 0.6 (2026-10-07). 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
 
 신규 성격은 [Big Five 규격](personality-specification.md). 기존 identity/군중 세 슬롯은 호환 입력이며 신규 성격과 동시 적용·자동 환산 금지. 구현 상태: [개발·검증 계획](development-validation.md).
 
@@ -57,11 +57,13 @@ source_checked는 출처 확인만 의미한다. draft 카드/규칙/예시/인�
 | identity_rules | 목록 | 상황 조건·가치 우선순위·금지 선택·오리지널 근거·승인 상태를 가진 판단 기준. 정체성 구조 1.0 출시 카드에 필수 |
 | identity_anchor | 선택 객체 | core_values, hard_limits의 짧은 작성 요약. 승인된 identity에서만 유도 |
 | presentation | 선택 객체 | 화면에서만 사용하는 인물 역할 요약. 핵심 성격은 core_personality의 다섯 수준을 표시하며 임의 특성 태그로 대체하지 않음 |
+| voice_profile_id | 선택 문자열 | [음성 출력 규격 3절](npc-voice-output-specification.md#3-참조-음성-자료)의 community voice_profile. 없으면 음성 없이 자막만 |
 
 - 정체성 모델 수정 금지. 목표·관계·지식은 승인 상태 조건으로 계산. 행동 선호는 권한 아님.
 - 호환 구조 1.0 출시 카드: 승인 배경·identity·identity_rules·voice_style·예시·목표/관계/지식 조건·대체 대사 필수. 누락 오리지널 정체성 무작위 보충 금지.
 - 선택 필드 누락은 창작 경험으로 보충하지 않는다. 창작은 provenance/허용 변경 범위 명시. speech_rules 중복은 voice_style로 통합.
 - UF-63의 욕설/성인 유머는 speech_rules.slang_density/humor_and_profanity_limit와 voice_style.direction에서 인물별로 작성한다. 조니 등 거친 인물과 절제된 인물의 강도를 구별한다. 군중 voice_styles의 speech_rules는 선택한 말투와 함께 유지하며 Big Five/원칙/지식/관계를 바꾸지 않는다. 성인 여부·비노골적 범위·상대 반응은 공통 말투 지침을 따른다.
+- 일본어 음성 표기표는 패키지 단위 ja_reading_table이다. 항목은 term(한국어 표기)·reading(가타카나/가나)·source_ids이며 인물·지역·기업·은어 고유명사를 담는다. speech_text 생성 지침과 검사에 쓰며 자막 표기를 바꾸지 않는다.
 - 화면 presentation.role은 짧은 역할, identity_slots는 원본 identity 목록 키의 비어 있지 않은 짧은 문자열 목록. 누락 슬롯은 원문 표시. 새 특성/관계 추가 및 생성/승인 권한 변경 금지. 신규 성격은 다섯 수준 표시.
 
 ### 2.1. 오리지널 관계 단계
@@ -106,7 +108,7 @@ traits는 슬롯별 ID 하나, 슬롯 간 중복 금지. 직업·지역·목표�
 3. 슬롯 키/trait_id 정렬. 후보 weight 곱으로 seed 추첨. 반복 재추첨/LLM 모순 수정 금지.
 4. 조합 없음은 검수 default_traits. 기본도 부적합이면 원형 거부 → 승인 기본 시민 → 미유효 시 대화 거부.
 5. 원형/특성의 identity·판단·말투·예시 로컬 정규화. 배경→원형→특성 금기 합집합. 금지 우선. 문체 충돌은 사전 제외.
-6. 저장: persona_id, npc_instance_key, archetype_id/revision, content_version, identity_structure_version, generator_version, seed, traits, background, identity, identity_rules, voice_style, example_ids. 동일 입력/버전/seed는 동일 결과.
+6. 저장: persona_id, npc_instance_key, archetype_id/revision, content_version, identity_structure_version, generator_version, seed, traits, background, identity, identity_rules, voice_style, example_ids, voice_profile_id(배정 규칙은 [음성 출력 규격 4.1](npc-voice-output-specification.md#41-참조-선택), 미배정은 null). 동일 입력/버전/seed는 동일 결과.
 
 compatibility_rules는 금지 trait_id 집합+조건. 작성 갈등 해소 기준이 있으면 복합 성격 허용. traits로 판단 규칙 대체 금지.
 
