@@ -240,6 +240,38 @@ Node.js 22 이상, 추가 패키지 없음. 저장소 루트에서 `npm start` �
 - 스트리밍 조각 경계 잡음, 버퍼링 시작 조건(4.2)의 실제 끊김 합계를 Native 구현에서 다시 잰다.
 - 음성 활성 시 대사 45자 안내(프롬프트 0.18)가 실제 대화 품질을 해치지 않는지 확인한다. speech_text 선행 합성·출력 순서 변경은 효과·위험 때문에 보류한다(8.2).
 
+#### 6.4.1. 게임 안 3D 재생 설계안
+
+현재 개발 연결(DEP-20261008011224)은 보조 프로세스가 Windows 기본 장치로 2D 재생한다. 게임 NPC처럼 화자 위치에서 들리게 하는 두 안이다. A를 먼저 시험하고, 결과로 출시 경로를 정해 음성 출력 규격 4~6절과 DIST에 반영한다. 공통: 합성·버퍼링 규칙(규격 4.2), 자막은 첫 음성 재생과 함께 표시(4.3), 립싱크와 delivery 속도 변경은 범위 밖.
+
+**A. Audioware 슬롯 재생** (선례: Real Talk)
+
+| 항목 | 설계 |
+| --- | --- |
+| 의존성 | Audioware 1.9.x(선택). 없으면 보조 프로세스 2D 재생으로 대체 |
+| 등록 | `r6/audioware/ANPC/manifest.yaml`에 `anpc_voice_0`~`7`을 `usage: on-demand`로 선언. 각 슬롯은 0.2초 무음 48kHz wav. on-demand는 재생할 때마다 파일을 다시 읽는다(Audioware `bank/storage.rs` `from_file`) |
+| 구간 | 보조 프로세스가 스트리밍 조각을 구간으로 묶는다. 첫 구간은 버퍼링 시작 조건을 채운 시점까지의 음성, 다음 구간은 앞 구간 재생 중 쌓인 음성. 경계는 구간 끝 300ms 안의 가장 조용한 20ms 지점, 양끝 5ms 페이드 |
+| 파일 쓰기 | 48kHz 16bit mono wav를 임시 파일에 쓰고 원자적 교체. 재생 중이거나 예약된 슬롯은 쓰지 않는다(링 8개). 깨진 파일을 재생하면 Audioware가 패닉할 수 있다 |
+| 알림 | 보조 프로세스 → CET: `tts/seg-<request_id>-<n>.json` {slot, dur_ms, final}. CET → 보조 프로세스: 기존 req/stop |
+| 재생 | redscript `AnpcVoice`: 대화 시작 때 `RegisterEmitter(npcID, n"ANPC", EmitterSettings)`, 다른 프레임에 `PlayOnEmitter(n"anpc_voice_<slot>", npcID, n"ANPC")`. CET가 앞 구간 dur_ms가 끝나는 시점에 다음 구간을 재생. 종료 때 `UnregisterEmitter` |
+| 중단 | 새 입력·종료·전투·로드: 재생 슬롯 `StopOnEmitter`(짧은 페이드) + stop 요청. 메뉴: Audioware가 일시정지, CET 구간 시계도 정지 |
+| 조건부 컴파일 | Audioware 참조 코드는 `@if(ModuleExists("Audioware"))` 파일에 둔다. 없을 때 같은 이름의 빈 구현 |
+| 위험 | 구간 경계의 프레임 단위 틈, 슬롯 파일 교체와 재생의 경합, 같은 프레임 등록·재생 시 위치 누락(Real Talk 주석), Audioware 업데이트 호환 |
+| 수용 확인 | 슬롯 덮어쓰기 후 새 음성 재생, NPC 방향·거리에 따른 패닝·감쇠, 경계 청취, 첫 음성 지연 증가 0.1초 이하, 대화 음량 설정·메뉴 일시정지 반영 |
+
+**B. ANPC.Native 내장 오디오 스트리밍** (선례: radioExt의 FMOD 3D 채널)
+
+| 항목 | 설계 |
+| --- | --- |
+| 의존성 | 추가 모드 없음. ANPC.Native에 miniaudio(단일 헤더) 정적 포함. 라이선스 고지 추가 |
+| 전송 | 보조 프로세스 → Native: 로컬 이름 있는 파이프로 PCM 조각 스트림(요청 ID·순번·float32 32kHz). 파일·슬롯 없음 |
+| 재생 | Native 링 버퍼 → miniaudio 3D 사운드 1개. 버퍼링 시작 조건 충족 시 재생, 조각 대기는 무음으로 채우고 끊김 시간을 기록 |
+| 위치 | CET가 매 프레임 `ANPCNative_VoiceSetListener(카메라 위치·방향)`, `ANPCNative_VoiceSetSource(NPC 머리 위치)` 호출. 거리 감쇠(최소 1m·최대 25m)·패닝은 miniaudio |
+| 게임 연동 | 게임 대화 음량·마스터 음량 설정값을 읽어 이득에 반영. 메뉴·일시정지 상태에서 재생 정지. 게임 잔향·가림은 적용하지 않음 |
+| 중단·상태 | `ANPCNative_VoiceStop`, `ANPCNative_VoicePollStarted(request_id)`로 첫 음성 시점을 CET에 알려 자막 동기화 |
+| 위험 | C++ 구현·검증량, 게임 오디오와 다른 출력 장치·지연, 위치 갱신이 프레임에 묶임, 게임 음량 설정 읽기 경로 확인 필요 |
+| 수용 확인 | A와 같은 항목 + 조각 경계 없는 연속 재생, 장치 변경·해제 처리 |
+
 ## 7. 요구사항 출처
 
 사용자 인터뷰로 확정한 요구와 기준 문서다.
