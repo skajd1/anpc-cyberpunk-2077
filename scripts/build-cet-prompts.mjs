@@ -65,9 +65,16 @@ function long(text) {
 }
 
 const lines = [];
-const schema = responseSchema();
-schema.properties.action.anyOf = schema.properties.action.anyOf.filter(a => a.type === 'null'
-  || ['end_conversation', 'play_gesture'].includes(a.properties?.action_id.enum[0]));
+const gameSchema = voice => {
+  const s = responseSchema({ voice });
+  s.properties.action.anyOf = s.properties.action.anyOf.filter(a => a.type === 'null'
+    || ['end_conversation', 'play_gesture'].includes(a.properties?.action_id.enum[0]));
+  return s;
+};
+const schema = gameSchema(false);
+// 음성 활성 시 CET가 인물 지침의 출력 필드 안내(text)를 voice로 바꾸고 voice_schema를 쓴다.
+const contract = voice => assemblePrompt('{{OUTPUT_CONTRACT}}', {}, {}, '', { voice }).instructions;
+if (!Object.values(characters).every(c => c.instructions.includes(contract(false)))) throw new Error('출력 필드 안내를 찾지 못했습니다.');
 lines.push('-- 생성 파일: scripts/build-cet-prompts.mjs. 직접 수정하지 않는다.');
 lines.push(`-- prompt_version ${PROMPT_VERSION} · runtime context`);
 lines.push('return {');
@@ -77,6 +84,8 @@ lines.push(`  identity_data = ${long(JSON.stringify(identityData))},`);
 lines.push(`  personality_table = ${long(JSON.stringify(PERSONALITY_TABLE))},`);
 lines.push(`  personality_prompt_version = ${JSON.stringify(PERSONALITY_PROMPT_VERSION)},`);
 lines.push(`  schema = ${long(JSON.stringify(schema))},`);
+lines.push(`  voice_schema = ${long(JSON.stringify(gameSchema(true)))},`);
+lines.push(`  contracts = { text = ${long(contract(false))}, voice = ${long(contract(true))} },`);
 lines.push(`  motions = ${long(JSON.stringify(AMM_MOTIONS))},`);
 lines.push(`  story_data = ${long(JSON.stringify(buildGameStoryData()))},`);
 lines.push('  blocked = {');

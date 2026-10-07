@@ -9,5 +9,10 @@ return {
   -- 제공자 요청 전체 제한 시간. redscript는 40초 뒤 실패로 처리한다.
   timeout_ms = 30000,
   -- 한 세션에서 다음 요청에 넣을 최근 발화 수.
-  recent_turns = 6
+  recent_turns = 6,
+  -- NPC 일본어 음성(개발 시험). 켜면 음성 출력 스키마를 요청하고 tts/req-<id>.json을 써서 로컬 TTS 보조 프로세스에 넘긴다.
+  voice_enabled = true,
+  -- 개발 시험용 NPC 키 → voice_profile_id. 없는 인물은 자막만.
+  voice_profiles = { judy = "vp_judy", viktor = "vp_viktor", rogue = "vp_rogue" },
+  voice_crowd_profile = "crowd_m2"
 }

@@ -628,3 +628,19 @@
 
 - 배포 manifest·해시: 당시 웹 반영 manifest 없음
 - 백업·복원 자료: 백업 위치 미기록
+
+## DEP-20261008011224 — NPC 일본어 음성 개발 시험 연결
+
+- 일시: 2026-10-08 01:12:25 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 음성 활성 시 출력 필드 안내·스키마를 음성 형태로 바꾸고, delivery·speech_text 검사와 일본어 구어 검사 추가. 수용된 대사의 음성 요청을 tts/req-<id>.json으로 쓰고 새 입력·종료·초기화 때 tts/stop.json을 씀 | UF-67~UF-73 개발 시험. 로컬 TTS 보조 프로세스가 스트리밍·버퍼링 재생. speech_text가 부적합하면 음성만 생략하고 자막은 유지 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_enabled=true, 주디·빅터·로그와 군중의 개발용 voice_profile 연결 추가 | 연결이 없는 인물은 자막만 표시 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/prompts.lua | 수정 | 프롬프트 0.18, 음성 출력 스키마(voice_schema)와 출력 필드 안내(contracts) 추가 | 음성 활성 요청에 일본어 speech_text와 45자 대사 안내 적용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/tts/ | 추가 | 음성 요청 파일 폴더 생성 | CET와 보조 프로세스 사이의 개발용 파일 요청 경로 |
+
+- 배포 manifest·해시: config.local.voice-dev-deployment.json
+- 백업·복원 자료: config.local.backups/voice-dev-20261008-011224
+- 확인: 실게임 미검증. Lua 단위 검사는 로컬 Lua 실행기가 없어 미실행. 보조 프로세스는 저장소 밖 개발 도구로 배포물에 포함하지 않음

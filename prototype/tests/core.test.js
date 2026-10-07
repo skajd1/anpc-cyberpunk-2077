@@ -112,5 +112,6 @@ test('음성 응답은 감정이 먼저인 순서와 일본어 음성 대사를 
   assert.throws(() => validateReply(reply, ACTIONS, persona, { voice: true }), /invalid_response/);
   const prompt = assemblePrompt('베이스 {{OUTPUT_CONTRACT}}', persona, {}, '안녕', { voice: true });
   assert.match(prompt.instructions, /speech_text\(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사/);
+  assert.match(prompt.instructions, /follow_up과 합쳐 45자 이내/);
   assert.doesNotMatch(assemblePrompt('베이스 {{OUTPUT_CONTRACT}}', persona, {}, '안녕').instructions, /speech_text|delivery/);
 });

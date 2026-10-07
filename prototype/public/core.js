@@ -1,6 +1,6 @@
 import { validateCorePersonality, personalityInstructions, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
 import { AMM_MOTIONS } from './motions.js';
-export const PROMPT_VERSION = '0.17';
+export const PROMPT_VERSION = '0.18';
 export const INTENTS = ['answer', 'ask', 'refuse', 'warn', 'farewell'];
 export const EMOTIONS = ['neutral', 'friendly', 'wary', 'annoyed', 'afraid', 'curious'];
 // 음성 활성 응답의 말 빠르기. 세부 규칙은 docs/npc-voice-output-specification.md 2절.
@@ -90,7 +90,7 @@ export function validateReply(raw, allowed, persona, { voice = false } = {}) {
 export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null, voice = false } = {}) {
   // 전체 스키마는 제공자의 구조화 출력 설정으로 전달한다. 본문에는 필드의 의미만 둔다.
   const contract = voice
-    ? `출력 필드(이 순서): emotion(${EMOTIONS.join('|')}), delivery(${DELIVERIES.join('|')} 말 빠르기), dialogue(1~600자 실제 대사), follow_up(1~150자 후속 질문 또는 null), speech_text(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사, 1~600자), intent(${INTENTS.join('|')}), action(허용 후보의 action_id·args 또는 null).`
+    ? `출력 필드(이 순서): emotion(${EMOTIONS.join('|')}), delivery(${DELIVERIES.join('|')} 말 빠르기), dialogue(실제 대사. follow_up과 합쳐 45자 이내), follow_up(후속 질문 또는 null), speech_text(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사, 1~600자), intent(${INTENTS.join('|')}), action(허용 후보의 action_id·args 또는 null).`
     : `출력 필드: dialogue(1~600자 실제 대사), intent(${INTENTS.join('|')}), emotion(${EMOTIONS.join('|')}), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).`;
   const { fallback_lines, action_preferences, revision, examples, seed, trait_pools, personality_generation, identity_structure_version, ...personaData } = persona;
   let requestPersona = personaData;

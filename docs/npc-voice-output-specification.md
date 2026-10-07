@@ -1,6 +1,6 @@
 # NPC 음성 출력 규격
 
-규격 버전: 1.0 (2026-10-07). 첫 게임판 기본 기능의 목표 계약. 게임 기능: [UF-67~UF-73](gameplay-functional-specification.md#10-npc-음성). 설치물: [DIST-23~DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권). 실측·남은 확인 항목: [개발·검증 계획 6.4·8.1](development-validation.md#81-npc-음성-tts-로컬-실측-2026-10-06).
+규격 버전: 1.1 (2026-10-08). 첫 게임판 기본 기능의 목표 계약. 게임 기능: [UF-67~UF-73](gameplay-functional-specification.md#10-npc-음성). 설치물: [DIST-23~DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권). 실측·남은 확인 항목: [개발·검증 계획 6.4·8.1·8.2](development-validation.md#81-npc-음성-tts-로컬-실측-2026-10-06).
 
 공통 스키마 전환 상태: `contracts/v1`의 DialogueReply는 자막 전용(DialogueReplyText)과 음성(DialogueReplyVoice) 두 형태 중 하나다. 웹 시제품의 응답 스키마·검사·출력 안내는 음성 옵션을 지원하지만 기본값은 꺼짐이다. 게임 CET 응답 검사와 TTS 연결은 아직 음성 형태를 받지 않는다.
 
@@ -13,7 +13,7 @@ AI 대화 세션에서 수용된 NPC 대사를 한국어 자막과 일본어 음
 | 대사 생성(LLM) | 대사 내용·말투·습관·비속어, emotion, delivery, 일본어 speech_text |
 | 음성 합성(TTS) | 참조 음성에 따른 화자별 음색·억양·발성. 대사 내용·감정 값을 바꾸지 않음 |
 
-- 엔진 구성은 ANPC 음성 모델 하나를 Genie-TTS(ONNX)로 사용자 PC의 CPU에서 실행하는 것이다(engine_profile=`genie_v2proplus_cpu`). ANPC 음성 모델은 GPT-SoVITS v2ProPlus를 주요 인물 음성으로 함께 파인튜닝한 다화자 모델이다(3.1절). 모든 NPC가 같은 모델을 쓰고 화자는 참조 음성으로만 구분한다.
+- 엔진 구성은 ANPC 음성 모델 하나를 Genie-TTS(ONNX)로 사용자 PC의 CPU에서 실행하는 것이다(engine_profile=`genie_v2proplus_cpu`). ANPC 음성 모델은 GPT-SoVITS v2ProPlus를 주요 인물 음성으로 함께 파인튜닝한 다화자 모델이다(3.1절). 합성은 스트리밍·버퍼링 재생으로 한다(4.2절). 모든 NPC가 같은 모델을 쓰고 화자는 참조 음성으로만 구분한다.
 - V의 음성은 생성하지 않는다. V의 대사는 참조·학습 자료로 쓰지 않는다.
 - 오리지널 대사·장면 음성을 대체하거나 끊지 않는다. 음성 출력은 ANPC 대화 세션 안에서만 한다.
 - 배포판에서 쓰지 않는 것: 인물마다 따로 둔 모델, 원격·제작자 운영 TTS 서버, 상용 TTS 제공자, 한국어 음성.
@@ -72,7 +72,7 @@ speech_text 작성 규칙:
 | 학습 화자 | 학습 목록에 승인된 커뮤니티 인물. 첫 모델은 주요 인물부터 시작하고, 인물을 더할 때 전체를 다시 학습한다. 군중·V는 학습하지 않는다 |
 | 학습 자료 | 해당 인물의 일본어 더빙 원작 대사. 단독 발화·효과음/배경음악/무전 필터 없음. 대본은 같은 string_id의 일본어 자막 원문 |
 | 화자 균형 | 화자별 학습 분량에 상한을 두어 대사가 많은 인물로 음색이 쏠리지 않게 한다. 상한 값은 학습 목록에 기록한다 |
-| 배포 형식 | 파인튜닝 가중치를 fp32 ONNX로 변환한 파일. 학습용 오디오·대본·체크포인트는 배포하지 않는다 |
+| 배포 형식 | 파인튜닝 가중치를 Genie ONNX로 변환한 파일. GPT(T2S) 디코더 두 개는 상수 접기 후 가중치 int8 동적 양자화(MatMul·Gemm, 채널별), 나머지는 fp32. VITS는 양자화하지 않는다. 학습용 오디오·대본·체크포인트는 배포하지 않는다 |
 | 학습 목록 | voice_model_version, 기반 버전, 화자별 voice_profile_id·string_id 목록·분량, 화자별 상한. 모델과 함께 배포하는 메타데이터 |
 
 - 모델 업데이트는 voice_model_version과 engine_profile 버전을 함께 올린다. engine_profile 버전은 런타임·모델·후처리 값을 함께 식별한다.
@@ -94,23 +94,34 @@ speech_text 작성 규칙:
 
 ### 4.2. 합성과 재생 순서
 
-1. speech_text를 일본어 문장 끝 기호(。！？…)와 줄바꿈으로 나눈다. 빈 문장은 버린다.
-2. 문장 순서대로 합성한다. 동시 합성은 1개다.
-3. 엔진 프로필의 후처리를 적용한다. 고정 EQ, 고정 이득, 피크 -1dBFS 제한, 앞 0.15초·뒤 0.25초 무음이다.
-4. 재생 큐에 넣고 순서대로 재생한다. 문장 사이 쉼은 delivery 값을 따른다.
+1. speech_text를 합성 단위로 나눈다. 일본어 문장 끝 기호(。！？…)와 줄바꿈에서만 자르고, 앞 문장부터 이어 붙여 단위당 unit_max_chars 이하로 만든다. 한 문장이 상한을 넘으면 그 문장 하나를 단위로 쓴다. 빈 문장은 버린다.
+2. 단위 순서대로 합성한다. 동시 합성은 1개다. 단위 안에서는 스트리밍 합성한다. GPT 토큰이 chunk_tokens개 쌓일 때마다 앞 context_tokens개를 겹쳐 VITS로 변환해 조각을 만들고, 마지막 hold_tokens개는 다음 조각까지 보류한다. 조각 경계는 crossfade_ms로 잇는다.
+3. 엔진 프로필의 후처리를 적용한다. 고정 EQ, 고정 이득, 피크 -1dBFS 제한, 대사 앞 0.15초·뒤 0.25초 무음이다.
+4. 버퍼링 후 재생을 시작한다. 확보된 음성 길이가 (예측 RTF − 1) × 남은 예상 음성 길이 이상이면 시작한다. 예측 RTF는 현재 대사에서 잰 최근 조각의 생성 시간 ÷ 조각 길이이고, 첫 조각 전에는 rtf_prior다. 남은 예상 음성 길이는 아직 조각이 되지 않은 speech_text 글자 수 × sec_per_char다. 예측 RTF가 1 이하이면 첫 조각이 준비되는 즉시 시작한다. 재생은 전체 응답 수용 뒤에만 한다(2절).
+5. 시작 뒤에는 조각을 순서대로 이어 재생한다. 다음 조각이 늦으면 준비될 때까지 기다린다. 합성 단위 사이 쉼은 delivery 값을 따른다.
 
-| delivery | speed_factor | 문장 사이 쉼 |
+| delivery | speed_factor | 합성 단위 사이 쉼 |
 | --- | --- | --- |
 | normal | 1.0 | 0.30초 |
 | fast | 1.15 | 0.20초 |
 | slow | 0.9 | 0.45초 |
 
+| 스트리밍·버퍼링 값 | 기본값 |
+| --- | --- |
+| unit_max_chars | 80 |
+| chunk_tokens | 25 (음성 약 1초) |
+| context_tokens | 10 |
+| hold_tokens | 3 |
+| crossfade_ms | 10 |
+| rtf_prior | 1.4 |
+| sec_per_char | 0.16 |
+
 수치는 engine_profile의 기본값이다. 실측에 따라 엔진 프로필 버전을 올려 조정하며 사용자 설정으로 노출하지 않는다.
 
 ### 4.3. 자막 동기
 
-- 자막은 첫 문장 재생 시작과 함께 표시한다.
-- 응답 수용 후 subtitle_wait_ms 안에 첫 문장이 준비되지 않으면 자막을 먼저 표시하고 그 대사의 음성은 버린다. 자막 표시 뒤 늦게 도착한 음성을 재생하지 않는다.
+- 자막은 첫 음성 재생 시작과 함께 표시한다.
+- 응답 수용 후 subtitle_wait_ms가 지나도 4.2의 시작 조건을 채우지 못하면, 준비된 조각이 있을 때는 그 시점에 재생과 자막을 시작한다(이후 조각 대기 허용). 준비된 조각이 없으면 자막을 먼저 표시하고 그 대사의 음성은 버린다. 자막 표시 뒤 늦게 도착한 음성을 재생하지 않는다.
 - 재생 중 자막을 유지한다. 자막 수명은 실행 규격을 따른다.
 
 ### 4.4. 로드·예열·캐시
@@ -119,7 +130,7 @@ speech_text 작성 규칙:
 | --- | --- |
 | 엔진·기본 모델 | 음성이 활성화된 게임 세션 시작 시 비동기 로드. 「ヴィー」가 들어간 고정 문장으로 1회 예열. 로드 완료 전 대사는 자막만 |
 | 참조 처리 결과 | (voice_profile_id, ref_id, engine_profile 버전) 키로 로컬 캐시. 대화 진입(entry_pending) 시 대상 profile의 캐시를 준비 |
-| 합성 결과 | 선택 캐시. (engine_profile 버전, ref_id, delivery, 문장 해시) 키. utterance_cache_mb 상한 초과 시 최근 미사용부터 제거 |
+| 합성 결과 | 선택 캐시. (engine_profile 버전, ref_id, delivery, 합성 단위 해시) 키. utterance_cache_mb 상한 초과 시 최근 미사용부터 제거 |
 
 engine_profile 버전 또는 content_version이 바뀌면 해당 캐시를 무효화한다. 캐시는 게임 세이브에 넣지 않는다.
 
@@ -168,12 +179,12 @@ engine_profile 버전 또는 content_version이 바뀌면 해당 캐시를 무�
 | voice_profile_missing | 대상 profile·참조 없음. 해당 대사 음성 생략 |
 | reference_unavailable | 게임 파일에서 참조 추출 실패. 해당 참조 제외 후 4.1 순서 계속 |
 | speech_text_invalid | 2절 내용 검사 실패. 해당 대사 음성 생략 |
-| synthesis_failed / synthesis_timeout | 해당 대사의 남은 문장 폐기. 자동 재합성·대사 재요청 없음 |
+| synthesis_failed / synthesis_timeout | 해당 대사의 남은 조각 폐기. 자동 재합성·대사 재요청 없음 |
 | audio_device_unavailable | 재생 장치 없음. 해당 대사 음성 생략 |
 
 - 음성 오류로 NPC 대사를 다시 요청하지 않는다. NPC가 음성 오류를 대사로 말하지 않는다.
-- 진단 기록은 오류 코드·지연·문장 수만 남긴다. speech_text 원문·오디오는 기본으로 기록하지 않는다.
+- 진단 기록은 오류 코드·지연·조각 수만 남긴다. speech_text 원문·오디오는 기본으로 기록하지 않는다.
 
 ## 9. 측정 항목
 
-로컬 단조 시계로 response_accepted, first_sentence_ready, npc_first_audio, playback_end를 기록한다. 첫 음성 지연은 npc_first_audio − player_input_accepted이다. 음성을 생략하면 npc_first_audio는 null이다. 시험 방법과 출시 판정 수치는 [개발·검증 계획](development-validation.md)에 둔다.
+로컬 단조 시계로 response_accepted, first_chunk_ready, npc_first_audio, playback_end와 재생 중 조각 대기 합계(playback_stall_ms)를 기록한다. 첫 음성 지연은 npc_first_audio − player_input_accepted이다. 음성을 생략하면 npc_first_audio는 null이다. 시험 방법과 출시 판정 수치는 [개발·검증 계획](development-validation.md)에 둔다.

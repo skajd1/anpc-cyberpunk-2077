@@ -53,10 +53,18 @@ function bridge.buildBody(character, turns, text, snapshot, key, crowd)
     input[#input + 1] = '{"role":"' .. (turn.role == "npc" and "assistant" or "user") .. '","content":' .. json.string(turn.text) .. '}'
   end
   input[#input + 1] = '{"role":"user","content":' .. json.string(text) .. '}'
-  return '{"model":' .. json.string(config.model) .. ',"store":false,"instructions":' .. json.string(character.instructions)
+  local instructions, schema = character.instructions, prompts.schema
+  if config.voice_enabled then
+    local at, stop = instructions:find(prompts.contracts.text, 1, true)
+    if at then
+      instructions = instructions:sub(1, at - 1) .. prompts.contracts.voice .. instructions:sub(stop + 1)
+      schema = prompts.voice_schema
+    end
+  end
+  return '{"model":' .. json.string(config.model) .. ',"store":false,"instructions":' .. json.string(instructions)
     .. ',"input":[' .. table.concat(input, ",") .. '],"max_output_tokens":512,'
     .. (config.model == "gpt-6-luna" and '"reasoning":{"effort":"none"},' or '')
-    .. '"text":{"format":{"type":"json_schema","name":"npc_reply","strict":true,"schema":' .. prompts.schema .. '}}}'
+    .. '"text":{"format":{"type":"json_schema","name":"npc_reply","strict":true,"schema":' .. schema .. '}}}'
 end
 
 -- 구조화 출력(npc_reply)을 자막 한 줄과 대화 종료 여부로 바꾼다. 형식이 맞지 않으면 nil.
@@ -84,12 +92,33 @@ end
 
 local intents = { answer = true, ask = true, refuse = true, warn = true, farewell = true }
 local emotions = { neutral = true, friendly = true, wary = true, annoyed = true, afraid = true, curious = true }
+local deliveries = { normal = true, fast = true, slow = true }
+local textKeys = { dialogue = true, intent = true, emotion = true, action = true, follow_up = true }
+local voiceKeys = { dialogue = true, intent = true, emotion = true, action = true, follow_up = true, delivery = true, speech_text = true }
 
-function bridge.readReply(text, actions)
+-- speech_text는 일본어 구어만 허용한다. 한글·지문 괄호·마크다운이 섞이면 음성만 생략한다(음성 출력 규격 2절).
+function bridge.speechValid(value)
+  for char in value:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+    local b1, b2, b3 = char:byte(1, 3)
+    local cp = b1
+    if b1 >= 224 and b3 then cp = (b1 % 16) * 4096 + (b2 % 64) * 64 + (b3 % 64)
+    elseif b1 >= 192 and b2 then cp = (b1 % 32) * 64 + (b2 % 64) end
+    if (cp >= 0xAC00 and cp <= 0xD7A3) or (cp >= 0x3131 and cp <= 0x318E) or cp == 0xFF08 or cp == 0xFF09
+      or char:find("^[%[%]%(%)%*_#`]$") then return false end
+  end
+  return true
+end
+
+-- voice가 참이면 음성 형태(delivery·speech_text 포함)도 받는다. 다섯째 반환값은 음성 요청 또는 nil.
+function bridge.readReply(text, actions, voice)
   local reply = json.decode(text)
-  if not exact(reply, { dialogue = true, intent = true, emotion = true, action = true, follow_up = true })
-    or not boundedText(reply.dialogue, 600) or not intents[reply.intent] or not emotions[reply.emotion]
+  local voiced = voice and exact(reply, voiceKeys)
+  if not voiced and not exact(reply, textKeys) then return nil end
+  if voiced and (not deliveries[reply.delivery] or not boundedText(reply.speech_text, 600)) then return nil end
+  if not boundedText(reply.dialogue, 600) or not intents[reply.intent] or not emotions[reply.emotion]
     or (reply.follow_up ~= json.null and not boundedText(reply.follow_up, 150)) then return nil end
+  local speech = voiced and bridge.speechValid(reply.speech_text)
+    and { emotion = reply.emotion, delivery = reply.delivery, text = reply.speech_text } or nil
   local selected
   if reply.action ~= json.null then
     if not exact(reply.action, { action_id = true, args = true }) then return nil end
@@ -123,7 +152,31 @@ function bridge.readReply(text, actions)
     end
   end
   return line, ended, display, selected and selected.action_id == "play_gesture" and selected.execution_mode == "execute"
-    and reply.action.args.gesture_ref or nil
+    and reply.action.args.gesture_ref or nil, speech
+end
+
+-- 로컬 TTS 보조 프로세스(개발 시험)에 tts/req-<id>.json을 넘긴다. 임시 파일에 쓴 뒤 이름을 바꿔 읽는 쪽이 반쯤 쓴 파일을 보지 않게 한다.
+local function writeTts(name, content)
+  local tmp = "tts/" .. name .. ".tmp"
+  local file = io.open(tmp, "w")
+  if not file then return false end
+  file:write(content)
+  file:close()
+  pcall(os.remove, "tts/" .. name .. ".json")
+  return os.rename(tmp, "tts/" .. name .. ".json") ~= nil
+end
+
+function bridge.speak(id, item, speech)
+  if not config.voice_enabled or not speech then return false end
+  local profile = item and (item.crowd and config.voice_crowd_profile or config.voice_profiles[item.key])
+  if not profile then return false end
+  return writeTts("req-" .. id, '{"request_id":"' .. id .. '","voice_profile_id":' .. json.string(profile)
+    .. ',"emotion":' .. json.string(speech.emotion) .. ',"delivery":' .. json.string(speech.delivery)
+    .. ',"speech_text":' .. json.string(speech.text) .. '}')
+end
+
+function bridge.stopSpeech()
+  if config.voice_enabled then writeTts("stop", '{"stop":true}') end
 end
 
 local function entry()
@@ -168,12 +221,13 @@ local function deliverReply(system, id, text, character, item)
       return nil
     end
   end
-  local line, ended, display, gesture = bridge.readReply(text, character and json.decode(character.actions))
+  local line, ended, display, gesture, speech = bridge.readReply(text, character and json.decode(character.actions), config.voice_enabled)
   if not line then
     system:OnAIResponse(id, "error:invalid_response", "")
     return nil
   end
   system:OnAIResponse(id, ended and "ok:end" or "ok", line)
+  bridge.speak(id, item, speech)
   if gesture then display = actions.start(system,id,gesture) end
   -- 폐기된 응답은 대사와 행동 목록 모두 표시하지 않는다.
   actionDisplay = { id = id, text = display }
@@ -354,6 +408,8 @@ function bridge.update(delta)
       if not request or not IsDefined(request) then break end
       if not request.worldToken or not worldToken or request.worldToken==worldToken then
         if request.kind=="say" then actions.cancel("새 입력") end
+        -- 새 입력·대화 종료 때 재생 중이거나 대기 중인 음성을 멈춘다(음성 출력 규격 5절).
+        bridge.stopSpeech()
         if native then sendNative(system, request) else sendFile(system, request) end
       end
     end
@@ -373,6 +429,7 @@ function bridge.update(delta)
 end
 
 function bridge.reset()
+  bridge.stopSpeech()
   actions.reset()
   for id in pairs(nativePending) do
     pcall(function() Game.ANPCNative_Cancel(id) end)
