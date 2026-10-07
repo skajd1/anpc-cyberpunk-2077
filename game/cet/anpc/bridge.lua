@@ -166,17 +166,97 @@ local function writeTts(name, content)
   return os.rename(tmp, "tts/" .. name .. ".json") ~= nil
 end
 
-function bridge.speak(id, item, speech)
+-- output: "slots"는 보조 프로세스가 Audioware 슬롯과 tts/seg-<id>-<n>.json을 쓰고 게임이 NPC 위치에서 재생,
+-- "local"은 보조 프로세스가 직접 2D 재생(Audioware 없음).
+function bridge.speak(id, item, speech, output)
   if not config.voice_enabled or not speech then return false end
   local profile = item and (item.crowd and config.voice_crowd_profile or config.voice_profiles[item.key])
   if not profile then return false end
   return writeTts("req-" .. id, '{"request_id":"' .. id .. '","voice_profile_id":' .. json.string(profile)
     .. ',"emotion":' .. json.string(speech.emotion) .. ',"delivery":' .. json.string(speech.delivery)
-    .. ',"speech_text":' .. json.string(speech.text) .. '}')
+    .. ',"output":"' .. (output or "local") .. '","speech_text":' .. json.string(speech.text) .. '}')
 end
 
-function bridge.stopSpeech()
-  if config.voice_enabled then writeTts("stop", '{"stop":true}') end
+-- 보조 프로세스가 1초마다 tts/alive.txt에 os.time 값을 쓴다. 3초 넘게 갱신이 없으면 음성 없이 자막만 쓴다.
+function bridge.helperAlive()
+  local file = io.open("tts/alive.txt", "r")
+  if not file then return false end
+  local stamp = tonumber(file:read("*a"))
+  file:close()
+  return stamp ~= nil and math.abs(os.time() - stamp) <= 3
+end
+
+local voiceJobs = {}
+
+function bridge.stopSpeech(system)
+  if not config.voice_enabled then return end
+  writeTts("stop", '{"stop":true}')
+  voiceJobs = {}
+  if system then pcall(function() system:VoiceStop() end) end
+end
+
+local function finishDelivery(system, id, display, gesture)
+  if gesture then display = actions.start(system, id, gesture) end
+  -- 폐기된 응답은 대사와 행동 목록 모두 표시하지 않는다.
+  actionDisplay = { id = id, text = display }
+end
+
+-- 첫 구간을 재생하는 순간 자막을 띄우고(음성 출력 규격 4.3), 앞 구간 길이가 끝나면 다음 구간을 잇는다.
+local function playSegment(system, id, job, seg)
+  local ok, played = pcall(function() return system:VoicePlay(id, seg.slot) end)
+  return ok and played == true
+end
+
+local function voiceUpdate(system, delta)
+  local menuOK, menuOpen = pcall(function() return system:IsChatMenuOpen() end)
+  for id, job in pairs(voiceJobs) do
+    local path = "tts/seg-" .. id .. "-" .. job.next .. ".json"
+    local file = io.open(path, "r")
+    if file then
+      local seg = json.decode(file:read("*a") or "")
+      file:close()
+      pcall(os.remove, path)
+      if type(seg) == "table" and type(seg.slot) == "number" and type(seg.dur_ms) == "number" then
+        job.queue[#job.queue + 1] = { slot = seg.slot, dur = seg.dur_ms / 1000, final = seg.final == true }
+        job.next = job.next + 1
+      end
+    end
+    if not job.started then
+      job.wait = job.wait + delta
+      if not system:IsWaitingForReply(id) then
+        voiceJobs[id] = nil
+      elseif job.queue[1] and playSegment(system, id, job, job.queue[1]) then
+        local seg = table.remove(job.queue, 1)
+        job.started, job.playEnd, job.final = true, clock + seg.dur, seg.final
+        system:OnAIVoiceResponse(id, job.ended and "ok:end" or "ok", job.line, job.seconds)
+        finishDelivery(system, id, job.display, job.gesture)
+      elseif job.queue[1] or job.wait > config.voice_wait_s then
+        -- 대기 한도 안에 첫 구간이 없거나 재생할 수 없으면 자막만 표시하고 음성은 버린다.
+        voiceJobs[id] = nil
+        bridge.stopSpeech(system)
+        system:OnAIResponse(id, job.ended and "ok:end" or "ok", job.line)
+        finishDelivery(system, id, job.display, job.gesture)
+      end
+    elseif system:GetLatestRequestId() ~= id then
+      voiceJobs[id] = nil
+    else
+      if menuOK and menuOpen then job.playEnd = job.playEnd + delta end
+      if job.queue[1] and clock >= job.playEnd - 0.01 then
+        local seg = table.remove(job.queue, 1)
+        playSegment(system, id, job, seg)
+        job.playEnd = math.max(clock, job.playEnd) + seg.dur
+        job.final = seg.final
+      elseif job.final and clock >= job.playEnd then
+        voiceJobs[id] = nil
+      end
+    end
+  end
+end
+
+function bridge.voicePendingCount()
+  local count = 0
+  for _ in pairs(voiceJobs) do count = count + 1 end
+  return count
 end
 
 local function entry()
@@ -226,11 +306,19 @@ local function deliverReply(system, id, text, character, item)
     system:OnAIResponse(id, "error:invalid_response", "")
     return nil
   end
+  if speech and bridge.helperAlive() then
+    local ok, spatial = pcall(function() return system:VoiceSpatialAvailable() end)
+    if ok and spatial == true and bridge.speak(id, item, speech, "slots") then
+      -- 자막·행동은 첫 음성 구간 재생 때 함께 시작한다(voiceUpdate).
+      local _, chars = speech.text:gsub("[^\128-\191]", "")
+      voiceJobs[id] = { line = line, ended = ended, display = display, gesture = gesture, wait = 0, next = 1, queue = {},
+        seconds = chars * config.voice_sec_per_char, started = false }
+      return line
+    end
+    bridge.speak(id, item, speech, "local")
+  end
   system:OnAIResponse(id, ended and "ok:end" or "ok", line)
-  bridge.speak(id, item, speech)
-  if gesture then display = actions.start(system,id,gesture) end
-  -- 폐기된 응답은 대사와 행동 목록 모두 표시하지 않는다.
-  actionDisplay = { id = id, text = display }
+  finishDelivery(system, id, display, gesture)
   return line
 end
 
@@ -402,6 +490,7 @@ function bridge.update(delta)
       worldToken=scope
     end
     actions.update(delta,system)
+    if config.voice_enabled then voiceUpdate(system, delta) end
     local native = useNative()
     for _ = 1, 8 do
       local request = system:TakeRequest()
@@ -409,7 +498,10 @@ function bridge.update(delta)
       if not request.worldToken or not worldToken or request.worldToken==worldToken then
         if request.kind=="say" then actions.cancel("새 입력") end
         -- 새 입력·대화 종료 때 재생 중이거나 대기 중인 음성을 멈춘다(음성 출력 규격 5절).
-        bridge.stopSpeech()
+        bridge.stopSpeech(system)
+        -- 재생과 같은 프레임에 음원을 등록하면 위치가 잡히지 않을 수 있어 요청 때 미리 등록한다.
+        if config.voice_enabled and request.kind=="say" then pcall(function() system:VoicePrepare(request.id) end) end
+        if request.kind=="end" then pcall(function() system:VoiceRelease() end) end
         if native then sendNative(system, request) else sendFile(system, request) end
       end
     end

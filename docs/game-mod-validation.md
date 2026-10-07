@@ -658,3 +658,20 @@
 - 배포 manifest·해시: config.local.audioware-deployment.json (릴리스 ZIP SHA-256·설치 파일 26개 해시·생성 폴더 4개)
 - 백업·복원 자료: 기존 파일 덮어쓰기 없음. manifest의 파일·생성 폴더 삭제로 복원
 - 확인: 실게임 로드 미검증
+
+## DEP-20261008015427 — NPC 음성 Audioware 3D 재생 개발 시험
+
+- 일시: 2026-10-08 01:54:27 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | Audioware가 있고 보조 프로세스가 살아 있으면 output=slots로 요청하고, tts/seg-<id>-<n>.json 구간을 앞 구간 길이에 맞춰 이어 재생. 첫 구간 재생 때 자막·행동 시작, 3초 안에 구간이 없으면 자막만. 요청 때 음원 등록, 종료 때 해제 | 설계안 A(개발·검증 계획 6.4.1). 음성이 대화 NPC 위치에서 들리고 자막이 첫 음성과 함께 표시 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_wait_s=3.0, voice_sec_per_char=0.16 추가 | 첫 구간 대기 한도와 자막 표시 시간 계산 |
+| r6/scripts/ANPC/Voice.reds | 추가 | Entry 확장: VoiceSpatialAvailable·VoicePrepare·VoicePlay·VoiceStop·VoiceRelease·OnAIVoiceResponse. Audioware 참조는 @if(ModuleExists("Audioware"))로 분리 | Audioware 없으면 false를 돌려 보조 프로세스 2D 재생으로 대체 |
+| r6/audioware/ANPC/manifest.yaml | 추가 | anpc_voice_0~7 슬롯을 on-demand로 선언 | 재생할 때마다 슬롯 파일을 다시 읽어 보조 프로세스가 덮어쓴 음성을 재생 |
+| r6/audioware/ANPC/slots/slot_0~7.wav | 추가 | 0.2초 무음 자리 표시 파일 | 시작 시 manifest 검증 통과. 실행 중 보조 프로세스가 덮어씀 |
+
+- 배포 manifest·해시: config.local.voice-spatial-deployment.json
+- 백업·복원 자료: config.local.backups/voice-spatial-20261008-015427 (수정 2개 백업, 추가 10개는 삭제로 복원)
+- 확인: 실게임 미검증(redscript 컴파일·Audioware 로드 포함). Lua 단위 검사 미실행

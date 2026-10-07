@@ -14,5 +14,9 @@ return {
   voice_enabled = true,
   -- 개발 시험용 NPC 키 → voice_profile_id. 없는 인물은 자막만.
   voice_profiles = { judy = "vp_judy", viktor = "vp_viktor", rogue = "vp_rogue" },
-  voice_crowd_profile = "crowd_m2"
+  voice_crowd_profile = "crowd_m2",
+  -- 응답 수용 후 첫 음성 구간 대기 한도(음성 출력 규격 subtitle_wait_ms). 넘으면 자막만.
+  voice_wait_s = 3.0,
+  -- 자막 표시 시간 계산용 일본어 1자당 음성 길이(초).
+  voice_sec_per_char = 0.16
 }
