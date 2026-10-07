@@ -92,6 +92,21 @@ assert(bridge.readReply((validReply:gsub('"follow_up":null', '"follow_up":null,"
 assert(bridge.readReply((validReply:gsub('"answer"', '"farewell"'):gsub('"follow_up":null', '"follow_up":"또?"'))) == nil)
 print("게임 응답 필드·열거값·글자 수·실행 가능한 행동 검사 통과")
 
+-- 음성 형태: voice가 참일 때만 delivery·speech_text를 받고, speech_text가 일본어 구어가 아니면 음성만 생략한다.
+local voicedReply = '{"emotion":"neutral","delivery":"normal","dialogue":"괜찮아.","follow_up":null,"speech_text":"大丈夫だ。","intent":"answer","action":null}'
+assert(bridge.readReply(voicedReply) == nil)
+local vLine, _, _, _, vSpeech = bridge.readReply(voicedReply, nil, true)
+assert(vLine == "괜찮아." and vSpeech.text == "大丈夫だ。" and vSpeech.delivery == "normal" and vSpeech.emotion == "neutral")
+assert(select(5, bridge.readReply(validReply, nil, true)) == nil and bridge.readReply(validReply, nil, true) == "괜찮아.")
+assert(bridge.readReply((voicedReply:gsub('"normal"', '"whisper"')), nil, true) == nil)
+assert(bridge.readReply((voicedReply:gsub('"大丈夫だ。"', '"   "')), nil, true) == nil)
+for _, bad in ipairs({ "大丈夫다。", "（笑）大丈夫", "**大丈夫**", "[小声]大丈夫" }) do
+  local badLine, _, _, _, badSpeech = bridge.readReply((voicedReply:gsub('"大丈夫だ。"', '"' .. bad .. '"')), nil, true)
+  assert(badLine == "괜찮아." and badSpeech == nil, bad)
+end
+assert(bridge.speechValid("よう、ヴィー。カネの話は後でいい！"))
+print("음성 응답 필드·speech_text 검사 통과")
+
 -- 네이티브 경로: 요청 본문 조립, 완료 폴링, 응답 해석, 최근 발화 누적, 세션 종료 시 취소.
 local nativeCalls, results, cancelled = {}, {}, {}
 Game.ANPCNative_Version = function() return "0.1.0" end

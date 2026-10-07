@@ -64,6 +64,8 @@ public class Entry extends ScriptableSystem {
   private let identityInstances: array<ref<IdentityInstance>>;
   private let identityTravelListener: ref<CallbackHandle>;
   private let menuListener: ref<CallbackHandle>;
+  private let moveListener: ref<AnpcMoveListener>;
+  private let moveOwner: wref<PlayerPuppet>;
 
   private func OnAttach() -> Void { this.Reset(); this.RegisterIdentityTravel(); }
   private func OnRestored(saveVersion: Int32, gameVersion: Int32) -> Void { this.Reset(); this.RegisterIdentityTravel(); }
@@ -111,8 +113,10 @@ public class Entry extends ScriptableSystem {
     this.rootNpc = null;
     this.rootHubId = -1;
     ArrayClear(this.rootChoices);
+    if IsDefined(this.session) && IsDefined(this.session.control) { this.session.control.Release(); }
     if IsDefined(this.session) && IsDefined(this.session.popup) { this.session.popup.Close(); }
     this.session = null;
+    this.StopMoveWatch();
     this.crowdNpc = null;
     this.crowdReactedAt = 0.0;
   }
@@ -282,16 +286,18 @@ public class Entry extends ScriptableSystem {
       if IsDefined(diagnostics) { diagnostics.RecordOffer("no_native_hub", false); }
       return false;
     }
+    // 원작 허브 데이터는 처음 표시될 때만 바뀐다. 그때 V가 아직 4m 밖이거나 인사 대사·장면 상태가
+    // 남아 막혔다면, 허브가 떠 있는 동안 조건을 계속 확인해 통과하는 순간 다시 그리게 한다.
     let candidate = SceneEntry.FindCandidate(player);
     if !IsDefined(candidate) || !IsDefined(candidate.npc) {
       this.sceneOffer = null;
       if IsDefined(diagnostics) { diagnostics.RecordOffer("no_supported_speaker", false); }
+      this.ScheduleRetry(player);
       return false;
     }
     if candidate.hubId < 0 {
       this.sceneOffer = null;
       if IsDefined(diagnostics) { diagnostics.RecordOffer("state_blocked", false); }
-      // 허브 표시 직후에는 장면 상태가 늦게 반영될 수 있어 짧게 몇 번만 다시 검사한다.
       this.ScheduleRetry(player);
       return false;
     }
@@ -351,18 +357,32 @@ public class Entry extends ScriptableSystem {
     return matched;
   }
 
+  // 처음 5초는 0.5초, 그 뒤에는 원작 선택 대기 허브가 떠 있는 동안 1초 간격으로 확인한다.
   private func ScheduleRetry(player: ref<PlayerPuppet>) -> Void {
-    if !IsDefined(player) || this.retryPending || this.retries >= 10 { return; }
+    if !IsDefined(player) || this.retryPending { return; }
     this.retries += 1;
     this.retryPending = true;
     let callback = new SceneEntryRefresh();
     callback.entry = this;
-    GameInstance.GetDelaySystem(player.GetGame()).DelayCallback(callback, 0.5, false);
+    GameInstance.GetDelaySystem(player.GetGame()).DelayCallback(callback, this.retries <= 10 ? 0.5 : 1.0, false);
   }
 
+  // 조건이 통과할 때만 위젯을 다시 그리게 해 원작 목록을 불필요하게 갱신하지 않는다.
+  // 허브가 닫혔거나 ANPC 대화로 보류 중이면 확인을 멈춘다.
   public func OnRetry() -> Void {
     this.retryPending = false;
-    SceneEntry.RefreshDialogs(this.GetGameInstance());
+    let game = this.GetGameInstance();
+    let player = GetPlayer(game);
+    if !IsDefined(player) || this.IsHolding() || !SceneEntry.HasWaitingHub(game) {
+      this.retries = 0;
+      return;
+    }
+    let candidate = SceneEntry.FindCandidate(player);
+    if IsDefined(candidate) && IsDefined(candidate.npc) && candidate.hubId >= 0 {
+      SceneEntry.RefreshDialogs(game);
+      return;
+    }
+    this.ScheduleRetry(player);
   }
 
   public func GetSceneHubId() -> Int32 {
@@ -411,6 +431,11 @@ public class Entry extends ScriptableSystem {
 
   public func HasSession() -> Bool {
     return IsDefined(this.session);
+  }
+
+  // 지난 세션의 차선 합류가 같은 NPC의 새 세션 정지를 덮지 않게 한다.
+  public func IsControlling(npc: ref<NPCPuppet>) -> Bool {
+    return IsDefined(this.session) && IsDefined(this.session.control) && this.session.control.Controls(npc);
   }
 
   // 행동 결과 표시의 유효성 검사. 새 입력·종료·로드 뒤의 결과는 CET가 버린다.
@@ -524,15 +549,39 @@ public class Entry extends ScriptableSystem {
     session.name = crowd ? "" : GetLocalizedText(npc.GetDisplayName());
     this.session = session;
     this.status.reason = "session_active";
+    // 자유 군중만 정지·V 시선을 소유한다. 커뮤니티 허브(UF-15)는 원작 장면 제어를 건드리지 않는다.
+    if crowd {
+      let control = new NpcControl();
+      if control.Engage(npc, player) { session.control = control; }
+    }
+    this.StartMoveWatch(player);
     this.OpenInput(session);
     this.ScheduleWatch(player.GetGame());
   }
 
+  private func StartMoveWatch(player: ref<PlayerPuppet>) -> Void {
+    this.StopMoveWatch();
+    let listener = new AnpcMoveListener();
+    player.RegisterInputListener(listener, n"MoveX");
+    player.RegisterInputListener(listener, n"MoveY");
+    this.moveListener = listener;
+    this.moveOwner = player;
+  }
+
+  private func StopMoveWatch() -> Void {
+    if IsDefined(this.moveOwner) && IsDefined(this.moveListener) { this.moveOwner.UnregisterInputListener(this.moveListener); }
+    this.moveListener = null;
+    this.moveOwner = null;
+  }
+
   // V 차례에만 입력칸을 연다. 입력칸이 닫혀 있는 동안 자막은 흐림 없는 화면에 표시된다.
+  // 이동 키가 눌려 있으면 뗌이 입력칸으로 가 키가 눌린 채 남으므로 뗄 때까지 미룬다.
   private func OpenInput(session: ref<ChatSession>) -> Void {
     if session.menuSuspended { session.resumeInputAfterMenu = true; return; }
     if session.pendingRequest >= 0 { return; }
     if IsDefined(session.popup) || !IsDefined(this.uiController) { return; }
+    session.inputDeferred = IsDefined(this.moveListener) && this.moveListener.IsMoving();
+    if session.inputDeferred { return; }
     session.popup = ChatPopup.Create(this, session.hangulMode, session.inputDraft, session.inputDraftCaret);
     session.inputDraft = "";
     session.inputDraftCaret = 0;
@@ -773,6 +822,8 @@ public class Entry extends ScriptableSystem {
         this.EndSession(session, watchReason);
         return;
       }
+      if IsDefined(session.control) { session.control.Maintain(); }
+      if session.inputDeferred { this.OpenInput(session); }
       this.ScheduleWatch(game);
     }
   }
@@ -802,6 +853,8 @@ public class Entry extends ScriptableSystem {
     if this.session != session { return; }
     this.HideSubtitles(session);
     this.session = null;
+    if IsDefined(session.control) { session.control.Release(); }
+    this.StopMoveWatch();
     this.status.reason = reason;
     // 브리지가 이 세션의 엔진을 정리하도록 알린다.
     this.requestSeq += 1;
@@ -830,6 +883,82 @@ public class Entry extends ScriptableSystem {
     this.consumedHubId = -1;
     let player: ref<PlayerPuppet> = session.player;
     if IsDefined(player) { SceneEntry.RefreshDialogs(player.GetGame()); }
+  }
+
+  // ---- NPC 일본어 음성 3D 재생(Voice.reds의 AnpcAudioware 사용) ----
+  private let voiceEmitter: EntityID;
+
+  private let voiceRegistered: Bool;
+
+  public func VoiceSpatialAvailable() -> Bool { return AnpcAudioware.Available(); }
+
+  // 재생과 같은 프레임에 등록하면 위치가 잡히지 않을 수 있어 요청 시점에 미리 등록한다.
+  public func VoicePrepare(requestId: Int32) -> Bool {
+    if !AnpcAudioware.Available() { return false; }
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId { return false; }
+    let npc: ref<NPCPuppet> = session.npc;
+    if !IsDefined(npc) || !npc.IsAttached() { return false; }
+    let game = this.GetGameInstance();
+    let id = npc.GetEntityID();
+    if this.voiceRegistered && NotEquals(this.voiceEmitter, id) {
+      AnpcAudioware.Unregister(game, this.voiceEmitter);
+      this.voiceRegistered = false;
+    }
+    if !this.voiceRegistered || !AnpcAudioware.IsRegistered(game, id) {
+      this.voiceRegistered = AnpcAudioware.Register(game, id);
+      this.voiceEmitter = id;
+    }
+    return this.voiceRegistered;
+  }
+
+  public func VoicePlay(requestId: Int32, slot: Int32, volume: Float) -> Bool {
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId || !this.voiceRegistered { return false; }
+    let npc: ref<NPCPuppet> = session.npc;
+    if !IsDefined(npc) || NotEquals(npc.GetEntityID(), this.voiceEmitter) { return false; }
+    return AnpcAudioware.Play(this.GetGameInstance(), this.voiceEmitter, slot, volume);
+  }
+
+  // 새 입력·대화 종료·초기화: 모든 슬롯을 멈춘다.
+  public func VoiceStop() -> Void {
+    if !this.voiceRegistered { return; }
+    let game = this.GetGameInstance();
+    let slot = 0;
+    while slot < 8 {
+      AnpcAudioware.Stop(game, this.voiceEmitter, slot);
+      slot += 1;
+    }
+  }
+
+  public func VoiceRelease() -> Void {
+    if !this.voiceRegistered { return; }
+    this.VoiceStop();
+    AnpcAudioware.Unregister(this.GetGameInstance(), this.voiceEmitter);
+    this.voiceRegistered = false;
+  }
+
+  // 첫 음성 재생과 함께 자막을 띄운다(음성 출력 규격 4.3). 표시 시간은 글자 수 기준과 예상 음성 길이 중 긴 쪽.
+  public func OnAIVoiceResponse(requestId: Int32, status: String, text: String, voiceSeconds: Float) -> Void {
+    let session = this.session;
+    if !IsDefined(session) || session.pendingRequest != requestId { return; }
+    let npc: ref<NPCPuppet> = session.npc;
+    if !StrBeginsWith(status, "ok") || StrLen(text) == 0 || !IsDefined(npc) {
+      this.OnAIResponse(requestId, status, text);
+      return;
+    }
+    session.pendingRequest = -1;
+    let diagnostics = SceneEntryInstaller.Get();
+    if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status + " voice"); }
+    let game = this.GetGameInstance();
+    this.HideSubtitles(session);
+    let line = this.NextSubtitleId();
+    let duration = MinF(30.0, MaxF(AnpcSubtitles.Duration(text), voiceSeconds + 0.3));
+    AnpcVoiceSubtitles.Show(game, line, npc, session.name, text, duration);
+    ArrayPush(session.subtitles, line);
+    this.ScheduleSubtitle(game, AnpcSubtitleCallback.Hide(), line, duration);
+    let next = Equals(status, "ok:end") ? AnpcSubtitleCallback.EndAfter() : AnpcSubtitleCallback.Reopen();
+    this.ScheduleSubtitle(game, next, line, duration + 0.3);
   }
 }
 

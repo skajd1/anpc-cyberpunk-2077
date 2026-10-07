@@ -628,3 +628,125 @@
 
 - 배포 manifest·해시: 당시 웹 반영 manifest 없음
 - 백업·복원 자료: 백업 위치 미기록
+
+## DEP-20261008011224 — NPC 일본어 음성 개발 시험 연결
+
+- 일시: 2026-10-08 01:12:25 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 음성 활성 시 출력 필드 안내·스키마를 음성 형태로 바꾸고, delivery·speech_text 검사와 일본어 구어 검사 추가. 수용된 대사의 음성 요청을 tts/req-<id>.json으로 쓰고 새 입력·종료·초기화 때 tts/stop.json을 씀 | UF-67~UF-73 개발 시험. 로컬 TTS 보조 프로세스가 스트리밍·버퍼링 재생. speech_text가 부적합하면 음성만 생략하고 자막은 유지 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_enabled=true, 주디·빅터·로그와 군중의 개발용 voice_profile 연결 추가 | 연결이 없는 인물은 자막만 표시 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/prompts.lua | 수정 | 프롬프트 0.18, 음성 출력 스키마(voice_schema)와 출력 필드 안내(contracts) 추가 | 음성 활성 요청에 일본어 speech_text와 45자 대사 안내 적용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/tts/ | 추가 | 음성 요청 파일 폴더 생성 | CET와 보조 프로세스 사이의 개발용 파일 요청 경로 |
+
+- 배포 manifest·해시: config.local.voice-dev-deployment.json
+- 백업·복원 자료: config.local.backups/voice-dev-20261008-011224
+- 확인: 실게임 미검증. Lua 단위 검사는 로컬 Lua 실행기가 없어 미실행. 보조 프로세스는 저장소 밖 개발 도구로 배포물에 포함하지 않음
+
+## DEP-20261008014811 — TweakXL 1.11.4·Audioware 1.9.9 설치
+
+- 일시: 2026-10-08 01:48:11 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/TweakXL/ (7개) · r6/tweaks/ | 추가 | TweakXL 1.11.4 공식 릴리스 압축 해제 | Audioware 필수 의존성 |
+| red4ext/plugins/audioware/audioware.dll · r6/scripts/Audioware/ (19개) | 추가 | Audioware 1.9.9 공식 릴리스 압축 해제 | 설계안 A(개발·검증 계획 6.4.1)의 NPC 위치 음성 재생 시험. 기존 파일 변경 없음 |
+
+- 배포 manifest·해시: config.local.audioware-deployment.json (릴리스 ZIP SHA-256·설치 파일 26개 해시·생성 폴더 4개)
+- 백업·복원 자료: 기존 파일 덮어쓰기 없음. manifest의 파일·생성 폴더 삭제로 복원
+- 확인: 실게임 로드 미검증
+
+## DEP-20261008015427 — NPC 음성 Audioware 3D 재생 개발 시험
+
+- 일시: 2026-10-08 01:54:27 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | Audioware가 있고 보조 프로세스가 살아 있으면 output=slots로 요청하고, tts/seg-<id>-<n>.json 구간을 앞 구간 길이에 맞춰 이어 재생. 첫 구간 재생 때 자막·행동 시작, 3초 안에 구간이 없으면 자막만. 요청 때 음원 등록, 종료 때 해제 | 설계안 A(개발·검증 계획 6.4.1). 음성이 대화 NPC 위치에서 들리고 자막이 첫 음성과 함께 표시 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_wait_s=3.0, voice_sec_per_char=0.16 추가 | 첫 구간 대기 한도와 자막 표시 시간 계산 |
+| r6/scripts/ANPC/Voice.reds | 추가 | Entry 확장: VoiceSpatialAvailable·VoicePrepare·VoicePlay·VoiceStop·VoiceRelease·OnAIVoiceResponse. Audioware 참조는 @if(ModuleExists("Audioware"))로 분리 | Audioware 없으면 false를 돌려 보조 프로세스 2D 재생으로 대체 |
+| r6/audioware/ANPC/manifest.yaml | 추가 | anpc_voice_0~7 슬롯을 on-demand로 선언 | 재생할 때마다 슬롯 파일을 다시 읽어 보조 프로세스가 덮어쓴 음성을 재생 |
+| r6/audioware/ANPC/slots/slot_0~7.wav | 추가 | 0.2초 무음 자리 표시 파일 | 시작 시 manifest 검증 통과. 실행 중 보조 프로세스가 덮어씀 |
+
+- 배포 manifest·해시: config.local.voice-spatial-deployment.json
+- 백업·복원 자료: config.local.backups/voice-spatial-20261008-015427 (수정 2개 백업, 추가 10개는 삭제로 복원)
+- 확인: 실게임 미검증(redscript 컴파일·Audioware 로드 포함). Lua 단위 검사 미실행
+
+## DEP-20261008015726 — 군중 NPC 대화 중 정지·V 시선
+
+- 일시: 2026-10-08 01:57:27 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/NpcControl.reds | 추가 | 군중 세션 시작 시 제자리 대기 명령(20초, 10초마다 갱신)·V 시선·제자리 몸통 정렬, 종료 시 자기 명령·시선 해제 | UF-14·SR-11. 걷는 군중이 입력 중 멀어지지 않음. 해제 누락 시에도 20초 뒤 자동 만료 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 군중 StartSession에서 제어 시작, 세션 감시마다 유지, EndSession·Reset에서 해제 | 장면 허브 NPC는 UF-15에 따라 제어하지 않음 |
+| r6/scripts/ANPC/Session.reds | 수정 | ChatSession에 제어 상태 필드 추가 | 세션별 제어 추적 |
+
+- 배포 manifest·해시: config.local.crowd-hold-deployment.json
+- 백업·복원 자료: config.local.backups/crowd-hold-20261008-015726 (수정 2개 백업, 추가 1개는 삭제로 복원)
+- 확인: 실게임 미검증(redscript 컴파일 포함)
+
+## DEP-20261008020223 — 음성 redscript 컴파일 오류 수정
+
+- 일시: 2026-10-08 02:02:23 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Voice.reds | 수정 | Audioware 호출을 조건부 static 클래스 AnpcAudioware로 옮기고 Audioware 형식을 조건부 import | DEP-20261008015427 배포본이 같은 모듈 클래스에 @addMethod를 써 UNRESOLVED_REF로 전체 ANPC 스크립트 컴파일 실패 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 음성 메서드(VoiceSpatialAvailable·VoicePrepare·VoicePlay·VoiceStop·VoiceRelease·OnAIVoiceResponse)를 Entry 클래스 안에 추가 | 컴파일 복구. 동작은 DEP-20261008015427 설계와 같음 |
+
+- 배포 manifest·해시: config.local.voice-fix-deployment.json
+- 백업·복원 자료: config.local.backups/voice-fix-20261008-020223
+- 확인: 게임 scc로 Audioware 있음·없음 두 경우 시험 컴파일 통과. 실게임 동작 미검증
+
+## DEP-20261008021503 — NPC 음성 환경 효과·가림·음량 설정
+
+- 일시: 2026-10-08 02:15:03 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Voice.reds | 수정 | 음원 등록에 환경 프리셋·가림(occlusion) 적용, 슬롯 재생에 음량 인수 추가 | 원작 음성과 같은 실내외 효과·벽 뒤 감쇠로 공간감 차이를 줄임 |
+| r6/scripts/ANPC/Entry.reds | 수정 | VoicePlay에 음량 인수 추가 | CET 설정 음량 전달 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 구간 재생 시 voice_volume 전달 | 원작 음성과 크기 맞춤 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_volume=1.0 추가 | 청취로 조정 |
+
+- 배포 manifest·해시: config.local.voice-env-deployment.json
+- 백업·복원 자료: config.local.backups/voice-env-20261008-021503
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261008030606 — 군중 차선 정지·커뮤니티 허브 진입 재확인
+
+- 일시: 2026-10-08 03:06:07 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/NpcControl.reds | 수정 | 정지 명령 전에 CrowdMemberComponent.TryStopTrafficMovement로 차선 이동 정지, 정지 지점에서 0.5m 넘게 벗어나면 1초 간격 이상으로 재정지, 워크스팟 중 시작이면 벗어난 뒤 적용 | UF-14·SR-11. DEP-20261008015726의 정지 명령만으로는 차선을 걷는 군중이 대화 중 계속 걸어감 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 원작 허브 표시 때 화자 미발견·상태 차단이면 허브가 떠 있는 동안 0.5초(5초 뒤 1초) 간격으로 재확인하고 통과할 때만 대화 위젯 갱신 | UF-11·SR-16. 로그 첫 접근에서 ANPC 항목이 안 뜨고 물러났다 재접근해야 표시되던 문제 |
+| r6/scripts/ANPC/SceneEntry.reds | 수정 | 선택 대기 원작 허브 존재 확인 함수 추가 | 허브가 닫히면 재확인 중지 |
+
+- 배포 manifest·해시: config.local.crowd-stop-deployment.json
+- 백업·복원 자료: config.local.backups/crowd-stop-20261008-030606 (수정 3개 백업)
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261008032457 — 군중 대화 종료 뒤 차선 재합류·입력칸 키 고착 방지
+
+- 일시: 2026-10-08 03:24:58 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/NpcControl.reds | 수정 | 해제 때 ANPC가 멈춘 군중을 ReactionSystem.TryAndJoinTraffic으로 차선에 재합류(0.2초 뒤 시작, 실패 시 0.5초 간격 최대 8회). 같은 NPC의 새 세션·워크스팟 중이면 중단 | UF-14·SR-11. DEP-20261008030606 이후 대화가 끝나도 군중이 30초 넘게 서 있음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 세션 동안 이동 축(MoveX/MoveY) 입력 감시, 이동 중이면 입력칸 열기를 미루고 세션 감시에서 뗀 뒤 열기. 재합류 중단 판정용 제어 대상 확인 추가 | UF-17·SR-17. 이동 키를 누른 채 입력칸이 열리면 뗌을 입력칸이 가져가 키가 눌린 채 남음 |
+| r6/scripts/ANPC/Session.reds | 수정 | 입력칸이 누름을 받은 키를 추적해 Enter/Esc 때 모두 뗀 뒤(최대 1초) 닫기. 이동 축 감시 객체와 세션 열기 지연 상태 추가 | UF-17·SR-17. Enter 뒤 가끔 V가 옆으로 계속 이동하던 문제 |
+
+- 배포 manifest·해시: config.local.crowd-rejoin-deployment.json
+- 백업·복원 자료: config.local.backups/crowd-rejoin-20261008-032457 (수정 3개 백업)
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증

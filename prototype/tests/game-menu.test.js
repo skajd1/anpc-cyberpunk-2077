@@ -34,14 +34,17 @@ function fixture(){
   for(const [name,args]of [['PrepareGameMenu',[]],['OpenGameMenu',['popup']],['QueueMenuResume',['session']],['OnChatMenuChanged',['inMenu']],['OpenInput',['session']],['SessionEndReason',['session']],['OnSubtitleTimer',['callback']],['OnChatClosed',['popup']],['IsChatMenuOpen',[]]]){
     const run=new Function(...Object.keys(env),...args,body(entrySource,name));entry[name]=function(...values){return run.call(this,...Object.values(env),...values);};
   }
-  const popup={entry,closing:false,input:{text:'안녕하세요',caret:3,FinishComposition(){runtime.finished=true;},GetText(){return this.text;},GetCaretPosition(){return this.caret;}},
-    IsHangulMode:()=>false,Close(){this.closing=true;runtime.closes=(runtime.closes??0)+1;entry.OnChatClosed(this);},WasSubmitted:()=>false};
-  for(const [name,args]of [['GetDraft',[]],['GetDraftCaret',[]],['OnChatKey',['event']]]){
-    const keyEnv={...env,EInputAction:{IACT_Release:'release'},EInputKey:{IK_Tab:'tab',IK_Enter:'enter',IK_Escape:'escape'}};
+  entry.SubmitChat=text=>{runtime.submitted=text;};
+  const popup={entry,closing:false,held:[],pendingClose:false,pendingText:'',submitted:false,GetGame:()=>runtime,
+    input:{text:'안녕하세요',caret:3,FinishComposition(){runtime.finished=true;},GetText(){return this.text;},GetCaretPosition(){return this.caret;},Clear(){this.text='';}},
+    IsHangulMode:()=>false,Close(){this.closing=true;runtime.closes=(runtime.closes??0)+1;entry.OnChatClosed(this);},WasSubmitted(){return this.submitted;}};
+  const keyEnv={...env,EInputAction:{IACT_Release:'release',IACT_Press:'press'},EInputKey:{IK_Tab:'tab',IK_Enter:'enter',IK_Escape:'escape'},
+    StrLen:s=>s.length,ArrayContains:(a,v)=>a.includes(v),ArrayPush:(a,v)=>a.push(v),ArrayRemove:(a,v)=>{const i=a.indexOf(v);if(i>=0)a.splice(i,1);},ChatCloseTimeout:class{}};
+  for(const [name,args]of [['GetDraft',[]],['GetDraftCaret',[]],['OnChatKey',['event']],['RequestClose',['text']],['FinishClose',[]]]){
     const run=new Function(...Object.keys(keyEnv),...args,body(popupSource,name));popup[name]=function(...values){return run.call(this,...Object.values(keyEnv),...values);};
   }
   session.popup=popup;
-  const press=(key,mods={})=>popup.OnChatKey({GetKey:()=>key,GetAction:()=>'release',IsShiftDown:()=>!!mods.shift,IsControlDown:()=>!!mods.ctrl,IsAltDown:()=>!!mods.alt});
+  const press=(key,mods={},action='release')=>popup.OnChatKey({GetKey:()=>key,GetAction:()=>action,IsShiftDown:()=>!!mods.shift,IsControlDown:()=>!!mods.ctrl,IsAltDown:()=>!!mods.alt});
   const menu=(open)=>{runtime.inMenu=open;entry.OnChatMenuChanged(open);};
   const resume=()=>entry.OnSubtitleTimer(runtime.timers.findLast(t=>t.kind===6));
   return {runtime,entry,session,popup,press,menu,resume,env};
@@ -73,6 +76,28 @@ test('UF-62 메뉴 차단·복귀 지연·대기/시한을 처리하고 이전 �
     f.resume();assert.equal(f.runtime.opened.length,0,invalidation);
   }
   f=fixture();for(const mods of [{shift:true},{ctrl:true},{alt:true}])f.press('tab',mods);assert.equal(f.runtime.events.length,0);
+});
+
+test('UF-17 Enter는 입력칸이 받은 키를 모두 뗀 뒤 닫고 전송한다',()=>{
+  const f=fixture();
+  f.press('d',{},'press');f.press('enter',{},'press');f.press('enter');
+  assert.equal(f.runtime.closes,undefined);assert.equal(f.runtime.submitted,undefined);
+  assert.equal(f.runtime.delayed.length,1);assert.equal(f.runtime.delayed[0].delay,1);
+  f.press('d');
+  assert.equal(f.runtime.closes,1);assert.equal(f.runtime.submitted,'안녕하세요');
+  f.popup.FinishClose();assert.equal(f.runtime.closes,1);
+  // 누름을 보지 못한 키의 뗌은 대기 목록에 영향을 주지 않는다.
+  const g=fixture();g.press('a');g.press('enter');assert.equal(g.runtime.closes,1);assert.equal(g.runtime.delayed.length,0);
+});
+
+test('UF-17 이동 키가 눌린 동안 입력칸 열기를 미루고 감시에서 뗀 뒤 연다',()=>{
+  const f=fixture();f.session.popup=null;
+  const listener={moving:true,IsMoving(){return this.moving;}};f.entry.moveListener=listener;
+  f.entry.OpenInput(f.session);
+  assert.equal(f.runtime.opened.length,0);assert.equal(f.session.inputDeferred,true);
+  f.entry.OnSubtitleTimer({kind:3,session:f.session,epoch:1});assert.equal(f.runtime.opened.length,0);
+  listener.moving=false;f.entry.OnSubtitleTimer({kind:3,session:f.session,epoch:1});
+  assert.equal(f.runtime.opened.length,1);assert.equal(f.session.inputDeferred,false);
 });
 
 test('UF-62 native 메뉴 액션은 오리지널 처리에 정확히 한 번 전달한다',()=>{

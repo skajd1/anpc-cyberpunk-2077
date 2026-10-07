@@ -2,7 +2,7 @@ module ANPC
 import Codeware.UI.*
 
 // G2 handoff 후보. ANPC 선택 뒤 V 차례에만 하단 입력칸을 열고, 대사는 원작 자막으로 표시한다.
-// AI 응답은 CET 브리지(파일)와 로컬 개발 브리지를 거친다. NPC 정지/시선은 연결하지 않는다. 커뮤니티 원작 허브는 종료하지 않고 보류한다.
+// AI 응답은 CET 브리지(파일)와 로컬 개발 브리지를 거친다. 자유 군중은 세션 동안 NpcControl로 정지·V 시선을 소유하고, 커뮤니티 원작 허브는 정지·회전 없이 종료하지 않고 보류한다.
 // CET 브리지로 넘기는 AI 요청. kind: say | end.
 public class AnpcRequest extends IScriptable {
   public let id: Int32;
@@ -38,9 +38,13 @@ public class ChatSession extends IScriptable {
   public let menuObservedOpen: Bool;
   public let menuResumeScheduled: Bool;
   public let resumeInputAfterMenu: Bool;
+  // 이동 키가 눌려 있어 미룬 입력칸 열기. 세션 감시에서 이동 축이 0이 되면 연다.
+  public let inputDeferred: Bool;
   public let menuRequestedAt: Float;
   // 현재 표시 중인 ANPC 자막 ID. 세션 종료 시 숨긴다.
   public let subtitles: array<CRUID>;
+  // 자유 군중의 정지·시선 제어. 군중이 아니거나 워크스팟 점유면 null. 세션 종료·세계 전환에서 해제한다.
+  public let control: ref<NpcControl>;
 }
 
 // 원작 자막 UI(UIGameData.ShowDialogLine/HideDialogLine)로 ANPC 대사를 표시한다.
@@ -106,6 +110,11 @@ public class ChatPopup extends InGamePopup {
   private let startCaret: Int32;
   private let submitted: Bool;
   private let closing: Bool;
+  // 입력칸이 누름을 받은 뒤 아직 떼지 않은 키. 닫는 순간 남아 있으면 게임은 누름만 보고
+  // 뗌은 닫히는 입력칸이 가져가 이동 키가 눌린 채로 남는다(두벌식 입력은 A·S·D·W를 자주 쓴다).
+  private let held: array<EInputKey>;
+  private let pendingClose: Bool;
+  private let pendingText: String;
 
   public static func Create(entry: ref<Entry>, hangulMode: Bool, opt draft: String, opt caret: Int32) -> ref<ChatPopup> {
     let popup = new ChatPopup();
@@ -238,28 +247,80 @@ public class ChatPopup extends InGamePopup {
 
   protected cb func OnChatKey(event: ref<inkKeyInputEvent>) {
     if this.closing { return; }
+    let key = event.GetKey();
+    if Equals(event.GetAction(), EInputAction.IACT_Press) {
+      if !ArrayContains(this.held, key) { ArrayPush(this.held, key); }
+      return;
+    }
     if NotEquals(event.GetAction(), EInputAction.IACT_Release) { return; }
-    if Equals(event.GetKey(), EInputKey.IK_Tab) && !event.IsShiftDown() && !event.IsControlDown() && !event.IsAltDown() {
+    ArrayRemove(this.held, key);
+    if this.pendingClose {
+      if ArraySize(this.held) == 0 { this.FinishClose(); }
+      return;
+    }
+    if Equals(key, EInputKey.IK_Tab) && !event.IsShiftDown() && !event.IsControlDown() && !event.IsAltDown() {
       if IsDefined(this.entry) { this.entry.OpenGameMenu(this); }
       return;
     }
-    if Equals(event.GetKey(), EInputKey.IK_Enter) {
+    if Equals(key, EInputKey.IK_Enter) {
       this.input.FinishComposition();
       let text = this.input.GetText();
       if StrLen(text) == 0 { return; }
       this.input.Clear();
       this.submitted = true;
-      this.Close();
-      if IsDefined(this.entry) { this.entry.SubmitChat(text); }
+      this.RequestClose(text);
       return;
     }
-    if Equals(event.GetKey(), EInputKey.IK_Escape) {
-      this.Close();
+    if Equals(key, EInputKey.IK_Escape) {
+      this.RequestClose("");
     }
+  }
+
+  // 남은 키를 모두 뗀 뒤 닫는다. 오래 누르고 있으면 1초 뒤 그대로 닫는다.
+  private func RequestClose(text: String) {
+    this.pendingClose = true;
+    this.pendingText = text;
+    if ArraySize(this.held) == 0 { this.FinishClose(); return; }
+    let timeout = new ChatCloseTimeout();
+    timeout.popup = this;
+    GameInstance.GetDelaySystem(this.GetGame()).DelayCallback(timeout, 1.0, false);
+  }
+
+  public func FinishClose() {
+    if !this.pendingClose || this.closing { return; }
+    this.pendingClose = false;
+    let text = this.pendingText;
+    this.pendingText = "";
+    this.Close();
+    if this.submitted && IsDefined(this.entry) { this.entry.SubmitChat(text); }
   }
 
   protected cb func OnHidden() {
     if IsDefined(this.entry) { this.entry.OnChatClosed(this); }
     super.OnHidden();
+  }
+}
+
+public class ChatCloseTimeout extends DelayCallback {
+  public let popup: wref<ChatPopup>;
+
+  public func Call() -> Void {
+    if IsDefined(this.popup) { this.popup.FinishClose(); }
+  }
+}
+
+// 대화 중 플레이어 이동 축 입력. 입력칸을 여는 순간 이동 키가 눌려 있으면 뗌을 입력칸이 가져가
+// 게임에는 키가 눌린 채로 남으므로, 축이 0일 때만 입력칸을 연다.
+public class AnpcMoveListener extends IScriptable {
+  public let moveX: Float;
+  public let moveY: Float;
+
+  public func IsMoving() -> Bool { return AbsF(this.moveX) > 0.05 || AbsF(this.moveY) > 0.05; }
+
+  protected cb func OnAction(action: ListenerAction, consumer: ListenerActionConsumer) -> Bool {
+    let name = ListenerAction.GetName(action);
+    if Equals(name, n"MoveX") { this.moveX = ListenerAction.GetValue(action); }
+    if Equals(name, n"MoveY") { this.moveY = ListenerAction.GetValue(action); }
+    return false;
   }
 }
