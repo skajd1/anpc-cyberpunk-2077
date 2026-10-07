@@ -1,0 +1,334 @@
+{
+  "schema_version": "0.1",
+  "table_id": "ja_reading_table",
+  "revision": 1,
+  "review_status": "draft",
+  "note": "speech_text의 고유명사 읽기 기준. 일본어판 게임 자막·음성 표기와 대조하기 전 초안이며 source_ids는 대조 후 채운다. 자막 표기를 바꾸지 않는다.",
+  "entries": [
+    {
+      "term": "V",
+      "reading": "ブイ",
+      "source_ids": []
+    },
+    {
+      "term": "주디",
+      "reading": "ジュディ",
+      "source_ids": []
+    },
+    {
+      "term": "주디 알바레스",
+      "reading": "ジュディ・アルバレス",
+      "source_ids": []
+    },
+    {
+      "term": "팬앰",
+      "reading": "パナム",
+      "source_ids": []
+    },
+    {
+      "term": "팬앰 팔머",
+      "reading": "パナム・パーマー",
+      "source_ids": []
+    },
+    {
+      "term": "재키",
+      "reading": "ジャッキー",
+      "source_ids": []
+    },
+    {
+      "term": "재키 웰스",
+      "reading": "ジャッキー・ウェルズ",
+      "source_ids": []
+    },
+    {
+      "term": "빅터",
+      "reading": "ヴィクター",
+      "source_ids": []
+    },
+    {
+      "term": "빅터 벡터",
+      "reading": "ヴィクター・ヴェクター",
+      "source_ids": []
+    },
+    {
+      "term": "빅",
+      "reading": "ヴィク",
+      "source_ids": []
+    },
+    {
+      "term": "미스티",
+      "reading": "ミスティ",
+      "source_ids": []
+    },
+    {
+      "term": "미스티 올셰프스키",
+      "reading": "ミスティ・オルシェフスキー",
+      "source_ids": []
+    },
+    {
+      "term": "로그",
+      "reading": "ローグ",
+      "source_ids": []
+    },
+    {
+      "term": "로그 아멘디아레스",
+      "reading": "ローグ・アメンディアレス",
+      "source_ids": []
+    },
+    {
+      "term": "고로",
+      "reading": "ゴロー",
+      "source_ids": []
+    },
+    {
+      "term": "타케무라",
+      "reading": "タケムラ",
+      "source_ids": []
+    },
+    {
+      "term": "고로 타케무라",
+      "reading": "ゴロー・タケムラ",
+      "source_ids": []
+    },
+    {
+      "term": "케리",
+      "reading": "ケリー",
+      "source_ids": []
+    },
+    {
+      "term": "케리 유로다인",
+      "reading": "ケリー・ユーロダイン",
+      "source_ids": []
+    },
+    {
+      "term": "리버",
+      "reading": "リバー",
+      "source_ids": []
+    },
+    {
+      "term": "리버 워드",
+      "reading": "リバー・ウォード",
+      "source_ids": []
+    },
+    {
+      "term": "조니",
+      "reading": "ジョニー",
+      "source_ids": []
+    },
+    {
+      "term": "조니 실버핸드",
+      "reading": "ジョニー・シルヴァーハンド",
+      "source_ids": []
+    },
+    {
+      "term": "에블린",
+      "reading": "エヴリン",
+      "source_ids": []
+    },
+    {
+      "term": "에블린 파커",
+      "reading": "エヴリン・パーカー",
+      "source_ids": []
+    },
+    {
+      "term": "송소미",
+      "reading": "ソン・ソミ",
+      "source_ids": []
+    },
+    {
+      "term": "소미",
+      "reading": "ソミ",
+      "source_ids": []
+    },
+    {
+      "term": "송버드",
+      "reading": "ソングバード",
+      "source_ids": []
+    },
+    {
+      "term": "하나코",
+      "reading": "ハナコ",
+      "source_ids": []
+    },
+    {
+      "term": "사부로",
+      "reading": "サブロウ",
+      "source_ids": []
+    },
+    {
+      "term": "나이트 시티",
+      "reading": "ナイトシティ",
+      "source_ids": []
+    },
+    {
+      "term": "왓슨",
+      "reading": "ワトソン",
+      "source_ids": []
+    },
+    {
+      "term": "웨스트브룩",
+      "reading": "ウエストブルック",
+      "source_ids": []
+    },
+    {
+      "term": "헤이우드",
+      "reading": "ヘイウッド",
+      "source_ids": []
+    },
+    {
+      "term": "퍼시피카",
+      "reading": "パシフィカ",
+      "source_ids": []
+    },
+    {
+      "term": "산토도밍고",
+      "reading": "サントドミンゴ",
+      "source_ids": []
+    },
+    {
+      "term": "시티 센터",
+      "reading": "シティセンター",
+      "source_ids": []
+    },
+    {
+      "term": "배드랜드",
+      "reading": "バッドランズ",
+      "source_ids": []
+    },
+    {
+      "term": "도그타운",
+      "reading": "ドッグタウン",
+      "source_ids": []
+    },
+    {
+      "term": "애프터라이프",
+      "reading": "アフターライフ",
+      "source_ids": []
+    },
+    {
+      "term": "아라사카",
+      "reading": "アラサカ",
+      "source_ids": []
+    },
+    {
+      "term": "밀리테크",
+      "reading": "ミリテク",
+      "source_ids": []
+    },
+    {
+      "term": "바이오테크니카",
+      "reading": "バイオテクニカ",
+      "source_ids": []
+    },
+    {
+      "term": "트라우마 팀",
+      "reading": "トラウマチーム",
+      "source_ids": []
+    },
+    {
+      "term": "NCPD",
+      "reading": "エヌシーピーディー",
+      "source_ids": []
+    },
+    {
+      "term": "넷워치",
+      "reading": "ネットウォッチ",
+      "source_ids": []
+    },
+    {
+      "term": "NUSA",
+      "reading": "エヌユーエスエー",
+      "source_ids": []
+    },
+    {
+      "term": "FIA",
+      "reading": "エフアイエー",
+      "source_ids": []
+    },
+    {
+      "term": "타이거 클로",
+      "reading": "タイガークロウズ",
+      "source_ids": []
+    },
+    {
+      "term": "발렌티노",
+      "reading": "バレンティーノス",
+      "source_ids": []
+    },
+    {
+      "term": "부두 보이즈",
+      "reading": "ブードゥーボーイズ",
+      "source_ids": []
+    },
+    {
+      "term": "목스",
+      "reading": "モックス",
+      "source_ids": []
+    },
+    {
+      "term": "알데칼도스",
+      "reading": "アルデカルドス",
+      "source_ids": []
+    },
+    {
+      "term": "메일스트롬",
+      "reading": "メイルストローム",
+      "source_ids": []
+    },
+    {
+      "term": "렐릭",
+      "reading": "レリック",
+      "source_ids": []
+    },
+    {
+      "term": "브레인댄스",
+      "reading": "ブレインダンス",
+      "source_ids": []
+    },
+    {
+      "term": "BD",
+      "reading": "ビーディー",
+      "source_ids": []
+    },
+    {
+      "term": "넷러너",
+      "reading": "ネットランナー",
+      "source_ids": []
+    },
+    {
+      "term": "리퍼닥",
+      "reading": "リパードク",
+      "source_ids": []
+    },
+    {
+      "term": "픽서",
+      "reading": "フィクサー",
+      "source_ids": []
+    },
+    {
+      "term": "엔그램",
+      "reading": "エングラム",
+      "source_ids": []
+    },
+    {
+      "term": "블랙월",
+      "reading": "ブラックウォール",
+      "source_ids": []
+    },
+    {
+      "term": "사이버사이코",
+      "reading": "サイバーサイコ",
+      "source_ids": []
+    },
+    {
+      "term": "크롬",
+      "reading": "クローム",
+      "source_ids": []
+    },
+    {
+      "term": "에디",
+      "reading": "エディー",
+      "source_ids": []
+    }
+  ]
+}

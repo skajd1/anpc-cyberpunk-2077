@@ -2923,6 +2923,16 @@
       }
     },
     "DialogueReply": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/DialogueReplyText"
+        },
+        {
+          "$ref": "#/$defs/DialogueReplyVoice"
+        }
+      ]
+    },
+    "DialogueReplyText": {
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -2973,6 +2983,79 @@
               "type": "string",
               "minLength": 1,
               "maxLength": 150
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "DialogueReplyVoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "emotion",
+        "delivery",
+        "dialogue",
+        "follow_up",
+        "speech_text",
+        "intent",
+        "action"
+      ],
+      "properties": {
+        "emotion": {
+          "enum": [
+            "neutral",
+            "friendly",
+            "wary",
+            "annoyed",
+            "afraid",
+            "curious"
+          ]
+        },
+        "delivery": {
+          "enum": [
+            "normal",
+            "fast",
+            "slow"
+          ]
+        },
+        "dialogue": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "follow_up": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 150
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "speech_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600
+        },
+        "intent": {
+          "enum": [
+            "answer",
+            "ask",
+            "refuse",
+            "warn",
+            "farewell"
+          ]
+        },
+        "action": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ActionProposal"
             },
             {
               "type": "null"

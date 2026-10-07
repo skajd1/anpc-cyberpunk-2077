@@ -2,7 +2,7 @@
 
 규격 버전: 1.0 (2026-10-07). 첫 게임판 기본 기능의 목표 계약. 게임 기능: [UF-67~UF-73](gameplay-functional-specification.md#10-npc-음성). 설치물: [DIST-23~DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권). 실측·남은 확인 항목: [개발·검증 계획 6.4·8.1](development-validation.md#81-npc-음성-tts-로컬-실측-2026-10-06).
 
-공통 스키마 전환 상태: 2절의 `delivery`·`speech_text`와 필드 순서는 목표 계약이며 `contracts/v1`의 DialogueReply에는 아직 반영하지 않았다. 반영할 때는 스키마·예시·게임 응답 검사를 함께 갱신한다.
+공통 스키마 전환 상태: `contracts/v1`의 DialogueReply는 자막 전용(DialogueReplyText)과 음성(DialogueReplyVoice) 두 형태 중 하나다. 웹 시제품의 응답 스키마·검사·출력 안내는 음성 옵션을 지원하지만 기본값은 꺼짐이다. 게임 CET 응답 검사와 TTS 연결은 아직 음성 형태를 받지 않는다.
 
 ## 1. 범위와 역할 분담
 

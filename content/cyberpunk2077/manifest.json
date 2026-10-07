@@ -24,7 +24,8 @@
     "characters/songbird.json",
     "story-progression-policy.json",
     "dialogue-preparation.json",
-    "crowd-archetypes.json"
+    "crowd-archetypes.json",
+    "ja-reading-table.json"
   ],
   "counts": {
     "characters": 12,

@@ -93,3 +93,24 @@ test('거리가 너무 멀면 시작을 거부하고 10m 이탈 시 종료한다
   const e = new DialogueEngine({ personas, base: '' }); e.changeWorld({ distance: 5 }); assert.throws(() => e.start('courier'));
   e.changeWorld({ distance: 2 }); e.start('courier'); e.changeWorld({ distance: 11 }); assert.equal(e.session, null);
 });
+test('음성 응답은 감정이 먼저인 순서와 일본어 음성 대사를 분리해 검사한다', () => {
+  const persona = personas.find(p => p.persona_id === 'courier');
+  const schema = responseSchema({ voice: true });
+  assert.deepEqual(Object.keys(schema.properties), ['emotion', 'delivery', 'dialogue', 'follow_up', 'speech_text', 'intent', 'action']);
+  assert.deepEqual(schema.required, Object.keys(schema.properties));
+  assert.deepEqual(Object.keys(responseSchema().properties), ['dialogue', 'intent', 'emotion', 'action', 'follow_up']);
+  const voiced = { ...reply, delivery: 'normal', speech_text: 'ちょっとなら話せるよ。' };
+  const ok = validateReply(voiced, ACTIONS, persona, { voice: true });
+  assert.deepEqual(Object.keys(ok.reply), ['dialogue', 'intent', 'emotion', 'action', 'follow_up']);
+  assert.deepEqual(ok.speech, { delivery: 'normal', text: 'ちょっとなら話せるよ。' });
+  // 내용 검사 실패는 자막을 살리고 음성만 생략한다.
+  const hangul = validateReply({ ...voiced, speech_text: '잠깐 話せる。' }, ACTIONS, persona, { voice: true });
+  assert.equal(hangul.reply.dialogue, reply.dialogue); assert.equal(hangul.speech, null); assert.equal(hangul.speechError, 'speech_text_invalid');
+  // 형식 위반은 응답 전체 거부다.
+  assert.throws(() => validateReply({ ...voiced, delivery: 'whisper' }, ACTIONS, persona, { voice: true }), /invalid_response/);
+  assert.throws(() => validateReply(voiced, ACTIONS, persona), /invalid_response/);
+  assert.throws(() => validateReply(reply, ACTIONS, persona, { voice: true }), /invalid_response/);
+  const prompt = assemblePrompt('베이스 {{OUTPUT_CONTRACT}}', persona, {}, '안녕', { voice: true });
+  assert.match(prompt.instructions, /speech_text\(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사/);
+  assert.doesNotMatch(assemblePrompt('베이스 {{OUTPUT_CONTRACT}}', persona, {}, '안녕').instructions, /speech_text|delivery/);
+});

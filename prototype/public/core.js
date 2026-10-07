@@ -1,8 +1,10 @@
 import { validateCorePersonality, personalityInstructions, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
 import { AMM_MOTIONS } from './motions.js';
-export const PROMPT_VERSION = '0.16';
+export const PROMPT_VERSION = '0.17';
 export const INTENTS = ['answer', 'ask', 'refuse', 'warn', 'farewell'];
 export const EMOTIONS = ['neutral', 'friendly', 'wary', 'annoyed', 'afraid', 'curious'];
+// 음성 활성 응답의 말 빠르기. 세부 규칙은 docs/npc-voice-output-specification.md 2절.
+export const DELIVERIES = ['normal', 'fast', 'slow'];
 export const ACTIONS = [
   { action_id: 'face_player', description: '플레이어 쪽 시선 (가상 실행)', args: { duration_s: { min: 1, max: 10 } } },
   { action_id: 'resume_walk', description: 'ANPC 제어 해제 (가상 실행)', args: {} },
@@ -36,7 +38,7 @@ export function validatePersona(p) {
   return clone(p);
 }
 
-export function responseSchema() {
+export function responseSchema({ voice = false } = {}) {
   const actionOptions = [...ACTIONS, ...SELECTION_ACTIONS].map(a => ({
     type: 'object', additionalProperties: false, required: ['action_id', 'args'],
     properties: { action_id: { type: 'string', enum: [a.action_id] }, args: {
@@ -46,15 +48,29 @@ export function responseSchema() {
       required: Object.keys(a.args)
     } }
   }));
-  return { type: 'object', additionalProperties: false, required: ['dialogue', 'intent', 'emotion', 'action', 'follow_up'], properties: {
+  const field = {
     dialogue: { type: 'string', minLength: 1, maxLength: 600 }, intent: { type: 'string', enum: INTENTS },
     emotion: { type: 'string', enum: EMOTIONS }, action: { anyOf: [{ type: 'null' }, ...actionOptions] },
-    follow_up: { anyOf: [{ type: 'null' }, { type: 'string', minLength: 1, maxLength: 150 }] }
-  } };
+    follow_up: { anyOf: [{ type: 'null' }, { type: 'string', minLength: 1, maxLength: 150 }] },
+    delivery: { type: 'string', enum: DELIVERIES }, speech_text: { type: 'string', minLength: 1, maxLength: 600 }
+  };
+  // 음성 응답은 emotion이 맨 앞이고 speech_text가 자막 필드 뒤에 오도록 생성 순서를 고정한다.
+  const order = voice ? ['emotion', 'delivery', 'dialogue', 'follow_up', 'speech_text', 'intent', 'action']
+    : ['dialogue', 'intent', 'emotion', 'action', 'follow_up'];
+  return { type: 'object', additionalProperties: false, required: order, properties: Object.fromEntries(order.map(key => [key, field[key]])) };
 }
 
-export function validateReply(reply, allowed, persona) {
-  if (!exact(reply, ['dialogue', 'intent', 'emotion', 'action', 'follow_up']) || !text(reply.dialogue, 600) || !INTENTS.includes(reply.intent) || !EMOTIONS.includes(reply.emotion) || !(reply.follow_up === null || text(reply.follow_up, 150))) throw new Error('invalid_response');
+// speech_text는 일본어 구어만 허용한다. 한글·지문 괄호·마크다운이 섞이면 음성만 생략한다.
+const speechValid = text => !/[가-힣ㄱ-ㆎ[\]()（）*_#`]/.test(text);
+
+export function validateReply(raw, allowed, persona, { voice = false } = {}) {
+  const textKeys = ['dialogue', 'intent', 'emotion', 'action', 'follow_up'];
+  if (!exact(raw, voice ? [...textKeys, 'delivery', 'speech_text'] : textKeys)) throw new Error('invalid_response');
+  if (voice && (!DELIVERIES.includes(raw.delivery) || !text(raw.speech_text, 600))) throw new Error('invalid_response');
+  const reply = Object.fromEntries(textKeys.map(key => [key, raw[key]]));
+  const speech = voice && speechValid(raw.speech_text) ? { delivery: raw.delivery, text: raw.speech_text } : null;
+  const speechError = voice && !speech ? 'speech_text_invalid' : null;
+  if (!text(reply.dialogue, 600) || !INTENTS.includes(reply.intent) || !EMOTIONS.includes(reply.emotion) || !(reply.follow_up === null || text(reply.follow_up, 150))) throw new Error('invalid_response');
   let actionValid = reply.action === null;
   if (exact(reply.action, ['action_id', 'args']) && allowed.some(a => a.action_id === reply.action.action_id)) {
     const a = reply.action;
@@ -64,14 +80,18 @@ export function validateReply(reply, allowed, persona) {
       : typeof a.args[key] === 'number' && Number.isFinite(a.args[key]) && a.args[key] >= rule.min && a.args[key] <= rule.max);
   }
   if (reply.intent === 'farewell' && (reply.follow_up !== null || (reply.action && reply.action.action_id !== 'end_conversation'))) actionValid = false;
-  if (!actionValid) return { reply: { dialogue: persona.fallback_lines.unavailable_action, intent: 'refuse', emotion: 'neutral', action: null, follow_up: null }, warning: '허용되지 않은 행동·인수: 원문 대신 인물의 안전 대사를 표시했습니다.' };
+  // 안전 대체 대사는 일본어 음성 대사가 없으므로 자막만 표시한다.
+  if (!actionValid) return { reply: { dialogue: persona.fallback_lines.unavailable_action, intent: 'refuse', emotion: 'neutral', action: null, follow_up: null }, warning: '허용되지 않은 행동·인수: 원문 대신 인물의 안전 대사를 표시했습니다.',
+    speech: null, speechError: voice ? 'speech_text_invalid' : null };
   if (persona.voice_style.forbidden_phrases?.some(phrase => reply.dialogue.includes(phrase))) throw new Error('invalid_response');
-  return { reply: clone(reply), warning: null };
+  return { reply: clone(reply), warning: null, speech, speechError };
 }
 
-export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null } = {}) {
+export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null, voice = false } = {}) {
   // 전체 스키마는 제공자의 구조화 출력 설정으로 전달한다. 본문에는 필드의 의미만 둔다.
-  const contract = `출력 필드: dialogue(1~600자 실제 대사), intent(${INTENTS.join('|')}), emotion(${EMOTIONS.join('|')}), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).`;
+  const contract = voice
+    ? `출력 필드(이 순서): emotion(${EMOTIONS.join('|')}), delivery(${DELIVERIES.join('|')} 말 빠르기), dialogue(1~600자 실제 대사), follow_up(1~150자 후속 질문 또는 null), speech_text(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사, 1~600자), intent(${INTENTS.join('|')}), action(허용 후보의 action_id·args 또는 null).`
+    : `출력 필드: dialogue(1~600자 실제 대사), intent(${INTENTS.join('|')}), emotion(${EMOTIONS.join('|')}), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).`;
   const { fallback_lines, action_preferences, revision, examples, seed, trait_pools, personality_generation, identity_structure_version, ...personaData } = persona;
   let requestPersona = personaData;
   let instructions = base.replace('{{OUTPUT_CONTRACT}}', contract);
