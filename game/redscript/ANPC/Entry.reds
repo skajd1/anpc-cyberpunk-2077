@@ -839,6 +839,82 @@ public class Entry extends ScriptableSystem {
     let player: ref<PlayerPuppet> = session.player;
     if IsDefined(player) { SceneEntry.RefreshDialogs(player.GetGame()); }
   }
+
+  // ---- NPC 일본어 음성 3D 재생(Voice.reds의 AnpcAudioware 사용) ----
+  private let voiceEmitter: EntityID;
+
+  private let voiceRegistered: Bool;
+
+  public func VoiceSpatialAvailable() -> Bool { return AnpcAudioware.Available(); }
+
+  // 재생과 같은 프레임에 등록하면 위치가 잡히지 않을 수 있어 요청 시점에 미리 등록한다.
+  public func VoicePrepare(requestId: Int32) -> Bool {
+    if !AnpcAudioware.Available() { return false; }
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId { return false; }
+    let npc: ref<NPCPuppet> = session.npc;
+    if !IsDefined(npc) || !npc.IsAttached() { return false; }
+    let game = this.GetGameInstance();
+    let id = npc.GetEntityID();
+    if this.voiceRegistered && NotEquals(this.voiceEmitter, id) {
+      AnpcAudioware.Unregister(game, this.voiceEmitter);
+      this.voiceRegistered = false;
+    }
+    if !this.voiceRegistered || !AnpcAudioware.IsRegistered(game, id) {
+      this.voiceRegistered = AnpcAudioware.Register(game, id);
+      this.voiceEmitter = id;
+    }
+    return this.voiceRegistered;
+  }
+
+  public func VoicePlay(requestId: Int32, slot: Int32) -> Bool {
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId || !this.voiceRegistered { return false; }
+    let npc: ref<NPCPuppet> = session.npc;
+    if !IsDefined(npc) || NotEquals(npc.GetEntityID(), this.voiceEmitter) { return false; }
+    return AnpcAudioware.Play(this.GetGameInstance(), this.voiceEmitter, slot);
+  }
+
+  // 새 입력·대화 종료·초기화: 모든 슬롯을 멈춘다.
+  public func VoiceStop() -> Void {
+    if !this.voiceRegistered { return; }
+    let game = this.GetGameInstance();
+    let slot = 0;
+    while slot < 8 {
+      AnpcAudioware.Stop(game, this.voiceEmitter, slot);
+      slot += 1;
+    }
+  }
+
+  public func VoiceRelease() -> Void {
+    if !this.voiceRegistered { return; }
+    this.VoiceStop();
+    AnpcAudioware.Unregister(this.GetGameInstance(), this.voiceEmitter);
+    this.voiceRegistered = false;
+  }
+
+  // 첫 음성 재생과 함께 자막을 띄운다(음성 출력 규격 4.3). 표시 시간은 글자 수 기준과 예상 음성 길이 중 긴 쪽.
+  public func OnAIVoiceResponse(requestId: Int32, status: String, text: String, voiceSeconds: Float) -> Void {
+    let session = this.session;
+    if !IsDefined(session) || session.pendingRequest != requestId { return; }
+    let npc: ref<NPCPuppet> = session.npc;
+    if !StrBeginsWith(status, "ok") || StrLen(text) == 0 || !IsDefined(npc) {
+      this.OnAIResponse(requestId, status, text);
+      return;
+    }
+    session.pendingRequest = -1;
+    let diagnostics = SceneEntryInstaller.Get();
+    if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status + " voice"); }
+    let game = this.GetGameInstance();
+    this.HideSubtitles(session);
+    let line = this.NextSubtitleId();
+    let duration = MinF(30.0, MaxF(AnpcSubtitles.Duration(text), voiceSeconds + 0.3));
+    AnpcVoiceSubtitles.Show(game, line, npc, session.name, text, duration);
+    ArrayPush(session.subtitles, line);
+    this.ScheduleSubtitle(game, AnpcSubtitleCallback.Hide(), line, duration);
+    let next = Equals(status, "ok:end") ? AnpcSubtitleCallback.EndAfter() : AnpcSubtitleCallback.Reopen();
+    this.ScheduleSubtitle(game, next, line, duration + 0.3);
+  }
 }
 
 @wrapMethod(ScriptedPuppetPS)

@@ -690,3 +690,17 @@
 - 배포 manifest·해시: config.local.crowd-hold-deployment.json
 - 백업·복원 자료: config.local.backups/crowd-hold-20261008-015726 (수정 2개 백업, 추가 1개는 삭제로 복원)
 - 확인: 실게임 미검증(redscript 컴파일 포함)
+
+## DEP-20261008020223 — 음성 redscript 컴파일 오류 수정
+
+- 일시: 2026-10-08 02:02:23 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Voice.reds | 수정 | Audioware 호출을 조건부 static 클래스 AnpcAudioware로 옮기고 Audioware 형식을 조건부 import | DEP-20261008015427 배포본이 같은 모듈 클래스에 @addMethod를 써 UNRESOLVED_REF로 전체 ANPC 스크립트 컴파일 실패 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 음성 메서드(VoiceSpatialAvailable·VoicePrepare·VoicePlay·VoiceStop·VoiceRelease·OnAIVoiceResponse)를 Entry 클래스 안에 추가 | 컴파일 복구. 동작은 DEP-20261008015427 설계와 같음 |
+
+- 배포 manifest·해시: config.local.voice-fix-deployment.json
+- 백업·복원 자료: config.local.backups/voice-fix-20261008-020223
+- 확인: 게임 scc로 Audioware 있음·없음 두 경우 시험 컴파일 통과. 실게임 동작 미검증
