@@ -2,7 +2,7 @@ module ANPC
 import Codeware.UI.*
 
 // G2 handoff 후보. ANPC 선택 뒤 V 차례에만 하단 입력칸을 열고, 대사는 원작 자막으로 표시한다.
-// AI 응답은 CET 브리지(파일)와 로컬 개발 브리지를 거친다. NPC 정지/시선은 연결하지 않는다. 커뮤니티 원작 허브는 종료하지 않고 보류한다.
+// AI 응답은 CET 브리지(파일)와 로컬 개발 브리지를 거친다. 자유 군중은 세션 동안 NpcControl로 정지·V 시선을 소유하고, 커뮤니티 원작 허브는 정지·회전 없이 종료하지 않고 보류한다.
 // CET 브리지로 넘기는 AI 요청. kind: say | end.
 public class AnpcRequest extends IScriptable {
   public let id: Int32;
@@ -41,6 +41,8 @@ public class ChatSession extends IScriptable {
   public let menuRequestedAt: Float;
   // 현재 표시 중인 ANPC 자막 ID. 세션 종료 시 숨긴다.
   public let subtitles: array<CRUID>;
+  // 자유 군중의 정지·시선 제어. 군중이 아니거나 워크스팟 점유면 null. 세션 종료·세계 전환에서 해제한다.
+  public let control: ref<NpcControl>;
 }
 
 // 원작 자막 UI(UIGameData.ShowDialogLine/HideDialogLine)로 ANPC 대사를 표시한다.

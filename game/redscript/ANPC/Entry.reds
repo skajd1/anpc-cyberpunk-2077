@@ -111,6 +111,7 @@ public class Entry extends ScriptableSystem {
     this.rootNpc = null;
     this.rootHubId = -1;
     ArrayClear(this.rootChoices);
+    if IsDefined(this.session) && IsDefined(this.session.control) { this.session.control.Release(); }
     if IsDefined(this.session) && IsDefined(this.session.popup) { this.session.popup.Close(); }
     this.session = null;
     this.crowdNpc = null;
@@ -524,6 +525,11 @@ public class Entry extends ScriptableSystem {
     session.name = crowd ? "" : GetLocalizedText(npc.GetDisplayName());
     this.session = session;
     this.status.reason = "session_active";
+    // 자유 군중만 정지·V 시선을 소유한다. 커뮤니티 허브(UF-15)는 원작 장면 제어를 건드리지 않는다.
+    if crowd {
+      let control = new NpcControl();
+      if control.Engage(npc, player) { session.control = control; }
+    }
     this.OpenInput(session);
     this.ScheduleWatch(player.GetGame());
   }
@@ -773,6 +779,7 @@ public class Entry extends ScriptableSystem {
         this.EndSession(session, watchReason);
         return;
       }
+      if IsDefined(session.control) { session.control.Maintain(); }
       this.ScheduleWatch(game);
     }
   }
@@ -802,6 +809,7 @@ public class Entry extends ScriptableSystem {
     if this.session != session { return; }
     this.HideSubtitles(session);
     this.session = null;
+    if IsDefined(session.control) { session.control.Release(); }
     this.status.reason = reason;
     // 브리지가 이 세션의 엔진을 정리하도록 알린다.
     this.requestSeq += 1;
