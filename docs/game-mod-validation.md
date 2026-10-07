@@ -720,3 +720,33 @@
 - 배포 manifest·해시: config.local.voice-env-deployment.json
 - 백업·복원 자료: config.local.backups/voice-env-20261008-021503
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261008030606 — 군중 차선 정지·커뮤니티 허브 진입 재확인
+
+- 일시: 2026-10-08 03:06:07 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/NpcControl.reds | 수정 | 정지 명령 전에 CrowdMemberComponent.TryStopTrafficMovement로 차선 이동 정지, 정지 지점에서 0.5m 넘게 벗어나면 1초 간격 이상으로 재정지, 워크스팟 중 시작이면 벗어난 뒤 적용 | UF-14·SR-11. DEP-20261008015726의 정지 명령만으로는 차선을 걷는 군중이 대화 중 계속 걸어감 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 원작 허브 표시 때 화자 미발견·상태 차단이면 허브가 떠 있는 동안 0.5초(5초 뒤 1초) 간격으로 재확인하고 통과할 때만 대화 위젯 갱신 | UF-11·SR-16. 로그 첫 접근에서 ANPC 항목이 안 뜨고 물러났다 재접근해야 표시되던 문제 |
+| r6/scripts/ANPC/SceneEntry.reds | 수정 | 선택 대기 원작 허브 존재 확인 함수 추가 | 허브가 닫히면 재확인 중지 |
+
+- 배포 manifest·해시: config.local.crowd-stop-deployment.json
+- 백업·복원 자료: config.local.backups/crowd-stop-20261008-030606 (수정 3개 백업)
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261008032457 — 군중 대화 종료 뒤 차선 재합류·입력칸 키 고착 방지
+
+- 일시: 2026-10-08 03:24:58 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/NpcControl.reds | 수정 | 해제 때 ANPC가 멈춘 군중을 ReactionSystem.TryAndJoinTraffic으로 차선에 재합류(0.2초 뒤 시작, 실패 시 0.5초 간격 최대 8회). 같은 NPC의 새 세션·워크스팟 중이면 중단 | UF-14·SR-11. DEP-20261008030606 이후 대화가 끝나도 군중이 30초 넘게 서 있음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 세션 동안 이동 축(MoveX/MoveY) 입력 감시, 이동 중이면 입력칸 열기를 미루고 세션 감시에서 뗀 뒤 열기. 재합류 중단 판정용 제어 대상 확인 추가 | UF-17·SR-17. 이동 키를 누른 채 입력칸이 열리면 뗌을 입력칸이 가져가 키가 눌린 채 남음 |
+| r6/scripts/ANPC/Session.reds | 수정 | 입력칸이 누름을 받은 키를 추적해 Enter/Esc 때 모두 뗀 뒤(최대 1초) 닫기. 이동 축 감시 객체와 세션 열기 지연 상태 추가 | UF-17·SR-17. Enter 뒤 가끔 V가 옆으로 계속 이동하던 문제 |
+
+- 배포 manifest·해시: config.local.crowd-rejoin-deployment.json
+- 백업·복원 자료: config.local.backups/crowd-rejoin-20261008-032457 (수정 3개 백업)
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
