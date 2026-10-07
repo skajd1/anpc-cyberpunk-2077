@@ -1,6 +1,6 @@
 # 모드 패키지·설치·백업·복원 규격
 
-규격 버전: 1.1 (2026-10-07). [플레이어 기능 명세](gameplay-functional-specification.md)의 UF-01/02/54/55/60/61/67에 적용한다. 구현 상태/출시 공백은 [명세 대조 리뷰](game-mod-spec-review-2026-10-05.md), 실제 배포 기록은 [배포 변경 이력](game-mod-validation.md)에 둔다.
+규격 버전: 1.1 (2026-10-07). [플레이어 기능 명세](gameplay-functional-specification.md)의 UF-01/02/54/55/60/61/67에 적용한다. 구현 상태/출시 공백은 [개발·검증 계획](development-validation.md#2-출시-전-남은-결함), 실제 배포 기록은 [배포 변경 이력](game-mod-validation.md)에 둔다.
 
 ## 1. 배포 범위와 소유권
 
@@ -22,10 +22,12 @@
 | CET Lua·생성 콘텐츠·키 없는 기본 설정 | bin/x64/plugins/cyber_engine_tweaks/mods/anpc/ |
 | redscript | r6/scripts/ANPC/ |
 | 제품 Native 플러그인 | red4ext/plugins/ANPC/ANPC.Native.dll |
-| TTS 런타임·기본 모델·참조 목록 (DIST-23) | red4ext/plugins/ANPC/tts/ |
+| TTS 런타임·ANPC 음성 모델·참조 목록 (DIST-23) | red4ext/plugins/ANPC/tts/ |
 | 음성 캐시, 설치 후 생성 (DIST-24) | red4ext/plugins/ANPC/tts-cache/ |
 
-Node.js·WolvenKit·빌드 도구는 제작/개발 의존성이다. 제품 Native 대화의 플레이어 실행 필수 의존성으로 요구하지 않는다. 개발 파일 브리지는 공개 패키지의 기본 대화 경로가 아니다.
+CET 디렉터리 안에서 승인 콘텐츠·공통 계약 검사 자료는 `content/`·`contracts/`, 지원 매핑·모듈 구성은 `profiles/` 아래에 둔다. 사용자 설정·비용 원장은 게임 폴더 밖 `%LOCALAPPDATA%/ANPC/Cyberpunk2077/`에 두며 패키지·제거 대상에 넣지 않는다(DIST-16). 신규 자산이 필요해지면 `archive/pc/mod` 또는 REDmod 중 실제 사용 방식을 정해 소유 목록에 추가한다.
+
+Node.js·WolvenKit·빌드 도구는 제작/개발 의존성이다. 제품 Native 대화의 플레이어 실행 필수 의존성으로 요구하지 않는다. 개발 파일 브리지는 공개 패키지의 기본 대화 경로가 아니다. REDmod·ArchiveXL·TweakXL·AMM은 필수 의존성이 아니다. AMM 제스처처럼 선택 연동은 설치·호환이 확인될 때만 활성화한다.
 
 ## 2. 최초 설치와 업데이트
 

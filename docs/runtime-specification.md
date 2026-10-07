@@ -12,7 +12,17 @@
 
 기본: 게임 내부 모드+로컬 설정/콘텐츠. UI/대화 정책=CET Lua, 실제 수집/제어/자막/저장 연결=redscript+Codeware. 제품 HTTPS/키 보관은 RED4ext 플러그인 ANPC.Native.dll의 WinHTTP/Credential Manager로 구현한다. 작업 완료 큐를 CET onUpdate에서 읽고 현재 세션 검사 후 게임에 적용한다. 별도 C#·제작자 서버 필수 없음. NPC 음성은 ANPC.Native가 관리하는 로컬 TTS 보조 프로세스로 [음성 출력 규격](npc-voice-output-specification.md)을 따른다. 로컬 대사 모델은 후속.
 
-도구 버전·설치/소스 배치·선택지/저장 실증은 [게임 모드 구현 계획](game-mod-implementation-plan.md)을 따른다. RedHttpClient는 초기 통신 실증용이며 제품의 취소·제한 시간·키 보관 완료를 대신하지 않는다. 현재 어댑터의 구현/검증 상태와 목표 계약의 공백은 [명세 대조 리뷰](game-mod-spec-review-2026-10-05.md), 실제 배포 파일 변경은 [배포 변경 이력](game-mod-validation.md)에 둔다.
+| 구성 | 소유 범위 | 수명 |
+| --- | --- | --- |
+| CET Lua | UI·입력·공통 계약 검사·콘텐츠/지식 선별·프롬프트·세션 요약 | 모드 로드 후. 세션/세계 세대로 작업 격리 |
+| redscript | 실제 대상 참조·상태 수집·오리지널 선택지 전환·기본 제어·자막·저장 앵커 | 게임 세션별 ScriptableSystem·살아 있는 객체 |
+| Codeware | 게임/엔티티/입력 이벤트·ink 접근 | 콜백 범위 지정. 게임 종료 때 참조 해제 |
+| ANPC.Native | HTTPS 전송·키 참조 해석·취소·제한 시간·완료 보관·문자/해시·원장 I/O·TTS 보조 프로세스 관리 | 프로세스 수명 |
+
+- 대화 정책은 Lua, 실제 게임값과 제어는 redscript가 소유한다. 같은 퀘스트/기억 규칙을 두 언어에서 따로 구현하지 않는다.
+- 웹 시제품의 JSON 콘텐츠·베이스·스키마·예시는 재사용하되 JS 엔진·Node 서버를 게임에 넣지 않는다.
+- Native 작업 스레드는 게임 객체·Lua 상태에 접근하지 않는다. 게임 타입을 임의 포인터/오프셋으로 다루지 않고 RED4ext.SDK의 export/RTTI 규약을 따른다.
+- RedHttpClient는 초기 통신 실증용이며 제품의 취소·제한 시간·키 보관을 대신하지 않는다. 게임 구성에 실증용과 제품용 통신을 동시에 연결하지 않는다.
 
 선택 플레이어 음성 입력은 [음성 인식 규격](speech-recognition-specification.md)과 [호스트 인터페이스 2.3](module-interface-specification.md#23-선택-음성-입력의-호스트-인터페이스)을 따른다. 마이크/전사 모듈은 확정 텍스트만 기존 요청 경로에 전달하며 대화 엔진·NPC 출력 계약을 변경하지 않는다.
 
@@ -48,6 +58,8 @@
 | output_token_limit | 정수 | 기본 512, 범위 128~2048 |
 
 - 비스트리밍 구조화 텍스트 기본. 실제 상한/예산은 [비용 규격](api-cost-specification.md). 인증 헤더/원시 응답 로그 금지.
+- 정상 인증서 검증과 등록된 endpoint_profile만 사용한다. 리디렉션으로 인증 헤더를 다른 호스트에 전달하지 않는다.
+- 연결·수신 제한과 별도로 접수 시점 기준 전체 마감 시간(timeout_ms)을 적용한다. 만료·취소는 Native 요청 핸들을 닫고 결과를 폐기한다. 취소가 이미 사용한 토큰의 미청구를 보장하지 않는다.
 - 키는 Windows 보안 저장소/계정 암호화. 미지원은 실행 메모리만 사용. 평문 저장 기본 금지. UI는 마스킹·등록/삭제, 저장 키 재표시 없음.
 - 키/모델 변경은 현재 요청 종료 후 적용.
 - 지원 프로필: provider_id, model_id, prompt_version, content_version, crowd_enabled, community_profile_ids, actions_enabled. 명시된 인물/행동만 활성. 품질 미달은 비활성+설정 안내. 형식/권한 검사는 항상 적용.
@@ -75,6 +87,8 @@ PromptAssembly → ModelInput → ProviderResult → DialogueReply. 공통 스�
 ## 7. 대사 자막과 게임 진행
 
 자막 필드: session_id, request_id, subtitle_id, speaker_key, display_name, text, sequence.
+
+- 자막은 ANPC 소유 ink 위젯으로 표시하며 오리지널 자막을 덮어쓰거나 숨기지 않는다.
 
 - text는 수용된 dialogue+중복 없는 follow_up. 폐기 응답/선택 행동 설명/서비스 오류 제외. 화자/요청 중복 차단.
 - 다음 수용 대사/세션 종료까지 유지. 활성 기록 열람 가능. 긴 대사는 동일 발화 순서로 분할.

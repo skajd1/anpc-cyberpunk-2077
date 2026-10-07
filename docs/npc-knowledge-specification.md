@@ -6,7 +6,7 @@
 
 content/cyberpunk2077/: world-facts.json=오리지널 사실, knowledge.json=인지/공개 조건, characters/*.json=정체성, dialogue-examples.json=예시, sources.json=출처, manifest.json=버전/상태/목록.
 
-사실은 ID 참조, 인물별 복제 금지. 플레이어 신원은 [고정 신원](content-specification.md#플레이어-고정-신원), NPC 이름 인지는 별도 조건. source_checked≠approved. draft는 런타임 제외. 개발용 예외: [시제품 안내](dialogue-prototype.md#인물-설정과-대화-테스트).
+사실은 ID 참조, 인물별 복제 금지. 플레이어 신원은 [고정 신원](content-specification.md#플레이어-고정-신원), NPC 이름 인지는 별도 조건. source_checked≠approved. draft는 런타임 제외. 개발용 예외는 웹 시제품·게임 설정의 명시적 초안 허용 경로뿐이다.
 
 ## 2. 지식의 층
 

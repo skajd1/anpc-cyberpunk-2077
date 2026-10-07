@@ -23,8 +23,8 @@
 
 `source_checked`는 출처 진술의 확인이며 출시 승인인 `approved`와 다르다. 현재 조사/작성 자료의 draft/runtime_enabled=false를 유지한다. Big Five 수치·판단·말투·태도·예시는 작성 해석이며 공식 심리검사값·오리지널 대사로 표시하지 않는다. PDF 전체 원문이나 추출 텍스트를 이 저장소에 복제하지 않는다. 개별 접근 제한·검색 발췌·본문 확인 여부는 sources와 source_audit에 보존한다.
 
-게임/웹의 명시적인 개발 초안 허용 경로에서만 시험한다. 실제 게임 인물 식별·진행/인지·한국어 문체 검수와 출시 승인은 별도다. 자료 12명 보유는 게임 진입 12명 지원을 뜻하지 않는다. 현재 구현·검증·공백은 [명세 대조 리뷰](../docs/game-mod-spec-review-2026-10-05.md), 실제 배포 파일 변경은 [배포 변경 이력](../docs/game-mod-validation.md)에서 구분한다.
+게임/웹의 명시적인 개발 초안 허용 경로에서만 시험한다. 실제 게임 인물 식별·진행/인지·한국어 문체 검수와 출시 승인은 별도다. 자료 12명 보유는 게임 진입 12명 지원을 뜻하지 않는다. 현재 구현·검증·공백은 [개발·검증 계획](../docs/development-validation.md), 실제 배포 파일 변경은 [배포 변경 이력](../docs/game-mod-validation.md)에서 구분한다.
 
-정책은 [콘텐츠 규격](../docs/content-specification.md), [Big Five 규격](../docs/personality-specification.md), [지식 규격](../docs/npc-knowledge-specification.md), [프롬프트 규격](../docs/prompt-specification.md)을 따른다. 코드 매핑 전의 진행/접촉 근거는 [진행도 분석](../docs/story-progression-analysis.md)에 남긴다. 원형 생성·대화 기억·성인 유머가 인지/관계/행동 권한을 추가하지 않는다.
+정책은 [콘텐츠 규격](../docs/content-specification.md), [Big Five 규격](../docs/personality-specification.md), [지식 규격](../docs/npc-knowledge-specification.md), [프롬프트 규격](../docs/prompt-specification.md)을 따른다. 진행/접촉 조건은 [진행 정책 자료](cyberpunk2077/story-progression-policy.json)가 기준이다. 원형 생성·대화 기억·성인 유머가 인지/관계/행동 권한을 추가하지 않는다.
 
 참조·조건·집계·seed 검사는 `node scripts/validate-content.mjs`, 진행 후보 검사는 `npm run check:story`로 수행한다. 원본 JSON·출처·기준 스펙을 보존하며 문서 정리를 콘텐츠 승인이나 게임 검증으로 처리하지 않는다.

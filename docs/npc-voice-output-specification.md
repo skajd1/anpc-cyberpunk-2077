@@ -1,6 +1,6 @@
 # NPC 음성 출력 규격
 
-규격 버전: 1.0 (2026-10-07). 첫 게임판 기본 기능의 목표 계약. 게임 기능: [UF-67~UF-73](gameplay-functional-specification.md#10-npc-음성). 설치물: [DIST-23~DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권). 지연 근거·후보 방안: [음성 지연 분석](npc-voice-latency-analysis.md). 실측·시험: [개발·검증 계획](development-validation.md#11-npc-음성-tts-로컬-실측-2026-10-06).
+규격 버전: 1.0 (2026-10-07). 첫 게임판 기본 기능의 목표 계약. 게임 기능: [UF-67~UF-73](gameplay-functional-specification.md#10-npc-음성). 설치물: [DIST-23~DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권). 실측·남은 확인 항목: [개발·검증 계획 6.4·8.1](development-validation.md#81-npc-음성-tts-로컬-실측-2026-10-06).
 
 공통 스키마 전환 상태: 2절의 `delivery`·`speech_text`와 필드 순서는 목표 계약이며 `contracts/v1`의 DialogueReply에는 아직 반영하지 않았다. 반영할 때는 스키마·예시·게임 응답 검사를 함께 갱신한다.
 
