@@ -750,3 +750,19 @@
 - 배포 manifest·해시: config.local.crowd-rejoin-deployment.json
 - 백업·복원 자료: config.local.backups/crowd-rejoin-20261008-032457 (수정 3개 백업)
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261008040617 — 감정 sad·프롬프트 0.19와 배포 스크립트 기준 동기화
+
+- 일시: 2026-10-08 04:06:17 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 응답 검사의 감정 허용값에 sad 추가 | 공통 계약의 감정 열거값과 일치. sad 응답을 검사 실패로 버리지 않음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/prompts.lua | 수정 | prompt_version 0.18 → 0.19, 출력 스키마·생성 지침의 emotion에 sad 추가 | NPC가 슬픔 감정을 선택해 해당 참조 음성 키로 쓸 수 있음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua, diagnostics.lua | 수정 | 줄바꿈만 LF → CRLF(내용 동일) | 배포 스크립트(DIST-26) 첫 실행으로 게임 파일을 저장소 소스와 같은 바이트로 맞춤. 동작 변화 없음 |
+| r6/scripts/ANPC/Diagnostics.reds, HangulTable.reds, Voice.reds | 수정 | 줄바꿈만 LF → CRLF(내용 동일) | 같음 |
+| r6/audioware/ANPC/manifest.yaml | 수정 | 줄바꿈만 LF → CRLF(내용 동일) | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261008040617/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
