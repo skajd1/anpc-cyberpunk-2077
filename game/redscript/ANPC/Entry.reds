@@ -867,12 +867,12 @@ public class Entry extends ScriptableSystem {
     return this.voiceRegistered;
   }
 
-  public func VoicePlay(requestId: Int32, slot: Int32) -> Bool {
+  public func VoicePlay(requestId: Int32, slot: Int32, volume: Float) -> Bool {
     let session = this.session;
     if !IsDefined(session) || session.latestRequest != requestId || !this.voiceRegistered { return false; }
     let npc: ref<NPCPuppet> = session.npc;
     if !IsDefined(npc) || NotEquals(npc.GetEntityID(), this.voiceEmitter) { return false; }
-    return AnpcAudioware.Play(this.GetGameInstance(), this.voiceEmitter, slot);
+    return AnpcAudioware.Play(this.GetGameInstance(), this.voiceEmitter, slot, volume);
   }
 
   // 새 입력·대화 종료·초기화: 모든 슬롯을 멈춘다.

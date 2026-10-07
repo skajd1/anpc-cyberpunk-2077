@@ -18,5 +18,7 @@ return {
   -- 응답 수용 후 첫 음성 구간 대기 한도(음성 출력 규격 subtitle_wait_ms). 넘으면 자막만.
   voice_wait_s = 3.0,
   -- 자막 표시 시간 계산용 일본어 1자당 음성 길이(초).
-  voice_sec_per_char = 0.16
+  voice_sec_per_char = 0.16,
+  -- 3D 음성 재생 음량(Audioware 1.0 기준). 원작 NPC 음성과 비교해 맞춘다.
+  voice_volume = 1.0
 }

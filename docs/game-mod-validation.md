@@ -704,3 +704,19 @@
 - 배포 manifest·해시: config.local.voice-fix-deployment.json
 - 백업·복원 자료: config.local.backups/voice-fix-20261008-020223
 - 확인: 게임 scc로 Audioware 있음·없음 두 경우 시험 컴파일 통과. 실게임 동작 미검증
+
+## DEP-20261008021503 — NPC 음성 환경 효과·가림·음량 설정
+
+- 일시: 2026-10-08 02:15:03 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Voice.reds | 수정 | 음원 등록에 환경 프리셋·가림(occlusion) 적용, 슬롯 재생에 음량 인수 추가 | 원작 음성과 같은 실내외 효과·벽 뒤 감쇠로 공간감 차이를 줄임 |
+| r6/scripts/ANPC/Entry.reds | 수정 | VoicePlay에 음량 인수 추가 | CET 설정 음량 전달 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 구간 재생 시 voice_volume 전달 | 원작 음성과 크기 맞춤 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_volume=1.0 추가 | 청취로 조정 |
+
+- 배포 manifest·해시: config.local.voice-env-deployment.json
+- 백업·복원 자료: config.local.backups/voice-env-20261008-021503
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증

@@ -203,7 +203,7 @@ end
 
 -- 첫 구간을 재생하는 순간 자막을 띄우고(음성 출력 규격 4.3), 앞 구간 길이가 끝나면 다음 구간을 잇는다.
 local function playSegment(system, id, job, seg)
-  local ok, played = pcall(function() return system:VoicePlay(id, seg.slot) end)
+  local ok, played = pcall(function() return system:VoicePlay(id, seg.slot, config.voice_volume) end)
   return ok and played == true
 end
 

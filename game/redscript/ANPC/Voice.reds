@@ -26,7 +26,12 @@ public abstract class AnpcAudioware {
   @if(ModuleExists("Audioware"))
   public static func Register(game: GameInstance, id: EntityID) -> Bool {
     let ext = GameInstance.GetAudioSystemExt(game);
-    return IsDefined(ext) && ext.RegisterEmitter(id, n"ANPC", n"ANPC");
+    if !IsDefined(ext) { return false; }
+    // 원작 음성처럼 실내·실외 환경 효과와 가림(벽 뒤 소리 감쇠)을 받는다. 잔향 믹스는 기본값(켜짐).
+    let settings = new EmitterSettings();
+    settings.affectedByEnvironmentalPreset = true;
+    settings.enableOcclusion = true;
+    return ext.RegisterEmitter(id, n"ANPC", n"ANPC", settings);
   }
 
   @if(!ModuleExists("Audioware"))
@@ -42,15 +47,17 @@ public abstract class AnpcAudioware {
   public static func Unregister(game: GameInstance, id: EntityID) -> Void {}
 
   @if(ModuleExists("Audioware"))
-  public static func Play(game: GameInstance, id: EntityID, slot: Int32) -> Bool {
+  public static func Play(game: GameInstance, id: EntityID, slot: Int32, volume: Float) -> Bool {
     let ext = GameInstance.GetAudioSystemExt(game);
     if !IsDefined(ext) { return false; }
-    ext.PlayOnEmitter(StringToName("anpc_voice_" + ToString(slot)), id, n"ANPC");
+    let audio = new AudioSettingsExt();
+    audio.volume = volume;
+    ext.PlayOnEmitter(StringToName("anpc_voice_" + ToString(slot)), id, n"ANPC", audio);
     return true;
   }
 
   @if(!ModuleExists("Audioware"))
-  public static func Play(game: GameInstance, id: EntityID, slot: Int32) -> Bool { return false; }
+  public static func Play(game: GameInstance, id: EntityID, slot: Int32, volume: Float) -> Bool { return false; }
 
   @if(ModuleExists("Audioware"))
   public static func Stop(game: GameInstance, id: EntityID, slot: Int32) -> Void {
