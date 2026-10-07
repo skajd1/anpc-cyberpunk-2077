@@ -4,7 +4,7 @@
 
 ## 배포 변경 이력
 
-- 게임 파일은 저장소 소스만 고치고 `scripts/deploy-game-dev.ps1`(`-Plan` 확인 → `-Name` 배포)로 반영한다. 게임 폴더 직접 수정·일회용 배포 스크립트는 만들지 않는다.
+- 게임 파일은 저장소 소스만 고치고 `scripts/deploy-game-dev.ps1`로 반영한다. 절차는 [docs/deploy.md](docs/deploy.md)를 따른다. 게임 폴더 직접 수정·일회용 배포 스크립트는 만들지 않는다.
 - 기록 문서는 [docs/game-mod-validation.md](docs/game-mod-validation.md)다. **배포 이력 전용**으로 사용하고 실제 배포 한 건당 한 항목을 배포 시점에 작성한다.
 - 실제 완료 시각을 `YYYY-MM-DD HH:mm:ss KST (UTC+09:00)`로 기록한다. 설치 manifest와 대조하며 시각을 추정하지 않는다. 과거 시각이 없으면 `시각 미기록`으로 표시한다.
 - 배포 ID/이름·대상/상태·변경 파일의 상대 경로·추가/수정/삭제·변경 내용·이유/영향·백업/복원/해시 manifest를 기록한다. 묶음 파일은 정확한 전체 목록이 있는 manifest를 연결한다.
