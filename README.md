@@ -47,6 +47,7 @@ PowerShell 7과 Node.js 22 이상에서 `scripts/build-game-package.ps1 -NativeD
 ## 개발·운영 문서
 
 - [개발 및 검증 계획](docs/development-validation.md) — 현재 상태·남은 결함·개발 순서·환경·검증 방법·실측값
+- [게임 배포 절차](docs/deploy.md) — 소스를 게임 폴더에 반영하는 배포 스크립트 사용법·되돌리기·기록 파일
 - [배포 변경 이력](docs/game-mod-validation.md) — 배포별 일시·변경 파일·변경 이유/영향·백업과 복원 기록
 - [NPC 음성 모델 파인튜닝 작업 절차](docs/voice-model-finetuning-guide.md) — 사내 GPU 서버 학습 절차와 학습 기록
 
