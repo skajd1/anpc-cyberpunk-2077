@@ -2,7 +2,7 @@
 
 규격 버전: 1.0 (2026-10-07). 첫 게임판 기본 기능의 목표 계약. 게임 기능: [UF-67~UF-73](gameplay-functional-specification.md#10-npc-음성). 설치물: [DIST-23~DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권). 실측·남은 확인 항목: [개발·검증 계획 6.4·8.1](development-validation.md#81-npc-음성-tts-로컬-실측-2026-10-06).
 
-공통 스키마 전환 상태: 2절의 `delivery`·`speech_text`와 필드 순서는 목표 계약이며 `contracts/v1`의 DialogueReply에는 아직 반영하지 않았다. 반영할 때는 스키마·예시·게임 응답 검사를 함께 갱신한다.
+공통 스키마 전환 상태: `contracts/v1`의 DialogueReply는 자막 전용(DialogueReplyText)과 음성(DialogueReplyVoice) 두 형태 중 하나다. 웹 시제품의 응답 스키마·검사·출력 안내는 음성 옵션을 지원하지만 기본값은 꺼짐이다. 게임 CET 응답 검사와 TTS 연결은 아직 음성 형태를 받지 않는다.
 
 ## 1. 범위와 역할 분담
 
@@ -33,7 +33,7 @@ speech_text 작성 규칙:
 
 - 새 사실·감정·약속·행동·질문을 더하거나 빼지 않는다. 한국어 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다.
 - 실제로 읽을 말만 쓴다. 지문·괄호 설명·마크다운·이모지·속도 지시·한글을 넣지 않는다.
-- 고유명사는 [콘텐츠 규격](content-specification.md#2-커뮤니티-캐릭터-카드)의 ja_reading_table을 따른다. 읽기가 여러 개인 한자는 가나로 쓴다. V는 「ブイ」로 쓴다.
+- 고유명사는 [콘텐츠 규격](content-specification.md#2-커뮤니티-캐릭터-카드)의 ja_reading_table에 있는 reading(가나)으로 쓴다. 읽기가 여러 개인 한자는 가나로 쓴다. V는 일본어판 공식 표기 「V（ヴィー）」에 따라 「ヴィー」로 쓴다.
 
 응답 검사:
 
@@ -117,7 +117,7 @@ speech_text 작성 규칙:
 
 | 대상 | 시점·규칙 |
 | --- | --- |
-| 엔진·기본 모델 | 음성이 활성화된 게임 세션 시작 시 비동기 로드. 「ブイ」가 들어간 고정 문장으로 1회 예열. 로드 완료 전 대사는 자막만 |
+| 엔진·기본 모델 | 음성이 활성화된 게임 세션 시작 시 비동기 로드. 「ヴィー」가 들어간 고정 문장으로 1회 예열. 로드 완료 전 대사는 자막만 |
 | 참조 처리 결과 | (voice_profile_id, ref_id, engine_profile 버전) 키로 로컬 캐시. 대화 진입(entry_pending) 시 대상 profile의 캐시를 준비 |
 | 합성 결과 | 선택 캐시. (engine_profile 버전, ref_id, delivery, 문장 해시) 키. utterance_cache_mb 상한 초과 시 최근 미사용부터 제거 |
 

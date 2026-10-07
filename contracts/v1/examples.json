@@ -943,6 +943,28 @@
         "follow_up": null
       }
     },
+    "dialogue.reply.voice": {
+      "contract": "dialogue.reply",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "judy"
+        }
+      },
+      "data": {
+        "emotion": "friendly",
+        "delivery": "normal",
+        "dialogue": "파란색을 좋아한다고 했지.",
+        "follow_up": null,
+        "speech_text": "青が好きだって言ってたよね。",
+        "intent": "answer",
+        "action": null
+      }
+    },
     "provider.result": {
       "contract": "provider.result",
       "contract_version": "1.0",
@@ -1195,6 +1217,26 @@
       "value": [
         "비공개 정보"
       ]
+    },
+    {
+      "name": "음성 응답의 말 빠르기 누락",
+      "base": "dialogue.reply.voice",
+      "path": "/data/delivery",
+      "operation": "delete"
+    },
+    {
+      "name": "등록 밖 말 빠르기",
+      "base": "dialogue.reply.voice",
+      "path": "/data/delivery",
+      "operation": "set",
+      "value": "whisper"
+    },
+    {
+      "name": "말 빠르기 없는 음성 대사",
+      "base": "dialogue.reply",
+      "path": "/data/speech_text",
+      "operation": "set",
+      "value": "こんにちは。"
     }
   ],
   "calls": [

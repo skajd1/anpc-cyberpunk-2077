@@ -1,0 +1,597 @@
+{
+  "schema_version": "0.2",
+  "table_id": "ja_reading_table",
+  "revision": 2,
+  "note": "speech_text의 고유명사 기준. ja_display는 일본어판 공식 표기, reading은 TTS가 읽을 가나다. speech_text에는 reading을 쓴다. approved는 CDPR 일본어 공식 자료에서 확인한 항목, draft는 매체·위키 근거이거나 실제 음성의 읽기를 확인하지 못한 항목이다. 자막 표기를 바꾸지 않는다.",
+  "entries": [
+    {
+      "term": "V",
+      "ja_display": "V",
+      "reading": "ヴィー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "주디",
+      "ja_display": "ジュディ",
+      "reading": "ジュディ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "주디 알바레스",
+      "ja_display": "ジュディ・アルヴァレス",
+      "reading": "ジュディ・アルヴァレス",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME",
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "팬앰",
+      "ja_display": "パナム",
+      "reading": "パナム",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "팬앰 팔머",
+      "ja_display": "パナム・パーマー",
+      "reading": "パナム・パーマー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "재키",
+      "ja_display": "ジャッキー",
+      "reading": "ジャッキー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "재키 웰스",
+      "ja_display": "ジャッキー・ウェルズ",
+      "reading": "ジャッキー・ウェルズ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "빅터",
+      "ja_display": "ヴィクター",
+      "reading": "ヴィクター",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "빅터 벡터",
+      "ja_display": "ヴィクター・ヴェクター",
+      "reading": "ヴィクター・ヴェクター",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "빅",
+      "ja_display": "ヴィク",
+      "reading": "ヴィク",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "미스티",
+      "ja_display": "ミスティ",
+      "reading": "ミスティ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "미스티 올셰프스키",
+      "ja_display": "ミスティ・オルシェフスキー",
+      "reading": "ミスティ・オルシェフスキー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "로그",
+      "ja_display": "ローグ",
+      "reading": "ローグ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "로그 아멘디아레스",
+      "ja_display": "ローグ・アメンディアレス",
+      "reading": "ローグ・アメンディアレス",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "고로",
+      "ja_display": "ゴロウ",
+      "reading": "ゴロウ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "타케무라",
+      "ja_display": "タケムラ",
+      "reading": "タケムラ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "고로 타케무라",
+      "ja_display": "ゴロウ・タケムラ",
+      "reading": "ゴロウ・タケムラ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "케리",
+      "ja_display": "ケリー",
+      "reading": "ケリー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "케리 유로다인",
+      "ja_display": "ケリー・ユーロダイン",
+      "reading": "ケリー・ユーロダイン",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "리버",
+      "ja_display": "リバー",
+      "reading": "リバー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "리버 워드",
+      "ja_display": "リバー・ウォード",
+      "reading": "リバー・ウォード",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "조니",
+      "ja_display": "ジョニー",
+      "reading": "ジョニー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "조니 실버핸드",
+      "ja_display": "ジョニー・シルヴァーハンド",
+      "reading": "ジョニー・シルヴァーハンド",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "에블린",
+      "ja_display": "エヴリン",
+      "reading": "エヴリン",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "에블린 파커",
+      "ja_display": "エヴリン・パーカー",
+      "reading": "エヴリン・パーカー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "송버드",
+      "ja_display": "ソングバード",
+      "reading": "ソングバード",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PL"
+      ]
+    },
+    {
+      "term": "송소미",
+      "ja_display": "ソン・ソミ",
+      "reading": "ソン・ソミ",
+      "review_status": "draft",
+      "source_ids": [
+        "JA_FAMITSU_PL"
+      ]
+    },
+    {
+      "term": "소미",
+      "ja_display": "ソミ",
+      "reading": "ソミ",
+      "review_status": "draft",
+      "source_ids": [
+        "JA_WIKI_STELLAR"
+      ]
+    },
+    {
+      "term": "하나코",
+      "ja_display": "ハナコ",
+      "reading": "ハナコ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "사부로",
+      "ja_display": "サブロウ",
+      "reading": "サブロウ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "나이트 시티",
+      "ja_display": "ナイトシティ",
+      "reading": "ナイトシティ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME",
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "왓슨",
+      "ja_display": "ワトソン",
+      "reading": "ワトソン",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "웨스트브룩",
+      "ja_display": "ウェストブルック",
+      "reading": "ウェストブルック",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "헤이우드",
+      "ja_display": "ヘイウッド",
+      "reading": "ヘイウッド",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "퍼시피카",
+      "ja_display": "パシフィカ",
+      "reading": "パシフィカ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "산토도밍고",
+      "ja_display": "サントドミンゴ",
+      "reading": "サントドミンゴ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "시티 센터",
+      "ja_display": "シティ・センター",
+      "reading": "シティ・センター",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "배드랜드",
+      "ja_display": "バッドランズ",
+      "reading": "バッドランズ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "도그타운",
+      "ja_display": "ドッグタウン",
+      "reading": "ドッグタウン",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PL"
+      ]
+    },
+    {
+      "term": "애프터라이프",
+      "ja_display": "アフターライフ",
+      "reading": "アフターライフ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "아라사카",
+      "ja_display": "アラサカ",
+      "reading": "アラサカ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "밀리테크",
+      "ja_display": "ミリテク",
+      "reading": "ミリテク",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PL"
+      ]
+    },
+    {
+      "term": "바이오테크니카",
+      "ja_display": "バイオテクニカ",
+      "reading": "バイオテクニカ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "트라우마 팀",
+      "ja_display": "トラウマ・チーム",
+      "reading": "トラウマ・チーム",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "NCPD",
+      "ja_display": "NCPD",
+      "reading": "エヌシーピーディー",
+      "review_status": "draft",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "넷워치",
+      "ja_display": "ネットウォッチ",
+      "reading": "ネットウォッチ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "NUSA",
+      "ja_display": "新アメリカ合衆国",
+      "reading": "シンアメリカガッシュウコク",
+      "review_status": "draft",
+      "source_ids": [
+        "JA_CDPR_PL",
+        "JA_CDPR_NEWS"
+      ]
+    },
+    {
+      "term": "FIA",
+      "ja_display": "連邦情報局（FIA）",
+      "reading": "レンポウジョウホウキョク",
+      "review_status": "draft",
+      "source_ids": [
+        "JA_CDPR_PL"
+      ]
+    },
+    {
+      "term": "타이거 클로",
+      "ja_display": "タイガークロウズ",
+      "reading": "タイガークロウズ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "발렌티노",
+      "ja_display": "ヴァレンティーノズ",
+      "reading": "ヴァレンティーノズ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "부두 보이즈",
+      "ja_display": "ヴードゥー・ボーイズ",
+      "reading": "ヴードゥー・ボーイズ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_NIGHTCITY"
+      ]
+    },
+    {
+      "term": "목스",
+      "ja_display": "モックス",
+      "reading": "モックス",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "알데칼도스",
+      "ja_display": "アルデカルドス",
+      "reading": "アルデカルドス",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "메일스트롬",
+      "ja_display": "メイルストローム",
+      "reading": "メイルストローム",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "렐릭",
+      "ja_display": "Relic",
+      "reading": "レリック",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME",
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "브레인댄스",
+      "ja_display": "ブレインダンス",
+      "reading": "ブレインダンス",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_GAME"
+      ]
+    },
+    {
+      "term": "BD",
+      "ja_display": "BD",
+      "reading": "ビーディー",
+      "review_status": "draft",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "넷러너",
+      "ja_display": "ネットランナー",
+      "reading": "ネットランナー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PL"
+      ]
+    },
+    {
+      "term": "리퍼닥",
+      "ja_display": "リパードク",
+      "reading": "リパードク",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "픽서",
+      "ja_display": "フィクサー",
+      "reading": "フィクサー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "엔그램",
+      "ja_display": "記憶痕跡",
+      "reading": "キオクコンセキ",
+      "review_status": "draft",
+      "source_ids": [
+        "JA_MEDIA_ENGRAM"
+      ]
+    },
+    {
+      "term": "블랙월",
+      "ja_display": "ブラックウォール",
+      "reading": "ブラックウォール",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "사이버사이코",
+      "ja_display": "サイバーサイコ",
+      "reading": "サイバーサイコ",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    },
+    {
+      "term": "크롬",
+      "ja_display": "クローム",
+      "reading": "クローム",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_COSPLAY"
+      ]
+    },
+    {
+      "term": "에디",
+      "ja_display": "エディー",
+      "reading": "エディー",
+      "review_status": "approved",
+      "source_ids": [
+        "JA_CDPR_PATCH"
+      ]
+    }
+  ]
+}

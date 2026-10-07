@@ -828,6 +828,87 @@
       "access_method": "search_extract",
       "locator": "DuckDuckGo 검색 발췌로 본명·역할·한센 거래 확인. 본문/API는 HTTP 402로 열람하지 못함",
       "checked_at": "2026-10-03"
+    },
+    {
+      "id": "JA_CDPR_GAME",
+      "title": "CDPR 일본어 공식 게임 페이지",
+      "url": "https://www.cyberpunk.net/jp/ja/cyberpunk-2077",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "상단 소개문 V（ヴィー）, 캐릭터 카드",
+      "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_CDPR_PL",
+      "title": "CDPR 일본어 공식 팬텀 리버티 페이지",
+      "url": "https://www.cyberpunk.net/jp/ja/phantom-liberty",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "인물 카드, 新合衆国の連邦情報局（FIA）",
+      "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_CDPR_COSPLAY",
+      "title": "CDPR 일본어 공식 코스프레 가이드",
+      "url": "https://www.cyberpunk.net/ja/cosplay-guides",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "인물별 설명",
+      "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_CDPR_NIGHTCITY",
+      "title": "CDPR 일본어 공식 나이트시티 관광 사이트",
+      "url": "https://www.nightcity.love/ja/",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "지구 소개·갱단·NCPD 안내",
+      "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_CDPR_PATCH",
+      "title": "CDPR 일본어 공식 패치노트 1.2~2.2",
+      "url": "https://www.cyberpunk.net/ja/news/37816",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "news 37816(1.2)·39181(1.3)·41483(1.5)·49252(2.01)·49669(2.1)·49861(2.11)·51076(2.2) 퀘스트·인물·업적명",
+      "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_CDPR_NEWS",
+      "title": "CDPR 일본어 공식 뉴스",
+      "url": "https://www.cyberpunk.net/ja/news/47057",
+      "tier": "primary",
+      "access_method": "web_body",
+      "locator": "news 47057(PL 티저)·49174(PL 출시)·48727·50224",
+      "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_FAMITSU_PL",
+      "title": "파미통 팬텀 리버티 리뷰",
+      "url": "https://www.famitsu.com/news/202309/21317339.html",
+      "tier": "secondary",
+      "access_method": "web_body",
+      "locator": "줄거리 단락 ソン・ソミ",
+      "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_MEDIA_ENGRAM",
+      "title": "AUTOMATON·전파미 2025-09-09 기사",
+      "url": "https://automaton-media.com/articles/newsjp/cyberpunk-2077-20250909-356803/",
+      "tier": "secondary",
+      "access_method": "web_body",
+      "locator": "작품 소개 단락 記憶痕跡（コンストラクト）. 전파미 250909g 동일 표기",
+      "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_WIKI_STELLAR",
+      "title": "stellar-gamer 사이버펑크 2077 용어 사전",
+      "url": "https://stellar-gamer.com/cyberpunk2077/terms/2481",
+      "tier": "secondary",
+      "access_method": "web_body",
+      "locator": "표제어·별칭 (terms/63·2481·167)",
+      "checked_at": "2026-10-07"
     }
   ]
 }

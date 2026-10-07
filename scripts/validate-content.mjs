@@ -156,6 +156,16 @@ for(const archetype of crowd.archetypes){
  check(['personal','quest'].every(layer=>plan.excluded_layers.includes(layer)),'군중 개인·퀘스트 지식 차단 누락: '+archetype.id);
 }
 for(const file of manifest.files)check(fs.existsSync(path.join(root,file)),'자료 파일 누락: '+file);
+// 일본어 음성 읽기 표기표: 한국어 표기 중복 없음, 공식 표기 필수, 읽기는 가나·중점·장음만, 근거는 등록 출처.
+const readings=read('ja-reading-table.json'), terms=new Set();
+for(const entry of readings.entries){
+ check(!terms.has(entry.term),'읽기 표기 중복: '+entry.term); terms.add(entry.term);
+ check(typeof entry.ja_display==='string'&&entry.ja_display.trim().length>0,'일본어판 표기 누락: '+entry.term);
+ check(/^[ぁ-ゖァ-ヺ・ー]+$/.test(entry.reading),'가나가 아닌 읽기: '+entry.term);
+ check(['approved','draft'].includes(entry.review_status),'읽기 검수 상태 오류: '+entry.term);
+ check(entry.source_ids.length>0&&entry.source_ids.every(id=>sourceIds.has(id)),'읽기 근거 출처 오류: '+entry.term);
+ check(entry.review_status==='draft'||entry.source_ids.some(id=>sources.find(s=>s.id===id).tier==='primary'),'공식 근거 없는 승인 읽기: '+entry.term);
+}
 const actual={characters:cards.length,world_facts:facts.length,knowledge_entries:knowledge.length,dialogue_examples:examples.length,knowledge_bundles:policy.bundles.length,relationship_stages:cards.reduce((sum,c)=>sum+(c.relationship_stages?.length??0),0),crowd_archetypes:crowd.archetypes.length};
 for(const [key,count] of Object.entries(actual))check(manifest.counts[key]===count,'집계 불일치: '+key);
 console.log(JSON.stringify({status:errors.length?'실패':'통과',sources:sources.length,...actual,new_example_condition_checks:newExamples.length,crowd_seed_checks:crowd.archetypes.length*32,errors},null,2));
