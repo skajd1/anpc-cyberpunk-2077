@@ -63,7 +63,7 @@ source_checked는 출처 확인만 의미한다. draft 카드/규칙/예시/인�
 - 호환 구조 1.0 출시 카드: 승인 배경·identity·identity_rules·voice_style·예시·목표/관계/지식 조건·대체 대사 필수. 누락 오리지널 정체성 무작위 보충 금지.
 - 선택 필드 누락은 창작 경험으로 보충하지 않는다. 창작은 provenance/허용 변경 범위 명시. speech_rules 중복은 voice_style로 통합.
 - UF-63의 욕설/성인 유머는 speech_rules.slang_density/humor_and_profanity_limit와 voice_style.direction에서 인물별로 작성한다. 조니 등 거친 인물과 절제된 인물의 강도를 구별한다. 군중 voice_styles의 speech_rules는 선택한 말투와 함께 유지하며 Big Five/원칙/지식/관계를 바꾸지 않는다. 성인 여부·비노골적 범위·상대 반응은 공통 말투 지침을 따른다.
-- 일본어 음성 표기표는 패키지 단위 ja_reading_table(`ja-reading-table.json`)이다. 표 단위 review_status가 draft가 아니면 모든 항목에 source_ids가 필요하다. 항목은 term(한국어 표기)·reading(가타카나/가나)·source_ids이며 인물·지역·기업·은어 고유명사를 담는다. speech_text 생성 지침과 검사에 쓰며 자막 표기를 바꾸지 않는다.
+- 일본어 음성 표기표는 패키지 단위 ja_reading_table(`ja-reading-table.json`)이다. 항목은 term(한국어 표기)·ja_display(일본어판 공식 표기)·reading(TTS가 읽을 가나)·review_status·source_ids(sources.json의 출처 ID, 1개 이상)이며 인물·지역·기업·은어 고유명사를 담는다. approved는 1차(primary) 출처로 확인한 항목만 쓴다. speech_text 생성 지침과 검사에 쓰며 자막 표기를 바꾸지 않는다.
 - 화면 presentation.role은 짧은 역할, identity_slots는 원본 identity 목록 키의 비어 있지 않은 짧은 문자열 목록. 누락 슬롯은 원문 표시. 새 특성/관계 추가 및 생성/승인 권한 변경 금지. 신규 성격은 다섯 수준 표시.
 
 ### 2.1. 오리지널 관계 단계

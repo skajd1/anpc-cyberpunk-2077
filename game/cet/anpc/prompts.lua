@@ -70,7 +70,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -131,7 +131,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -192,7 +192,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -253,7 +253,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -314,7 +314,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -375,7 +375,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -436,7 +436,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -497,7 +497,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -558,7 +558,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -619,7 +619,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -680,7 +680,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -741,7 +741,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
@@ -802,7 +802,7 @@ runtime_story_binding_unavailable]=],
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 「ブイ」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 새 사실·감정·약속·행동·질문을 더하거나 빼지 않고, 비속어·호칭·말끝의 강도는 일본어 구어의 같은 강도로 옮긴다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 출력 필드: dialogue(1~600자 실제 대사), intent(answer|ask|refuse|warn|farewell), emotion(neutral|friendly|wary|annoyed|afraid|curious), action(허용 후보의 action_id·args 또는 null), follow_up(1~150자 후속 질문 또는 null).
