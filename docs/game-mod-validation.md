@@ -644,3 +644,17 @@
 - 배포 manifest·해시: config.local.voice-dev-deployment.json
 - 백업·복원 자료: config.local.backups/voice-dev-20261008-011224
 - 확인: 실게임 미검증. Lua 단위 검사는 로컬 Lua 실행기가 없어 미실행. 보조 프로세스는 저장소 밖 개발 도구로 배포물에 포함하지 않음
+
+## DEP-20261008014811 — TweakXL 1.11.4·Audioware 1.9.9 설치
+
+- 일시: 2026-10-08 01:48:11 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/TweakXL/ (7개) · r6/tweaks/ | 추가 | TweakXL 1.11.4 공식 릴리스 압축 해제 | Audioware 필수 의존성 |
+| red4ext/plugins/audioware/audioware.dll · r6/scripts/Audioware/ (19개) | 추가 | Audioware 1.9.9 공식 릴리스 압축 해제 | 설계안 A(개발·검증 계획 6.4.1)의 NPC 위치 음성 재생 시험. 기존 파일 변경 없음 |
+
+- 배포 manifest·해시: config.local.audioware-deployment.json (릴리스 ZIP SHA-256·설치 파일 26개 해시·생성 폴더 4개)
+- 백업·복원 자료: 기존 파일 덮어쓰기 없음. manifest의 파일·생성 폴더 삭제로 복원
+- 확인: 실게임 로드 미검증
