@@ -208,6 +208,16 @@ public abstract class SceneEntry {
     return hub.id != SceneEntry.HubId() && ArraySize(hub.choices) > 0 && !IsDefined(hub.timeProvider);
   }
 
+  public static func HasWaitingHub(game: GameInstance) -> Bool {
+    let hubs = SceneEntry.NativeHubs(game);
+    let i = 0;
+    while i < ArraySize(hubs.choiceHubs) {
+      if SceneEntry.IsWaitingHub(hubs.choiceHubs[i]) { return true; }
+      i += 1;
+    }
+    return false;
+  }
+
   // 조건을 모두 통과하면 이 NPC 이름과 일치하는 타이머 없는 원작 허브 ID, 아니면 -1.
   public static func MatchedHubId(npc: ref<NPCPuppet>, player: ref<PlayerPuppet>) -> Int32 {
     if !SceneEntry.StateAllowed(npc, player) { return -1; }
