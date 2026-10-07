@@ -675,3 +675,18 @@
 - 배포 manifest·해시: config.local.voice-spatial-deployment.json
 - 백업·복원 자료: config.local.backups/voice-spatial-20261008-015427 (수정 2개 백업, 추가 10개는 삭제로 복원)
 - 확인: 실게임 미검증(redscript 컴파일·Audioware 로드 포함). Lua 단위 검사 미실행
+
+## DEP-20261008015726 — 군중 NPC 대화 중 정지·V 시선
+
+- 일시: 2026-10-08 01:57:27 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/NpcControl.reds | 추가 | 군중 세션 시작 시 제자리 대기 명령(20초, 10초마다 갱신)·V 시선·제자리 몸통 정렬, 종료 시 자기 명령·시선 해제 | UF-14·SR-11. 걷는 군중이 입력 중 멀어지지 않음. 해제 누락 시에도 20초 뒤 자동 만료 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 군중 StartSession에서 제어 시작, 세션 감시마다 유지, EndSession·Reset에서 해제 | 장면 허브 NPC는 UF-15에 따라 제어하지 않음 |
+| r6/scripts/ANPC/Session.reds | 수정 | ChatSession에 제어 상태 필드 추가 | 세션별 제어 추적 |
+
+- 배포 manifest·해시: config.local.crowd-hold-deployment.json
+- 백업·복원 자료: config.local.backups/crowd-hold-20261008-015726 (수정 2개 백업, 추가 1개는 삭제로 복원)
+- 확인: 실게임 미검증(redscript 컴파일 포함)
