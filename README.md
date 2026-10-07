@@ -1,6 +1,6 @@
 # ANPC
 
-ANPC(Autonomous Non-Player Character)는 V가 NPC에게 먼저 말을 걸어 실제 복장·진행도·공개 평판·이전 만남에 맞는 대사 자막을 받는 사이버펑크 2077 모드 프로젝트다. 길거리 군중은 생성 정체성을 유지하고 커뮤니티 인물은 오리지널 성격·퀘스트·관계를 보존한다. 향후 대화에 맞는 행동을 기존 게임 모션·모드 연동으로 실행한다.
+ANPC(Autonomous Non-Player Character)는 V가 NPC에게 먼저 말을 걸어 실제 복장·진행도·공개 평판·이전 만남에 맞는 대사 자막과 일본어 음성을 받는 사이버펑크 2077 모드 프로젝트다. 길거리 군중은 생성 정체성을 유지하고 커뮤니티 인물은 오리지널 성격·퀘스트·관계를 보존한다. 향후 대화에 맞는 행동을 기존 게임 모션·모드 연동으로 실행한다.
 
 현재 저장소에는 설계 문서·웹 시제품·게임 진입/입력/자막·Native 통신·행동 선택 패널·군중 생성 정체성·게임 관찰/스캔 신원 수집 소스가 있다. 실제 게임에서 기존 모델의 AI 자막을 확인했고 최신 구성은 CLI/자동/모의 상태의 실제 API 검사까지 진행했다. 최신판 실게임 회귀·진행/저장 연결·제품 설치/복원·출시 승인은 미완료다. 현재 구현·검증·공백은 [명세 대조 리뷰](docs/game-mod-spec-review-2026-10-05.md), 실제 적용된 파일 변경은 [배포 변경 이력](docs/game-mod-validation.md)을 기준으로 구분한다. 프로젝트 문서는 한국어로 작성한다.
 
@@ -24,6 +24,8 @@ Node.js 22 이상에서 `npm start`를 실행하고 브라우저로 http://127.0
 - [모드 공통 데이터 및 모듈 입출력 규격](docs/module-interface-specification.md)
 - [초기 버전 명세](docs/initial-design.md)
 - [기술 구조 및 AI 통신 규격](docs/runtime-specification.md)
+- [NPC 음성 출력 규격](docs/npc-voice-output-specification.md) — 첫 게임판 일본어 음성, 아직 미구현
+- [NPC 음성 모델 파인튜닝 작업 절차](docs/voice-model-finetuning-guide.md) — 사내 GPU 서버 학습 절차와 학습 기록
 - [플레이어 음성 인식 구현 규격](docs/speech-recognition-specification.md) — 선택 후속 모듈 설계, 아직 미구현
 - [NPC 식별 및 대화 허용 규격](docs/npc-identity-specification.md)
 - [NPC 단기·장기 기억 및 비동기 정리 규격](docs/memory-specification.md)
