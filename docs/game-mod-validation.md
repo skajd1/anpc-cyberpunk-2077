@@ -922,3 +922,22 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009030217/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261009032213 — 군중 원작 목소리 TTS와 목소리 이름 표시
+
+- 일시: 2026-10-09 03:22:14 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/VoiceIdentity.reds | 추가 | NpcVoice.Probe: Codeware 리플렉션으로 scnVoicesetComponentPS.voiceTag(없으면 TweakDB VoiceTag)와 성별 읽기 | 군중 TTS가 NPC의 원작 목소리와 같은 참조 음성을 쓰게 함 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 세션 시작 때 목소리 이름·성별 기억, AI 요청에 포함 | 같음 |
+| r6/scripts/ANPC/Session.reds | 수정 | AnpcRequest·ChatSession에 voiceTag·gender 추가 | 같음 |
+| r6/scripts/ANPC/Diagnostics.reds | 수정 | 바라보는 NPC 검사에 목소리 정보 추가 | 디버그 창에서 목소리 이름 확인 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 군중 TTS 요청에 voice_tag·gender·voice_seed 포함, 최근 음성에 목소리 이름 표시 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_crowd_profile crowd_m2 → crowd | 없는 프로필 대신 원작 목소리 선택 사용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 바라보는 NPC에 목소리 이름·읽은 곳·인물 데이터 값·성별 표시, 못 읽으면 컴포넌트 구조 표시 | 실게임 확인용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/labels.lua | 수정 | 목소리 읽은 곳 표시 이름 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009032213/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 게임 폴더 밖 TTS 보조 프로세스·로컬 참조 음성 목록과 함께 동작. 실게임 동작 미검증
