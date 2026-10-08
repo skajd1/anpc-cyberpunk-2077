@@ -965,3 +965,18 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009041442/manifest.json
 - 확인: GitHub Actions 빌드·Provider 응답 해석 시험 통과. 실게임 동작 미검증
+
+## DEP-20261009042528 — 군중 성별 체형 판정과 목소리 이름 읽기 기록
+
+- 일시: 2026-10-09 04:25:28 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/VoiceIdentity.reds | 수정 | 성별을 GetResolvedGenderName이 None이면 GetBodyType(체형)으로 판정. 목소리 이름 읽기를 컴포넌트·GetPS·GetBasePS·persistentState 단계별로 기록 | 군중 성별이 None으로 넘어가 여성 NPC에 남성 목소리가 나오던 문제 수정. 목소리 이름을 못 읽는 원인 분석 |
+| r6/scripts/ANPC/Session.reds | 수정 | AnpcRequest·ChatSession에 voiceDetail 추가 | 같음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 세션 시작 때 목소리 읽기 기록을 요청에 포함 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 군중 목소리 이름을 못 읽으면 세션마다 한 번 CET 로그에 성별·읽기 기록 출력 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009042528/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
