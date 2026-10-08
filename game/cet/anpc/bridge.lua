@@ -239,7 +239,9 @@ function bridge.speak(id, item, speech, output)
   if not profile then return false end
   -- 군중은 원작 목소리 이름·성별·NPC 고유값을 함께 보내 보조 프로세스가 같은 목소리의 참조 음성을 고르게 한다.
   local voice = item.crowd and (',"voice_tag":' .. json.string(item.voiceTag or "") .. ',"gender":' .. json.string(item.gender or "")
-    .. ',"voice_seed":' .. json.string(item.voiceSeed or "")) or ""
+    .. ',"voice_seed":' .. json.string(item.voiceSeed or "")
+    -- 목소리 이름을 못 읽었으면 읽기 기록을 보조 프로세스 로그(helper_events.jsonl)에 남기게 함께 보낸다.
+    .. ((item.voiceTag or "") == "" and (',"voice_detail":' .. json.string(item.voiceDetail or "")) or "")) or ""
   return writeTts("req-" .. id, '{"request_id":"' .. id .. '","voice_profile_id":' .. json.string(profile)
     .. ',"emotion":' .. json.string(speech.emotion) .. ',"delivery":' .. json.string(speech.delivery) .. voice
     .. ',"output":"' .. (output or "local") .. '","speech_text":' .. json.string(speech.text) .. '}')
@@ -252,7 +254,6 @@ function bridge.helperAlive()
 end
 
 local voiceJobs = {}
-local voiceLogged = {}
 -- 디버그 창용 최근 처리 결과(음성·얼굴). 게임 동작에는 쓰지 않는다.
 local recent = { voice = "없음", face = "없음" }
 local function note(kind, id, text) recent[kind] = ("#%s %s"):format(tostring(id), text) end
@@ -435,11 +436,6 @@ local function deliverReply(system, id, text, character, item)
   if speech and bridge.helperAlive() then
     local ok, spatial = pcall(function() return system:VoiceSpatialAvailable() end)
     if ok and spatial == true and bridge.speak(id, item, speech, "slots") then
-      -- 군중 목소리 이름을 못 읽으면 원인 분석용 읽기 기록을 대화 세션마다 한 번 CET 로그에 남긴다.
-      if item.crowd and (item.voiceTag or "") == "" and not voiceLogged[item.session] then
-        voiceLogged[item.session] = true
-        print("[ANPC] 군중 목소리 이름 못 읽음 · 성별 " .. tostring(item.gender) .. " · " .. tostring(item.voiceDetail))
-      end
       note("voice", id, profile .. (item.crowd and (" " .. ((item.voiceTag or "") ~= "" and item.voiceTag or "목소리 모름") .. " ") or " ") .. "합성 대기")
       -- 자막·행동은 첫 음성 구간 재생 때 함께 시작한다(voiceUpdate).
       local _, chars = speech.text:gsub("[^\128-\191]", "")
