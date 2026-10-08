@@ -804,3 +804,21 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261008235433/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261009010542 — 말하기 입모양(UF-75)과 로컬 입모양 자원
+
+- 일시: 2026-10-09 01:05:42 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| archive/pc/mod/ANPC_talk.local.archive | 추가 | 남녀 원작 얼굴 표정 묶음·표정 대응표에 말하기 표정 3종(분류 4)을 더한 로컬 빌드 아카이브. 원작 일본어 립싱크 클립으로 이 PC에서 생성 | 표정 기능으로 말하는 입모양을 재생. 원작 자원이 들어 있어 저장소·배포물에는 포함하지 않음. 같은 원작 표정 파일을 고치는 다른 모드와 충돌 가능 |
+| r6/scripts/ANPC/Expression.reds | 수정 | Talk/EndTalk: 말하기 표정 즉시 적용, 끝나면 기억한 감정 표정 복귀 | 음성 시작·끝에 맞춘 입모양 |
+| r6/scripts/ANPC/Entry.reds | 수정 | TalkStart·TalkStop·DebugTalk | 세션 NPC의 안전 조건에서만 입모양 적용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 첫 음성 구간 재생 때 입모양 시작, 마지막 구간 끝·다른 요청·새 입력·종료 때 멈춤 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/expressions.lua | 수정 | 입모양 자원 확인, 변형 1~3 순환 시작·멈춤 | 자원이 없으면 입모양 없이 진행 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/devtools.lua | 수정 | 확인 도구에 다음 말하기 입모양 시험 | 실게임 확인 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | lipsync_enabled=true | 기능 켜기 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009010542/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
