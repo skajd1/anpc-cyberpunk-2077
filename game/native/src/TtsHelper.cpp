@@ -150,9 +150,9 @@ std::string Launch(bool aOwnRestart)
             startup.lpAttributeList = nullptr;
         }
     }
-    const BOOL inherit = (flags & EXTENDED_STARTUPINFO_PRESENT) != 0 ? TRUE : FALSE;
+    const BOOL inheritHandles = (flags & EXTENDED_STARTUPINFO_PRESENT) != 0 ? TRUE : FALSE;
     PROCESS_INFORMATION info{};
-    const BOOL created = CreateProcessW(nullptr, commandLine.data(), nullptr, nullptr, inherit, flags, environment.data(),
+    const BOOL created = CreateProcessW(nullptr, commandLine.data(), nullptr, nullptr, inheritHandles, flags, environment.data(),
                                         cwd.empty() ? nullptr : cwd.c_str(), &startup.StartupInfo, &info);
     if (startup.lpAttributeList)
         DeleteProcThreadAttributeList(startup.lpAttributeList);
