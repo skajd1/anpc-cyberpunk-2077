@@ -980,3 +980,15 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009042528/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261009043444 — 군중 목소리 읽기 기록을 보조 프로세스 로그로
+
+- 일시: 2026-10-09 04:34:44 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 군중 목소리 이름을 못 읽으면 읽기 기록을 TTS 요청 voice_detail로 보내고, CET print 기록은 삭제 | CET 로그 파일이 갱신되지 않아 기록이 남지 않던 문제. 보조 프로세스 로그에서 원인 확인 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009043444/manifest.json
+- 확인: Lua 시험 통과. 실게임 동작 미검증
