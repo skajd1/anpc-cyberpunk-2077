@@ -140,6 +140,10 @@ if ($conflicts.Count) { Write-Output '충돌: 마지막 배포 뒤 게임 쪽 �
 
 # 배포 전 검사(DIST-05·DIST-25)
 $checks = [ordered]@{}
+# 바뀌는 .json(설정·로컬 원문 등)은 형식이 맞는지 먼저 확인한다. 깨진 설정은 게임에서 조용히 실패한다.
+foreach ($i in $items | Where-Object { $_.from -and $_.path -like '*.json' }) {
+  try { [IO.File]::ReadAllText($i.from, $utf8) | ConvertFrom-Json | Out-Null } catch { throw "JSON 형식 오류: $($i.source) ($($_.Exception.Message))" }
+}
 if ($PSCmdlet.ParameterSetName -eq 'Deploy') {
   $gen = (& node (Join-Path $repo 'scripts/build-cet-prompts.mjs')) -join "`n"
   if ($LASTEXITCODE -ne 0) { throw '프롬프트 생성 검사 실패' }
