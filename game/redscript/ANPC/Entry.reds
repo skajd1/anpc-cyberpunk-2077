@@ -969,14 +969,29 @@ public class Entry extends ScriptableSystem {
     if IsDefined(this.expression) { this.expression.Reset(); }
   }
 
-  // UF-75: 음성 재생 동안 말하기 입모양. 시작은 첫 음성 구간, 끝은 마지막 구간 종료·중단.
-  public func TalkStart(requestId: Int32, idle: Int32) -> Bool {
+  // UF-75: 음성 재생 동안 말하기 입모양. TalkBegin은 첫 음성 구간, TalkStop은 마지막 구간 종료·중단.
+  // 그 사이 소리 나는 구간에 TalkOpen, 쉼에 TalkPause(CET가 보조 프로세스의 구간 정보로 판단).
+  private func TalkTarget(requestId: Int32) -> ref<NPCPuppet> {
     let session = this.session;
-    if !IsDefined(session) || session.latestRequest != requestId || NotEquals(this.SessionEndReason(session), "") { return false; }
+    if !IsDefined(session) || session.latestRequest != requestId || NotEquals(this.SessionEndReason(session), "") { return null; }
     let npc: ref<NPCPuppet> = session.npc;
-    if !IsDefined(npc) || NotEquals(Entry.FaceSafeReason(npc, session.player), "") { return false; }
+    if !IsDefined(npc) || NotEquals(Entry.FaceSafeReason(npc, session.player), "") { return null; }
     if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
-    return this.expression.Talk(npc, idle);
+    return npc;
+  }
+
+  public func TalkBegin(requestId: Int32) -> Bool {
+    let npc = this.TalkTarget(requestId);
+    return IsDefined(npc) && this.expression.Begin(npc);
+  }
+
+  public func TalkOpen(requestId: Int32, idle: Int32) -> Bool {
+    let npc = this.TalkTarget(requestId);
+    return IsDefined(npc) && this.expression.Open(npc, idle);
+  }
+
+  public func TalkPause() -> Void {
+    if IsDefined(this.expression) { this.expression.Pause(); }
   }
 
   public func TalkStop() -> Void {
@@ -987,7 +1002,7 @@ public class Entry extends ScriptableSystem {
     let npc = this.DebugFaceTarget();
     if !IsDefined(npc) { return false; }
     if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
-    return this.expression.Talk(npc, idle);
+    return this.expression.Begin(npc) && this.expression.Switch(npc, idle);
   }
 
   // ---- 개발 확인 도구: 바라보는 NPC를 고정해 표정·제스처를 직접 걸어 본다(세션 밖, CET 단축키 전용) ----

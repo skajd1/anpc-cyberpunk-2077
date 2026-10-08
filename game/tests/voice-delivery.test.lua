@@ -34,7 +34,9 @@ local system={
   VoicePlay=function()events[#events+1]="voice_play";return playOK end,
   VoiceStop=function()end,VoicePrepare=function()end,VoiceSpatialAvailable=function()return true end,
   IsChatMenuOpen=function()return false end,
-  TalkStart=function(_,id,idle)assert(id==latest and idle>=1 and idle<=3);events[#events+1]="talk_start";return true end,
+  TalkBegin=function(_,id)assert(id==latest);events[#events+1]="talk_begin";return true end,
+  TalkOpen=function(_,id,idle)assert(id==latest and idle>=1 and idle<=3);events[#events+1]="talk_open";return true end,
+  TalkPause=function()events[#events+1]="talk_pause" end,
   TalkStop=function()events[#events+1]="talk_stop" end
 }
 Game={GetPlayer=function()return {}end,GetResourceDepot=function()return {ArchiveExists=function(_,name)return name=="ANPC_talk.local.archive" end}end,GetSystemRequestsHandler=function()return {IsPreGame=function()return false end}end,
@@ -73,16 +75,31 @@ assert(#responses==0 and started==0 and bridge.voicePendingCount()==1)
 files["tts/seg-1-1.json"]='{"slot":1,"dur_ms":1000,"final":true}'
 assert(bridge.update(0.1))
 -- UF-75: 새 입력 때 이전 입모양을 멈추고, 첫 음성과 함께 시작해 마지막 구간이 끝나면 멈춘다.
-assert(table.concat(events,",")=="talk_stop,voice_play,talk_start,voice_subtitle,gesture" and started==1)
+-- 소리 구간 정보(talk)가 없는 구간은 전체를 소리로 본다.
+assert(table.concat(events,",")=="talk_stop,voice_play,talk_begin,voice_subtitle,gesture,talk_open" and started==1)
 assert(bridge.update(2) and started==1)
 assert(events[#events]=="talk_stop")
 -- 진단 창의 최근 처리 결과
-assert(bridge.recent().voice=="#1 재생 완료" and bridge.recent().face:find("입모양 시작",1,true))
+assert(bridge.recent().voice=="#1 재생 완료" and bridge.recent().face:find("입모양 1구간",1,true))
 request(2)
 local joined="";for _,message in ipairs(calls[#calls].body.input)do joined=joined .. message.content end
 assert(joined:find('"last_action_result":',1,true) and joined:find('"status":"cancelled"',1,true))
 assert(joined:find('"reading":"ヴィー"',1,true))
 
+-- 소리 구간에서만 입을 열고 0.2초 이상 쉼과 끝 무음에서 닫는다. 구간 경계를 넘는 짧은 쉼은 잇는다.
+begin(8)
+files["tts/seg-8-1.json"]='{"slot":1,"dur_ms":1000,"final":false,"talk":[[0,300],[700,950]]}'
+files["tts/seg-8-2.json"]='{"slot":2,"dur_ms":1000,"final":true,"talk":[[50,500]]}'
+assert(bridge.update(0.01))
+local function mouth()local n=#events;while n>0 and not events[n]:find("^talk_")do n=n-1 end;return events[n]end
+assert(mouth()=="talk_open")
+for _,step in ipairs({{0.3,"talk_pause"},{0.37,"talk_open"},{0.5,"talk_open"},{0.6,"talk_pause"}})do
+  assert(bridge.update(step[1]));assert(mouth()==step[2],step[2])
+end
+assert(bridge.update(1) and mouth()=="talk_stop" and bridge.recent().face:find("입모양 2구간",1,true))
+-- 구간 정보 형식 오류는 구간 전체를 소리로 본다.
+begin(9);files["tts/seg-9-1.json"]='{"slot":1,"dur_ms":1000,"final":true,"talk":[["a",1]]}'
+assert(bridge.update(0.01) and mouth()=="talk_open")
 begin(3);assert(bridge.update(config.voice_wait_s+0.1))
 assert(bridge.recent().voice:find("자막만 · 첫 구간",1,true))
 assert(#responses==1 and responses[1].text=="안녕." and started==1 and bridge.voicePendingCount()==0)

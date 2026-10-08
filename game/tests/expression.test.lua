@@ -27,14 +27,23 @@ local voiced = json.encode({ emotion = "annoyed", delivery = "normal", speech_te
   intent = "answer", action = json.null })
 local _, _, _, _, speech2, emotion2 = bridge.readReply(voiced, {}, true)
 assert(speech2 and emotion2 == "annoyed")
--- UF-75: 말하기 입모양은 로컬 자원 아카이브가 있을 때만, 변형 1~3을 돌려 쓰고 멈춤은 redscript TalkStop에 위임한다.
-local talks, stops, archive = {}, 0, false
+-- UF-75: 말하기 입모양은 로컬 자원 아카이브가 있을 때만 시작하고, 소리 구간마다 변형 1~3을 돌려 열며 쉼·멈춤은 redscript에 위임한다.
+local talks, begins, pauses, stops, archive = {}, 0, 0, 0, false
 Game = { GetResourceDepot = function() return { ArchiveExists = function(_, name) return archive and name == expressions.TALK_ARCHIVE end } end }
-local talker = { TalkStart = function(_, id, idle) talks[#talks + 1] = idle; return true end, TalkStop = function() stops = stops + 1 end }
-assert(not expressions.talkStart(talker, 1) and #talks == 0)
+local talker = { TalkBegin = function() begins = begins + 1; return true end, TalkOpen = function(_, id, idle) talks[#talks + 1] = idle; return true end,
+  TalkPause = function() pauses = pauses + 1 end, TalkStop = function() stops = stops + 1 end }
+assert(not expressions.talkBegin(talker, 1) and begins == 0)
 archive = true
-for _ = 1, 4 do assert(expressions.talkStart(talker, 1)) end
+assert(expressions.talkBegin(talker, 1) and begins == 1)
+for _ = 1, 4 do assert(expressions.talkOpen(talker, 1)) end
 assert(table.concat(talks, ",") == "1,2,3,1")
-expressions.talkStop(talker); expressions.talkStop(nil)
-assert(stops == 1)
-print("UF-74 감정 표정 대응·redscript 위임·실패 무시·응답 감정 전달 검사 통과")
+expressions.talkPause(talker); expressions.talkStop(talker); expressions.talkStop(nil)
+assert(pauses == 1 and stops == 1)
+assert(not expressions.talkOpen({ TalkOpen = function() error("detached") end }, 1))
+-- 소리 구간 판단: 0.05초 먼저 열고, 0.2초 미만 쉼(구간 경계 포함)은 잇고, 그 이상은 닫는다. 구간 정보가 없으면 구간 전체.
+local segs = { { dur = 1, talk = { { 0.1, 0.4 }, { 0.5, 0.6 }, { 0.9, 1 } } }, { dur = 1, talk = { { 0.05, 0.3 } } } }
+local expect = { [0.04] = false, [0.06] = true, [0.45] = true, [0.7] = false, [0.86] = true, [1.02] = true, [1.2] = true, [1.31] = false }
+for now, want in pairs(expect) do assert(expressions.talkWanted(segs, 0, now) == want, now) end
+assert(expressions.talkWanted({ { dur = 1 } }, 5, 5.5) and not expressions.talkWanted({ { dur = 1 } }, 5, 6))
+assert(not expressions.talkWanted({ { dur = 1, talk = {} } }, 0, 0.5))
+print("UF-74 감정 표정 대응·redscript 위임·실패 무시·응답 감정 전달, UF-75 소리 구간 입모양 판단 검사 통과")

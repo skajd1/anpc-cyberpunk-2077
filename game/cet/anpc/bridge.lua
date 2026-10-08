@@ -266,7 +266,7 @@ end
 local function finishDelivery(system, id, display, gesture, session, emotion)
   if config.expression_enabled then
     local applied = expressions.apply(system, id, emotion)
-    if not voiceJobs[id] or not voiceJobs[id].talking then note("face", id, "표정 " .. tostring(emotion) .. (applied and " 적용" or " 거부")) end
+    if not voiceJobs[id] or not voiceJobs[id].lips then note("face", id, "표정 " .. tostring(emotion) .. (applied and " 적용" or " 거부")) end
   end
   if gesture then display = actions.start(system, id, gesture, session) end
   -- 폐기된 응답은 대사와 행동 목록 모두 표시하지 않는다.
@@ -279,6 +279,34 @@ local function playSegment(system, id, job, seg)
   return ok and played == true
 end
 
+-- 구간 알림의 소리 구간 talk([[시작ms, 끝ms], ...])를 초 단위로 읽는다. 없거나 형식이 틀리면 nil(구간 전체를 소리로 봄).
+local function talkSpans(seg)
+  if type(seg.talk) ~= "table" then return nil end
+  local spans, dur = {}, seg.dur_ms / 1000
+  for _, span in ipairs(seg.talk) do
+    if type(span) ~= "table" or type(span[1]) ~= "number" or type(span[2]) ~= "number" or span[1] > span[2] then return nil end
+    spans[#spans + 1] = { math.max(0, span[1] / 1000), math.min(dur, span[2] / 1000) }
+  end
+  return spans
+end
+
+-- UF-75: 재생 위치가 소리 구간에 들어가면 입을 열고 쉼에 닫는다. 대상 조건이 깨지면 이 대사의 입모양을 멈춘다.
+local function updateMouth(system, id, job, paused)
+  if not job.lips then return end
+  local segments = { job.current }
+  for _, seg in ipairs(job.queue) do segments[#segments + 1] = seg end
+  local want = not paused and expressions.talkWanted(segments, job.playEnd - job.current.dur, clock)
+  if want == job.mouth then return end
+  if want and not expressions.talkOpen(system, id) then
+    job.lips = false
+    expressions.talkStop(system)
+    note("face", id, ("입모양 중단(대상 조건) · %d구간"):format(job.opens))
+    return
+  end
+  if want then job.opens = job.opens + 1 else expressions.talkPause(system) end
+  job.mouth = want
+end
+
 local function voiceUpdate(system, delta)
   local menuOK, menuOpen = pcall(function() return system:IsChatMenuOpen() end)
   for id, job in pairs(voiceJobs) do
@@ -288,7 +316,7 @@ local function voiceUpdate(system, delta)
       local seg=json.decode(segment)
       pcall(os.remove, path)
       if type(seg) == "table" and type(seg.slot) == "number" and type(seg.dur_ms) == "number" and seg.dur_ms>0 and seg.dur_ms<math.huge then
-        job.queue[#job.queue + 1] = { slot = seg.slot, dur = seg.dur_ms / 1000, final = seg.final == true }
+        job.queue[#job.queue + 1] = { slot = seg.slot, dur = seg.dur_ms / 1000, final = seg.final == true, talk = talkSpans(seg) }
         job.next = job.next + 1
       end
     end
@@ -298,14 +326,15 @@ local function voiceUpdate(system, delta)
         voiceJobs[id] = nil
       elseif job.queue[1] and playSegment(system, id, job, job.queue[1]) then
         local seg = table.remove(job.queue, 1)
-        job.started, job.playEnd, job.final = true, clock + seg.dur, seg.final
-        -- UF-75: 첫 음성과 함께 말하기 입모양을 시작한다.
-        if config.lipsync_enabled then job.talking = expressions.talkStart(system, id) end
+        job.started, job.playEnd, job.final, job.current = true, clock + seg.dur, seg.final, seg
+        -- UF-75: 첫 음성과 함께 말하기를 시작하고, 소리 구간마다 입을 연다.
+        if config.lipsync_enabled then job.lips, job.mouth, job.opens = expressions.talkBegin(system, id), false, 0 end
         note("voice", id, ("재생 시작 · 첫 구간 %.1f초"):format(job.wait))
-        note("face", id, "입모양 " .. (not config.lipsync_enabled and "꺼짐" or job.talking and "시작"
+        note("face", id, "입모양 " .. (not config.lipsync_enabled and "꺼짐" or job.lips and "시작"
           or expressions.talkAvailable() and "거부(대상 조건)" or "자원 없음"))
         system:OnAIVoiceResponse(id, job.ended and "ok:end" or "ok", job.line, job.seconds)
         finishDelivery(system, id, job.display, job.gesture, job.session, job.emotion)
+        updateMouth(system, id, job, false)
       elseif job.queue[1] or job.wait > config.voice_wait_s then
         -- 대기 한도 안에 첫 구간이 없거나 재생할 수 없으면 자막만 표시하고 음성은 버린다.
         voiceJobs[id] = nil
@@ -317,18 +346,25 @@ local function voiceUpdate(system, delta)
     elseif system:GetLatestRequestId() ~= id then
       voiceJobs[id] = nil
       note("voice", id, "중단 · 새 요청")
-      if job.talking then expressions.talkStop(system) end
+      if job.lips then expressions.talkStop(system) end
     else
       if menuOK and menuOpen then job.playEnd = job.playEnd + delta end
       if job.queue[1] and clock >= job.playEnd - 0.01 then
         local seg = table.remove(job.queue, 1)
         playSegment(system, id, job, seg)
         job.playEnd = math.max(clock, job.playEnd) + seg.dur
-        job.final = seg.final
-      elseif job.final and clock >= job.playEnd then
+        job.final, job.current = seg.final, seg
+      end
+      if job.final and clock >= job.playEnd then
         voiceJobs[id] = nil
         note("voice", id, "재생 완료")
-        if job.talking then expressions.talkStop(system) end
+        if job.lips then
+          expressions.talkStop(system)
+          note("face", id, ("입모양 %d구간 · 끝"):format(job.opens))
+        end
+      else
+        -- 메뉴가 열려 음성이 멈춘 동안에는 입을 닫는다.
+        updateMouth(system, id, job, menuOK and menuOpen)
       end
     end
   end

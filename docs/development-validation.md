@@ -255,7 +255,7 @@ Node.js 22 이상, 추가 패키지 없음. 저장소 루트에서 `npm start` �
 - Genie 출력 끝 음절 잘림(v1 일부 출력이 소리 도중 끝남)과 EQ 보정 결과를 청취로 확인한다.
 - 스트리밍 조각 경계 잡음, 버퍼링 시작 조건(4.2)의 실제 끊김 합계를 Native 구현에서 다시 잰다.
 - TTS 보조 프로세스 자동 실행: ANPC.Native(TtsHelper)가 게임 시작 때 `red4ext/plugins/ANPC/tts-helper.local.json`의 명령으로 실행하고 게임 종료와 함께 끝낸다. 게임 실행 중 모델 로드는 약 70초다. Native 빌드는 GitHub Actions에서 하며 실게임 미확인.
-- 말할 때 입모양(UF-75): 원작 표정 대응표(facial_reactions_male/female.csv)와 얼굴 대기 애니메이션(generic_average_male_facial_idle.anims)에는 감정 표정 19종만 있고 말하기 애니메이션이 없다. 원작 립싱크 애니메이션(AdditiveFromRefPose)은 장면·음성 대응표에 묶여 재생된다. 구현: 실험 폴더의 `work/lipsync/build_talk.py`가 WolvenKit CLI 9.0.1(실험 폴더의 .NET 10.0.12 런타임으로 실행)로 원작 일본어 립싱크 클립(여성 주디 5.7~6.6초·남성 잭키 7.7초, 각 3개, AdditiveFromRefPose 344관절)을 남녀 표정 묶음에 `idle__anpc_talk_0N__<성별>`로 옮기고 표정 대응표 data·compiledData에 분류 4번 행을 추가해 `game/archive/ANPC_talk.local.archive`(Git 제외)를 만든다. 첫 음성 구간 재생에 Entry.TalkStart(분류 4, 변형 1~3 순환), 마지막 구간 끝·다른 요청·새 입력·종료에 TalkStop(감정 표정 복귀). 발음 일치는 목표가 아니다. 주요 인물 전용 얼굴 묶음에서의 재생, 클립 반복 이음새는 실게임 미확인.
+- 말할 때 입모양(UF-75): 원작 표정 대응표(facial_reactions_male/female.csv)와 얼굴 대기 애니메이션(generic_average_male_facial_idle.anims)에는 감정 표정 19종만 있고 말하기 애니메이션이 없다. 원작 립싱크 애니메이션(AdditiveFromRefPose)은 장면·음성 대응표에 묶여 재생된다. 구현: 실험 폴더의 `work/lipsync/build_talk.py`가 WolvenKit CLI 9.0.1(실험 폴더의 .NET 10.0.12 런타임으로 실행)로 원작 일본어 립싱크 클립(여성 주디 5.7~6.6초·남성 잭키 7.7초, 각 3개, AdditiveFromRefPose 344관절)을 남녀 표정 묶음에 `idle__anpc_talk_0N__<성별>`로 옮기고 표정 대응표 data·compiledData에 분류 4번 행을 추가해 `game/archive/ANPC_talk.local.archive`(Git 제외)를 만든다. 첫 음성 구간 재생에 Entry.TalkBegin, 소리 구간마다 TalkOpen(분류 4, 변형 1~3 순환), 0.2초 이상 쉼에 TalkPause, 마지막 구간 끝·다른 요청·새 입력·종료에 TalkStop(감정 표정 복귀). 보이는 표정을 다른 표정으로 바로 바꾸면 무시돼 끝난 뒤에도 입이 움직였으므로, 닫기·복귀는 항상 ResetFacial을 거친다(감정 표정 복귀는 0.5초 뒤, 감정 표정이 보일 때 입 열기는 0.3초 뒤). 발음 일치는 목표가 아니다. 주요 인물 전용 얼굴 묶음에서의 재생, 클립 반복 이음새는 실게임 미확인.
 - 인물별 참조 음성을 다시 고른다. 기존 참조는 대사 내용만으로 감정을 붙여 부적합한 경우가 있었다. 참조 풀(3~10초 원작 대사)을 들리는 말투 기준으로 감정·적합성(잡음·다른 목소리·필터·과장·자막 불일치) 수작업 라벨링하고, 감정별 후보 3개 이하를 청취 승인한다.
 - 음성 활성 시 대사 45자 안내(프롬프트 0.18~)가 실제 대화 품질을 해치지 않는지 확인한다. 출력 순서는 비교 결과(8.3)에 따라 일본어 우선으로 바꿨다. speech_text 선행 합성은 효과·위험 때문에 보류한다(8.2).
 
@@ -271,7 +271,7 @@ Node.js 22 이상, 추가 패키지 없음. 저장소 루트에서 `npm start` �
 | 등록 | `r6/audioware/ANPC/manifest.yaml`에 `anpc_voice_0`~`7`을 `usage: on-demand`로 선언. 각 슬롯은 0.2초 무음 48kHz wav. on-demand는 재생할 때마다 파일을 다시 읽는다(Audioware `bank/storage.rs` `from_file`) |
 | 구간 | 보조 프로세스가 스트리밍 조각을 구간으로 묶는다. 첫 구간은 버퍼링 시작 조건을 채운 시점까지의 음성, 다음 구간은 앞 구간 재생 중 쌓인 음성. 경계는 구간 끝 300ms 안의 가장 조용한 20ms 지점, 양끝 5ms 페이드 |
 | 파일 쓰기 | 48kHz 16bit mono wav를 임시 파일에 쓰고 원자적 교체. 재생 중이거나 예약된 슬롯은 쓰지 않는다(링 8개). 깨진 파일을 재생하면 Audioware가 패닉할 수 있다 |
-| 알림 | 보조 프로세스 → CET: `tts/seg-<request_id>-<n>.json` {slot, dur_ms, final}. CET → 보조 프로세스: 기존 req/stop |
+| 알림 | 보조 프로세스 → CET: `tts/seg-<request_id>-<n>.json` {slot, dur_ms, final, talk}. talk는 소리 구간 [[시작ms, 끝ms], ...](20ms RMS가 대사 상위 음량의 15%·최소 -38dBFS 초과, 0.2초 미만 쉼 연결, 0.08초 미만 제외). 없으면 구간 전체를 소리로 본다. CET → 보조 프로세스: 기존 req/stop |
 | 재생 | redscript `AnpcVoice`: 대화 시작 때 `RegisterEmitter(npcID, n"ANPC", EmitterSettings)`, 다른 프레임에 `PlayOnEmitter(n"anpc_voice_<slot>", npcID, n"ANPC")`. CET가 앞 구간 dur_ms가 끝나는 시점에 다음 구간을 재생. 종료 때 `UnregisterEmitter` |
 | 중단 | 새 입력·종료·전투·로드: 재생 슬롯 `StopOnEmitter`(짧은 페이드) + stop 요청. 메뉴: Audioware가 일시정지, CET 구간 시계도 정지 |
 | 조건부 컴파일 | Audioware 참조 코드는 `@if(ModuleExists("Audioware"))` 파일에 둔다. 없을 때 같은 이름의 빈 구현 |
