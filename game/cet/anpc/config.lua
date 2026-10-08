@@ -23,6 +23,8 @@ return {
   voice_volume = 1.0,
   -- UF-74: 응답 감정에 맞춘 NPC 얼굴 표정. 대화가 끝나면 되돌린다.
   expression_enabled = true,
+  -- UF-75: 음성 재생 동안 말하기 입모양. 로컬 자원 아카이브(ANPC_talk.local.archive)가 있어야 동작한다.
+  lipsync_enabled = true,
   -- 개발 확인 단축키(CET 설정의 단축키에서 지정): 바라보는 NPC 고정, 감정 표정·제스처 차례로 시험.
   dev_tools = true
 }

@@ -4,7 +4,7 @@ local actions = require("actions")
 local expressions = require("expressions")
 local devtools = {}
 local message, remaining = nil, 0
-local faceIndex, gestureIndex = 0, 0
+local faceIndex, gestureIndex, talkIndex = 0, 0, 0
 
 local function entry()
   local player = Game.GetPlayer()
@@ -54,11 +54,21 @@ function devtools.gesture()
   end)
 end
 
+function devtools.talk()
+  run(function(system)
+    if not expressions.talkAvailable() then say("말하기 자원 없음: archive/pc/mod/" .. expressions.TALK_ARCHIVE .. " 확인"); return end
+    talkIndex = talkIndex % expressions.TALK_VARIANTS + 1
+    local ok = system:DebugTalk(talkIndex)
+    say(("말하기 %d/%d (category 4, idle %d)%s"):format(talkIndex, expressions.TALK_VARIANTS, talkIndex,
+      ok and " · 멈추려면 해제" or " · 적용 불가: NPC를 먼저 고정"))
+  end)
+end
+
 function devtools.reset()
   run(function(system)
     system:ExpressionReset()
     actions.cancel("시험 중단")
-    say("표정 해제·제스처 중단")
+    say("표정·말하기 해제·제스처 중단")
   end)
 end
 
@@ -68,7 +78,8 @@ function devtools.register()
   registerHotkey("anpc_dev_pin", "[ANPC 시험] 바라보는 NPC 고정", devtools.pin)
   registerHotkey("anpc_dev_face", "[ANPC 시험] 다음 감정 표정", devtools.face)
   registerHotkey("anpc_dev_gesture", "[ANPC 시험] 다음 제스처", devtools.gesture)
-  registerHotkey("anpc_dev_reset", "[ANPC 시험] 표정 해제·제스처 중단", devtools.reset)
+  registerHotkey("anpc_dev_talk", "[ANPC 시험] 다음 말하기 입모양", devtools.talk)
+  registerHotkey("anpc_dev_reset", "[ANPC 시험] 표정·말하기 해제·제스처 중단", devtools.reset)
 end
 
 -- CET 오버레이 진단 창 안의 같은 버튼.
@@ -77,7 +88,8 @@ function devtools.buttons()
   if ImGui.Button("시험: NPC 고정") then devtools.pin() end
   if ImGui.Button("시험: 다음 표정") then devtools.face() end
   if ImGui.Button("시험: 다음 제스처") then devtools.gesture() end
-  if ImGui.Button("시험: 표정 해제·제스처 중단") then devtools.reset() end
+  if ImGui.Button("시험: 다음 말하기 입모양") then devtools.talk() end
+  if ImGui.Button("시험: 표정·말하기 해제·제스처 중단") then devtools.reset() end
   if remaining > 0 and message then ImGui.TextWrapped(message) end
 end
 

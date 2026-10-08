@@ -15,6 +15,7 @@
 | `game/cet/anpc/` | `bin/x64/plugins/cyber_engine_tweaks/mods/anpc/` | `anpc.log`·`db.sqlite3`·`tts/` 등 실행 중 생기는 파일은 관리하지 않는다 |
 | `game/redscript/ANPC/` | `r6/scripts/ANPC/` | 바뀌면 시험 컴파일(DIST-25) 후 배포 |
 | `game/audioware/ANPC/` | `r6/audioware/ANPC/` | `slots/*.wav`는 TTS 보조 프로세스가 덮어쓰므로 없을 때만 설치 |
+| `game/archive/` | `archive/pc/mod/` | 원작 자원으로 이 PC에서 만든 로컬 빌드 아카이브(`*.local.archive`, Git 제외)만 둔다. 예: UF-75 말하기 입모양 `ANPC_talk.local.archive`. 폴더가 없으면 건너뛴다 |
 | `-NativeDll`로 지정한 빌드 DLL | `red4ext/plugins/ANPC/ANPC.Native.dll` | 지정하지 않으면 건드리지 않는다 |
 
 게임 폴더 밖의 개발용 TTS 보조 프로세스·참조 음성 목록은 이 스크립트 대상이 아니다. 바꾸면 보조 프로세스만 다시 실행한다.

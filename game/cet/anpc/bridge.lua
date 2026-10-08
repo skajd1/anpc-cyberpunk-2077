@@ -255,6 +255,7 @@ function bridge.stopSpeech(system)
   writeTts("stop", '{"stop":true}')
   voiceJobs = {}
   if system then pcall(function() system:VoiceStop() end) end
+  if config.lipsync_enabled then expressions.talkStop(system) end
 end
 
 -- 대사가 보이는 순간 감정 표정(UF-74)과 제스처(UF-64)를 함께 시작한다.
@@ -291,6 +292,8 @@ local function voiceUpdate(system, delta)
       elseif job.queue[1] and playSegment(system, id, job, job.queue[1]) then
         local seg = table.remove(job.queue, 1)
         job.started, job.playEnd, job.final = true, clock + seg.dur, seg.final
+        -- UF-75: 첫 음성과 함께 말하기 입모양을 시작한다.
+        if config.lipsync_enabled then job.talking = expressions.talkStart(system, id) end
         system:OnAIVoiceResponse(id, job.ended and "ok:end" or "ok", job.line, job.seconds)
         finishDelivery(system, id, job.display, job.gesture, job.session, job.emotion)
       elseif job.queue[1] or job.wait > config.voice_wait_s then
@@ -302,6 +305,7 @@ local function voiceUpdate(system, delta)
       end
     elseif system:GetLatestRequestId() ~= id then
       voiceJobs[id] = nil
+      if job.talking then expressions.talkStop(system) end
     else
       if menuOK and menuOpen then job.playEnd = job.playEnd + delta end
       if job.queue[1] and clock >= job.playEnd - 0.01 then
@@ -311,6 +315,7 @@ local function voiceUpdate(system, delta)
         job.final = seg.final
       elseif job.final and clock >= job.playEnd then
         voiceJobs[id] = nil
+        if job.talking then expressions.talkStop(system) end
       end
     end
   end

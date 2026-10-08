@@ -11,3 +11,4 @@ build/
 __pycache__/
 *.pyc
 game/cet/anpc/*.local.json
+game/archive/*.local.archive

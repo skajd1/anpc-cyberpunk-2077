@@ -33,9 +33,11 @@ local system={
   end,
   VoicePlay=function()events[#events+1]="voice_play";return playOK end,
   VoiceStop=function()end,VoicePrepare=function()end,VoiceSpatialAvailable=function()return true end,
-  IsChatMenuOpen=function()return false end
+  IsChatMenuOpen=function()return false end,
+  TalkStart=function(_,id,idle)assert(id==latest and idle>=1 and idle<=3);events[#events+1]="talk_start";return true end,
+  TalkStop=function()events[#events+1]="talk_stop" end
 }
-Game={GetPlayer=function()return {}end,GetSystemRequestsHandler=function()return {IsPreGame=function()return false end}end,
+Game={GetPlayer=function()return {}end,GetResourceDepot=function()return {ArchiveExists=function(_,name)return name=="ANPC_talk.local.archive" end}end,GetSystemRequestsHandler=function()return {IsPreGame=function()return false end}end,
   GetScriptableSystemsContainer=function()return {Get=function()return system end}end,
   ANPCNative_Version=function()return "test"end,
   ANPCNative_Request=function(id,_,body)calls[#calls+1]={id=id,body=json.decode(body)};return true end,
@@ -70,8 +72,10 @@ begin(1)
 assert(#responses==0 and started==0 and bridge.voicePendingCount()==1)
 files["tts/seg-1-1.json"]='{"slot":1,"dur_ms":1000,"final":true}'
 assert(bridge.update(0.1))
-assert(table.concat(events,",")=="voice_play,voice_subtitle,gesture" and started==1)
+-- UF-75: 새 입력 때 이전 입모양을 멈추고, 첫 음성과 함께 시작해 마지막 구간이 끝나면 멈춘다.
+assert(table.concat(events,",")=="talk_stop,voice_play,talk_start,voice_subtitle,gesture" and started==1)
 assert(bridge.update(2) and started==1)
+assert(events[#events]=="talk_stop")
 request(2)
 local joined="";for _,message in ipairs(calls[#calls].body.input)do joined=joined .. message.content end
 assert(joined:find('"last_action_result":',1,true) and joined:find('"status":"cancelled"',1,true))

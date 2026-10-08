@@ -27,4 +27,14 @@ local voiced = json.encode({ emotion = "annoyed", delivery = "normal", speech_te
   intent = "answer", action = json.null })
 local _, _, _, _, speech2, emotion2 = bridge.readReply(voiced, {}, true)
 assert(speech2 and emotion2 == "annoyed")
+-- UF-75: 말하기 입모양은 로컬 자원 아카이브가 있을 때만, 변형 1~3을 돌려 쓰고 멈춤은 redscript TalkStop에 위임한다.
+local talks, stops, archive = {}, 0, false
+Game = { GetResourceDepot = function() return { ArchiveExists = function(_, name) return archive and name == expressions.TALK_ARCHIVE end } end }
+local talker = { TalkStart = function(_, id, idle) talks[#talks + 1] = idle; return true end, TalkStop = function() stops = stops + 1 end }
+assert(not expressions.talkStart(talker, 1) and #talks == 0)
+archive = true
+for _ = 1, 4 do assert(expressions.talkStart(talker, 1)) end
+assert(table.concat(talks, ",") == "1,2,3,1")
+expressions.talkStop(talker); expressions.talkStop(nil)
+assert(stops == 1)
 print("UF-74 감정 표정 대응·redscript 위임·실패 무시·응답 감정 전달 검사 통과")

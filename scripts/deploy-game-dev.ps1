@@ -23,7 +23,9 @@ $backupRoot = Join-Path $repo 'config.local.backups'
 $mappings = @(
   @('game/cet/anpc', 'bin/x64/plugins/cyber_engine_tweaks/mods/anpc'),
   @('game/redscript/ANPC', 'r6/scripts/ANPC'),
-  @('game/audioware/ANPC', 'r6/audioware/ANPC')
+  @('game/audioware/ANPC', 'r6/audioware/ANPC'),
+  # 로컬 빌드 자원(Git 제외 *.local.archive). 예: UF-75 말하기 입모양 ANPC_talk.local.archive
+  @('game/archive', 'archive/pc/mod')
 )
 $nativePath = 'red4ext/plugins/ANPC/ANPC.Native.dll'
 # 없을 때만 설치하는 경로: Audioware 슬롯 wav는 TTS 보조 프로세스가 실행 중에 덮어쓴다
@@ -69,6 +71,8 @@ $same = 0
 if ($PSCmdlet.ParameterSetName -eq 'Deploy') {
   $desired = [ordered]@{}
   foreach ($m in $mappings) {
+    # Git에 없는 로컬 빌드 폴더(game/archive)는 없을 수 있다.
+    if (!(Test-Path -LiteralPath (Join-Path $repo $m[0]))) { continue }
     $src = (Resolve-Path -LiteralPath (Join-Path $repo $m[0])).Path
     foreach ($f in Get-ChildItem -LiteralPath $src -File -Recurse) {
       $desired[$m[1] + '/' + ($f.FullName.Substring($src.Length + 1) -replace '\\', '/')] = $f.FullName

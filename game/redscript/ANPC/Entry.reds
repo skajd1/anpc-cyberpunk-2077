@@ -958,6 +958,27 @@ public class Entry extends ScriptableSystem {
     if IsDefined(this.expression) { this.expression.Reset(); }
   }
 
+  // UF-75: 음성 재생 동안 말하기 입모양. 시작은 첫 음성 구간, 끝은 마지막 구간 종료·중단.
+  public func TalkStart(requestId: Int32, idle: Int32) -> Bool {
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId || NotEquals(this.SessionEndReason(session), "") { return false; }
+    let npc: ref<NPCPuppet> = session.npc;
+    if !IsDefined(npc) || NotEquals(Entry.SafeReason(npc, session.player), "") { return false; }
+    if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
+    return this.expression.Talk(npc, idle);
+  }
+
+  public func TalkStop() -> Void {
+    if IsDefined(this.expression) { this.expression.EndTalk(); }
+  }
+
+  public func DebugTalk(idle: Int32) -> Bool {
+    let npc = this.DebugMotionTarget();
+    if !IsDefined(npc) { return false; }
+    if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
+    return this.expression.Talk(npc, idle);
+  }
+
   // ---- 개발 확인 도구: 바라보는 NPC를 고정해 표정·제스처를 직접 걸어 본다(세션 밖, CET 단축키 전용) ----
   private let debugNpc: wref<NPCPuppet>;
 
