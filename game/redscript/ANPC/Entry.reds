@@ -629,11 +629,21 @@ public class Entry extends ScriptableSystem {
     }
   }
 
+  // 입력칸의 Tab. 입력칸 닫기는 다음 프레임에 처리되고 입력 차단(ModalPopup 문맥)·알림은 닫힘 애니메이션 뒤에 풀린다.
+  // 그 전에 메뉴를 열면 메뉴가 열린 뒤 차단이 풀리며 메뉴에서 아무 키도 듣지 않았다. 입력칸이 사라진 뒤 연다.
   public func OpenGameMenu(popup: ref<ChatPopup>) -> Void {
     if !IsDefined(this.session) || this.session.popup != popup { return; }
     this.PrepareGameMenu();
     if !IsDefined(this.session) || !this.session.menuSuspended { return; }
-    if !GameMenu.Request(this.GetGameInstance()) { this.QueueMenuResume(this.session); }
+    this.session.menuPopup = popup;
+  }
+
+  public func OnChatHidden(popup: ref<ChatPopup>) -> Void {
+    let session = this.session;
+    let pending: ref<ChatPopup> = IsDefined(session) ? session.menuPopup : null;
+    if !IsDefined(pending) || pending != popup { return; }
+    session.menuPopup = null;
+    this.ScheduleSubtitle(this.GetGameInstance(), AnpcSubtitleCallback.OpenMenu(), this.NextSubtitleId(), 0.05);
   }
 
   private func QueueMenuResume(session: ref<ChatSession>) -> Void {
@@ -790,6 +800,11 @@ public class Entry extends ScriptableSystem {
     }
     let session = this.session;
     if !IsDefined(session) || session != callback.session || callback.epoch != this.epoch { return; }
+    if callback.kind == AnpcSubtitleCallback.OpenMenu() {
+      if !session.menuSuspended || session.menuObservedOpen { return; }
+      if !GameMenu.Request(game) { this.QueueMenuResume(session); }
+      return;
+    }
     if callback.kind == AnpcSubtitleCallback.ResumeMenu() {
       if !session.menuSuspended || !session.menuResumeScheduled || GameMenu.IsOpen(game) { return; }
       session.menuSuspended = false;
