@@ -1,6 +1,6 @@
 module ANPC
 
-// G0/G1 전용. 게임 객체는 약한 참조로만 보관하고 원작 상태를 변경하지 않는다.
+// CET 디버그 창의 바라보는 NPC 검사 전용. 게임 객체는 약한 참조로만 보관하고 원작 상태를 변경하지 않는다.
 public class DiagnosticSnapshot extends IScriptable {
   public let reason: String;
   public let epoch: Int32;
@@ -16,6 +16,7 @@ public class DiagnosticSnapshot extends IScriptable {
   public let inScene: Bool;
   public let highLevel: Int32;
   public let diagnosticAllowed: Bool;
+  public let voice: ref<NpcVoiceProbe>;
 }
 
 public class Diagnostics extends ScriptableSystem {
@@ -24,7 +25,7 @@ public class Diagnostics extends ScriptableSystem {
   private let pinnedPlayer: wref<PlayerPuppet>;
 
   public static func Version() -> String {
-    return "0.1.0-g0-g1";
+    return "0.1.0";
   }
 
   private func OnAttach() -> Void {
@@ -87,6 +88,7 @@ public class Diagnostics extends ScriptableSystem {
     // ID 문자열은 진단 표시 전용이다. 개인 키나 객체 동일성 판정에 쓰지 않는다.
     state.entityID = ToString(npc.GetEntityID());
     state.recordID = TDBID.ToStringDEBUG(npc.GetRecordID());
+    state.voice = NpcVoice.Probe(npc);
     state.sameObject = IsDefined(this.pinnedNPC) && IsDefined(this.pinnedPlayer)
       && this.pinnedNPC == npc && this.pinnedPlayer == player;
     state.distance = Vector4.Distance(player.GetWorldPosition(), npc.GetWorldPosition());

@@ -784,3 +784,211 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261008223949/manifest.json
 - 확인: 배포 후 계획 변경 0. 실게임 동작 미검증
+
+## DEP-20261008235433 — 응답 감정 표정·AMM 제스처 18종·표정/제스처 확인 도구
+
+- 일시: 2026-10-08 23:54:33 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Expression.reds | 추가 | NpcExpression: 원작 FacialReaction으로 얼굴 표정만 적용(초기화 후 0.5초 뒤), ANPC가 건 표정만 ResetFacial로 복구 | UF-74 응답 감정 표정. 몸·위치·워크스팟을 건드리지 않음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | ExpressionApply·ExpressionReset, 대화 종료·초기화 때 표정 복구, 확인 도구용 DebugPinTarget·DebugMotionTarget·DebugExpression | 세션 NPC(군중·커뮤니티 인물)에 안전 조건에서만 표정 적용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/expressions.lua | 추가 | emotion → 표정 대응 7종(무표정·미소·긴장·분노·공포·슬픔·관심) | AI 변경 없이 기존 감정값으로 표정 결정 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 응답 감정을 받아 첫 음성 또는 자막 표시 순간 표정 적용 | 표정·자막·음성·제스처 동시 시작 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/prompts.lua | 수정 | 행동 후보의 AMM 제스처 3 → 18종 | 대사에 맞는 동작 선택 폭 확대 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/actions.lua | 수정 | 확인 도구가 고정한 NPC 대상 경로, 재생 가능 제스처 조회 | 대화 밖 제스처 시험 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/devtools.lua | 추가 | 바라보는 NPC 고정·다음 표정·다음 제스처·해제(CET 단축키 `[ANPC 시험]`·오버레이 버튼), 결과 8초 표시 | 실게임 확인 도구 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 확인 도구 등록·갱신·표시 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | expression_enabled=true, dev_tools=true | 기능·도구 켜기 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261008235433/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261009010542 — 말하기 입모양(UF-75)과 로컬 입모양 자원
+
+- 일시: 2026-10-09 01:05:42 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| archive/pc/mod/ANPC_talk.local.archive | 추가 | 남녀 원작 얼굴 표정 묶음·표정 대응표에 말하기 표정 3종(분류 4)을 더한 로컬 빌드 아카이브. 원작 일본어 립싱크 클립으로 이 PC에서 생성 | 표정 기능으로 말하는 입모양을 재생. 원작 자원이 들어 있어 저장소·배포물에는 포함하지 않음. 같은 원작 표정 파일을 고치는 다른 모드와 충돌 가능 |
+| r6/scripts/ANPC/Expression.reds | 수정 | Talk/EndTalk: 말하기 표정 즉시 적용, 끝나면 기억한 감정 표정 복귀 | 음성 시작·끝에 맞춘 입모양 |
+| r6/scripts/ANPC/Entry.reds | 수정 | TalkStart·TalkStop·DebugTalk | 세션 NPC의 안전 조건에서만 입모양 적용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 첫 음성 구간 재생 때 입모양 시작, 마지막 구간 끝·다른 요청·새 입력·종료 때 멈춤 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/expressions.lua | 수정 | 입모양 자원 확인, 변형 1~3 순환 시작·멈춤 | 자원이 없으면 입모양 없이 진행 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/devtools.lua | 수정 | 확인 도구에 다음 말하기 입모양 시험 | 실게임 확인 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | lipsync_enabled=true | 기능 켜기 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009010542/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261009015550 — TTS 보조 프로세스 자동 실행(Native TtsHelper)
+
+- 일시: 2026-10-09 01:55:50 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/ANPC/ANPC.Native.dll | 수정 | GitHub Actions 빌드(실행 37812299900). TtsHelper: 플러그인 로드 때 보조 프로세스 실행, Job Object로 게임 종료 시 함께 종료, ANPCNative_TtsStatus·ANPCNative_TtsRestart 추가 | 게임을 켜면 TTS가 함께 준비되고, 수동 실행·종료가 필요 없음 |
+| red4ext/plugins/ANPC/tts-helper.local.json | 추가 | 보조 프로세스 실행 명령·작업 폴더·환경·로그 경로(로컬 설정) | 개인 경로라 저장소·배포물 제외 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 진단 창에 TTS 상태·응답 여부·재시작 버튼 | 상태 확인과 복구 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009015550/manifest.json
+- 확인: GitHub Actions 빌드·테스트 통과. 실게임 동작 미검증
+
+## DEP-20261009020207 — TTS 보조 프로세스 설정 파일 JSON 형식 수정
+
+- 일시: 2026-10-09 02:02:07 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/ANPC/tts-helper.local.json | 수정 | 경로 백슬래시를 JSON 이스케이프로 저장한 올바른 JSON으로 교체(설정 값은 같음) | DEP-20261009015550 배포본이 JSON 형식 오류라 Native가 failed:config_invalid로 보조 프로세스를 띄우지 못함 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009020207/manifest.json
+- 확인: 배포 전 JSON 형식 검사 통과. 실게임 자동 실행 미검증
+
+## DEP-20261009020746 — CET 첫 음성 대기 한도 4초로 수정
+
+- 일시: 2026-10-09 02:07:46 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료(게임 실행 중 배포, CET 모드 다시 불러오기 필요)
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_wait_s 3.0 → 4.0 | 보조 프로세스가 3초 시한에 맞춰 낸 첫 음성 구간 직전에 CET가 같은 3초로 포기해 자막만 나오던 경쟁 해소 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009020746/manifest.json
+- 확인: 실게임 동작 미검증
+
+## DEP-20261009021528 — 장면 안 주요 인물 표정·입모양 허용과 진단 창 정리
+
+- 일시: 2026-10-09 02:15:28 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Entry.reds | 수정 | FaceSafeReason(사망·전투·거리만 검사) 추가, ExpressionApply·TalkStart·확인 도구 고정에 사용 | 원작 대화 허브를 보류한 장면 안의 커뮤니티 인물에게 npc_in_scene으로 표정·입모양이 막히던 문제 해결. 제스처는 기존 안전 검사 유지 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 최근 음성·얼굴 처리 결과 기록(재생 시작·자막만 사유·생략 사유·완료, 표정·입모양 결과) | 진단 창에서 원인 확인 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 진단 창을 요약·최근 결과·접는 구역(대상·장면 진입·API 키·시험)으로 재구성, 고정 안내 문구 삭제 | 디버깅 단순화 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/devtools.lua | 수정 | 시험 구역 안내 문구 정리 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009021528/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 직전 게임 종료 때 TTS 보조 프로세스 동반 종료 확인. 실게임 표정·입모양 미검증
+
+## DEP-20261009023015 — 입모양 소리 구간 연동과 종료 시 닫기
+
+- 일시: 2026-10-09 02:30:15 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 구간 알림의 소리 구간(talk)을 읽어 재생 위치에 맞춰 입 열기·닫기, 메뉴로 음성이 멈추면 닫기, 진단 창에 입모양 구간 수 표시 | 말하는 중 쉼과 음성이 끝난 뒤에도 입이 움직이던 문제 해결. talk가 없으면 구간 전체를 소리로 봄 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/expressions.lua | 수정 | talkBegin·talkOpen·talkPause와 소리 구간 판단(0.05초 먼저 열기, 0.2초 미만 쉼 연결) | 같음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | TalkStart를 TalkBegin·TalkOpen·TalkPause로 분리, 확인 도구 말하기는 변형 전환 | 같음 |
+| r6/scripts/ANPC/Expression.reds | 수정 | 입 닫기·감정 표정 복귀를 ResetFacial 경유로 변경(복귀 0.5초 뒤, 감정 표정이 보일 때 입 열기 0.3초 뒤) | 말하기 표정에서 감정 표정으로 바로 바꾸면 무시돼 입이 계속 움직이던 문제 해결 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009023015/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 소리 구간을 보내는 TTS 보조 프로세스(게임 폴더 밖)와 함께 동작. 실게임 동작 미검증
+
+## DEP-20261009023956 — 디버그 창 용어 정리와 상태 코드 한국어 표시
+
+- 일시: 2026-10-09 02:39:56 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 창 이름 "ANPC 디버그", 버전 표기에서 G0/G1 제거, G1 모의 대사 버튼 삭제, 구역을 바라보는 NPC·원작 선택지 연결·API 키·테스트로 정리, 예/아니오/모름 표시 | 쓰지 않는 개발 단계 용어 제거와 디버깅 가독성 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/labels.lua | 추가 | 대화·대상 검사·원작 선택지·AI 응답·TTS 상태 코드의 한국어 표시 이름 | 영어 상태 코드 대신 뜻이 보이게 함. 모르는 코드는 원문 표시 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/diagnostics.lua | 삭제 | G1 모의 대사 판정 모듈 | 쓰지 않는 기능 제거 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/devtools.lua | 수정 | 시험 → 테스트, 버튼·단축키·결과 문구 정리, 대상 불가 사유 한국어 표시 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 주석 용어만 변경 | 동작 변화 없음 |
+| r6/scripts/ANPC/Diagnostics.reds | 수정 | 버전 문자열 0.1.0-g0-g1 → 0.1.0 | 같음 |
+| r6/scripts/ANPC/SceneEntry.reds | 수정 | 원작 선택지 연결 기록을 항목별 줄(ANPC 선택지·화자·대화 입력·키 입력·군중·감시 NPC)과 한국어 표기로 변경 | 같음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 원작 선택지·군중·입력 기록 문구 한국어화 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009023956/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 표시 미검증
+
+## DEP-20261009030217 — 입력칸 Tab 메뉴 입력 막힘 수정
+
+- 일시: 2026-10-09 03:02:17 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Entry.reds | 수정 | 입력칸의 Tab은 입력칸이 완전히 사라진 뒤(OnHidden) 0.05초 후 원작 메뉴를 열도록 변경(OnChatHidden, OpenMenu 예약) | 입력칸 닫기와 메뉴 열기를 동시에 보내 메뉴가 열린 뒤 입력 차단이 풀리며 캐릭터 메뉴에서 아무 키도 듣지 않던 문제 해결 |
+| r6/scripts/ANPC/Session.reds | 수정 | 닫는 중인 입력칸 기억(menuPopup), 입력칸 OnHidden 뒤 Entry 알림 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009030217/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261009032213 — 군중 원작 목소리 TTS와 목소리 이름 표시
+
+- 일시: 2026-10-09 03:22:14 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/VoiceIdentity.reds | 추가 | NpcVoice.Probe: Codeware 리플렉션으로 scnVoicesetComponentPS.voiceTag(없으면 TweakDB VoiceTag)와 성별 읽기 | 군중 TTS가 NPC의 원작 목소리와 같은 참조 음성을 쓰게 함 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 세션 시작 때 목소리 이름·성별 기억, AI 요청에 포함 | 같음 |
+| r6/scripts/ANPC/Session.reds | 수정 | AnpcRequest·ChatSession에 voiceTag·gender 추가 | 같음 |
+| r6/scripts/ANPC/Diagnostics.reds | 수정 | 바라보는 NPC 검사에 목소리 정보 추가 | 디버그 창에서 목소리 이름 확인 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 군중 TTS 요청에 voice_tag·gender·voice_seed 포함, 최근 음성에 목소리 이름 표시 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_crowd_profile crowd_m2 → crowd | 없는 프로필 대신 원작 목소리 선택 사용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 바라보는 NPC에 목소리 이름·읽은 곳·인물 데이터 값·성별 표시, 못 읽으면 컴포넌트 구조 표시 | 실게임 확인용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/labels.lua | 수정 | 목소리 읽은 곳 표시 이름 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009032213/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 게임 폴더 밖 TTS 보조 프로세스·로컬 참조 음성 목록과 함께 동작. 실게임 동작 미검증
+
+## DEP-20261009035649 — 원작 선택지 화자 검색을 필요할 때만
+
+- 일시: 2026-10-09 03:56:49 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/SceneEntry.reds | 수정 | 모든 NPC 생성 감시(Entity/Initialize 콜백·감시 목록 복사)를 없애고, 원작 선택지가 떠 있을 때만 타게팅 시스템으로 V 주변 4m NPC와 바라보는 NPC를 찾음. 디버그 창에 최근 검색 인원 표시 | 이동·운전 중 군중이 생길 때마다 반복되던 목록 복사 제거 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009035649/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임에서 장면 안 화자 검색 미검증
+
+## DEP-20261009041442 — Native 요청별 토큰 사용량 기록
+
+- 일시: 2026-10-09 04:14:42 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/ANPC/ANPC.Native.dll | 수정 | 커밋 49bb6ca GitHub Actions 빌드. 응답의 캐시 적중·추론 토큰·모델을 읽어 요청마다 플러그인 폴더 usage.local.jsonl에 지연·토큰을 한 줄씩 기록(1MB 넘으면 .1), RED4ext 로그에 cached 추가 | 프롬프트 캐시 적중률·응답 지연 분석. 본문·키는 기록하지 않음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009041442/manifest.json
+- 확인: GitHub Actions 빌드·Provider 응답 해석 시험 통과. 실게임 동작 미검증
+
+## DEP-20261009042528 — 군중 성별 체형 판정과 목소리 이름 읽기 기록
+
+- 일시: 2026-10-09 04:25:28 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/VoiceIdentity.reds | 수정 | 성별을 GetResolvedGenderName이 None이면 GetBodyType(체형)으로 판정. 목소리 이름 읽기를 컴포넌트·GetPS·GetBasePS·persistentState 단계별로 기록 | 군중 성별이 None으로 넘어가 여성 NPC에 남성 목소리가 나오던 문제 수정. 목소리 이름을 못 읽는 원인 분석 |
+| r6/scripts/ANPC/Session.reds | 수정 | AnpcRequest·ChatSession에 voiceDetail 추가 | 같음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 세션 시작 때 목소리 읽기 기록을 요청에 포함 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 군중 목소리 이름을 못 읽으면 세션마다 한 번 CET 로그에 성별·읽기 기록 출력 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009042528/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261009043444 — 군중 목소리 읽기 기록을 보조 프로세스 로그로
+
+- 일시: 2026-10-09 04:34:44 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 군중 목소리 이름을 못 읽으면 읽기 기록을 TTS 요청 voice_detail로 보내고, CET print 기록은 삭제 | CET 로그 파일이 갱신되지 않아 기록이 남지 않던 문제. 보조 프로세스 로그에서 원인 확인 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009043444/manifest.json
+- 확인: Lua 시험 통과. 실게임 동작 미검증

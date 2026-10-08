@@ -1,26 +1,19 @@
 package.path = "game/cet/anpc/?.lua;" .. package.path
-local diagnostics = require("diagnostics")
+local labels = require("labels")
 local function safe()
   return { epoch = 4, sameObject = true, sceneKnown = true, dead = false,
-    playerCombat = false, npcCombat = false, inScene = false, distance = 4.5,
+    playerCombat = false, npcCombat = false, npcStateKnown = true, inScene = false, distance = 4.5,
     diagnosticAllowed = true, reason = "diagnostic_only" }
 end
-assert(diagnostics.mock(safe(), 4))
-assert(not diagnostics.mock(nil, 4))
-assert(not diagnostics.mock(safe(), 3))
-for _, field in ipairs({"sameObject", "sceneKnown", "diagnosticAllowed"}) do
-  local state = safe(); state[field] = false; assert(not diagnostics.mock(state, 4))
-  state[field] = nil; assert(not diagnostics.mock(state, 4))
-end
-for _, field in ipairs({"dead", "playerCombat", "npcCombat", "inScene"}) do
-  local state = safe(); state[field] = true; assert(not diagnostics.mock(state, 4))
-  state[field] = nil; assert(not diagnostics.mock(state, 4))
-end
-for _, distance in ipairs({-1, 4.501, math.huge, 0/0, "1"}) do
-  local state = safe(); state.distance = distance; assert(not diagnostics.mock(state, 4))
-end
-local state = safe(); state.reason = "scene_unknown"; assert(not diagnostics.mock(state, 4))
-print("G1 차단 검사 통과 (모의 상태, 실제 게임 결과 아님)")
+-- 디버그 창 표시 이름: 코드만 바꾸고 모르는 코드·한국어 문장은 그대로 둔다.
+assert(labels.text("session_left") == "멀어져서 종료(6m)" and labels.text("entry_unknown_code") == "entry_unknown_code")
+assert(labels.text("AI 응답 #3 ok:end · 음성") == "AI 응답 #3 정상(대화 끝) · 음성")
+assert(labels.text("error:story_blocked") == "오류(스토리 조건으로 막힘)" and labels.text("error:http_429") == "오류(http_429)")
+assert(labels.text("exited:3") == "종료됨(코드 3)" and labels.text("failed:create_process_2") == "실행 실패(프로세스 생성 2)")
+assert(labels.text("대상 불가: npc_combat") == "대상 불가: NPC 전투 중" and labels.text(nil) == "모름")
+assert(labels.text("not_root_hub(3) · 등록 true") == "첫 선택지 화면 아님(3) · 등록 예")
+assert(labels.yes(true) == "예" and labels.yes(false) == "아니오" and labels.yes(nil) == "모름")
+print("디버그 창 상태 코드 한국어 표시 검사 통과")
 
 -- CET가 게임에 진입하지 않은 상태에서도 로더/수명 콜백이 동작해야 한다.
 local events = {}
@@ -57,7 +50,7 @@ Game = {
   end } end,
   GetScriptableServiceContainer = function() return { GetService = function(_, name)
     assert(name == "ANPC.SceneEntryInstaller")
-    return { GetStatus = function() return "decorated=1 lastOffer=test" end }
+    return { GetStatus = function() return "ANPC 선택지: 표시 1회 · 최근 consumed" end }
   end } end,
   GetAllBlackboardDefs = function() return {UIInteractions = {DialogChoiceHubs = "test_hubs"}} end,
   GetBlackboardSystem = function() return { Get = function() return { GetVariant = function(_, field)
@@ -86,33 +79,32 @@ end
 events.onInit()
 events.onOverlayOpen()
 assert(draw():find("redscript test%-redscript"))
-assert(draw():find("원작 장면 허브 1개 | 선택지 5개", 1, true))
-assert(draw():find("G2 장면 진입: 대화 위젯 표시 전용 허브", 1, true))
-assert(draw():find("G2 장면 진입 진단: decorated=1 lastOffer=test", 1, true))
+assert(not draw():find("읽기 전용", 1, true) and not draw():find("미구현", 1, true))
+assert(draw():find("원작 선택지 화면 1개 · 선택지 5개", 1, true))
+assert(draw():find("ANPC 선택지: 표시 1회 · 최근 이미 사용함", 1, true))
+assert(draw():find("대화: 선택됨 · AI 연결 없음", 1, true) and draw():find("상태: 대화 가능", 1, true))
+assert(not draw():find("G1", 1, true) and not draw():find("시험", 1, true) and not draw():find("허브", 1, true))
 hubFailed = true
 events.onUpdate(0.25)
 assert(not draw():find("선택지 5개", 1, true))
-assert(draw():find("원작 장면 선택지 수집: 미확인", 1, true))
+assert(draw():find("원작 선택지: 읽지 못함", 1, true))
 hubFailed = false
-draw("시선 대상 고정/다시 검사")
-assert(draw("G1 모의 대사 재검사"):find("%[G1 모의 대사%]"))
-current.sameObject = false
-events.onUpdate(0.25)
-assert(not draw():find("%[G1 모의 대사%]"))
+assert(draw("다시 검사"):find("레코드 test_record · 엔티티 test_entity", 1, true))
+assert(draw():find("사망 아니오 · V 전투 아니오 · NPC 전투 아니오 · 장면 중 아니오", 1, true))
 current = nil
 events.onUpdate(0.25)
 assert(not draw():find("test_entity"))
-assert(not draw():find("entry_confirmed_ai_not_connected", 1, true))
+assert(not draw():find("AI 연결 없음", 1, true))
 assert(not draw():find("선택지 5개", 1, true))
-assert(not draw():find("decorated=1", 1, true))
+assert(not draw():find("표시 1회", 1, true))
 current = safe()
 current.entityID, current.recordID, current.highLevel = "test_entity", "test_record", 1
 events.onUpdate(0.25)
-assert(draw():find("entry_confirmed_ai_not_connected", 1, true))
+assert(draw():find("AI 연결 없음", 1, true))
 system.Collect = function() error("collector failed") end
 events.onUpdate(0.25)
-assert(draw():find("수집 실패"))
-assert(not draw():find("entry_confirmed_ai_not_connected", 1, true))
+assert(draw():find("읽기 실패", 1, true))
+assert(not draw():find("AI 연결 없음", 1, true))
 assert(not draw():find("선택지 5개", 1, true))
 events.onShutdown()
 print("대상 변경/세션 소멸/수집 실패 시 오래된 표시 폐기 검사 통과 (모의 런타임)")

@@ -15,6 +15,8 @@
 | `game/cet/anpc/` | `bin/x64/plugins/cyber_engine_tweaks/mods/anpc/` | `anpc.log`·`db.sqlite3`·`tts/` 등 실행 중 생기는 파일은 관리하지 않는다 |
 | `game/redscript/ANPC/` | `r6/scripts/ANPC/` | 바뀌면 시험 컴파일(DIST-25) 후 배포 |
 | `game/audioware/ANPC/` | `r6/audioware/ANPC/` | `slots/*.wav`는 TTS 보조 프로세스가 덮어쓰므로 없을 때만 설치 |
+| `game/red4ext/ANPC/` | `red4ext/plugins/ANPC/` | Native 플러그인의 로컬 설정(`*.local.json`, Git 제외)만 둔다. 예: TTS 보조 프로세스 실행 명령 `tts-helper.local.json`(command·args·cwd·env·log). Native DLL 자체는 `-NativeDll`로만 바꾼다. 실행 중 생기는 `usage.local.jsonl`(요청별 지연·토큰 기록)은 관리하지 않는다 |
+| `game/archive/` | `archive/pc/mod/` | 원작 자원으로 이 PC에서 만든 로컬 빌드 아카이브(`*.local.archive`, Git 제외)만 둔다. 예: UF-75 말하기 입모양 `ANPC_talk.local.archive`. 폴더가 없으면 건너뛴다 |
 | `-NativeDll`로 지정한 빌드 DLL | `red4ext/plugins/ANPC/ANPC.Native.dll` | 지정하지 않으면 건드리지 않는다 |
 
 게임 폴더 밖의 개발용 TTS 보조 프로세스·참조 음성 목록은 이 스크립트 대상이 아니다. 바꾸면 보조 프로세스만 다시 실행한다.
@@ -36,7 +38,7 @@
    powershell -ExecutionPolicy Bypass -File scripts/deploy-game-dev.ps1 -Name '<배포 이름>'
    ```
 
-   Native DLL을 함께 바꿀 때는 `-NativeDll <빌드한 DLL 경로>`를 붙인다.
+   Native DLL을 함께 바꿀 때는 `-NativeDll <빌드한 DLL 경로>`를 붙인다. CET Lua(`…/mods/anpc/*.lua`)와 `*.local.json`만 바뀐 경우에는 `-Live`로 게임을 켠 채 배포할 수 있다. 반영은 CET 오버레이의 모드 다시 불러오기(Lua) 또는 디버그 창의 TTS 재시작(보조 프로세스 설정)으로 한다.
 6. 출력된 `config.local.backups/<배포 ID>/history.md` 초안의 변경 내용·이유·영향을 채워 [배포 변경 이력](game-mod-validation.md) 끝에 옮긴다. 일시·파일 목록·구분은 초안 그대로 쓴다.
 7. 게임을 시작해 확인한다. 실게임 확인 결과는 [개발·검증 계획](development-validation.md)에 남긴다. 배포 이력의 `확인` 줄은 배포 시점 상태만 적는다.
 

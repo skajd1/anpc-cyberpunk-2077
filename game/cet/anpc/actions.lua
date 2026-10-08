@@ -10,8 +10,14 @@ local function same(a,b)
   return ok and equal
 end
 
+-- id가 "debug"이면 개발 확인 도구가 고정한 NPC(세션 밖)를 대상으로 한다.
+local function target(system,id)
+  if id=="debug" then return system:DebugMotionTarget() end
+  return system:GetMotionTarget(id)
+end
+
 local function ready(system,id)
-  local actor=system:GetMotionTarget(id)
+  local actor=target(system,id)
   if not actor or not IsDefined(actor) then return nil end
   local amm=GetMod("AppearanceMenuMod")
   if not amm or amm.currentVersion~="2.12.5" or not amm.Poses or not amm.Poses.anims then return nil end
@@ -141,7 +147,7 @@ function actions.update(delta,system)
   if not active then return end
   local job=active
   job.age=job.age+delta
-  local ok,actor=pcall(function() return system and system:GetMotionTarget(job.id) end)
+  local ok,actor=pcall(function() return system and target(system,job.id) end)
   if not ok or not same(actor,job.actor) then actions.cancel("대화 상태 변경");return end
   local checked,err=pcall(function()
     local workspots=Game.GetWorkspotSystem()
@@ -167,6 +173,12 @@ function actions.update(delta,system)
     elseif job.age>=2 then finish("failed","timeout","재생 시작 미확인") end
   end)
   if not checked then finish("failed","adapter_error","재생 오류") end
+end
+
+-- 개발 확인 도구: 고정한 NPC에서 지금 재생 가능한 제스처 목록.
+function actions.debugOptions(system)
+  local ok,available=pcall(options,system,"debug")
+  return ok and available or {}
 end
 
 function actions.result(id) return last and last.id==id and last.text or nil end

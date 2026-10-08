@@ -22,6 +22,10 @@ struct ProviderResult
     std::string text;
     int32_t inputTokens = -1;
     int32_t outputTokens = -1;
+    // 프롬프트 캐시가 적중한 입력 토큰(usage.input_tokens_details.cached_tokens)과 추론 토큰. 없으면 -1.
+    int32_t cachedTokens = -1;
+    int32_t reasoningTokens = -1;
+    std::string model;
 };
 
 std::optional<Endpoint> FindEndpoint(std::string_view aProvider);
