@@ -941,3 +941,15 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009032213/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 게임 폴더 밖 TTS 보조 프로세스·로컬 참조 음성 목록과 함께 동작. 실게임 동작 미검증
+
+## DEP-20261009035649 — 원작 선택지 화자 검색을 필요할 때만
+
+- 일시: 2026-10-09 03:56:49 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/SceneEntry.reds | 수정 | 모든 NPC 생성 감시(Entity/Initialize 콜백·감시 목록 복사)를 없애고, 원작 선택지가 떠 있을 때만 타게팅 시스템으로 V 주변 4m NPC와 바라보는 NPC를 찾음. 디버그 창에 최근 검색 인원 표시 | 이동·운전 중 군중이 생길 때마다 반복되던 목록 복사 제거 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009035649/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임에서 장면 안 화자 검색 미검증
