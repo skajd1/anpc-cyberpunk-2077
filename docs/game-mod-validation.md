@@ -848,3 +848,15 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009020207/manifest.json
 - 확인: 배포 전 JSON 형식 검사 통과. 실게임 자동 실행 미검증
+
+## DEP-20261009020746 — CET 첫 음성 대기 한도 4초로 수정
+
+- 일시: 2026-10-09 02:07:46 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료(게임 실행 중 배포, CET 모드 다시 불러오기 필요)
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | voice_wait_s 3.0 → 4.0 | 보조 프로세스가 3초 시한에 맞춰 낸 첫 음성 구간 직전에 CET가 같은 3초로 포기해 자막만 나오던 경쟁 해소 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009020746/manifest.json
+- 확인: 실게임 동작 미검증
