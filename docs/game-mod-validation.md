@@ -836,3 +836,15 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009015550/manifest.json
 - 확인: GitHub Actions 빌드·테스트 통과. 실게임 동작 미검증
+
+## DEP-20261009020207 — TTS 보조 프로세스 설정 파일 JSON 형식 수정
+
+- 일시: 2026-10-09 02:02:07 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/ANPC/tts-helper.local.json | 수정 | 경로 백슬래시를 JSON 이스케이프로 저장한 올바른 JSON으로 교체(설정 값은 같음) | DEP-20261009015550 배포본이 JSON 형식 오류라 Native가 failed:config_invalid로 보조 프로세스를 띄우지 못함 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009020207/manifest.json
+- 확인: 배포 전 JSON 형식 검사 통과. 실게임 자동 실행 미검증
