@@ -1,6 +1,6 @@
 # NPC 행동 범위 명세
 
-규격 버전: 0.2 (2026-10-01). 타입/포트: [공통 규격](module-interface-specification.md). 게임/모드 구현 상태: [개발·검증 계획](development-validation.md). 단위: 미터·초. 수치는 설계 기본값.
+규격 버전: 0.3 (2026-10-08). 타입/포트: [공통 규격](module-interface-specification.md). 게임/모드 구현 상태: [개발·검증 계획](development-validation.md). 단위: 미터·초. 수치는 설계 기본값.
 
 ## 1. 범위와 권한
 
@@ -11,6 +11,7 @@ execute 허용=배포 실행 지원 ∩ NPC 기능 ∩ 카드 ∩ 현재 상태.
 ### 1.1. 행동 선택과 실행 모드
 
 - 첫 게임판 기본 실제 제어: stop_and_listen, face_player, resume_walk, end_conversation.
+- 감정 표정(UF-74): react_with_expression은 AI가 action으로 고르지 않고 응답 emotion으로 자동 적용한다. 대응은 neutral 무표정(2·2), friendly 미소(3·6), wary 긴장(3·10), annoyed 분노(3·1), afraid 공포(3·11), sad 슬픔(3·3), curious 관심(1·3)이다(FacialReaction category·idle, AMM OG Expressions와 같은 값). 커뮤니티 인물에게도 적용하며 얼굴만 바꾼다. 대응은 실게임 확인 뒤 조정한다.
 - 워크스팟 점유 중인 군중 대상: end_conversation만 execute. 워크스팟 동작을 끊거나 이동·회전시키는 행동은 거부하고 대사·자막만 진행.
 - 추가 행동: selection_only 기본, 지원 어댑터의 후속 execute. 항목별 ActionOption.execution_mode가 최종 권한.
 - selection_only: 검수 통과 시 로컬 selection_state=selected. 실행 상태 proposed 유지. 명령·성공 효과/기억·자막 실행 서술 없음.
@@ -19,7 +20,7 @@ execute 허용=배포 실행 지원 ∩ NPC 기능 ∩ 카드 ∩ 현재 상태.
 
 ### AMM 최초 실행 어댑터
 
-UF-64의 구현 대상은 AMM 2.12.5 등록 목록과 실제 설치 자원을 교차 확인한 손 흔들기·박수·회상 대화 제스처다. 정확한 AnimatedComponent 리그가 Man Average/Woman Average인 자유 군중을 대상으로 하며 Big은 박수만 등록한다. 고유 NPC·장면·기존 워크스팟·현재 무장·미확인 리그는 제외한다. Lua 내부 임시 객체는 Codeware DynamicEntitySystem으로 생성하며 ANPC 고유 태그와 GetDeviceUser로 소유권을 확인한 대상만 정리한다. AMM 자체 재생 함수의 비동기 작업·V 재대상 설정은 사용하지 않는다.
+UF-64의 구현 대상은 AMM 2.12.5 등록 목록과 실제 설치 자원을 교차 확인한 서서 하는 대화 제스처 18종(`prototype/public/motions.js`)이다. 정확한 AnimatedComponent 리그가 Man Average/Woman Average인 자유 군중을 대상으로 하며, Big은 DB에 Big 동작이 있는 15종만 등록한다. 고유 NPC·장면·기존 워크스팟·현재 무장·미확인 리그는 제외한다. Lua 내부 임시 객체는 Codeware DynamicEntitySystem으로 생성하며 ANPC 고유 태그와 GetDeviceUser로 소유권을 확인한 대상만 정리한다. AMM 자체 재생 함수의 비동기 작업·V 재대상 설정은 사용하지 않는다.
 
 객체 생성/재생 시작 확인은 각각 최대 2초, 시작 요청 후 재생 점유는 최대 5초다. 점유 확인은 실제 클립 재생/완료 확인과 다르다. 현재 어댑터는 succeeded를 만들지 않고 제한 도달 시 cancelled로 정리한다. 자연 완료·반복 방지·시작 블렌딩·위치 보존은 실제 자원 설치 후 검증해야 한다. CET는 시작 수용(accepted), 시작 명령 전달, 소유 워크스팟 점유(running), 시작 실패(failed), 조건 거부(rejected), 제한/외부 중단(cancelled)을 구분한다. 시작 명령·점유 확인만 observed_effect로 남기며 실제 클립 재생·완료·보행 복귀는 추정하지 않는다. 다음 입력에 같은 세션의 마지막 ActionOutcome 형상 결과를 last_action_result로 전달한다. 세션 종료·세계 전환 후 다른 세션에 재사용하지 않는다. 전체 ActionRequest/Outcome 포트·시간 참조 전환은 미완료다. 이동·앉기·동행과 고유 NPC 확대는 후속 범위다. 외부 자원이 없으면 game allowed_actions에 추가 모션이 없다. 웹은 같은 등록 참조를 selection_only로 제공한다.
 

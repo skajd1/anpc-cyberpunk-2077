@@ -9,6 +9,7 @@ local context = require("context")
 local identity = require("identity")
 local actions = require("actions")
 local speechRules = require("speech")
+local expressions = require("expressions")
 local readingTable = json.decode(prompts.ja_reading_table)
 
 local bridge = {}
@@ -199,7 +200,7 @@ function bridge.readReply(text, actions, voice)
     end
   end
   return line, ended, display, selected and selected.action_id == "play_gesture" and selected.execution_mode == "execute"
-    and reply.action.args.gesture_ref or nil, speech
+    and reply.action.args.gesture_ref or nil, speech, reply.emotion
 end
 
 -- 로컬 TTS 보조 프로세스(개발 시험)에 tts/req-<id>.json을 넘긴다. 임시 파일에 쓴 뒤 이름을 바꿔 읽는 쪽이 반쯤 쓴 파일을 보지 않게 한다.
@@ -256,7 +257,9 @@ function bridge.stopSpeech(system)
   if system then pcall(function() system:VoiceStop() end) end
 end
 
-local function finishDelivery(system, id, display, gesture, session)
+-- 대사가 보이는 순간 감정 표정(UF-74)과 제스처(UF-64)를 함께 시작한다.
+local function finishDelivery(system, id, display, gesture, session, emotion)
+  if config.expression_enabled then expressions.apply(system, id, emotion) end
   if gesture then display = actions.start(system, id, gesture, session) end
   -- 폐기된 응답은 대사와 행동 목록 모두 표시하지 않는다.
   actionDisplay = { id = id, text = display }
@@ -289,13 +292,13 @@ local function voiceUpdate(system, delta)
         local seg = table.remove(job.queue, 1)
         job.started, job.playEnd, job.final = true, clock + seg.dur, seg.final
         system:OnAIVoiceResponse(id, job.ended and "ok:end" or "ok", job.line, job.seconds)
-        finishDelivery(system, id, job.display, job.gesture, job.session)
+        finishDelivery(system, id, job.display, job.gesture, job.session, job.emotion)
       elseif job.queue[1] or job.wait > config.voice_wait_s then
         -- 대기 한도 안에 첫 구간이 없거나 재생할 수 없으면 자막만 표시하고 음성은 버린다.
         voiceJobs[id] = nil
         bridge.stopSpeech(system)
         system:OnAIResponse(id, job.ended and "ok:end" or "ok", job.line)
-        finishDelivery(system, id, job.display, job.gesture, job.session)
+        finishDelivery(system, id, job.display, job.gesture, job.session, job.emotion)
       end
     elseif system:GetLatestRequestId() ~= id then
       voiceJobs[id] = nil
@@ -361,7 +364,7 @@ local function deliverReply(system, id, text, character, item)
       return nil
     end
   end
-  local line, ended, display, gesture, speech = bridge.readReply(text, character and json.decode(character.actions), config.voice_enabled)
+  local line, ended, display, gesture, speech, emotion = bridge.readReply(text, character and json.decode(character.actions), config.voice_enabled)
   if not line then
     system:OnAIResponse(id, "error:invalid_response", "")
     return nil
@@ -371,14 +374,14 @@ local function deliverReply(system, id, text, character, item)
     if ok and spatial == true and bridge.speak(id, item, speech, "slots") then
       -- 자막·행동은 첫 음성 구간 재생 때 함께 시작한다(voiceUpdate).
       local _, chars = speech.text:gsub("[^\128-\191]", "")
-      voiceJobs[id] = { session = item and item.session, line = line, ended = ended, display = display, gesture = gesture, wait = 0, next = 1, queue = {},
+      voiceJobs[id] = { session = item and item.session, line = line, ended = ended, display = display, gesture = gesture, emotion = emotion, wait = 0, next = 1, queue = {},
         seconds = chars * config.voice_sec_per_char, started = false }
       return line
     end
     bridge.speak(id, item, speech, "local")
   end
   system:OnAIResponse(id, ended and "ok:end" or "ok", line)
-  finishDelivery(system, id, display, gesture, item and item.session)
+  finishDelivery(system, id, display, gesture, item and item.session, emotion)
   return line
 end
 

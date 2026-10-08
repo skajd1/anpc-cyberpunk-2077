@@ -20,5 +20,9 @@ return {
   -- 자막 표시 시간 계산용 일본어 1자당 음성 길이(초).
   voice_sec_per_char = 0.16,
   -- 3D 음성 재생 음량(Audioware 1.0 기준). 원작 NPC 음성과 비교해 맞춘다.
-  voice_volume = 1.0
+  voice_volume = 1.0,
+  -- UF-74: 응답 감정에 맞춘 NPC 얼굴 표정. 대화가 끝나면 되돌린다.
+  expression_enabled = true,
+  -- 개발 확인 단축키(CET 설정의 단축키에서 지정): 바라보는 NPC 고정, 감정 표정·제스처 차례로 시험.
+  dev_tools = true
 }

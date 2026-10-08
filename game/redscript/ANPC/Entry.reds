@@ -116,6 +116,8 @@ public class Entry extends ScriptableSystem {
     if IsDefined(this.session) && IsDefined(this.session.control) { this.session.control.Release(); }
     if IsDefined(this.session) && IsDefined(this.session.popup) { this.session.popup.Close(); }
     this.session = null;
+    this.ExpressionReset();
+    this.debugNpc = null;
     this.StopMoveWatch();
     this.crowdNpc = null;
     this.crowdReactedAt = 0.0;
@@ -853,6 +855,7 @@ public class Entry extends ScriptableSystem {
     if this.session != session { return; }
     this.HideSubtitles(session);
     this.session = null;
+    this.ExpressionReset();
     if IsDefined(session.control) { session.control.Release(); }
     this.StopMoveWatch();
     this.status.reason = reason;
@@ -936,6 +939,51 @@ public class Entry extends ScriptableSystem {
     this.VoiceStop();
     AnpcAudioware.Unregister(this.GetGameInstance(), this.voiceEmitter);
     this.voiceRegistered = false;
+  }
+
+  // ---- 감정 표정(Expression.reds의 NpcExpression). 군중·주요 인물 모두, 대화 중 안전 조건에서만 ----
+  private let expression: ref<NpcExpression>;
+
+  public func ExpressionApply(requestId: Int32, category: Int32, idle: Int32) -> Bool {
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId || session.menuSuspended || NotEquals(this.SessionEndReason(session), "") { return false; }
+    let npc: ref<NPCPuppet> = session.npc;
+    let player: ref<PlayerPuppet> = session.player;
+    if !IsDefined(npc) || NotEquals(Entry.SafeReason(npc, player), "") { return false; }
+    if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
+    return this.expression.Apply(npc, category, idle);
+  }
+
+  public func ExpressionReset() -> Void {
+    if IsDefined(this.expression) { this.expression.Reset(); }
+  }
+
+  // ---- 개발 확인 도구: 바라보는 NPC를 고정해 표정·제스처를 직접 걸어 본다(세션 밖, CET 단축키 전용) ----
+  private let debugNpc: wref<NPCPuppet>;
+
+  public func DebugPinTarget() -> String {
+    let player = GetPlayer(this.GetGameInstance());
+    if !IsDefined(player) { return "플레이어 없음"; }
+    let target = GameInstance.GetTargetingSystem(this.GetGameInstance()).GetLookAtObject(player, false, false) as NPCPuppet;
+    if !IsDefined(target) { this.debugNpc = null; return "바라보는 NPC 없음"; }
+    let reason = Entry.SafeReason(target, player);
+    if NotEquals(reason, "") { this.debugNpc = null; return "대상 불가: " + reason; }
+    this.debugNpc = target;
+    return "고정: " + target.GetDisplayName();
+  }
+
+  public func DebugMotionTarget() -> ref<NPCPuppet> {
+    let npc: ref<NPCPuppet> = this.debugNpc;
+    let player = GetPlayer(this.GetGameInstance());
+    if !IsDefined(npc) || !IsDefined(player) || NotEquals(Entry.SafeReason(npc, player), "") || IsDefined(GameObject.GetActiveWeapon(npc)) { return null; }
+    return npc;
+  }
+
+  public func DebugExpression(category: Int32, idle: Int32) -> Bool {
+    let npc = this.DebugMotionTarget();
+    if !IsDefined(npc) { return false; }
+    if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
+    return this.expression.Apply(npc, category, idle);
   }
 
   // 첫 음성 재생과 함께 자막을 띄운다(음성 출력 규격 4.3). 표시 시간은 글자 수 기준과 예상 음성 길이 중 긴 쪽.

@@ -1,6 +1,8 @@
 local diagnostics = require("diagnostics")
 local bridge = require("bridge")
 local config = require("config")
+local devtools = require("devtools")
+if config.dev_tools then devtools.register() end
 local version = "0.1.0-g0-g1"
 local overlay, elapsed = false, 0
 local state, pinnedEpoch, mockText
@@ -99,6 +101,7 @@ end)
 registerForEvent("onUpdate", function(delta)
   -- AI 요청 전달은 진단 창과 무관하게 매 프레임 처리한다.
   bridge.update(delta)
+  devtools.update(delta)
   if not overlay then return end
   elapsed = elapsed + delta
   if elapsed >= 0.25 then elapsed = 0; refresh(false) end
@@ -118,6 +121,7 @@ registerForEvent("onDraw", function()
     end
     ImGui.End()
   end
+  devtools.draw()
   if not overlay then return end
   local expanded = ImGui.Begin("ANPC G0/G1 진단")
   if expanded then
@@ -165,6 +169,7 @@ registerForEvent("onDraw", function()
       end
     end
     if mockText then ImGui.TextWrapped(mockText) end
+    if config.dev_tools then devtools.buttons() end
     ImGui.TextWrapped("인물/진행 매핑·원작 선택지 handoff·저장 기억: 미구현/미검증")
   end
   ImGui.End()
