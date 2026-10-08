@@ -12,9 +12,8 @@ public class SceneEntryCandidate extends IScriptable {
 }
 
 public class SceneEntryInstaller extends ScriptableService {
-  private let registered: Bool;
-  private let initialized: Int32;
-  private let tracked: array<wref<NPCPuppet>>;
+  // 마지막 검색에서 찾은 V 주변 NPC. 원작 선택지가 떠 있는 동안만 쓴다.
+  private let nearby: array<wref<NPCPuppet>>;
   private let decorated: Int32;
   private let lastOffer: String;
   private let lastSpeaker: String;
@@ -36,7 +35,7 @@ public class SceneEntryInstaller extends ScriptableService {
       + "
 군중: " + SceneEntryInstaller.Or(this.lastCrowd)
       + "
-감시 NPC " + ToString(ArraySize(this.tracked)) + "명 · 등록 " + ToString(this.registered) + " · 초기화 " + ToString(this.initialized) + "회";
+주변 NPC(최근 검색): " + ToString(ArraySize(this.nearby)) + "명";
   }
 
   private static func Or(text: String) -> String {
@@ -72,13 +71,40 @@ public class SceneEntryInstaller extends ScriptableService {
     this.lastAction = reason;
   }
 
+  // 원작 선택지가 뜰 때만 V 주변 4m의 NPC를 찾는다(모든 NPC 생성을 감시하지 않는다). 바라보는 NPC도 넣는다.
+  public func Scan(player: ref<PlayerPuppet>) -> Void {
+    let found: array<wref<NPCPuppet>>;
+    let targeting = GameInstance.GetTargetingSystem(player.GetGame());
+    let query = TSQ_NPC();
+    query.maxDistance = 4.0;
+    query.testedSet = TargetingSet.Complete;
+    query.filterObjectByDistance = true;
+    let parts: array<TS_TargetPartInfo>;
+    targeting.GetTargetParts(player, query, parts);
+    for part in parts {
+      let npc = TS_TargetPartInfo.GetComponent(part).GetEntity() as NPCPuppet;
+      if IsDefined(npc) && !SceneEntryInstaller.Has(found, npc) { ArrayPush(found, npc); }
+    }
+    let look = targeting.GetLookAtObject(player, false, false) as NPCPuppet;
+    if IsDefined(look) && !SceneEntryInstaller.Has(found, look) { ArrayPush(found, look); }
+    this.nearby = found;
+  }
+
+  private static func Has(list: array<wref<NPCPuppet>>, npc: ref<NPCPuppet>) -> Bool {
+    for item in list {
+      let current: ref<NPCPuppet> = item;
+      if current == npc { return true; }
+    }
+    return false;
+  }
+
   // 허브 제목과 이름이 일치하는 화자가 없을 때 가장 가까운 NPC를 진단에만 남긴다.
   public func RecordSpeakerMissing(player: ref<PlayerPuppet>, title: String) -> Void {
     let nearest: ref<NPCPuppet>;
     let nearestDistance = 4.0;
     let i = 0;
-    while i < ArraySize(this.tracked) {
-      let npc: ref<NPCPuppet> = this.tracked[i];
+    while i < ArraySize(this.nearby) {
+      let npc: ref<NPCPuppet> = this.nearby[i];
       if IsDefined(npc) && npc.IsAttached() {
         let distance = Vector4.Distance(npc.GetWorldPosition(), player.GetWorldPosition());
         if distance <= nearestDistance {
@@ -100,8 +126,8 @@ public class SceneEntryInstaller extends ScriptableService {
     let best: ref<NPCPuppet>;
     let bestDistance = 4.0;
     let i = 0;
-    while i < ArraySize(this.tracked) {
-      let npc: ref<NPCPuppet> = this.tracked[i];
+    while i < ArraySize(this.nearby) {
+      let npc: ref<NPCPuppet> = this.nearby[i];
       if IsDefined(npc) && npc.IsAttached() && !npc.IsDead()
         && SceneEntry.TitleMatches(title, npc) {
         let distance = Vector4.Distance(npc.GetWorldPosition(), player.GetWorldPosition());
@@ -113,26 +139,6 @@ public class SceneEntryInstaller extends ScriptableService {
       i += 1;
     }
     return best;
-  }
-
-  private cb func OnLoad() -> Void {
-    GameInstance.GetCallbackSystem().RegisterCallback(n"Entity/Initialize", this, n"OnEntityInitialize", true)
-      .AddTarget(EntityTarget.Type(n"NPCPuppet")).SetLifetime(CallbackLifetime.Forever);
-    this.registered = true;
-  }
-
-  private cb func OnEntityInitialize(event: ref<EntityLifecycleEvent>) -> Void {
-    this.initialized += 1;
-    let npc = event.GetEntity() as NPCPuppet;
-    if !IsDefined(npc) { return; }
-    let alive: array<wref<NPCPuppet>>;
-    let i = 0;
-    while i < ArraySize(this.tracked) {
-      if IsDefined(this.tracked[i]) { ArrayPush(alive, this.tracked[i]); }
-      i += 1;
-    }
-    ArrayPush(alive, npc);
-    this.tracked = alive;
   }
 }
 
@@ -249,6 +255,7 @@ public abstract class SceneEntry {
     if !IsDefined(installer) || !IsDefined(player) { return null; }
     let blocked: ref<SceneEntryCandidate>;
     let hubs = SceneEntry.NativeHubs(player.GetGame());
+    if ArraySize(hubs.choiceHubs) > 0 { installer.Scan(player); }
     let i = 0;
     while i < ArraySize(hubs.choiceHubs) {
       if SceneEntry.IsWaitingHub(hubs.choiceHubs[i]) {
