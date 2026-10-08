@@ -953,3 +953,15 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009035649/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임에서 장면 안 화자 검색 미검증
+
+## DEP-20261009041442 — Native 요청별 토큰 사용량 기록
+
+- 일시: 2026-10-09 04:14:42 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/ANPC/ANPC.Native.dll | 수정 | 커밋 49bb6ca GitHub Actions 빌드. 응답의 캐시 적중·추론 토큰·모델을 읽어 요청마다 플러그인 폴더 usage.local.jsonl에 지연·토큰을 한 줄씩 기록(1MB 넘으면 .1), RED4ext 로그에 cached 추가 | 프롬프트 캐시 적중률·응답 지연 분석. 본문·키는 기록하지 않음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009041442/manifest.json
+- 확인: GitHub Actions 빌드·Provider 응답 해석 시험 통과. 실게임 동작 미검증
