@@ -14,7 +14,7 @@
 | Native | WinHTTP·Credential Manager·완료 큐·요청 취소 | GitHub Actions Windows 빌드. 새 CTest 로컬 빌드·실게임 재검증 미수행 |
 | 정체성·관찰 | 12명 카드·군중 생성 정체성·스캔 표시 신원·복장/무장/지역/평판 | Lua/CLI·모의 상태의 실제 API. 실게임 대조 미완 |
 | 진행·관계 | 주디·팬앰·조니의 일지 경로·fact 읽기(UF-66) | 정적 분석. 나머지 인물·실게임 binding 미검증 |
-| 행동 | 행동 선택 패널·AMM 제스처 어댑터(18종), 응답 감정 표정(UF-74), 말하기 입모양(UF-75), 개발 확인 도구(바라보는 NPC 고정·표정/제스처 차례 시험), 세션별 last_action_result·시작/점유/실패/중단 구분 | 실제 클립 완료 신호·기본 제어와 충돌·보행 복귀는 실게임 미검증. succeeded 미발급 |
+| 행동 | 행동 선택 패널·AMM 제스처 어댑터(18종), 응답 감정 표정(UF-74), 말하기 입모양(UF-75), 개발 테스트 도구(바라보는 NPC 고정·표정/제스처/입모양 차례 적용), 세션별 last_action_result·시작/점유/실패/중단 구분 | 실제 클립 완료 신호·기본 제어와 충돌·보행 복귀는 실게임 미검증. succeeded 미발급 |
 | 저장별 기억·비용 원장 | 미구현 | SR-04·SR-06 |
 | 제품 설치/복원/제거 | 개발 ZIP 생성기만 | SR-12·SR-13 |
 | NPC 음성 | 응답 계약(DialogueReplyVoice)·프롬프트 0.19(음성 시 대사 45자 안내, 감정 sad 추가)·웹 응답 검사의 음성 옵션(기본 꺼짐), 일본어 읽기 표기표(65개 중 58개 일본어판 공식 자료로 확인). 파인튜닝 v1(주디·빅터·로그), 개발용 TTS 보조 프로세스·CET 음성 응답 연결, Audioware 슬롯 3D 재생(설계안 A)·환경 효과·가림·음량 | Node·계약·콘텐츠 검사. 설계안 A 3D 재생 실게임 확인. 인물별 참조 음성 재선정 중. 실제 API 음성 대사 품질·Native TTS·voice_profile 콘텐츠 미착수 |
@@ -255,7 +255,7 @@ Node.js 22 이상, 추가 패키지 없음. 저장소 루트에서 `npm start` �
 - Genie 출력 끝 음절 잘림(v1 일부 출력이 소리 도중 끝남)과 EQ 보정 결과를 청취로 확인한다.
 - 스트리밍 조각 경계 잡음, 버퍼링 시작 조건(4.2)의 실제 끊김 합계를 Native 구현에서 다시 잰다.
 - TTS 보조 프로세스 자동 실행: ANPC.Native(TtsHelper)가 게임 시작 때 `red4ext/plugins/ANPC/tts-helper.local.json`의 명령으로 실행하고 게임 종료와 함께 끝낸다. 게임 실행 중 모델 로드는 약 70초다. Native 빌드는 GitHub Actions에서 하며 실게임 미확인.
-- 말할 때 입모양(UF-75): 원작 표정 대응표(facial_reactions_male/female.csv)와 얼굴 대기 애니메이션(generic_average_male_facial_idle.anims)에는 감정 표정 19종만 있고 말하기 애니메이션이 없다. 원작 립싱크 애니메이션(AdditiveFromRefPose)은 장면·음성 대응표에 묶여 재생된다. 구현: 실험 폴더의 `work/lipsync/build_talk.py`가 WolvenKit CLI 9.0.1(실험 폴더의 .NET 10.0.12 런타임으로 실행)로 원작 일본어 립싱크 클립(여성 주디 5.7~6.6초·남성 잭키 7.7초, 각 3개, AdditiveFromRefPose 344관절)을 남녀 표정 묶음에 `idle__anpc_talk_0N__<성별>`로 옮기고 표정 대응표 data·compiledData에 분류 4번 행을 추가해 `game/archive/ANPC_talk.local.archive`(Git 제외)를 만든다. 첫 음성 구간 재생에 Entry.TalkBegin, 소리 구간마다 TalkOpen(분류 4, 변형 1~3 순환), 0.2초 이상 쉼에 TalkPause, 마지막 구간 끝·다른 요청·새 입력·종료에 TalkStop(감정 표정 복귀). 보이는 표정을 다른 표정으로 바로 바꾸면 무시돼 끝난 뒤에도 입이 움직였으므로, 닫기·복귀는 항상 ResetFacial을 거친다(감정 표정 복귀는 0.5초 뒤, 감정 표정이 보일 때 입 열기는 0.3초 뒤). 발음 일치는 목표가 아니다. 주요 인물 전용 얼굴 묶음에서의 재생, 클립 반복 이음새는 실게임 미확인.
+- 말할 때 입모양(UF-75): 원작 표정 대응표(facial_reactions_male/female.csv)와 얼굴 대기 애니메이션(generic_average_male_facial_idle.anims)에는 감정 표정 19종만 있고 말하기 애니메이션이 없다. 원작 립싱크 애니메이션(AdditiveFromRefPose)은 장면·음성 대응표에 묶여 재생된다. 구현: 실험 폴더의 `work/lipsync/build_talk.py`가 WolvenKit CLI 9.0.1(실험 폴더의 .NET 10.0.12 런타임으로 실행)로 원작 일본어 립싱크 클립(여성 주디 5.7~6.6초·남성 잭키 7.7초, 각 3개, AdditiveFromRefPose 344관절)을 남녀 표정 묶음에 `idle__anpc_talk_0N__<성별>`로 옮기고 표정 대응표 data·compiledData에 분류 4번 행을 추가해 `game/archive/ANPC_talk.local.archive`(Git 제외)를 만든다. 첫 음성 구간 재생에 Entry.TalkBegin, 소리 구간마다 TalkOpen(분류 4, 변형 1~3 순환), 0.2초 이상 쉼에 TalkPause, 마지막 구간 끝·다른 요청·새 입력·종료에 TalkStop(감정 표정 복귀). 보이는 표정을 다른 표정으로 바로 바꾸면 무시돼 끝난 뒤에도 입이 움직였으므로, 닫기·복귀는 항상 ResetFacial을 거친다(감정 표정 복귀는 0.5초 뒤, 감정 표정이 보일 때 입 열기는 0.3초 뒤). 발음 일치는 목표가 아니다. 2026-10-09 실게임(DEP-20261009023015)에서 음성의 소리 구간에만 입이 움직이고 쉼·종료 때 멈추는 것을 확인했다. 클립 반복 이음새는 미확인.
 - 인물별 참조 음성을 다시 고른다. 기존 참조는 대사 내용만으로 감정을 붙여 부적합한 경우가 있었다. 참조 풀(3~10초 원작 대사)을 들리는 말투 기준으로 감정·적합성(잡음·다른 목소리·필터·과장·자막 불일치) 수작업 라벨링하고, 감정별 후보 3개 이하를 청취 승인한다.
 - 음성 활성 시 대사 45자 안내(프롬프트 0.18~)가 실제 대화 품질을 해치지 않는지 확인한다. 출력 순서는 비교 결과(8.3)에 따라 일본어 우선으로 바꿨다. speech_text 선행 합성은 효과·위험 때문에 보류한다(8.2).
 
