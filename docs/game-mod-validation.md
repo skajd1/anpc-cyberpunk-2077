@@ -860,3 +860,18 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009020746/manifest.json
 - 확인: 실게임 동작 미검증
+
+## DEP-20261009021528 — 장면 안 주요 인물 표정·입모양 허용과 진단 창 정리
+
+- 일시: 2026-10-09 02:15:28 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Entry.reds | 수정 | FaceSafeReason(사망·전투·거리만 검사) 추가, ExpressionApply·TalkStart·확인 도구 고정에 사용 | 원작 대화 허브를 보류한 장면 안의 커뮤니티 인물에게 npc_in_scene으로 표정·입모양이 막히던 문제 해결. 제스처는 기존 안전 검사 유지 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 최근 음성·얼굴 처리 결과 기록(재생 시작·자막만 사유·생략 사유·완료, 표정·입모양 결과) | 진단 창에서 원인 확인 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 진단 창을 요약·최근 결과·접는 구역(대상·장면 진입·API 키·시험)으로 재구성, 고정 안내 문구 삭제 | 디버깅 단순화 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/devtools.lua | 수정 | 시험 구역 안내 문구 정리 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009021528/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 직전 게임 종료 때 TTS 보조 프로세스 동반 종료 확인. 실게임 표정·입모양 미검증
