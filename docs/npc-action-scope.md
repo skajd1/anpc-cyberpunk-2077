@@ -11,7 +11,7 @@ execute 허용=배포 실행 지원 ∩ NPC 기능 ∩ 카드 ∩ 현재 상태.
 ### 1.1. 행동 선택과 실행 모드
 
 - 첫 게임판 기본 실제 제어: stop_and_listen, face_player, resume_walk, end_conversation.
-- 감정 표정(UF-74): react_with_expression은 AI가 action으로 고르지 않고 응답 emotion으로 자동 적용한다. 대응은 neutral 무표정(2·2), friendly 미소(3·6), wary 긴장(3·10), annoyed 분노(3·1), afraid 공포(3·11), sad 슬픔(3·3), curious 관심(1·3)이다(FacialReaction category·idle, AMM OG Expressions와 같은 값). 커뮤니티 인물에게도 적용하며 얼굴만 바꾼다. 대응은 실게임 확인 뒤 조정한다.
+- 감정 표정(UF-74): react_with_expression은 AI가 action으로 고르지 않고 응답 emotion으로 자동 적용한다. 대응은 neutral 무표정(2·2), friendly 미소(3·6), wary 긴장(3·10), annoyed 분노(3·1), afraid 공포(3·11), sad 슬픔(3·3), curious 관심(1·3)이다(FacialReaction category·idle, AMM OG Expressions와 같은 값). 커뮤니티 인물에게도 적용하며 얼굴만 바꾼다. 원작 대화 허브를 보류한 커뮤니티 인물 세션은 장면 안에서 진행되므로, 표정·입모양(UF-75)은 사망·전투·거리·메뉴만 검사하고 장면·대화·워크스팟·시선 조건은 보지 않는다. 몸을 움직이는 행동은 기존 안전 조건을 그대로 쓴다. 대응은 실게임 확인 뒤 조정한다.
 - 워크스팟 점유 중인 군중 대상: end_conversation만 execute. 워크스팟 동작을 끊거나 이동·회전시키는 행동은 거부하고 대사·자막만 진행.
 - 추가 행동: selection_only 기본, 지원 어댑터의 후속 execute. 항목별 ActionOption.execution_mode가 최종 권한.
 - selection_only: 검수 통과 시 로컬 selection_state=selected. 실행 상태 proposed 유지. 명령·성공 효과/기억·자막 실행 서술 없음.

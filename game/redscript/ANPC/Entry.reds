@@ -181,6 +181,17 @@ public class Entry extends ScriptableSystem {
     return Equals(Entry.SafeReason(npc, player), "");
   }
 
+  // 얼굴만 바꾸는 표정·입모양(UF-74/75)의 차단 조건. 원작 대화 허브를 보류한 커뮤니티 인물 세션은 장면 안에서 진행되므로
+  // 장면·대화·워크스팟·시선·탑승 조건은 보지 않는다. 몸을 움직이는 행동은 SafeReason을 쓴다.
+  public static func FaceSafeReason(npc: ref<NPCPuppet>, player: ref<PlayerPuppet>) -> String {
+    if !IsDefined(npc) || !IsDefined(player) || !npc.IsAttached() || !player.IsAttached() { return "missing"; }
+    if npc.IsDead() || player.IsDead() { return "dead"; }
+    if player.IsInCombat() { return "player_combat"; }
+    if IsDefined(npc.GetPuppetStateBlackboard()) && NPCPuppet.IsInCombat(npc) { return "npc_combat"; }
+    if Vector4.Distance(npc.GetWorldPosition(), player.GetWorldPosition()) > Entry.LeaveDistance() { return "too_far"; }
+    return "";
+  }
+
   // 차단 조건 이름을 반환한다. 빈 문자열이면 허용. 조건과 순서는 기존 Safe와 같다.
   public static func SafeReason(npc: ref<NPCPuppet>, player: ref<PlayerPuppet>) -> String {
     if !IsDefined(npc) || !IsDefined(player) || !npc.IsAttached() || !player.IsAttached() { return "missing"; }
@@ -949,7 +960,7 @@ public class Entry extends ScriptableSystem {
     if !IsDefined(session) || session.latestRequest != requestId || session.menuSuspended || NotEquals(this.SessionEndReason(session), "") { return false; }
     let npc: ref<NPCPuppet> = session.npc;
     let player: ref<PlayerPuppet> = session.player;
-    if !IsDefined(npc) || NotEquals(Entry.SafeReason(npc, player), "") { return false; }
+    if !IsDefined(npc) || NotEquals(Entry.FaceSafeReason(npc, player), "") { return false; }
     if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
     return this.expression.Apply(npc, category, idle);
   }
@@ -963,7 +974,7 @@ public class Entry extends ScriptableSystem {
     let session = this.session;
     if !IsDefined(session) || session.latestRequest != requestId || NotEquals(this.SessionEndReason(session), "") { return false; }
     let npc: ref<NPCPuppet> = session.npc;
-    if !IsDefined(npc) || NotEquals(Entry.SafeReason(npc, session.player), "") { return false; }
+    if !IsDefined(npc) || NotEquals(Entry.FaceSafeReason(npc, session.player), "") { return false; }
     if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
     return this.expression.Talk(npc, idle);
   }
@@ -973,7 +984,7 @@ public class Entry extends ScriptableSystem {
   }
 
   public func DebugTalk(idle: Int32) -> Bool {
-    let npc = this.DebugMotionTarget();
+    let npc = this.DebugFaceTarget();
     if !IsDefined(npc) { return false; }
     if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
     return this.expression.Talk(npc, idle);
@@ -987,10 +998,11 @@ public class Entry extends ScriptableSystem {
     if !IsDefined(player) { return "플레이어 없음"; }
     let target = GameInstance.GetTargetingSystem(this.GetGameInstance()).GetLookAtObject(player, false, false) as NPCPuppet;
     if !IsDefined(target) { this.debugNpc = null; return "바라보는 NPC 없음"; }
-    let reason = Entry.SafeReason(target, player);
+    let reason = Entry.FaceSafeReason(target, player);
     if NotEquals(reason, "") { this.debugNpc = null; return "대상 불가: " + reason; }
     this.debugNpc = target;
-    return "고정: " + target.GetDisplayName();
+    let body = Entry.SafeReason(target, player);
+    return "고정: " + target.GetDisplayName() + (Equals(body, "") ? "" : " (표정·입모양만, 제스처 불가: " + body + ")");
   }
 
   public func DebugMotionTarget() -> ref<NPCPuppet> {
@@ -1000,8 +1012,16 @@ public class Entry extends ScriptableSystem {
     return npc;
   }
 
+  // 표정·입모양 시험 대상: 고정한 NPC가 얼굴 안전 조건을 만족할 때.
+  public func DebugFaceTarget() -> ref<NPCPuppet> {
+    let npc: ref<NPCPuppet> = this.debugNpc;
+    let player = GetPlayer(this.GetGameInstance());
+    if !IsDefined(npc) || NotEquals(Entry.FaceSafeReason(npc, player), "") { return null; }
+    return npc;
+  }
+
   public func DebugExpression(category: Int32, idle: Int32) -> Bool {
-    let npc = this.DebugMotionTarget();
+    let npc = this.DebugFaceTarget();
     if !IsDefined(npc) { return false; }
     if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
     return this.expression.Apply(npc, category, idle);
