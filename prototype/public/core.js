@@ -39,7 +39,7 @@ export function validatePersona(p) {
   return clone(p);
 }
 
-export function responseSchema({ voice = false, voiceOrder = 'ko_first' } = {}) {
+export function responseSchema({ voice = false, voiceOrder = 'ja_first' } = {}) {
   const actionOptions = [...ACTIONS, ...SELECTION_ACTIONS].map(a => ({
     type: 'object', additionalProperties: false, required: ['action_id', 'args'],
     properties: { action_id: { type: 'string', enum: [a.action_id] }, args: {
@@ -55,7 +55,7 @@ export function responseSchema({ voice = false, voiceOrder = 'ko_first' } = {}) 
     follow_up: { anyOf: [{ type: 'null' }, { type: 'string', minLength: 1, maxLength: 150 }] },
     delivery: { type: 'string', enum: DELIVERIES }, speech_text: { type: 'string', minLength: 1, maxLength: 600 }
   };
-  // 음성 응답은 emotion이 맨 앞이고 speech_text가 자막 필드 뒤에 오도록 생성 순서를 고정한다(ja_first 실험은 speech_text가 먼저).
+  // 음성 응답은 emotion이 맨 앞이고 일본어 speech_text를 한국어 자막 필드보다 먼저 생성한다(ko_first는 비교 실험용).
   const order = voice ? (voiceOrder === 'ja_first' ? ['emotion', 'delivery', 'speech_text', 'dialogue', 'follow_up', 'intent', 'action']
     : ['emotion', 'delivery', 'dialogue', 'follow_up', 'speech_text', 'intent', 'action'])
     : ['dialogue', 'intent', 'emotion', 'action', 'follow_up'];
@@ -88,13 +88,13 @@ export function validateReply(raw, allowed, persona, { voice = false } = {}) {
   return { reply: clone(reply), warning: null, speech, speechError };
 }
 
-// 음성 응답의 원문 언어 순서. ja_first는 일본어 원문 우선 생성 비교 실험용이며 게임 기본값은 ko_first다.
+// 음성 응답의 원문 언어 순서. 기본은 일본어 원문 우선(ja_first)이며 ko_first는 비교 실험용이다.
 export const VOICE_ORDERS = ['ko_first', 'ja_first'];
 const voiceContract = order => order === 'ja_first'
   ? `출력 필드(이 순서): emotion(${EMOTIONS.join('|')}), delivery(${DELIVERIES.join('|')} 말 빠르기), speech_text(이 인물이 지금 일본어로 실제 말할 구어 대사 원문, 1~600자. 후속 질문이 있으면 끝에 포함), dialogue(speech_text의 대사를 같은 순서·의미로 옮긴 한국어 구어 자막. follow_up과 합쳐 45자 이내), follow_up(speech_text 끝의 후속 질문을 옮긴 한국어 또는 null), intent(${INTENTS.join('|')}), action(허용 후보의 action_id·args 또는 null).`
   : `출력 필드(이 순서): emotion(${EMOTIONS.join('|')}), delivery(${DELIVERIES.join('|')} 말 빠르기), dialogue(실제 대사. follow_up과 합쳐 45자 이내), follow_up(후속 질문 또는 null), speech_text(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사, 1~600자), intent(${INTENTS.join('|')}), action(허용 후보의 action_id·args 또는 null).`;
 
-export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null, voice = false, readingTable = null, jaVoice = null, voiceOrder = 'ko_first' } = {}) {
+export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null, voice = false, readingTable = null, jaVoice = null, voiceOrder = 'ja_first' } = {}) {
   // 전체 스키마는 제공자의 구조화 출력 설정으로 전달한다. 본문에는 필드의 의미만 둔다.
   if (!VOICE_ORDERS.includes(voiceOrder)) throw new Error('알 수 없는 음성 원문 순서입니다.');
   const contract = voice

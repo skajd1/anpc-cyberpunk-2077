@@ -52,13 +52,13 @@ function accepts(s, value, root = schema) {
 function envelopeValid(value) {
   if (!accepts(schema.$defs.Envelope, value)) return false;
   if (value.contract === 'prompt.model-input') {
-    const messages = value.data.data_messages, order = ['persona', 'style_examples', 'context', 'identity_reminder', 'recent_turn', 'player_input'];
+    const messages = value.data.data_messages, order = ['persona', 'style_examples', 'ja_voice', 'context', 'identity_reminder', 'recent_turn', 'player_input'];
     const kinds = messages.map(m => m.kind);
     const fixed = kinds.filter(k => k !== 'recent_turn');
     if (new Set(fixed).size !== fixed.length || kinds[0] !== 'persona' || kinds.at(-1) !== 'player_input'
       || !kinds.includes('context') || kinds.some((k, i) => i && order.indexOf(k) < order.indexOf(kinds[i - 1]))) return false;
     const viewTypes = { persona: schema.$defs.PersonaView, context: schema.$defs.PromptContextData,
-      style_examples: { type: 'array', items: schema.$defs.StyleExample }, identity_reminder: schema.$defs.IdentityReminder };
+      style_examples: { type: 'array', items: schema.$defs.StyleExample }, ja_voice: schema.$defs.JaVoiceData, identity_reminder: schema.$defs.IdentityReminder };
     for (const m of messages) if (viewTypes[m.kind]) {
       try { if (!accepts(viewTypes[m.kind], JSON.parse(m.content))) return false; } catch { return false; }
     }

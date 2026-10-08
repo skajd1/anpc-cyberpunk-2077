@@ -2608,6 +2608,45 @@
         }
       }
     },
+    "JaVoiceData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "first_person",
+        "address_v",
+        "sentence_endings",
+        "interjections",
+        "politeness",
+        "profanity",
+        "avoid",
+        "style_notes",
+        "examples"
+      ],
+      "properties": {
+        "first_person": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1, "maxLength": 20 } },
+        "address_v": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1, "maxLength": 20 } },
+        "sentence_endings": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1, "maxLength": 20 } },
+        "interjections": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 20 } },
+        "politeness": { "type": "string", "maxLength": 300 },
+        "profanity": { "type": "string", "maxLength": 300 },
+        "avoid": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 20 } },
+        "style_notes": { "type": "string", "maxLength": 600 },
+        "examples": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["emotion", "ko", "ja"],
+            "properties": {
+              "emotion": { "enum": ["neutral", "friendly", "wary", "annoyed", "afraid", "sad", "curious"] },
+              "ko": { "type": "string", "minLength": 1, "maxLength": 300 },
+              "ja": { "type": "string", "minLength": 1, "maxLength": 300 }
+            }
+          }
+        }
+      }
+    },
     "StyleExample": {
       "type": "object",
       "additionalProperties": false,
@@ -2828,6 +2867,16 @@
             }
           ]
         },
+        "ja_voice": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/JaVoiceData"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "player_text": {
           "type": "string",
           "minLength": 1,
@@ -2874,6 +2923,7 @@
                     "enum": [
                       "persona",
                       "style_examples",
+                      "ja_voice",
                       "context",
                       "identity_reminder",
                       "player_input"
@@ -2998,9 +3048,9 @@
       "required": [
         "emotion",
         "delivery",
+        "speech_text",
         "dialogue",
         "follow_up",
-        "speech_text",
         "intent",
         "action"
       ],

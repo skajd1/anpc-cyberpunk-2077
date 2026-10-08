@@ -7,7 +7,7 @@ import { compileResearchTurn, CONFIGURATIONS } from '../prototype/public/researc
 import { assemblePrompt, responseSchema, PROMPT_VERSION } from '../prototype/public/core.js';
 
 // voiceOrder·jaVoice·base는 일본어 대사 개선 비교용이다. base를 주면 그 베이스 프롬프트(예: 이전 버전)로 조립한다.
-export async function prepareJaEvaluation(configuration = 'full', { voiceOrder = 'ko_first', jaVoice = true, base: baseOverride = null } = {}) {
+export async function prepareJaEvaluation(configuration = 'full', { voiceOrder = 'ja_first', jaVoice = true, base: baseOverride = null } = {}) {
   if (!Object.hasOwn(CONFIGURATIONS, configuration)) throw new Error('configuration은 card/knowledge/full 중 하나여야 합니다.');
   const suite = JSON.parse(await readFile(new URL('../content/evaluation/ja-dialogue-v1.json', import.meta.url), 'utf8'));
   const { base, research: bundle } = await loadPrototypeData();

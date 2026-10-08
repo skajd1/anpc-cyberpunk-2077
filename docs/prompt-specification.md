@@ -152,7 +152,7 @@ PromptContext 및 세부 뷰의 필드·타입은 공통 스키마 참조.
 
 - 구조화 출력 지원 시 공통 계약에서 스키마 생성. 미지원이면 로컬 JSON·필드·열거값·인수 검사.
 - emotion은 표현 메타데이터. 표정 실행에는 별도 허용 행동 필요. 음성 활성 시 참조 음성 선택 키로도 쓴다.
-- 음성 활성 시 출력 계약에 delivery·speech_text를 더하고, dialogue와 follow_up을 합쳐 45자 이내로 안내한다. 이 상한은 생성 지침이며 응답 검사의 길이 한도(600자·150자)는 바꾸지 않는다. speech_text는 dialogue+follow_up의 일본어 구어 대사이며 작성 규칙은 [음성 출력 규격 2절](npc-voice-output-specification.md#2-응답-계약-추가)을 따른다. 음성 비활성 요청의 출력 필드 안내·스키마에는 두 필드를 넣지 않는다.
+- 음성 활성 시 출력 계약에 delivery·speech_text를 더하고, dialogue와 follow_up을 합쳐 45자 이내로 안내한다. 이 상한은 생성 지침이며 응답 검사의 길이 한도(600자·150자)는 바꾸지 않는다. 필드 순서는 speech_text(일본어 원문)가 dialogue·follow_up(한국어 자막)보다 먼저다. 한국어 우선 순서(`voiceOrder: ko_first`)는 비교 실험용으로만 남긴다. speech_text 작성 규칙은 [음성 출력 규격 2절](npc-voice-output-specification.md#2-응답-계약-추가)을 따른다. 음성 비활성 요청의 출력 필드 안내·스키마에는 두 필드를 넣지 않는다.
 - 음성 활성 시 [콘텐츠 규격](content-specification.md)의 인물별 일본어 말투 프로필(ja_voice_profiles)을 `일본어 말투 데이터` 메시지로 전달한다. 프로필의 examples는 string_id만이며 원문(한국어 자막·일본어 대사)은 사용자 PC의 설치된 게임 파일에서 추출한 로컬 파일에서 채운다. 원문이 없는 예시는 빼고, 프로필이 없는 인물은 메시지를 생략한다. 인물마다 고정이라 캐시 가능한 앞부분에 둔다.
 - follow_up은 같은 응답의 질문. 추가 모델 호출/별도 자동 턴 없음.
 - 판단 과정/단계별 이유 출력 필드 없음.

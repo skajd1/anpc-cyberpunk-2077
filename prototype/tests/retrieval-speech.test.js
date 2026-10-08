@@ -63,13 +63,13 @@ test('일본어 말투 데이터는 음성 요청에만 인물 데이터 뒤에 
   for (const text of Object.values(bundle.jaStyleExamples?.examples ?? {})) assert.ok(!generated.includes(text.ja) && !generated.includes(text.ko));
 });
 
-test('일본어 원문 우선 실험은 speech_text를 자막보다 먼저 생성하고 게임 기본값은 한국어 우선이다', () => {
-  assert.deepEqual(Object.keys(responseSchema({ voice: true }).properties), ['emotion', 'delivery', 'dialogue', 'follow_up', 'speech_text', 'intent', 'action']);
-  assert.deepEqual(Object.keys(responseSchema({ voice: true, voiceOrder: 'ja_first' }).properties), ['emotion', 'delivery', 'speech_text', 'dialogue', 'follow_up', 'intent', 'action']);
+test('음성 응답은 일본어 speech_text를 한국어 자막보다 먼저 생성하고 한국어 우선은 실험 옵션이다', () => {
+  assert.deepEqual(Object.keys(responseSchema({ voice: true }).properties), ['emotion', 'delivery', 'speech_text', 'dialogue', 'follow_up', 'intent', 'action']);
+  assert.deepEqual(Object.keys(responseSchema({ voice: true, voiceOrder: 'ko_first' }).properties), ['emotion', 'delivery', 'dialogue', 'follow_up', 'speech_text', 'intent', 'action']);
   const contract = order => assemblePrompt('{{OUTPUT_CONTRACT}}', {}, {}, '', { voice: true, voiceOrder: order }).instructions;
   assert.ok(contract('ja_first').indexOf('speech_text(') < contract('ja_first').indexOf('dialogue('));
   assert.ok(contract('ko_first').indexOf('dialogue(') < contract('ko_first').indexOf('speech_text('));
-  assert.equal(contract(undefined), contract('ko_first'));
+  assert.equal(contract(undefined), contract('ja_first'));
   assert.throws(() => assemblePrompt('{{OUTPUT_CONTRACT}}', {}, {}, '', { voice: true, voiceOrder: 'en_first' }));
 });
 
