@@ -890,3 +890,22 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009023015/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 소리 구간을 보내는 TTS 보조 프로세스(게임 폴더 밖)와 함께 동작. 실게임 동작 미검증
+
+## DEP-20261009023956 — 디버그 창 용어 정리와 상태 코드 한국어 표시
+
+- 일시: 2026-10-09 02:39:56 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 창 이름 "ANPC 디버그", 버전 표기에서 G0/G1 제거, G1 모의 대사 버튼 삭제, 구역을 바라보는 NPC·원작 선택지 연결·API 키·테스트로 정리, 예/아니오/모름 표시 | 쓰지 않는 개발 단계 용어 제거와 디버깅 가독성 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/labels.lua | 추가 | 대화·대상 검사·원작 선택지·AI 응답·TTS 상태 코드의 한국어 표시 이름 | 영어 상태 코드 대신 뜻이 보이게 함. 모르는 코드는 원문 표시 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/diagnostics.lua | 삭제 | G1 모의 대사 판정 모듈 | 쓰지 않는 기능 제거 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/devtools.lua | 수정 | 시험 → 테스트, 버튼·단축키·결과 문구 정리, 대상 불가 사유 한국어 표시 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 주석 용어만 변경 | 동작 변화 없음 |
+| r6/scripts/ANPC/Diagnostics.reds | 수정 | 버전 문자열 0.1.0-g0-g1 → 0.1.0 | 같음 |
+| r6/scripts/ANPC/SceneEntry.reds | 수정 | 원작 선택지 연결 기록을 항목별 줄(ANPC 선택지·화자·대화 입력·키 입력·군중·감시 NPC)과 한국어 표기로 변경 | 같음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | 원작 선택지·군중·입력 기록 문구 한국어화 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009023956/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 표시 미검증
