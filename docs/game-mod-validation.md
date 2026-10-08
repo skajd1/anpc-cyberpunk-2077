@@ -766,3 +766,21 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261008040617/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261008223949 — 일본어 원문 우선·인물별 일본어 말투 데이터와 지식 선별·읽기 개선
+
+- 일시: 2026-10-08 22:39:49 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/prompts.lua | 수정 | 프롬프트 0.20 → 0.21, 음성 출력 순서를 speech_text(일본어 원문) → dialogue·follow_up(한국어 자막)으로 변경, 일본어 구어 지침, 주디·빅터·로그의 일본어 말투 프로필과 예시 string_id | 일본어 대사의 번역투·인물 말투 불일치 개선(비교 결과 채택). 원작 대사 원문은 포함하지 않음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 음성 요청에 인물 데이터 뒤 일본어 말투 데이터 메시지 추가, 합성 직전 단독 V를 ヴィー로 보정, 지식·읽기 선별 모듈 연결과 직전 행동 결과 전달 | 말투 데이터 전달과 TTS가 V를 빼먹는 문제 해결 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/ja_style_examples.local.json | 추가 | 설치된 게임 파일에서 추출한 말투 예시 원문(인물당 6쌍) | 로컬 생성 파일. 저장소·배포물에 포함하지 않음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/retrieval.lua | 추가 | 상세 지식·예시 선별과 고유명사 경계 일치 | 웹과 같은 지식 선별 순서 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/speech.lua | 추가 | 승인 읽기 선별(현재 입력·인물 이름·선별 공개 지식 기준, 최대 12개) | 무관한 읽기 사전 항목 전달 방지 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/actions.lua | 수정 | 행동 요청 결과(수용·실행 중·실패·취소)를 같은 세션의 다음 턴에 전달, 세션이 다르면 넘기지 않음 | 실행 결과를 성공으로 오인하지 않음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/identity.lua | 수정 | 용어 일치 함수를 retrieval.lua로 이동 | 중복 제거, 동작 동일 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261008223949/manifest.json
+- 확인: 배포 후 계획 변경 0. 실게임 동작 미검증
