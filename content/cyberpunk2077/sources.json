@@ -909,6 +909,14 @@
       "access_method": "web_body",
       "locator": "표제어·별칭 (terms/63·2481·167)",
       "checked_at": "2026-10-07"
+    },
+    {
+      "id": "JA_GAME_LOCALIZATION",
+      "title": "사이버펑크 2077 일본어 더빙 음성·일본어/한국어 자막 (게임 2.31 설치 파일)",
+      "tier": "primary",
+      "access_method": "local_game_files",
+      "locator": "lang_ja_voice·lang_ja_text·lang_ko_text 아카이브. 인물 음성 파일 접두어(viktor 계열·judy_·rogue_)의 3~10초 대사를 string_id로 집계. 원문은 저장소에 두지 않음",
+      "checked_at": "2026-10-08"
     }
   ]
 }

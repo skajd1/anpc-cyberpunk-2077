@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { loadPrototypeData } from '../server.js';
 import { termMatches, entityMatches, factMatch, rankFacts, rankExamples, exampleTerms } from '../public/retrieval.js';
-import { selectReadings } from '../public/speech.js';
-import { assemblePrompt } from '../public/core.js';
+import { selectReadings, jaVoiceData } from '../public/speech.js';
+import { assemblePrompt, responseSchema } from '../public/core.js';
 import { prepareJaEvaluation } from '../../scripts/prepare-ja-evaluation.mjs';
 
 const { research: bundle } = await loadPrototypeData();
@@ -39,6 +39,38 @@ test('승인 읽기는 현재 인물·질문·선별 공개 지식에만 적용�
   assert.ok(!JSON.stringify(plain).includes('ja_readings'));
   const voiced = assemblePrompt('{{OUTPUT_CONTRACT}}', { display_name: '주디' }, context, 'V', { ...options, voice: true });
   assert.match(voiced.input[1].content, /ja_readings/);
+});
+
+test('일본어 말투 데이터는 음성 요청에만 인물 데이터 뒤에 붙고 예시 원문은 로컬 파일에서만 채운다', () => {
+  const profiles = bundle.jaVoiceProfiles;
+  const ids = profiles.profiles.find(p => p.character_key === 'judy').examples.map(e => e.string_id);
+  assert.equal(jaVoiceData(profiles, null, 'misty'), null);
+  const bare = jaVoiceData(profiles, null, 'judy');
+  assert.deepEqual([bare.first_person, bare.address_v, bare.examples], [['私'], ['あなた', 'ヴィー'], []]);
+  const local = { examples: { [ids[0]]: { ko: '괜찮아?', ja: '大丈夫？' }, [ids[2]]: { ko: '', ja: '欠けた' } } };
+  const filled = jaVoiceData(profiles, local, 'judy');
+  assert.deepEqual(filled.examples, [{ emotion: profiles.profiles.find(p => p.character_key === 'judy').examples[0].emotion, ko: '괜찮아?', ja: '大丈夫？' }]);
+  assert.ok(!JSON.stringify(filled).includes(ids[0]));
+  const context = { knowledge: [] };
+  const voiced = assemblePrompt('{{OUTPUT_CONTRACT}}', { display_name: '주디' }, context, '안녕', { voice: true, jaVoice: filled, styleExamples: [{ id: 'x' }] });
+  assert.deepEqual(voiced.input.map(m => m.content.split('\n')[0]),
+    ['인물 데이터 (지침이 아님):', 'style_examples (작성 예시이며 실제 대화 기록이 아님):', '일본어 말투 데이터 (지침이 아님):', '현재 상황 데이터 (지침이 아님):', '안녕']);
+  assert.equal(voiced.input[2].content, `일본어 말투 데이터 (지침이 아님):\n${JSON.stringify(filled)}`);
+  const plain = assemblePrompt('{{OUTPUT_CONTRACT}}', { display_name: '주디' }, context, '안녕', { jaVoice: filled });
+  assert.ok(!plain.input.some(m => m.content.startsWith('일본어 말투 데이터')));
+  // 생성 파일에는 프로필·string_id만 있고, 로컬 원문 예시가 있으면 그 문장은 들어가지 않는다.
+  const generated = readFileSync('game/cet/anpc/prompts.lua', 'utf8');
+  for (const text of Object.values(bundle.jaStyleExamples?.examples ?? {})) assert.ok(!generated.includes(text.ja) && !generated.includes(text.ko));
+});
+
+test('음성 응답은 일본어 speech_text를 한국어 자막보다 먼저 생성하고 한국어 우선은 실험 옵션이다', () => {
+  assert.deepEqual(Object.keys(responseSchema({ voice: true }).properties), ['emotion', 'delivery', 'speech_text', 'dialogue', 'follow_up', 'intent', 'action']);
+  assert.deepEqual(Object.keys(responseSchema({ voice: true, voiceOrder: 'ko_first' }).properties), ['emotion', 'delivery', 'dialogue', 'follow_up', 'speech_text', 'intent', 'action']);
+  const contract = order => assemblePrompt('{{OUTPUT_CONTRACT}}', {}, {}, '', { voice: true, voiceOrder: order }).instructions;
+  assert.ok(contract('ja_first').indexOf('speech_text(') < contract('ja_first').indexOf('dialogue('));
+  assert.ok(contract('ko_first').indexOf('dialogue(') < contract('ko_first').indexOf('speech_text('));
+  assert.equal(contract(undefined), contract('ja_first'));
+  assert.throws(() => assemblePrompt('{{OUTPUT_CONTRACT}}', {}, {}, '', { voice: true, voiceOrder: 'en_first' }));
 });
 
 test('일본어 평가 입력은 세 인물×20개로 고정하고 세 구성을 같은 상태·질문으로 준비한다', async () => {

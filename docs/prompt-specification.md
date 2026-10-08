@@ -1,6 +1,6 @@
 # NPC 대사·행동 생성 프롬프트 명세
 
-규격 버전: 0.20 (2026-10-08). 입출력: [공통 규격](module-interface-specification.md)의 PromptAssembly → ModelInput → DialogueReply. 구현 상태: [개발·검증 계획](development-validation.md).
+규격 버전: 0.21 (2026-10-08). 입출력: [공통 규격](module-interface-specification.md)의 PromptAssembly → ModelInput → DialogueReply. 구현 상태: [개발·검증 계획](development-validation.md).
 
 하위 규격: [프롬프트 캐싱 적용 규격](prompt-caching-specification.md) 1.1 (2026-10-05). 기본 OpenAI 대사 경로는 공통 developer 지침 끝·user 인물 데이터 끝 두 경계의 explicit 캐싱을 적용한다. 가변 상황·기억·최근 대화는 경계 뒤에 배치한다. 요청 옵션·모델 호환·갱신·정산·파일별 적용 규칙은 하위 문서를 단일 기준으로 한다. 구현 순서는 [개발·검증 계획 6.2](development-validation.md#62-프롬프트-캐싱)에 둔다.
 
@@ -23,7 +23,7 @@
 
 공통 ModelInput.instructions는 유지한다. OpenAI explicit 제공자 요청에서는 어댑터가 이를 첫 developer/input_text로 변환하고 최상위 instructions는 생략한다. 인물/상황은 아래 데이터 역할을 유지한다. 구형 모델·요약·다른 제공자에는 하위 캐싱 규격의 호환 정책을 적용한다.
 
-낮은 데이터 채널: persona → 선택 style_examples → context → 선택 identity_reminder → 시간순 최근 대화 → 현재 player_input.
+낮은 데이터 채널: persona → 선택 style_examples → 음성 활성 시 일본어 말투 데이터 → context → 선택 identity_reminder → 시간순 최근 대화 → 현재 player_input.
 
 - recent_turns는 조립 입력 전용. player는 user, npc는 assistant 메시지로 변환한다. context JSON에서는 제거한다.
 - 확정된 최근 최대 6개 발화를 원래 순서로 전달한다. 현재 입력은 마지막 user 메시지에 한 번만 넣는다.
@@ -136,7 +136,9 @@ PromptContext 및 세부 뷰의 필드·타입은 공통 스키마 참조.
 [대화 진행과 출력]
 - follow_up은 기본 null이다. 뜻 확인이나 인물 자신의 궁금증에 필요할 때만 응답 전체에 질문 하나를 쓴다. dialogue에 질문이 있으면 follow_up=null이다. 매 답변에 질문을 붙이거나 같은 뜻을 다시 묻지 않는다.
 - farewell을 선택하면 follow_up은 null이고 action은 허용된 end_conversation 또는 null이다.
-- 출력 필드에 speech_text가 있으면 dialogue와 follow_up을 같은 순서·같은 의미의 일본어 구어로 옮긴다. 사실·부정·질문·약속·행동의 수행 여부·감정과 욕설 강도를 보존한다. 한국어 어순·대명사를 직역하지 않고 일본어 어순·자연스러운 주어 생략·관용구를 사용한다. 이름·호칭을 매 문장 반복하지 않으며 호칭으로 현재 관계보다 친밀도를 높이지 않는다. 승인된 인물별 일본어 인칭·호칭·존대·종결·금기 프로필이 제공된 경우 이를 따른다. 프로필이 없으면 원작 일본어 말버릇을 확정하거나 다른 인물의 말투를 빌리지 않는다. ja_readings는 현재 인물·질문·선별된 공개 지식에 해당하는 승인 읽기만 담은 발음 사전이다. 해당 용어를 말할 때만 reading을 쓰고, 사전 항목 자체를 새 지식·발화 의무로 취급하지 않는다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓴다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- 출력 필드에 speech_text가 있으면 speech_text는 이 인물이 실제로 소리 내어 말하는 일본어 구어 대사이고 dialogue와 follow_up은 같은 대사의 한국어 자막이다. 출력 필드 안내에서 먼저 쓰는 쪽을 원문으로 쓰고 다른 쪽을 같은 순서·같은 의미로 옮긴다. 사실·부정·질문·약속·행동의 수행 여부·감정과 거절의 강도를 보존한다. 이름·호칭을 매 문장 반복하지 않으며 호칭으로 현재 관계보다 친밀도를 높이지 않는다. ja_readings는 현재 인물·질문·선별된 공개 지식에 해당하는 승인 읽기만 담은 발음 사전이다. 해당 용어를 말할 때만 reading을 쓰고, 사전 항목 자체를 새 지식·발화 의무로 취급하지 않는다. 실제로 읽을 말만 쓰며 지문·괄호·마크다운·이모지·한글을 넣지 않는다. 읽기가 여러 개인 한자는 가나로, V는 일본어판 표기대로 「ヴィー」로 쓰며 알파벳 V를 그대로 쓰지 않는다. delivery는 지금 말하는 빠르기(normal|fast|slow)다.
+- speech_text는 귀로 듣는 대사로 쓴다. 한국어 어순·대명사·한자어를 직역하지 않는다. 한 문장은 짧게 끊고, 한자어 명사를 나열한 설명문·문어체(〜である·〜において·〜に対して) 대신 동사 중심의 구어로 말한다. 문맥상 분명한 주어·목적어는 생략하고 인물에 맞는 종조사와 말끝 흐림(…)을 쓴다. 자막의 정보를 모두 담으려 하지 말고 말로 할 만큼 줄이되 사실·약속·거절·행동 여부는 바꾸지 않는다. 한국어 욕설을 일본어 욕설 단어로 그대로 옮기지 않고 인물의 profanity 기준과 말투의 거칠기로 같은 감정 강도를 낸다.
+- 일본어 말투 데이터가 제공되면 first_person·address_v·sentence_endings·interjections·politeness·profanity·avoid·style_notes를 따른다. examples는 같은 인물의 원작 한국어 자막과 일본어 대사 쌍이다. 말투·어휘·옮기는 방식만 참고하고 그 내용·사건·관계를 대화의 사실 근거로 쓰거나 문장을 그대로 반복하지 않는다. 말투 데이터가 없으면 원작 일본어 말버릇을 확정하거나 다른 인물의 말투를 빌리지 않는다.
 - 출력 계약에 맞는 JSON 객체 하나만 반환한다. 설명·코드 블록·판단 과정·추가 필드는 출력하지 않는다.
 
 {{OUTPUT_CONTRACT}}
@@ -150,7 +152,8 @@ PromptContext 및 세부 뷰의 필드·타입은 공통 스키마 참조.
 
 - 구조화 출력 지원 시 공통 계약에서 스키마 생성. 미지원이면 로컬 JSON·필드·열거값·인수 검사.
 - emotion은 표현 메타데이터. 표정 실행에는 별도 허용 행동 필요. 음성 활성 시 참조 음성 선택 키로도 쓴다.
-- 음성 활성 시 출력 계약에 delivery·speech_text를 더하고, dialogue와 follow_up을 합쳐 45자 이내로 안내한다. 이 상한은 생성 지침이며 응답 검사의 길이 한도(600자·150자)는 바꾸지 않는다. speech_text는 dialogue+follow_up의 일본어 구어 대사이며 작성 규칙은 [음성 출력 규격 2절](npc-voice-output-specification.md#2-응답-계약-추가)을 따른다. 음성 비활성 요청의 출력 필드 안내·스키마에는 두 필드를 넣지 않는다.
+- 음성 활성 시 출력 계약에 delivery·speech_text를 더하고, dialogue와 follow_up을 합쳐 45자 이내로 안내한다. 이 상한은 생성 지침이며 응답 검사의 길이 한도(600자·150자)는 바꾸지 않는다. 필드 순서는 speech_text(일본어 원문)가 dialogue·follow_up(한국어 자막)보다 먼저다. 한국어 우선 순서(`voiceOrder: ko_first`)는 비교 실험용으로만 남긴다. speech_text 작성 규칙은 [음성 출력 규격 2절](npc-voice-output-specification.md#2-응답-계약-추가)을 따른다. 음성 비활성 요청의 출력 필드 안내·스키마에는 두 필드를 넣지 않는다.
+- 음성 활성 시 [콘텐츠 규격](content-specification.md)의 인물별 일본어 말투 프로필(ja_voice_profiles)을 `일본어 말투 데이터` 메시지로 전달한다. 프로필의 examples는 string_id만이며 원문(한국어 자막·일본어 대사)은 사용자 PC의 설치된 게임 파일에서 추출한 로컬 파일에서 채운다. 원문이 없는 예시는 빼고, 프로필이 없는 인물은 메시지를 생략한다. 인물마다 고정이라 캐시 가능한 앞부분에 둔다.
 - follow_up은 같은 응답의 질문. 추가 모델 호출/별도 자동 턴 없음.
 - 판단 과정/단계별 이유 출력 필드 없음.
 

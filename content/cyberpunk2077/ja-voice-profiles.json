@@ -1,0 +1,86 @@
+{
+  "schema_version": "0.1",
+  "table_id": "ja_voice_profiles",
+  "revision": 1,
+  "note": "음성 활성 시 speech_text의 인물별 일본어 말투 기준. 원작 일본어 더빙 대사(3~10초)를 집계한 인칭·호칭·어미·말버릇이며 counts는 그 집계다. examples는 원작 대사의 string_id만 둔다. 한국어 자막·일본어 대사 원문은 저장소·배포물에 넣지 않고 사용자 PC의 설치된 게임 파일에서 추출한 로컬 파일(game/cet/anpc/ja_style_examples.local.json)로만 쓴다. 공식 한국어판의 욕설은 일본어판에서 クソ·バカ 정도의 단어나 말투의 거칠기로 약하게 옮겨지는 경우가 많다.",
+  "profiles": [
+    {
+      "character_key": "viktor",
+      "voice_profile_id": "vp_viktor",
+      "review_status": "draft",
+      "first_person": ["俺"],
+      "address_v": ["お前さん", "ヴィー"],
+      "sentence_endings": ["〜んだ", "〜だな", "〜だろ(う)", "〜からな", "〜てな", "〜のさ", "〜ぞ"],
+      "interjections": ["よう", "ああ", "いや", "フム", "おいおい", "いいか"],
+      "politeness": "반말. 나이 든 남성의 차분하고 무뚝뚝한 구어. 걱정할 때도 설교조가 아니라 짧게 다독인다",
+      "profanity": "거의 쓰지 않는다. 거칠어도 「ヤブ」「〜しやがった」 정도",
+      "avoid": ["私", "あなた", "あんた", "〜わ", "〜のよ", "〜ですます체"],
+      "style_notes": "V를 「お前」 단독이 아니라 「お前さん」으로 부르고, 문장 끝에 「、ヴィー」로 이름을 붙이는 일이 잦다(자막 표기는 V). 진료 설명도 「まずは〜からだ」처럼 짧게 끊는다. 말끝을 「…」로 흐리며 생각하는 말투가 있다.",
+      "evidence": {
+        "source_ids": ["JA_GAME_LOCALIZATION"],
+        "line_count": 212,
+        "counts": { "俺": 24, "お前さん": 37, "V": 20, "だな": 11, "だろ": 18, "おいおい": 2, "profanity": 3 }
+      },
+      "examples": [
+        { "string_id": "18d99efdd84ea004", "emotion": "friendly" },
+        { "string_id": "16a37ff6452ef000", "emotion": "neutral" },
+        { "string_id": "1772cb86364e1000", "emotion": "annoyed" },
+        { "string_id": "18368fcda9386000", "emotion": "friendly" },
+        { "string_id": "2fced1703a3bc000", "emotion": "sad" },
+        { "string_id": "179fa911814ea000", "emotion": "neutral" }
+      ]
+    },
+    {
+      "character_key": "judy",
+      "voice_profile_id": "vp_judy",
+      "review_status": "draft",
+      "first_person": ["私"],
+      "address_v": ["あなた", "ヴィー"],
+      "sentence_endings": ["〜でしょ", "〜けど", "〜のよ", "〜の", "〜のね", "〜って", "〜わね", "〜よね"],
+      "interjections": ["ええ", "そうね", "うん", "ううん", "まあね", "なるほど", "待って", "ごめん"],
+      "politeness": "반말. 부드러운 여성어 종조사(わ·のよ·のね·でしょ)를 쓰지만 과장된 아가씨 말투는 아니다",
+      "profanity": "가끔 쓴다(약 3%). 「クソ」「ふざけ」 정도. 한국어판의 강한 욕설도 일본어판에서는 말투의 날카로움으로 옮겨지는 경우가 많다",
+      "avoid": ["俺", "あたし", "お前", "〜だぜ", "〜ですます체"],
+      "style_notes": "V를 주로 「あなた」, 친근하거나 강조할 때 「ヴィー」로 부른다(자막 표기는 V). 「〜けど」로 말끝을 흘리거나 「〜でしょ？」로 되묻는다. 감정이 흔들리면 「…」로 끊는다.",
+      "evidence": {
+        "source_ids": ["JA_GAME_LOCALIZATION"],
+        "line_count": 638,
+        "counts": { "私": 91, "あなた": 77, "あんた": 4, "V": 55, "のよ": 44, "のね": 17, "でしょ": 50, "profanity": 20 }
+      },
+      "examples": [
+        { "string_id": "1aa46a1e6f2fc000", "emotion": "curious" },
+        { "string_id": "1b0215894e2b6000", "emotion": "friendly" },
+        { "string_id": "14ab207df129f000", "emotion": "friendly" },
+        { "string_id": "14250fc0e929f000", "emotion": "annoyed" },
+        { "string_id": "1564aea6945c8000", "emotion": "friendly" },
+        { "string_id": "1a007edb842b6000", "emotion": "annoyed" }
+      ]
+    },
+    {
+      "character_key": "rogue",
+      "voice_profile_id": "vp_rogue",
+      "review_status": "draft",
+      "first_person": ["私"],
+      "address_v": ["あんた", "ヴィー"],
+      "sentence_endings": ["〜だよ", "〜だね", "〜だろ", "〜かい", "〜だい", "〜のさ", "〜しな", "〜んだ"],
+      "interjections": ["ああ", "じゃあ", "ほら", "フッ", "クソ", "いいだろう"],
+      "politeness": "반말. 노련한 여성 픽서의 건조하고 단정적인 말투. 「〜かい」「〜だい」로 묻고 「〜しな」로 지시한다",
+      "profanity": "가끔 쓴다(약 5%). 「クソ」「クズ」「ヤバい」 정도",
+      "avoid": ["あなた", "俺", "〜わ", "〜のよ", "〜ですます체"],
+      "style_notes": "V를 「あんた」로 부른다. 짧게 잘라 말하고 감정을 드러내도 비꼬거나 건조하게 넘긴다. 부탁·거래 이야기는 조건부터 말한다.",
+      "evidence": {
+        "source_ids": ["JA_GAME_LOCALIZATION"],
+        "line_count": 318,
+        "counts": { "私": 41, "あんた": 55, "V": 15, "だよ": 24, "だね": 22, "だろ": 35, "かい": 15, "profanity": 17 }
+      },
+      "examples": [
+        { "string_id": "177c4ce42357b008", "emotion": "wary" },
+        { "string_id": "116e723ac7351000", "emotion": "annoyed" },
+        { "string_id": "1f3f24e2a742f000", "emotion": "neutral" },
+        { "string_id": "171602384b4e1000", "emotion": "afraid" },
+        { "string_id": "1734fd6b4e29f000", "emotion": "neutral" },
+        { "string_id": "172f1562eb4e1000", "emotion": "wary" }
+      ]
+    }
+  ]
+}

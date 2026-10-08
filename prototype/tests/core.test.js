@@ -93,10 +93,10 @@ test('거리가 너무 멀면 시작을 거부하고 10m 이탈 시 종료한다
   const e = new DialogueEngine({ personas, base: '' }); e.changeWorld({ distance: 5 }); assert.throws(() => e.start('courier'));
   e.changeWorld({ distance: 2 }); e.start('courier'); e.changeWorld({ distance: 11 }); assert.equal(e.session, null);
 });
-test('음성 응답은 감정이 먼저인 순서와 일본어 음성 대사를 분리해 검사한다', () => {
+test('음성 응답은 감정·일본어 음성 대사가 먼저인 순서와 일본어 음성 대사를 분리해 검사한다', () => {
   const persona = personas.find(p => p.persona_id === 'courier');
   const schema = responseSchema({ voice: true });
-  assert.deepEqual(Object.keys(schema.properties), ['emotion', 'delivery', 'dialogue', 'follow_up', 'speech_text', 'intent', 'action']);
+  assert.deepEqual(Object.keys(schema.properties), ['emotion', 'delivery', 'speech_text', 'dialogue', 'follow_up', 'intent', 'action']);
   assert.deepEqual(schema.required, Object.keys(schema.properties));
   assert.deepEqual(Object.keys(responseSchema().properties), ['dialogue', 'intent', 'emotion', 'action', 'follow_up']);
   const voiced = { ...reply, delivery: 'normal', speech_text: 'ちょっとなら話せるよ。' };
@@ -111,7 +111,7 @@ test('음성 응답은 감정이 먼저인 순서와 일본어 음성 대사를 
   assert.throws(() => validateReply(voiced, ACTIONS, persona), /invalid_response/);
   assert.throws(() => validateReply(reply, ACTIONS, persona, { voice: true }), /invalid_response/);
   const prompt = assemblePrompt('베이스 {{OUTPUT_CONTRACT}}', persona, {}, '안녕', { voice: true });
-  assert.match(prompt.instructions, /speech_text\(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사/);
+  assert.match(prompt.instructions, /speech_text\(이 인물이 지금 일본어로 실제 말할 구어 대사 원문.*dialogue\(speech_text의 대사를 같은 순서·의미로 옮긴 한국어 구어 자막/);
   assert.match(prompt.instructions, /follow_up과 합쳐 45자 이내/);
   assert.doesNotMatch(assemblePrompt('베이스 {{OUTPUT_CONTRACT}}', persona, {}, '안녕').instructions, /speech_text|delivery/);
 });

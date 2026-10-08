@@ -1,6 +1,6 @@
 # NPC 음성 출력 규격
 
-규격 버전: 1.1 (2026-10-08). 첫 게임판 기본 기능의 목표 계약. 게임 기능: [UF-67~UF-73](gameplay-functional-specification.md#10-npc-음성). 설치물: [DIST-23~DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권). 실측·남은 확인 항목: [개발·검증 계획 6.4·8.1·8.2](development-validation.md#81-npc-음성-tts-로컬-실측-2026-10-06).
+규격 버전: 1.2 (2026-10-08). 첫 게임판 기본 기능의 목표 계약. 게임 기능: [UF-67~UF-73](gameplay-functional-specification.md#10-npc-음성). 설치물: [DIST-23~DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권). 실측·남은 확인 항목: [개발·검증 계획 6.4·8.1·8.2](development-validation.md#81-npc-음성-tts-로컬-실측-2026-10-06).
 
 공통 스키마 전환 상태: `contracts/v1`의 DialogueReply는 자막 전용(DialogueReplyText)과 음성(DialogueReplyVoice) 두 형태 중 하나다. 웹 시제품의 응답 스키마·검사·출력 안내는 음성 옵션을 지원하지만 기본값은 꺼짐이다. 게임 CET 응답 검사와 TTS 연결은 아직 음성 형태를 받지 않는다.
 
@@ -21,17 +21,18 @@ AI 대화 세션에서 수용된 NPC 대사를 한국어 자막과 일본어 음
 
 ## 2. 응답 계약 추가
 
-DialogueReply의 구조화 출력 필드 순서는 `emotion → delivery → dialogue → follow_up → speech_text → intent → action`이다. 음성 합성은 speech_text 완성 뒤 시작할 수 있고, 재생은 전체 응답이 수용된 뒤에만 한다.
+DialogueReply의 구조화 출력 필드 순서는 `emotion → delivery → speech_text → dialogue → follow_up → intent → action`이다. 일본어 음성 대사를 원문으로 먼저 생성하고 한국어 자막을 그 번역으로 쓴다(한국어 우선보다 일본어·한국어 품질이 모두 높았던 비교 결과, [개발·검증 계획 8.3](development-validation.md#83-일본어-대사-개선-비교-2026-10-08)). 음성 합성은 speech_text 완성 뒤 시작할 수 있고, 재생은 전체 응답이 수용된 뒤에만 한다.
 
 | 필드 | 형식 | 규칙 |
 | --- | --- | --- |
 | emotion | 열거값 | neutral·friendly·wary·annoyed·afraid·sad·curious. 응답 하나에 값 하나이며 참조 음성 선택 키로 쓴다 |
 | delivery | `normal`·`fast`·`slow` | 말하는 빠르기. 속삭임·외침 같은 발성 지시는 값으로 두지 않는다 |
-| speech_text | 문자열 1~600자 | dialogue와 follow_up을 같은 순서·같은 의미로 옮긴 일본어 구어 대사 |
+| speech_text | 문자열 1~600자 | 인물이 실제로 말하는 일본어 구어 대사 원문. 후속 질문도 끝에 포함한다. dialogue와 follow_up은 이를 같은 순서·같은 의미로 옮긴 한국어 자막이다 |
 
 speech_text 작성 규칙:
 
-- 의미 보존·구어 변환·인칭/호칭과 읽기 선별은 [프롬프트 규격](prompt-specification.md)의 일본어 생성 규칙을 따른다.
+- 의미 보존·구어 변환·인칭/호칭과 읽기 선별은 [프롬프트 규격](prompt-specification.md)의 일본어 생성 규칙을 따른다. 인물별 인칭·호칭·어미·욕설 강도는 [콘텐츠 규격](content-specification.md)의 ja_voice_profiles를 기준으로 한다.
+- TTS 읽기 변환기는 단독 알파벳 V(전각 Ｖ 포함)를 읽지 않으므로, 합성 직전에 단어 경계의 V를 「ヴィー」로 바꾼다. 자막은 바꾸지 않는다.
 - 실제로 읽을 말만 쓴다. 지문·괄호 설명·마크다운·이모지·속도 지시·한글을 넣지 않는다.
 - 고유명사는 [콘텐츠 규격](content-specification.md#2-커뮤니티-캐릭터-카드)의 ja_reading_table에서 승인되고 현재 요청에 선택된 reading(가나)으로 쓴다. 읽기가 여러 개인 한자는 가나로 쓴다. V는 일본어판 공식 표기 「V（ヴィー）」에 따라 「ヴィー」로 쓴다.
 

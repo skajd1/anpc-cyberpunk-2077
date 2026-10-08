@@ -1,6 +1,6 @@
 # 모드 공통 데이터 및 모듈 입출력 규격
 
-규격 버전: 1.1 (2026-10-03). 목표 계약. 구현 상태: [개발·검증 계획](development-validation.md).
+규격 버전: 1.2 (2026-10-08). 목표 계약. 구현 상태: [개발·검증 계획](development-validation.md).
 
 ## 1. 기준과 범위
 
@@ -151,7 +151,7 @@ public도 대상의 인지·거리·시야·분야별 정책을 통과해야 한
 - 오케스트레이터가 공개 관찰, identity.view/state.canon, knowledge.view, memory.view, action.options, 최근 발화·현재 입력·출력 상한으로 PromptAssembly를 구성한다.
 - 모듈은 선언된 입력/의존성만 사용한다. 콘텐츠 카탈로그·정책·필드 등록표·저장소·연결 설정/키 접근기·취소 신호는 구성 시 주입한다.
 - 콘텐츠/정책 버전은 호출 동안 고정한다. 미지원 버전은 거부한다. persona_id/content_version으로 불변 카탈로그 조회 가능. 가변 게임/기억의 우회 조회 금지. 저장소는 MemoryStore만 접근한다.
-- ModelInput.instructions는 높은 지침 채널, data_messages는 낮은 데이터 채널이다. 순서: persona → 선택 style_examples → context → 선택 identity_reminder → recent_turn 반복 → player_input.
+- ModelInput.instructions는 높은 지침 채널, data_messages는 낮은 데이터 채널이다. 순서: persona → 선택 style_examples → 음성 요청의 선택 ja_voice(JaVoiceData) → context → 선택 identity_reminder → recent_turn 반복 → player_input.
 - 모델은 dialogue.reply@1.0의 데이터만 생성한다. Envelope·Call·Fence·요청 ID는 호스트가 관리한다.
 - ActionRequest는 execute만 허용한다. selection_only는 로컬 선택 결과로 표시한다. succeeded는 실제 완료 검증을 요구한다.
 - accepted/running 진행 이벤트는 같은 call_id를 사용한다. 최종 Reply는 한 번 확정하고 결과 상태는 역행시키지 않는다.
@@ -243,7 +243,7 @@ ModuleManifest/ModulePlan은 호스트 구성 자료이며 Envelope·LLM 입력�
 - CommonKnowledgeView: category_id + statements[]의 배열. category_id와 범위는 공통 스키마 참조. 허용된 공개 개요만 포함.
 - KnowledgeView.common_knowledge·PromptContext.common_knowledge는 선택 필드. 생략 시 빈 배열. 상세 items/knowledge와 사실 중복 제외.
 - PromptContext.recent_turns는 조립 전의 내부 TurnView 배열. ModelInput의 context는 recent_turns를 제외한 PromptContextData로 직렬화.
-- ModelInput.data_messages 순서: persona → 선택 style_examples → context → 선택 identity_reminder → recent_turn 반복 → player_input.
+- ModelInput.data_messages 순서: persona → 선택 style_examples → 음성 요청의 선택 ja_voice → context → 선택 identity_reminder → recent_turn 반복 → player_input.
 - recent_turn: kind=recent_turn, role=user/assistant, content=실제 표시한 원문. player→user, npc→assistant. 역할을 높은 지침으로 변환하거나 현재 입력을 중복 추가하지 않음.
 - 포트 계약 1.0은 유지하며 v1 스키마의 전송 메시지 종류를 확장. 신규 어댑터는 recent_turn을 반드시 지원. 예전 메시지 배열은 여전히 유효하되 context에서 recent_turns는 제거해야 함.
 - 웹 내부 journal/슬롯 형식은 테스트 어댑터 전용. SummaryInput·MemoryRecord·MemoryView는 공통 타입 사용. 실제 SourceEvent 등록·SaveBundle 연결을 구현한 것으로 간주하지 않음.

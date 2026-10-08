@@ -166,6 +166,20 @@ for(const entry of readings.entries){
  check(entry.source_ids.length>0&&entry.source_ids.every(id=>sourceIds.has(id)),'읽기 근거 출처 오류: '+entry.term);
  check(entry.review_status==='draft'||entry.source_ids.some(id=>sources.find(s=>s.id===id).tier==='primary'),'공식 근거 없는 승인 읽기: '+entry.term);
 }
+// 일본어 말투 프로필: 원작 대사 원문 없이 집계·string_id만. 인물 카드·감정 열거값·등록 출처와 일치.
+const jaVoice=read('ja-voice-profiles.json'), jaKeys=new Set(), jaExamples=new Set();
+const jaEmotions=['neutral','friendly','wary','annoyed','afraid','sad','curious'];
+for(const profile of jaVoice.profiles){
+ check(cards.some(c=>c.character_key===profile.character_key)&&!jaKeys.has(profile.character_key),'일본어 말투 인물 오류: '+profile.character_key); jaKeys.add(profile.character_key);
+ check(['approved','draft'].includes(profile.review_status),'일본어 말투 검수 상태 오류: '+profile.character_key);
+ for(const field of ['first_person','address_v','sentence_endings'])check(Array.isArray(profile[field])&&profile[field].length>0,'일본어 말투 필드 누락: '+profile.character_key+' / '+field);
+ check(profile.evidence.source_ids.length>0&&profile.evidence.source_ids.every(id=>sourceIds.has(id)),'일본어 말투 근거 출처 오류: '+profile.character_key);
+ check(profile.examples.length<=6,'일본어 말투 예시 6개 초과: '+profile.character_key);
+ for(const example of profile.examples){
+  check(/^[0-9a-f]{16}$/.test(example.string_id)&&!jaExamples.has(example.string_id),'일본어 말투 예시 string_id 오류: '+example.string_id); jaExamples.add(example.string_id);
+  check(jaEmotions.includes(example.emotion)&&Object.keys(example).every(k=>['string_id','emotion'].includes(k)),'일본어 말투 예시 필드 오류(원문 금지): '+example.string_id);
+ }
+}
 const actual={characters:cards.length,world_facts:facts.length,knowledge_entries:knowledge.length,dialogue_examples:examples.length,knowledge_bundles:policy.bundles.length,relationship_stages:cards.reduce((sum,c)=>sum+(c.relationship_stages?.length??0),0),crowd_archetypes:crowd.archetypes.length};
 for(const [key,count] of Object.entries(actual))check(manifest.counts[key]===count,'집계 불일치: '+key);
 console.log(JSON.stringify({status:errors.length?'실패':'통과',sources:sources.length,...actual,new_example_condition_checks:newExamples.length,crowd_seed_checks:crowd.archetypes.length*32,errors},null,2));

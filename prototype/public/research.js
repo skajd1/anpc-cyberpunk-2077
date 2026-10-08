@@ -4,6 +4,7 @@ import { evaluateCondition } from './conditions.js';
 export { evaluateCondition } from './conditions.js';
 import { evaluateStoryPolicy, storySignature } from './story.js';
 import { DialogueEngine, validatePersona } from './core.js';
+import { jaVoiceData } from './speech.js';
 import { validateCorePersonality, PERSONALITY_PROMPT_VERSION } from './personality.js';
 
 export const CONFIGURATIONS = {
@@ -176,6 +177,7 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
   }
   const reminder = settings.configuration === 'full' ? { hard_limits: card.identity_anchor.hard_limits } : null;
   return { persona, context: preparedContext, styleExamples: examples, identityReminder: reminder, readingTable: bundle.jaReadingTable,
+    jaVoice: jaVoiceData(bundle.jaVoiceProfiles, bundle.jaStyleExamples, npcKey),
     diagnostics: { npc_key: npcKey, content_version: bundle.version, configuration: settings.configuration,
       development_only: true, story_policy: { enabled: story.enabled, allowed: story.allowed, channel: story.channel, applied_events: story.events.map(e => e.id) }, review_status: card.review_status, runtime_enabled: card.runtime_enabled,
       core_personality: clone(persona.core_personality), personality_prompt_version: PERSONALITY_PROMPT_VERSION,
