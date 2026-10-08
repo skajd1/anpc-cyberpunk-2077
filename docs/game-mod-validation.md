@@ -909,3 +909,16 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009023956/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 표시 미검증
+
+## DEP-20261009030217 — 입력칸 Tab 메뉴 입력 막힘 수정
+
+- 일시: 2026-10-09 03:02:17 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Entry.reds | 수정 | 입력칸의 Tab은 입력칸이 완전히 사라진 뒤(OnHidden) 0.05초 후 원작 메뉴를 열도록 변경(OnChatHidden, OpenMenu 예약) | 입력칸 닫기와 메뉴 열기를 동시에 보내 메뉴가 열린 뒤 입력 차단이 풀리며 캐릭터 메뉴에서 아무 키도 듣지 않던 문제 해결 |
+| r6/scripts/ANPC/Session.reds | 수정 | 닫는 중인 입력칸 기억(menuPopup), 입력칸 OnHidden 뒤 Entry 알림 | 같음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009030217/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
