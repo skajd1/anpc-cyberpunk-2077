@@ -822,3 +822,17 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009010542/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
+
+## DEP-20261009015550 — TTS 보조 프로세스 자동 실행(Native TtsHelper)
+
+- 일시: 2026-10-09 01:55:50 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/ANPC/ANPC.Native.dll | 수정 | GitHub Actions 빌드(실행 37812299900). TtsHelper: 플러그인 로드 때 보조 프로세스 실행, Job Object로 게임 종료 시 함께 종료, ANPCNative_TtsStatus·ANPCNative_TtsRestart 추가 | 게임을 켜면 TTS가 함께 준비되고, 수동 실행·종료가 필요 없음 |
+| red4ext/plugins/ANPC/tts-helper.local.json | 추가 | 보조 프로세스 실행 명령·작업 폴더·환경·로그 경로(로컬 설정) | 개인 경로라 저장소·배포물 제외 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 진단 창에 TTS 상태·응답 여부·재시작 버튼 | 상태 확인과 복구 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009015550/manifest.json
+- 확인: GitHub Actions 빌드·테스트 통과. 실게임 동작 미검증
