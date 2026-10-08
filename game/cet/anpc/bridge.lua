@@ -237,8 +237,11 @@ function bridge.speak(id, item, speech, output)
   if not config.voice_enabled or not speech then return false end
   local profile = item and (item.crowd and config.voice_crowd_profile or config.voice_profiles[item.key])
   if not profile then return false end
+  -- 군중은 원작 목소리 이름·성별·NPC 고유값을 함께 보내 보조 프로세스가 같은 목소리의 참조 음성을 고르게 한다.
+  local voice = item.crowd and (',"voice_tag":' .. json.string(item.voiceTag or "") .. ',"gender":' .. json.string(item.gender or "")
+    .. ',"voice_seed":' .. json.string(item.voiceSeed or "")) or ""
   return writeTts("req-" .. id, '{"request_id":"' .. id .. '","voice_profile_id":' .. json.string(profile)
-    .. ',"emotion":' .. json.string(speech.emotion) .. ',"delivery":' .. json.string(speech.delivery)
+    .. ',"emotion":' .. json.string(speech.emotion) .. ',"delivery":' .. json.string(speech.delivery) .. voice
     .. ',"output":"' .. (output or "local") .. '","speech_text":' .. json.string(speech.text) .. '}')
 end
 
@@ -431,7 +434,7 @@ local function deliverReply(system, id, text, character, item)
   if speech and bridge.helperAlive() then
     local ok, spatial = pcall(function() return system:VoiceSpatialAvailable() end)
     if ok and spatial == true and bridge.speak(id, item, speech, "slots") then
-      note("voice", id, profile .. " 합성 대기")
+      note("voice", id, profile .. (item.crowd and (" " .. ((item.voiceTag or "") ~= "" and item.voiceTag or "목소리 모름") .. " ") or " ") .. "합성 대기")
       -- 자막·행동은 첫 음성 구간 재생 때 함께 시작한다(voiceUpdate).
       local _, chars = speech.text:gsub("[^\128-\191]", "")
       voiceJobs[id] = { session = item and item.session, line = line, ended = ended, display = display, gesture = gesture, emotion = emotion, wait = 0, next = 1, queue = {},
@@ -536,6 +539,7 @@ local function sendNative(system, request)
     return
   end
   nativePending[wireId] = { requestId=request.id, session = request.session, text = request.text, character = character, key = key, crowd = request.crowd,
+    voiceTag = request.voiceTag, gender = request.gender, voiceSeed = request.instanceToken,
     fingerprint = request.context and context.fingerprint(request.context, key, request.crowd) }
 end
 
@@ -582,6 +586,7 @@ local function sendFile(system, request)
   if request.kind == "say" then
     pending[request.id] = { token = token, age = 0,
       character = character, session = request.session, text = request.text, key = key, crowd = request.crowd,
+      voiceTag = request.voiceTag, gender = request.gender, voiceSeed = request.instanceToken,
       fingerprint = request.context and context.fingerprint(request.context, key, request.crowd) }
   end
 end

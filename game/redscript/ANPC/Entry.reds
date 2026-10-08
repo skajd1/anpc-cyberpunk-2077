@@ -550,6 +550,9 @@ public class Entry extends ScriptableSystem {
     session.player = player;
     session.characterKey = characterKey;
     session.crowd = crowd;
+    let voice = NpcVoice.Probe(npc);
+    session.voiceTag = voice.tag;
+    session.gender = voice.gender;
     session.instanceToken = crowd ? this.IdentityToken(npc) : this.worldToken + ":community:" + characterKey;
     session.holdHubId = holdHubId;
     session.epoch = this.epoch;
@@ -723,6 +726,8 @@ public class Entry extends ScriptableSystem {
     request.session = session.id;
     request.npcKey = session.characterKey;
     request.crowd = session.crowd;
+    request.voiceTag = session.voiceTag;
+    request.gender = session.gender;
     request.text = text;
     request.context = GameContext.Collect(player, session.npc);
     if session.crowd && IsDefined(request.context.npcIdentity) {

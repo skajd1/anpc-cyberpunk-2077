@@ -151,6 +151,12 @@ registerForEvent("onDraw", function()
         ImGui.TextWrapped(("사망 %s · V 전투 %s · NPC 전투 %s · 장면 중 %s · V 장면 단계 %s"):format(labels.yes(state.dead),
           labels.yes(state.playerCombat), state.npcStateKnown and labels.yes(state.npcCombat) or "모름",
           state.sceneKnown and labels.yes(state.inScene) or "모름", tostring(state.highLevel)))
+        local voice = state.voice
+        if voice then
+          ImGui.TextWrapped(("목소리: %s (%s) · 인물 데이터 %s · 성별 %s"):format(voice.tag ~= "" and voice.tag or "모름",
+            labels.text(voice.source), voice.recordTag ~= "" and voice.recordTag or "없음", voice.gender ~= "" and voice.gender or "모름"))
+          if voice.detail ~= "" then ImGui.TextWrapped(voice.detail) end
+        end
       end
     end
     if section("원작 선택지 연결") then

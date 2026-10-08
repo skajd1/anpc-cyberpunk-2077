@@ -10,6 +10,9 @@ public class AnpcRequest extends IScriptable {
   public let session: Int32;
   public let npcKey: String;
   public let crowd: Bool;
+  // 원작 목소리 이름과 성별(Female/Male). 군중 TTS 참조 음성 선택에 쓴다.
+  public let voiceTag: String;
+  public let gender: String;
   public let text: String;
   public let context: ref<ContextSnapshot>;
   public let instanceToken: String;
@@ -25,6 +28,8 @@ public class ChatSession extends IScriptable {
   public let player: wref<PlayerPuppet>;
   public let characterKey: String;
   public let crowd: Bool;
+  public let voiceTag: String;
+  public let gender: String;
   public let instanceToken: String;
   // 보류 중인 원작 허브 ID. 군중은 -1.
   public let holdHubId: Int32;

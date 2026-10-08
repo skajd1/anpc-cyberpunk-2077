@@ -69,6 +69,10 @@ local NAMES = {
   not_started = "시작 안 함",
   config_invalid = "설정 파일 형식 오류",
   command_missing = "실행 명령 없음",
+  -- 원작 목소리 이름을 읽은 곳(NpcVoice)
+  ps = "목소리 상태값",
+  record = "인물 데이터",
+  none = "못 읽음",
   ["true"] = "예",
   ["false"] = "아니오",
 }

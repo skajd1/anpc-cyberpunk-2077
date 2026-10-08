@@ -60,7 +60,8 @@ local reply={dialogue="やあ。",follow_up=json.null,intent="answer",emotion="f
 reply.dialogue="안녕."
 local function request(id)
   latest=id;waiting=true
-  queue[#queue+1]={kind="say",id=id,session=44,npcKey="resident",crowd=true,text="V라고 불러"}
+  queue[#queue+1]={kind="say",id=id,session=44,npcKey="resident",crowd=true,text="V라고 불러",
+    voiceTag="civ_mid_m_10_enus_30",gender="Male",instanceToken="npc-7"}
   assert(bridge.update(0.3))
 end
 local function begin(id)
@@ -72,6 +73,10 @@ local function begin(id)
 end
 begin(1)
 assert(#responses==0 and started==0 and bridge.voicePendingCount()==1)
+-- 군중 음성 요청은 원작 목소리 이름·성별·NPC 고유값을 함께 보낸다.
+local req=json.decode(files["tts/req-1.json"])
+assert(req.voice_profile_id=="crowd" and req.voice_tag=="civ_mid_m_10_enus_30" and req.gender=="Male" and req.voice_seed=="npc-7")
+assert(bridge.recent().voice:find("civ_mid_m_10_enus_30 합성 대기",1,true))
 files["tts/seg-1-1.json"]='{"slot":1,"dur_ms":1000,"final":true}'
 assert(bridge.update(0.1))
 -- UF-75: 새 입력 때 이전 입모양을 멈추고, 첫 음성과 함께 시작해 마지막 구간이 끝나면 멈춘다.
