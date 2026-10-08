@@ -24,13 +24,23 @@ public class SceneEntryInstaller extends ScriptableService {
   private let lastAction: String;
   private let lastCrowd: String;
 
+  // CET 디버그 창 표시용. 상태 코드는 CET labels.lua가 한국어로 바꾼다.
   public func GetStatus() -> String {
-    return "registered=" + ToString(this.registered) + " initialized=" + ToString(this.initialized)
-      + " tracked=" + ToString(ArraySize(this.tracked)) + " decorated=" + ToString(this.decorated)
-      + " lastOffer=" + this.lastOffer + " lastSpeaker=" + this.lastSpeaker
-      + " inputs=" + ToString(this.inputs) + " lastInput=" + this.lastInput
-      + " actions=" + ToString(this.actions) + " lastAction=" + this.lastAction
-      + " lastCrowd=" + this.lastCrowd;
+    return "ANPC 선택지: 표시 " + ToString(this.decorated) + "회 · 최근 " + SceneEntryInstaller.Or(this.lastOffer)
+      + "
+화자: " + SceneEntryInstaller.Or(this.lastSpeaker)
+      + "
+대화 입력: " + ToString(this.inputs) + "회 · 최근 " + SceneEntryInstaller.Or(this.lastInput)
+      + "
+키 입력: " + ToString(this.actions) + "회 · 최근 " + SceneEntryInstaller.Or(this.lastAction)
+      + "
+군중: " + SceneEntryInstaller.Or(this.lastCrowd)
+      + "
+감시 NPC " + ToString(ArraySize(this.tracked)) + "명 · 등록 " + ToString(this.registered) + " · 초기화 " + ToString(this.initialized) + "회";
+  }
+
+  private static func Or(text: String) -> String {
+    return StrLen(text) > 0 ? text : "없음";
   }
 
   public static func Get() -> ref<SceneEntryInstaller> {
@@ -44,8 +54,8 @@ public class SceneEntryInstaller extends ScriptableService {
 
   // 원작 허브 화자의 실측 레코드. 지원 인물 표를 채울 때 CET 진단에서 읽는다.
   public func RecordSpeaker(npc: ref<NPCPuppet>, title: String, key: String, highLevel: Int32) -> Void {
-    this.lastSpeaker = "title=" + SceneEntry.ResolveTitle(title) + " record=" + TDBID.ToStringDEBUG(npc.GetRecordID())
-      + " key=" + key + " crowd=" + ToString(npc.IsCrowd()) + " highLevel=" + ToString(highLevel);
+    this.lastSpeaker = SceneEntry.ResolveTitle(title) + " · 레코드 " + TDBID.ToStringDEBUG(npc.GetRecordID())
+      + " · 인물 " + key + " · 군중 " + ToString(npc.IsCrowd()) + " · V 장면 단계 " + ToString(highLevel);
   }
 
   public func RecordCrowd(reason: String) -> Void {
@@ -78,10 +88,10 @@ public class SceneEntryInstaller extends ScriptableService {
       }
       i += 1;
     }
-    this.lastSpeaker = "title=" + SceneEntry.ResolveTitle(title) + " speaker=none";
+    this.lastSpeaker = SceneEntry.ResolveTitle(title) + " · 화자 못 찾음";
     if IsDefined(nearest) {
-      this.lastSpeaker += " nearest=" + GetLocalizedText(nearest.GetDisplayName())
-        + " record=" + TDBID.ToStringDEBUG(nearest.GetRecordID());
+      this.lastSpeaker += " · 가장 가까운 NPC " + GetLocalizedText(nearest.GetDisplayName())
+        + "(레코드 " + TDBID.ToStringDEBUG(nearest.GetRecordID()) + ")";
     }
   }
 
@@ -438,8 +448,8 @@ protected cb func OnAction(action: ListenerAction, consumer: ListenerActionConsu
   let name = ListenerAction.GetName(action);
   let diagnostics = SceneEntryInstaller.Get();
   if IsDefined(diagnostics) {
-    diagnostics.RecordAction(NameToString(name) + ":" + ToString(ListenerAction.GetType(action))
-      + " offered=" + ToString(this.anpcOffered) + " focus=" + ToString(this.anpcFocus));
+    diagnostics.RecordAction(NameToString(name) + " " + ToString(ListenerAction.GetType(action))
+      + " · ANPC 선택지 표시 " + ToString(this.anpcOffered) + " · 선택 중 " + ToString(this.anpcFocus));
   }
   let player = this.GetPlayerControlledObject() as PlayerPuppet;
   if !IsDefined(player) { return false; }

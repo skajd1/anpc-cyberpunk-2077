@@ -129,7 +129,7 @@ public class Entry extends ScriptableSystem {
     this.crowdReactedAt = EngineTime.ToFloat(GameInstance.GetSimTime(npc.GetGame()));
     this.crowdRetries = 0;
     let diagnostics = SceneEntryInstaller.Get();
-    if IsDefined(diagnostics) { diagnostics.RecordCrowd("reacted record=" + TDBID.ToStringDEBUG(npc.GetRecordID())); }
+    if IsDefined(diagnostics) { diagnostics.RecordCrowd("원작 대화 반응 · 레코드 " + TDBID.ToStringDEBUG(npc.GetRecordID())); }
     let callback = new CrowdEntryRefresh();
     callback.npc = npc;
     GameInstance.GetDelaySystem(npc.GetGame()).DelayCallback(callback, 1.5, false);
@@ -318,7 +318,7 @@ public class Entry extends ScriptableSystem {
     let hubId = candidate.hubId;
     if !this.IsRootHub(npc, hubId, SceneEntry.HubChoiceNames(player.GetGame(), hubId)) {
       this.sceneOffer = null;
-      if IsDefined(diagnostics) { diagnostics.RecordOffer("not_root_hub=" + ToString(hubId), false); }
+      if IsDefined(diagnostics) { diagnostics.RecordOffer("not_root_hub(" + ToString(hubId) + ")", false); }
       return false;
     }
     if hubId == this.consumedHubId {
@@ -339,7 +339,7 @@ public class Entry extends ScriptableSystem {
     }
     this.retries = 0;
     if IsDefined(diagnostics) {
-      diagnostics.RecordOffer("shown key=" + candidate.characterKey + " hub=" + ToString(hubId), true);
+      diagnostics.RecordOffer("표시 · 인물 " + candidate.characterKey + " · 화면 " + ToString(hubId), true);
     }
     return true;
   }
@@ -691,7 +691,7 @@ public class Entry extends ScriptableSystem {
   public func SubmitChat(text: String) -> Void {
     let session = this.session;
     let diagnostics = SceneEntryInstaller.Get();
-    if IsDefined(diagnostics) { diagnostics.RecordInput("chat_submit len=" + ToString(StrLen(text)) + " session=" + ToString(IsDefined(session))); }
+    if IsDefined(diagnostics) { diagnostics.RecordInput("대사 입력 " + ToString(StrLen(text)) + "자 · 대화 중 " + ToString(IsDefined(session))); }
     if !IsDefined(session) { return; }
     let reason = this.SessionEndReason(session);
     if NotEquals(reason, "") {
@@ -746,7 +746,7 @@ public class Entry extends ScriptableSystem {
     if !IsDefined(session) || session.pendingRequest != requestId { return; }
     session.pendingRequest = -1;
     let diagnostics = SceneEntryInstaller.Get();
-    if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status); }
+    if IsDefined(diagnostics) { diagnostics.RecordInput("AI 응답 #" + ToString(requestId) + " " + status); }
     let game = this.GetGameInstance();
     this.HideSubtitles(session);
     let npc: ref<NPCPuppet> = session.npc;
@@ -1053,7 +1053,7 @@ public class Entry extends ScriptableSystem {
     }
     session.pendingRequest = -1;
     let diagnostics = SceneEntryInstaller.Get();
-    if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status + " voice"); }
+    if IsDefined(diagnostics) { diagnostics.RecordInput("AI 응답 #" + ToString(requestId) + " " + status + " · 음성"); }
     let game = this.GetGameInstance();
     this.HideSubtitles(session);
     let line = this.NextSubtitleId();
@@ -1091,14 +1091,14 @@ private final func PushChoicesToInteractionComponent(interactionComponent: ref<I
     let safe = Equals(blocked, "");
     let diagnostics = SceneEntryInstaller.Get();
     if IsDefined(diagnostics) {
-      diagnostics.RecordCrowd("push layer=" + NameToString(layer) + " choices=" + ToString(ArraySize(appended))
-        + " reacted=" + ToString(reacted) + " safe=" + ToString(safe) + " blocked=" + blocked);
+      diagnostics.RecordCrowd("선택지 갱신 · " + NameToString(layer) + " · 원작 선택지 " + ToString(ArraySize(appended))
+        + "개 · 원작 반응 " + ToString(reacted) + " · 막힘 " + (safe ? "없음" : blocked));
     }
     if !hasEntry && reacted && !safe { entry.RetryCrowd(npc, blocked); }
     if !hasEntry && reacted && safe {
       ArrayPush(appended, entry.CreateChoice(npc, player, layer));
       interactionComponent.SetChoices(appended, layer);
-      if IsDefined(diagnostics) { diagnostics.RecordCrowd("appended layer=" + NameToString(layer)); }
+      if IsDefined(diagnostics) { diagnostics.RecordCrowd("ANPC 선택지 추가 · " + NameToString(layer)); }
     }
   }
 }

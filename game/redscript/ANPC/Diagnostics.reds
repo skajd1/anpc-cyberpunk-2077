@@ -1,6 +1,6 @@
 module ANPC
 
-// G0/G1 전용. 게임 객체는 약한 참조로만 보관하고 원작 상태를 변경하지 않는다.
+// CET 디버그 창의 바라보는 NPC 검사 전용. 게임 객체는 약한 참조로만 보관하고 원작 상태를 변경하지 않는다.
 public class DiagnosticSnapshot extends IScriptable {
   public let reason: String;
   public let epoch: Int32;
@@ -24,7 +24,7 @@ public class Diagnostics extends ScriptableSystem {
   private let pinnedPlayer: wref<PlayerPuppet>;
 
   public static func Version() -> String {
-    return "0.1.0-g0-g1";
+    return "0.1.0";
   }
 
   private func OnAttach() -> Void {

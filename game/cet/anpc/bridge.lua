@@ -249,7 +249,7 @@ function bridge.helperAlive()
 end
 
 local voiceJobs = {}
--- 진단 창용 최근 처리 결과(음성·얼굴). 게임 동작에는 쓰지 않는다.
+-- 디버그 창용 최근 처리 결과(음성·얼굴). 게임 동작에는 쓰지 않는다.
 local recent = { voice = "없음", face = "없음" }
 local function note(kind, id, text) recent[kind] = ("#%s %s"):format(tostring(id), text) end
 function bridge.recent() return recent end

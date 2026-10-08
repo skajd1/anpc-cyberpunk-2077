@@ -1,11 +1,11 @@
-local diagnostics = require("diagnostics")
+local labels = require("labels")
 local bridge = require("bridge")
 local config = require("config")
 local devtools = require("devtools")
 if config.dev_tools then devtools.register() end
-local version = "0.1.0-g0-g1"
+local version = "0.1.0"
 local overlay, elapsed = false, 0
-local state, pinnedEpoch, mockText
+local state
 local sceneHubs, sceneChoices
 local entryStatus = "entry_not_selected"
 local sceneEntryStatus
@@ -29,15 +29,15 @@ local function refresh(pin)
     return pin and system:Pin() or system:Collect()
   end)
   if not ok then
-    state, pinnedEpoch, mockText = nil, nil, nil
+    state = nil
     sceneHubs, sceneChoices = nil, nil
     entryStatus = "entry_collector_unavailable"
     sceneEntryStatus = nil
-    status = "수집 실패: redscript/CET 로그를 확인하세요."
+    status = "읽기 실패(redscript·CET 로그 확인)"
     return
   end
   state = result
-  status = state and state.reason or "게임 세션/ANPC 수집기 없음"
+  status = state and state.reason or "게임 불러오기 전"
   sceneHubs, sceneChoices = nil, nil
   if state then
     local hubOK, hubs, choices = pcall(function()
@@ -66,16 +66,13 @@ local function refresh(pin)
     return service:GetStatus()
   end)
   sceneEntryStatus = sceneOK and sceneResult or nil
-  if pin then pinnedEpoch = state and state.epoch or nil end
-  if not state then pinnedEpoch, mockText = nil, nil end
-  if mockText then mockText = diagnostics.mock(state, pinnedEpoch) end
 end
 
 registerForEvent("onInit", function()
   cetVersion = tostring(GetVersion())
   local ok, redVersion = pcall(function() return GetSingleton("ANPC.Diagnostics"):Version() end)
   if ok then redscriptVersion = tostring(redVersion) end
-  status = ok and ("redscript " .. tostring(redVersion)) or "redscript 로더 미확인"
+  status = ok and ("redscript " .. tostring(redVersion)) or "redscript 불러오기 실패"
   print("[ANPC] Lua " .. version .. "; CET " .. cetVersion .. "; " .. status)
   if not ok then print("[ANPC] redscript 버전 조회 실패: " .. tostring(redVersion)) end
 end)
@@ -83,7 +80,7 @@ end)
 registerForEvent("onOverlayOpen", function() overlay = true; refresh(false) end)
 registerForEvent("onOverlayClose", function()
   overlay = false
-  state, pinnedEpoch, mockText = nil, nil, nil
+  state = nil
   sceneHubs, sceneChoices = nil, nil
   entryStatus = "entry_not_selected"
   sceneEntryStatus = nil
@@ -92,14 +89,14 @@ end)
 registerForEvent("onShutdown", function()
   overlay = false
   bridge.reset()
-  state, pinnedEpoch, mockText = nil, nil, nil
+  state = nil
   sceneHubs, sceneChoices = nil, nil
   entryStatus = "entry_not_selected"
   sceneEntryStatus = nil
   pcall(function() local system = collector(); if system then system:Reset() end end)
 end)
 registerForEvent("onUpdate", function(delta)
-  -- AI 요청 전달은 진단 창과 무관하게 매 프레임 처리한다.
+  -- AI 요청 전달은 디버그 창과 무관하게 매 프레임 처리한다.
   bridge.update(delta)
   devtools.update(delta)
   if not overlay then return end
@@ -107,7 +104,7 @@ registerForEvent("onUpdate", function(delta)
   if elapsed >= 0.25 then elapsed = 0; refresh(false) end
 end)
 
--- 접는 구역. ImGui에 CollapsingHeader가 없는 환경(시험)에서는 항상 펼친다.
+-- 접는 구역. ImGui에 CollapsingHeader가 없는 환경(테스트)에서는 항상 펼친다.
 local function section(label)
   if ImGui.CollapsingHeader then return ImGui.CollapsingHeader(label) end
   return true
@@ -129,43 +126,39 @@ registerForEvent("onDraw", function()
   end
   devtools.draw()
   if not overlay then return end
-  local expanded = ImGui.Begin("ANPC 진단")
+  local expanded = ImGui.Begin("ANPC 디버그")
   if expanded then
     -- 요약: 한 줄에 한 구성 요소. 문제 원인은 '최근 음성/얼굴'에서 먼저 본다.
-    ImGui.Text(("ANPC %s · CET %s · redscript %s"):format(version, cetVersion, redscriptVersion))
-    ImGui.TextWrapped("대화: " .. entryStatus .. " · 수집: " .. status)
+    ImGui.Text(("버전: ANPC %s · CET %s · redscript %s"):format(version, cetVersion, redscriptVersion))
+    ImGui.TextWrapped("대화: " .. labels.text(entryStatus))
     local native = bridge.nativeVersion()
-    ImGui.TextWrapped(("AI: %s · %s · 키 %s · 대기 %d"):format(native and ("Native " .. native) or "파일 브리지",
+    ImGui.TextWrapped(("AI: %s · 모델 %s · API 키 %s · 응답 대기 %d"):format(native and ("Native " .. native) or "Native 없음(파일 연결)",
       config.model, native and (bridge.hasKey() and "있음" or "없음") or "-", bridge.pendingCount()))
     local ttsOK, ttsStatus = pcall(function() return Game.ANPCNative_TtsStatus() end)
-    ImGui.TextWrapped(("TTS: %s · 응답 %s · 재생 대기 %d"):format(ttsOK and tostring(ttsStatus) or "Native 미지원",
+    ImGui.TextWrapped(("TTS: %s · 응답 %s · 재생 대기 %d"):format(ttsOK and labels.text(ttsStatus) or "Native 미지원",
       bridge.helperAlive() and "있음" or "없음", bridge.voicePendingCount()))
     if ttsOK and ImGui.Button("TTS 재시작") then pcall(function() Game.ANPCNative_TtsRestart() end) end
     local recent = bridge.recent()
     ImGui.TextWrapped("최근 음성: " .. recent.voice)
     ImGui.TextWrapped("최근 얼굴: " .. recent.face)
 
-    if section("대상") then
-      if ImGui.Button("대상 고정·다시 검사") then mockText = nil; refresh(true) end
+    if section("바라보는 NPC") then
+      if ImGui.Button("다시 검사") then refresh(true) end
+      ImGui.TextWrapped("상태: " .. labels.text(status))
       if state and state.entityID ~= "" then
-        ImGui.TextWrapped(("%s · %s · %.2fm · 같은 객체 %s · 세대 %s"):format(state.recordID, state.entityID,
-          state.distance, tostring(state.sameObject), tostring(state.epoch)))
-        ImGui.TextWrapped(("사망 %s · V 전투 %s · NPC 전투 %s · 장면 %s · HighLevel %s"):format(tostring(state.dead),
-          tostring(state.playerCombat), state.npcStateKnown and tostring(state.npcCombat) or "?",
-          state.sceneKnown and tostring(state.inScene) or "?", tostring(state.highLevel)))
-        if ImGui.Button("G1 모의 대사 재검사") then
-          refresh(false)
-          mockText, status = diagnostics.mock(state, pinnedEpoch)
-        end
+        ImGui.TextWrapped(("레코드 %s · 엔티티 %s · 거리 %.2fm · 로드 %s"):format(state.recordID, state.entityID,
+          state.distance, tostring(state.epoch)))
+        ImGui.TextWrapped(("사망 %s · V 전투 %s · NPC 전투 %s · 장면 중 %s · V 장면 단계 %s"):format(labels.yes(state.dead),
+          labels.yes(state.playerCombat), state.npcStateKnown and labels.yes(state.npcCombat) or "모름",
+          state.sceneKnown and labels.yes(state.inScene) or "모름", tostring(state.highLevel)))
       end
-      if mockText then ImGui.TextWrapped(mockText) end
     end
-    if section("장면 진입") then
+    if section("원작 선택지 연결") then
       if sceneHubs then
-        ImGui.TextWrapped(string.format("원작 장면 허브 %d개 | 선택지 %d개", sceneHubs, sceneChoices))
-        ImGui.TextWrapped("진입 진단: " .. (sceneEntryStatus or "미확인"))
+        ImGui.TextWrapped(string.format("원작 선택지 화면 %d개 · 선택지 %d개", sceneHubs, sceneChoices))
+        ImGui.TextWrapped(labels.text(sceneEntryStatus or "ANPC 선택지 기록 없음"))
       else
-        ImGui.TextWrapped("원작 장면 선택지 수집: 미확인")
+        ImGui.TextWrapped("원작 선택지: 읽지 못함")
       end
     end
     if native and section("API 키") then
@@ -179,7 +172,7 @@ registerForEvent("onDraw", function()
       ImGui.SameLine()
       if ImGui.Button("키 삭제") then keyNotice = bridge.deleteKey() and "삭제했습니다" or "삭제 실패" end
     end
-    if config.dev_tools and section("시험: 표정·제스처·입모양") then devtools.buttons() end
+    if config.dev_tools and section("테스트: 표정·제스처·입모양") then devtools.buttons() end
   end
   ImGui.End()
 end)
