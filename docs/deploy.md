@@ -38,7 +38,7 @@
    powershell -ExecutionPolicy Bypass -File scripts/deploy-game-dev.ps1 -Name '<배포 이름>'
    ```
 
-   Native DLL을 함께 바꿀 때는 `-NativeDll <빌드한 DLL 경로>`를 붙인다.
+   Native DLL을 함께 바꿀 때는 `-NativeDll <빌드한 DLL 경로>`를 붙인다. CET Lua(`…/mods/anpc/*.lua`)와 `*.local.json`만 바뀐 경우에는 `-Live`로 게임을 켠 채 배포할 수 있다. 반영은 CET 오버레이의 모드 다시 불러오기(Lua) 또는 진단 창의 TTS 재시작(보조 프로세스 설정)으로 한다.
 6. 출력된 `config.local.backups/<배포 ID>/history.md` 초안의 변경 내용·이유·영향을 채워 [배포 변경 이력](game-mod-validation.md) 끝에 옮긴다. 일시·파일 목록·구분은 초안 그대로 쓴다.
 7. 게임을 시작해 확인한다. 실게임 확인 결과는 [개발·검증 계획](development-validation.md)에 남긴다. 배포 이력의 `확인` 줄은 배포 시점 상태만 적는다.
 

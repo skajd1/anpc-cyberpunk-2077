@@ -15,8 +15,9 @@ return {
   -- 개발 시험용 NPC 키 → voice_profile_id. 없는 인물은 자막만.
   voice_profiles = { judy = "vp_judy", viktor = "vp_viktor", rogue = "vp_rogue" },
   voice_crowd_profile = "crowd_m2",
-  -- 응답 수용 후 첫 음성 구간 대기 한도(음성 출력 규격 subtitle_wait_ms). 넘으면 자막만.
-  voice_wait_s = 3.0,
+  -- 응답 수용 후 첫 음성 구간 대기 한도. 시작 판단은 보조 프로세스가 subtitle_wait_ms(3초)로 하고,
+  -- 게임 쪽은 구간 파일 전달 여유 1초를 더 기다린다(같은 3초면 첫 구간 직전에 포기하는 경쟁이 생긴다). 넘으면 자막만.
+  voice_wait_s = 4.0,
   -- 자막 표시 시간 계산용 일본어 1자당 음성 길이(초).
   voice_sec_per_char = 0.16,
   -- 3D 음성 재생 음량(Audioware 1.0 기준). 원작 NPC 음성과 비교해 맞춘다.

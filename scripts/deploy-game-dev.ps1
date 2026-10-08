@@ -8,6 +8,8 @@ param(
   [Parameter(ParameterSetName = 'Deploy')][string]$Name,
   [Parameter(ParameterSetName = 'Deploy')][string]$NativeDll,
   [Parameter(ParameterSetName = 'Deploy')][Parameter(ParameterSetName = 'Restore')][switch]$Plan,
+  # 게임 실행 중 배포: CET Lua·*.local.json만 바뀔 때 허용. 반영은 CET의 모드 다시 불러오기 또는 TTS 재시작.
+  [Parameter(ParameterSetName = 'Deploy')][switch]$Live,
   [Parameter(ParameterSetName = 'Restore', Mandatory)][string]$Restore,
   [string]$GameRoot,
   [switch]$Force
@@ -45,7 +47,8 @@ function Get-Sha($path) { if (Test-Path -LiteralPath $path -PathType Leaf) { (Ge
 function Get-GamePath($rel) { Join-Path $GameRoot ($rel -replace '/', '\') }
 function Get-RepoRel($full) { $full.Substring($repo.Length + 1) -replace '\\', '/' }
 function Write-Json($path, $obj) { New-Item -ItemType Directory -Path (Split-Path $path) -Force | Out-Null; [IO.File]::WriteAllText($path, ($obj | ConvertTo-Json -Depth 8), $utf8) }
-function Assert-GameStopped { if (Get-Process -Name Cyberpunk2077 -ErrorAction SilentlyContinue) { throw '게임 실행 중: 게임을 종료한 뒤 다시 실행하세요.' } }
+function Assert-GameStopped { if (!$script:LiveAllowed -and (Get-Process -Name Cyberpunk2077 -ErrorAction SilentlyContinue)) { throw '게임 실행 중: 게임을 종료한 뒤 다시 실행하세요.' } }
+$script:LiveAllowed = $false
 function Format-Kst($iso) {
   $t = [DateTimeOffset]::Parse($iso)
   $o = $t.Offset
@@ -161,6 +164,11 @@ if (!$items.Count) {
   return
 }
 if (!$Name) { throw '-Name으로 배포 이름을 지정하세요.' }
+if ($Live) {
+  $blocked = @($items | Where-Object { !($_.path -like 'bin/x64/plugins/cyber_engine_tweaks/mods/anpc/*.lua' -or $_.path -like '*.local.json') })
+  if ($blocked.Count) { throw ('-Live는 CET Lua·*.local.json 변경만 허용합니다: ' + (($blocked | ForEach-Object { $_.path }) -join ', ')) }
+  $script:LiveAllowed = $true
+}
 if ($conflicts.Count -and !$Force) { throw '충돌 파일이 있어 중단했습니다.' }
 if ($PSCmdlet.ParameterSetName -eq 'Deploy' -and ($items | Where-Object { $_.path -like '*.reds' })) {
   & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $repo 'scripts\check-redscript.ps1') -GameRoot $GameRoot
