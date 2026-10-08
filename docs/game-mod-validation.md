@@ -784,3 +784,23 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261008223949/manifest.json
 - 확인: 배포 후 계획 변경 0. 실게임 동작 미검증
+
+## DEP-20261008235433 — 응답 감정 표정·AMM 제스처 18종·표정/제스처 확인 도구
+
+- 일시: 2026-10-08 23:54:33 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| r6/scripts/ANPC/Expression.reds | 추가 | NpcExpression: 원작 FacialReaction으로 얼굴 표정만 적용(초기화 후 0.5초 뒤), ANPC가 건 표정만 ResetFacial로 복구 | UF-74 응답 감정 표정. 몸·위치·워크스팟을 건드리지 않음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | ExpressionApply·ExpressionReset, 대화 종료·초기화 때 표정 복구, 확인 도구용 DebugPinTarget·DebugMotionTarget·DebugExpression | 세션 NPC(군중·커뮤니티 인물)에 안전 조건에서만 표정 적용 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/expressions.lua | 추가 | emotion → 표정 대응 7종(무표정·미소·긴장·분노·공포·슬픔·관심) | AI 변경 없이 기존 감정값으로 표정 결정 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 응답 감정을 받아 첫 음성 또는 자막 표시 순간 표정 적용 | 표정·자막·음성·제스처 동시 시작 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/prompts.lua | 수정 | 행동 후보의 AMM 제스처 3 → 18종 | 대사에 맞는 동작 선택 폭 확대 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/actions.lua | 수정 | 확인 도구가 고정한 NPC 대상 경로, 재생 가능 제스처 조회 | 대화 밖 제스처 시험 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/devtools.lua | 추가 | 바라보는 NPC 고정·다음 표정·다음 제스처·해제(CET 단축키 `[ANPC 시험]`·오버레이 버튼), 결과 8초 표시 | 실게임 확인 도구 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/init.lua | 수정 | 확인 도구 등록·갱신·표시 | 같음 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/config.lua | 수정 | expression_enabled=true, dev_tools=true | 기능·도구 켜기 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261008235433/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 실게임 동작 미검증
