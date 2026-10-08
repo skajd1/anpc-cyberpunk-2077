@@ -9,7 +9,7 @@ public class NpcVoiceProbe extends IScriptable {
   public let source: String;
   public let recordTag: String;
   public let gender: String;
-  // 목소리를 못 읽었을 때 디버그 창에 보일 컴포넌트 구조(클래스·속성·함수 이름).
+  // 목소리를 못 읽었을 때 디버그 창·CET 로그에 남길 컴포넌트 구조(클래스·속성·함수 이름)와 체형.
   public let detail: String;
 }
 
@@ -18,53 +18,63 @@ public abstract class NpcVoice {
     let probe = new NpcVoiceProbe();
     probe.source = "none";
     if !IsDefined(npc) { return probe; }
-    probe.gender = NameToString(npc.GetResolvedGenderName());
+    probe.gender = NpcVoice.Gender(npc);
     let record = TweakDBInterface.GetCharacterRecord(npc.GetRecordID());
     if IsDefined(record) { probe.recordTag = NpcVoice.Clean(NameToString(record.VoiceTag())); }
     let component = npc.FindComponentByType(n"scnVoicesetComponent");
     if IsDefined(component) {
-      let tag = NpcVoice.Clean(NpcVoice.ComponentTag(component));
+      let trace = "";
+      let tag = NpcVoice.Clean(NpcVoice.ComponentTag(component, trace));
       if StrLen(tag) > 0 { probe.tag = tag; probe.source = "ps"; return probe; }
-      probe.detail = NpcVoice.Describe(component);
+      probe.detail = "읽기:" + trace + " · 체형 " + NameToString(npc.GetBodyType()) + " · " + NpcVoice.Describe(component);
     } else {
-      probe.detail = "scnVoicesetComponent 없음";
+      probe.detail = "scnVoicesetComponent 없음 · 체형 " + NameToString(npc.GetBodyType());
     }
     if StrLen(probe.recordTag) > 0 { probe.tag = probe.recordTag; probe.source = "record"; }
     return probe;
   }
 
-  // 컴포넌트의 상태 객체(GetPS·GetBasePS·persistentState 순)에서 voiceTag를 읽는다.
-  private static func ComponentTag(component: ref<IComponent>) -> String {
+  // 컴포넌트 자신의 voiceTag → 상태 객체(GetPS·GetBasePS·persistentState 순)의 voiceTag. 단계별 결과를 trace에 남긴다.
+  private static func ComponentTag(component: ref<IComponent>, trace: script_ref<String>) -> String {
     let cls = Reflection.GetClassOf(ToVariant(component), true);
-    if !IsDefined(cls) { return ""; }
+    if !IsDefined(cls) { Deref(trace) += " 클래스 없음"; return ""; }
     let own = cls.GetProperty(n"voiceTag");
-    if IsDefined(own) { return NameToString(FromVariant<CName>(own.GetValue(ToVariant(component)))); }
+    if IsDefined(own) {
+      let tag = NameToString(FromVariant<CName>(own.GetValue(ToVariant(component))));
+      Deref(trace) += " 컴포넌트.voiceTag=" + tag;
+      if StrLen(NpcVoice.Clean(tag)) > 0 { return tag; }
+    }
     let psClass = Reflection.GetClass(n"scnVoicesetComponentPS");
-    if !IsDefined(psClass) { return ""; }
-    let tagProp = psClass.GetProperty(n"voiceTag");
-    if !IsDefined(tagProp) { return ""; }
+    let tagProp = IsDefined(psClass) ? psClass.GetProperty(n"voiceTag") : null;
+    if !IsDefined(tagProp) { Deref(trace) += " PS.voiceTag 속성 없음"; return ""; }
     let getters: array<CName> = [n"GetPS", n"GetBasePS"];
     for name in getters {
       let getter = cls.GetFunction(name);
-      if IsDefined(getter) {
+      if !IsDefined(getter) {
+        Deref(trace) += " " + NameToString(name) + " 없음";
+      } else {
         let state = getter.Call(component);
-        if NpcVoice.IsState(state) {
-          let tag = NameToString(FromVariant<CName>(tagProp.GetValue(state)));
-          if StrLen(NpcVoice.Clean(tag)) > 0 { return tag; }
-        }
+        let tag = NpcVoice.StateTag(tagProp, state, NameToString(name), trace);
+        if StrLen(tag) > 0 { return tag; }
       }
     }
     let stateProp = cls.GetProperty(n"persistentState");
-    if IsDefined(stateProp) {
-      let state = stateProp.GetValue(ToVariant(component));
-      if NpcVoice.IsState(state) { return NameToString(FromVariant<CName>(tagProp.GetValue(state))); }
-    }
-    return "";
+    if !IsDefined(stateProp) { Deref(trace) += " persistentState 없음"; return ""; }
+    return NpcVoice.StateTag(tagProp, stateProp.GetValue(ToVariant(component)), "persistentState", trace);
   }
 
-  private static func IsState(value: Variant) -> Bool {
-    let cls = Reflection.GetClassOf(value, true);
-    return IsDefined(cls) && cls.IsA(n"scnVoicesetComponentPS");
+  private static func StateTag(tagProp: ref<ReflectionProp>, state: Variant, label: String, trace: script_ref<String>) -> String {
+    let type = Reflection.GetTypeOf(state);
+    let typeName = IsDefined(type) ? NameToString(type.GetName()) : "없음";
+    let cls = Reflection.GetClassOf(state, true);
+    let className = IsDefined(cls) ? NameToString(cls.GetName()) : "없음";
+    if !IsDefined(cls) || !cls.IsA(n"scnVoicesetComponentPS") {
+      Deref(trace) += " " + label + "=" + typeName + "/" + className;
+      return "";
+    }
+    let tag = NameToString(FromVariant<CName>(tagProp.GetValue(state)));
+    Deref(trace) += " " + label + ".voiceTag=" + tag;
+    return NpcVoice.Clean(tag);
   }
 
   private static func Describe(component: ref<IComponent>) -> String {
@@ -75,6 +85,16 @@ public abstract class NpcVoice {
     text += " · 함수:";
     for fn in cls.GetFunctions() { text += " " + NameToString(fn.GetName()); }
     return text;
+  }
+
+  // Female | Male | "". 군중은 GetResolvedGenderName이 None이라 몸 체형 이름(WomanAverage 등)으로 가른다.
+  public static func Gender(npc: ref<NPCPuppet>) -> String {
+    let resolved = NameToString(npc.GetResolvedGenderName());
+    if Equals(resolved, "Female") || Equals(resolved, "Male") { return resolved; }
+    let body = StrLower(NameToString(npc.GetBodyType()));
+    if StrContains(body, "woman") || StrContains(body, "female") { return "Female"; }
+    if StrContains(body, "man") || StrContains(body, "male") { return "Male"; }
+    return "";
   }
 
   private static func Clean(tag: String) -> String {

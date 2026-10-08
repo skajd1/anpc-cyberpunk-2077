@@ -13,6 +13,8 @@ public class AnpcRequest extends IScriptable {
   // 원작 목소리 이름과 성별(Female/Male). 군중 TTS 참조 음성 선택에 쓴다.
   public let voiceTag: String;
   public let gender: String;
+  // 목소리 이름을 못 읽었을 때 원인 분석용 구조(세션 첫 요청에만).
+  public let voiceDetail: String;
   public let text: String;
   public let context: ref<ContextSnapshot>;
   public let instanceToken: String;
@@ -30,6 +32,7 @@ public class ChatSession extends IScriptable {
   public let crowd: Bool;
   public let voiceTag: String;
   public let gender: String;
+  public let voiceDetail: String;
   public let instanceToken: String;
   // 보류 중인 원작 허브 ID. 군중은 -1.
   public let holdHubId: Int32;
