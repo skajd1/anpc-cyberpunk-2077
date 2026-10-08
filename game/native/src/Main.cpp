@@ -1,6 +1,6 @@
 // ANPC.Native: 개인 API 키 보관(Windows 자격 증명 관리자)과 등록된 AI 제공자로의 비동기 HTTPS 요청.
 // 스크립트(CET/redscript)는 아래 전역 함수만 쓴다. 키 원문을 돌려주는 함수는 두지 않는다.
-// 로그에는 요청 번호·상태·지연·토큰 수만 남기고 요청/응답 본문·키를 남기지 않는다.
+// 로그에는 요청 번호·상태·지연·토큰 수(캐시 적중 포함)만 남기고 요청/응답 본문·키를 남기지 않는다(usage.local.jsonl).
 #include <RED4ext/RED4ext.hpp>
 #include <RedLib.hpp>
 
@@ -10,6 +10,7 @@
 #include "Credentials.hpp"
 #include "HttpWorker.hpp"
 #include "TtsHelper.hpp"
+#include "UsageLog.hpp"
 
 namespace
 {
@@ -67,8 +68,9 @@ int32_t ANPCNative_PollId()
     auto done = anpc::HttpWorker::Poll();
     if (!done)
         return -1;
-    LogInfo(std::format("request #{} status={} elapsed={}ms tokens={}/{}", done->id, done->status, done->elapsedMs,
-                        done->inputTokens, done->outputTokens));
+    LogInfo(std::format("request #{} status={} elapsed={}ms tokens={}/{} cached={}", done->id, done->status, done->elapsedMs,
+                        done->inputTokens, done->outputTokens, done->cachedTokens));
+    anpc::AppendUsage(*done);
     const int32_t id = done->id;
     gReady[id] = std::move(*done);
     return id;

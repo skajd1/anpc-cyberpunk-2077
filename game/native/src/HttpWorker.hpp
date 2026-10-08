@@ -17,6 +17,10 @@ struct CompletedRequest
     std::string text;
     int32_t inputTokens = -1;
     int32_t outputTokens = -1;
+    int32_t cachedTokens = -1;
+    int32_t reasoningTokens = -1;
+    std::string model;
+    uint32_t requestBytes = 0;
     uint32_t elapsedMs = 0;
 };
 

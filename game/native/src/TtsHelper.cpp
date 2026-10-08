@@ -1,4 +1,5 @@
 #include "TtsHelper.hpp"
+#include "UsageLog.hpp"
 
 #include <Windows.h>
 
@@ -26,16 +27,6 @@ std::wstring Widen(const std::string& aText)
     std::wstring result(static_cast<size_t>(size), L'\0');
     MultiByteToWideChar(CP_UTF8, 0, aText.data(), static_cast<int>(aText.size()), result.data(), size);
     return result;
-}
-
-std::filesystem::path PluginDirectory()
-{
-    HMODULE module = nullptr;
-    GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-                       reinterpret_cast<LPCWSTR>(&PluginDirectory), &module);
-    wchar_t path[MAX_PATH * 4]{};
-    GetModuleFileNameW(module, path, static_cast<DWORD>(std::size(path)));
-    return std::filesystem::path(path).parent_path();
 }
 
 // 게임 루트/red4ext/plugins/ANPC → 게임 루트. CET 모드가 보조 프로세스와 주고받는 tts 폴더의 생존 표시를 읽는다.

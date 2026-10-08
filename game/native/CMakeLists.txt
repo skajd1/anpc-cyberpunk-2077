@@ -22,6 +22,7 @@ add_library(ANPC.Native SHARED
   src/HttpWorker.cpp
   src/Provider.cpp
   src/TtsHelper.cpp
+  src/UsageLog.cpp
 )
 target_link_libraries(ANPC.Native PRIVATE RED4ext::SDK RedLib nlohmann_json::nlohmann_json winhttp advapi32)
 target_compile_options(ANPC.Native PRIVATE /W4 /utf-8 /permissive- /Zc:__cplusplus)

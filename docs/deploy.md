@@ -15,7 +15,7 @@
 | `game/cet/anpc/` | `bin/x64/plugins/cyber_engine_tweaks/mods/anpc/` | `anpc.log`·`db.sqlite3`·`tts/` 등 실행 중 생기는 파일은 관리하지 않는다 |
 | `game/redscript/ANPC/` | `r6/scripts/ANPC/` | 바뀌면 시험 컴파일(DIST-25) 후 배포 |
 | `game/audioware/ANPC/` | `r6/audioware/ANPC/` | `slots/*.wav`는 TTS 보조 프로세스가 덮어쓰므로 없을 때만 설치 |
-| `game/red4ext/ANPC/` | `red4ext/plugins/ANPC/` | Native 플러그인의 로컬 설정(`*.local.json`, Git 제외)만 둔다. 예: TTS 보조 프로세스 실행 명령 `tts-helper.local.json`(command·args·cwd·env·log). Native DLL 자체는 `-NativeDll`로만 바꾼다 |
+| `game/red4ext/ANPC/` | `red4ext/plugins/ANPC/` | Native 플러그인의 로컬 설정(`*.local.json`, Git 제외)만 둔다. 예: TTS 보조 프로세스 실행 명령 `tts-helper.local.json`(command·args·cwd·env·log). Native DLL 자체는 `-NativeDll`로만 바꾼다. 실행 중 생기는 `usage.local.jsonl`(요청별 지연·토큰 기록)은 관리하지 않는다 |
 | `game/archive/` | `archive/pc/mod/` | 원작 자원으로 이 PC에서 만든 로컬 빌드 아카이브(`*.local.archive`, Git 제외)만 둔다. 예: UF-75 말하기 입모양 `ANPC_talk.local.archive`. 폴더가 없으면 건너뛴다 |
 | `-NativeDll`로 지정한 빌드 DLL | `red4ext/plugins/ANPC/ANPC.Native.dll` | 지정하지 않으면 건드리지 않는다 |
 

@@ -197,6 +197,9 @@ CompletedRequest Execute(const Job& aJob)
         done.text = std::move(parsed.text);
         done.inputTokens = parsed.inputTokens;
         done.outputTokens = parsed.outputTokens;
+        done.cachedTokens = parsed.cachedTokens;
+        done.reasoningTokens = parsed.reasoningTokens;
+        done.model = std::move(parsed.model);
     }
     return done;
 }
@@ -217,6 +220,7 @@ void WorkerLoop()
 
         const auto started = Clock::now();
         auto done = Execute(job);
+        done.requestBytes = static_cast<uint32_t>(job.body.size());
         done.elapsedMs = static_cast<uint32_t>(
             std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - started).count());
         SecureZeroMemory(job.body.data(), job.body.size());
