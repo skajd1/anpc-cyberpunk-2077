@@ -25,7 +25,8 @@
     "story-progression-policy.json",
     "dialogue-preparation.json",
     "crowd-archetypes.json",
-    "ja-reading-table.json"
+    "ja-reading-table.json",
+    "ja-voice-profiles.json"
   ],
   "counts": {
     "characters": 12,

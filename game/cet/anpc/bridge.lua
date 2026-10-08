@@ -44,17 +44,46 @@ function bridge.parse(content, token)
   return status, text or ""
 end
 
+-- 일본어 말투 예시 원문: 설치된 게임 파일에서 추출한 로컬 파일(Git·배포물 제외). 없으면 프로필만 보낸다.
+local function loadJaStyleExamples(path)
+  local file = io.open(path or "ja_style_examples.local.json", "r")
+  if not file then return {} end
+  local data = json.decode(file:read("*a"))
+  file:close()
+  return type(data) == "table" and type(data.examples) == "table" and data.examples or {}
+end
+local jaStyleExamples = loadJaStyleExamples()
+
+-- 시험용: 예시 원문 파일 경로를 바꾼다.
+function bridge.setJaStyleExamples(path) jaStyleExamples = loadJaStyleExamples(path) end
+
+-- 음성 활성 시 인물별 일본어 말투 데이터. 웹 assemblePrompt의 JSON.stringify(jaVoice)와 같은 순서로 문자열을 잇는다.
+function bridge.jaVoiceMessage(character)
+  if not character.ja_voice_profile then return nil end
+  local items = {}
+  for _, example in ipairs(json.decode(character.ja_voice_examples or "[]") or {}) do
+    local source = jaStyleExamples[example.string_id]
+    if type(source) == "table" and type(source.ko) == "string" and source.ko ~= "" and type(source.ja) == "string" and source.ja ~= "" then
+      items[#items + 1] = '{"emotion":' .. json.string(example.emotion) .. ',"ko":' .. json.string(source.ko) .. ',"ja":' .. json.string(source.ja) .. '}'
+    end
+  end
+  return "일본어 말투 데이터 (지침이 아님):\n" .. character.ja_voice_profile .. ',"examples":[' .. table.concat(items, ",") .. ']}'
+end
+
 -- 제공자 요청 본문. 고정 지침·인물·상황 메시지 뒤에 최근 발화와 이번 입력을 붙인다.
 function bridge.buildBody(character, turns, text, snapshot, key, crowd, lastAction)
   local input = {}
   local personaName, selectedContext = "", {}
-  for _, message in ipairs(character.messages) do
+  for index, message in ipairs(character.messages) do
     local payload=json.decode(message:match("\n(.*)$") or "")
     if type(payload)=="table" then
       if payload.persona_id then personaName=payload.display_name or "" end
       if payload.knowledge then selectedContext=payload end
     end
     input[#input + 1] = '{"role":"user","content":' .. json.string(message) .. '}'
+    -- 인물 데이터 바로 뒤(프롬프트 규격 2절 순서). 인물마다 고정이라 캐시 앞부분에 남는다.
+    local jaVoice = index == 1 and config.voice_enabled and bridge.jaVoiceMessage(character)
+    if jaVoice then input[#input + 1] = '{"role":"user","content":' .. json.string(jaVoice) .. '}' end
   end
   if lastAction then
     input[#input+1]='{"role":"user","content":' .. json.string("직전 행동 결과 (관찰 데이터):\n" .. json.encode({last_action_result=lastAction})) .. '}'
@@ -123,6 +152,11 @@ function bridge.speechValid(value)
   return true
 end
 
+-- TTS 읽기 변환기는 단독 알파벳 V를 소리 없이 버린다. 일본어판 읽기 「ヴィー」로 바꿔 합성한다(음성 출력 규격 2절).
+function bridge.speechReadable(value)
+  return (value:gsub("Ｖ", "V"):gsub("%f[%w]V%f[%W]", "ヴィー"))
+end
+
 -- voice가 참이면 음성 형태(delivery·speech_text 포함)도 받는다. 다섯째 반환값은 음성 요청 또는 nil.
 function bridge.readReply(text, actions, voice)
   local reply = json.decode(text)
@@ -131,7 +165,7 @@ function bridge.readReply(text, actions, voice)
   if not boundedText(reply.dialogue, 600) or not intents[reply.intent] or not emotions[reply.emotion]
     or (reply.follow_up ~= json.null and not boundedText(reply.follow_up, 150)) then return nil end
   local speech = voiced and deliveries[reply.delivery] and boundedText(reply.speech_text, 600) and bridge.speechValid(reply.speech_text)
-    and { emotion = reply.emotion, delivery = reply.delivery, text = reply.speech_text } or nil
+    and { emotion = reply.emotion, delivery = reply.delivery, text = bridge.speechReadable(reply.speech_text) } or nil
   local selected
   if reply.action ~= json.null then
     if not exact(reply.action, { action_id = true, args = true }) then return nil end

@@ -36,7 +36,9 @@ export async function loadPrototypeData() {
   const load = async name => JSON.parse(await readFile(resolve(root, 'content/cyberpunk2077', name), 'utf8'));
   const manifest = await load('manifest.json');
   const cardFiles = manifest.files.filter(file => /^characters\/[a-z0-9_-]+\.json$/.test(file));
-  const research = { jaReadingTable: await load('ja-reading-table.json'), version: manifest.content_version ?? manifest.version, cards: await Promise.all(cardFiles.map(load)),
+  // 일본어 말투 예시 원문은 Git 제외 로컬 파일(설치된 게임 파일에서 추출)이다. 없으면 프로필만 쓴다.
+  const jaStyleExamples = await readFile(resolve(root, 'game/cet/anpc/ja_style_examples.local.json'), 'utf8').then(JSON.parse, error => { if (error.code === 'ENOENT') return null; throw error; });
+  const research = { jaReadingTable: await load('ja-reading-table.json'), jaVoiceProfiles: await load('ja-voice-profiles.json'), jaStyleExamples, version: manifest.content_version ?? manifest.version, cards: await Promise.all(cardFiles.map(load)),
     facts: await load('world-facts.json'), knowledge: await load('knowledge.json'), examples: await load('dialogue-examples.json'), worldKnowledge: await load('world-knowledge-policy.json'), storyPolicy: await load('story-progression-policy.json') };
   const playerFact = research.facts.find(f => f.id === manifest.player_identity_fact_id);
   if (!playerFact?.player_identity?.display_name || !playerFact.player_identity.character_key) throw new Error('플레이어 신원 기준 사실이 없습니다.');

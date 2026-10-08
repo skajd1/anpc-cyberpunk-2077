@@ -9,6 +9,7 @@ import { buildIdentityData } from './cet-identity-data.mjs';
 import { AMM_MOTIONS } from '../prototype/public/motions.js';
 import { buildGameStoryData } from './game-story-data.mjs';
 import { assemblePrompt, responseSchema, PROMPT_VERSION, SELECTION_ACTIONS, validatePersona } from '../prototype/public/core.js';
+import { jaVoiceData } from '../prototype/public/speech.js';
 
 const data = await loadPrototypeData();
 const bundle = withTestCrowds(data.research, data.personas);
@@ -52,8 +53,12 @@ for (const key of KEYS) {
   const instructions = data.base + '\n게임 상태는 매 입력의 현재 게임 데이터만 기준으로 삼는다. 단계·관계 unknown은 처음 만남이라는 뜻이 아니다. 확인되지 않은 원작 관계·진행·비밀은 인정하거나 부정하지 않는다. player_identity.name_known_by_npc=true일 때만 V라는 이름으로 부른다. game_identity는 이 NPC의 현재 게임상 표시 신원이며 군중의 생성 배경보다 우선한다. 표시 이름이 시민·직업 같은 범주명이면 개인 실명으로 단정하지 않는다. 소속만으로 직책·거주·전문 자격·사적 관계를 만들지 않는다. 표시 특성은 게임 능력이며 성격 점수나 실행 가능한 행동을 추가하는 근거가 아니다. 현재 우호/중립/적대 표시는 사적인 친밀도가 아니다. 자료에서 모르는 정보는 실제로 없다는 뜻이 아니며 모드의 확인·검수 상태를 대사로 설명하지 않는다.';
   const prompt = assemblePrompt(instructions, persona, context, '');
   // 마지막 항목은 빈 플레이어 입력이다. 최근 대화가 없으므로 나머지가 고정 메시지다.
+  // 일본어 말투: 프로필 JSON의 앞부분과 예시 string_id만 둔다. 예시 원문은 CET가 로컬 파일에서 채운다(원작 대사를 생성 파일에 넣지 않음).
+  const jaVoice = jaVoiceData(data.research.jaVoiceProfiles, null, key);
+  const { examples: _, ...jaFields } = jaVoice ?? {};
   characters[key] = { instructions: prompt.instructions, messages: prompt.input.slice(0, -1).map(m => m.content),
-    actions };
+    actions, ...(jaVoice ? { jaVoiceProfile: JSON.stringify(jaFields).slice(0, -1),
+      jaVoiceExamples: JSON.stringify(data.research.jaVoiceProfiles.profiles.find(p => p.character_key === key).examples) } : {}) };
 }
 
 function long(text) {
@@ -97,6 +102,10 @@ for (const [key, value] of Object.entries(characters)) {
   lines.push(`    ${key} = {`);
   lines.push(`      instructions = ${long(value.instructions)},`);
   lines.push(`      actions = ${long(JSON.stringify(value.actions))},`);
+  if (value.jaVoiceProfile) {
+    lines.push(`      ja_voice_profile = ${long(value.jaVoiceProfile)},`);
+    lines.push(`      ja_voice_examples = ${long(value.jaVoiceExamples)},`);
+  }
   lines.push('      messages = {');
   for (const message of value.messages) lines.push(`        ${long(message)},`);
   lines.push('      },');

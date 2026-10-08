@@ -10,3 +10,4 @@ build/
 .idea/
 __pycache__/
 *.pyc
+game/cet/anpc/*.local.json

@@ -31,7 +31,8 @@ DialogueReply의 구조화 출력 필드 순서는 `emotion → delivery → dia
 
 speech_text 작성 규칙:
 
-- 의미 보존·구어 변환·인칭/호칭과 읽기 선별은 [프롬프트 규격](prompt-specification.md)의 일본어 생성 규칙을 따른다.
+- 의미 보존·구어 변환·인칭/호칭과 읽기 선별은 [프롬프트 규격](prompt-specification.md)의 일본어 생성 규칙을 따른다. 인물별 인칭·호칭·어미·욕설 강도는 [콘텐츠 규격](content-specification.md)의 ja_voice_profiles를 기준으로 한다.
+- TTS 읽기 변환기는 단독 알파벳 V(전각 Ｖ 포함)를 읽지 않으므로, 합성 직전에 단어 경계의 V를 「ヴィー」로 바꾼다. 자막은 바꾸지 않는다.
 - 실제로 읽을 말만 쓴다. 지문·괄호 설명·마크다운·이모지·속도 지시·한글을 넣지 않는다.
 - 고유명사는 [콘텐츠 규격](content-specification.md#2-커뮤니티-캐릭터-카드)의 ja_reading_table에서 승인되고 현재 요청에 선택된 reading(가나)으로 쓴다. 읽기가 여러 개인 한자는 가나로 쓴다. V는 일본어판 공식 표기 「V（ヴィー）」에 따라 「ヴィー」로 쓴다.
 

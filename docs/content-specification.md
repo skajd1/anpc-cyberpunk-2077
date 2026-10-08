@@ -1,6 +1,6 @@
 # 콘텐츠 데이터 규격
 
-규격 버전: 0.6 (2026-10-07). 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
+규격 버전: 0.7 (2026-10-08). 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
 
 신규 성격은 [Big Five 규격](personality-specification.md). 기존 identity/군중 세 슬롯은 호환 입력이며 신규 성격과 동시 적용·자동 환산 금지. 구현 상태: [개발·검증 계획](development-validation.md).
 
@@ -64,6 +64,7 @@ source_checked는 출처 확인만 의미한다. draft 카드/규칙/예시/인�
 - 선택 필드 누락은 창작 경험으로 보충하지 않는다. 창작은 provenance/허용 변경 범위 명시. speech_rules 중복은 voice_style로 통합.
 - UF-63의 욕설/성인 유머는 speech_rules.slang_density/humor_and_profanity_limit와 voice_style.direction에서 인물별로 작성한다. 조니 등 거친 인물과 절제된 인물의 강도를 구별한다. 군중 voice_styles의 speech_rules는 선택한 말투와 함께 유지하며 Big Five/원칙/지식/관계를 바꾸지 않는다. 성인 여부·비노골적 범위·상대 반응은 공통 말투 지침을 따른다.
 - 일본어 음성 표기표는 패키지 단위 ja_reading_table(`ja-reading-table.json`)이다. 항목은 term(한국어 표기)·ja_display(일본어판 공식 표기)·reading(TTS가 읽을 가나)·review_status·source_ids(sources.json의 출처 ID, 1개 이상)이며 인물·지역·기업·은어 고유명사를 담는다. approved는 1차(primary) 출처로 확인한 항목만 쓴다. speech_text 생성 지침과 검사에 쓰며 자막 표기를 바꾸지 않는다.
+- 인물별 일본어 말투는 패키지 단위 ja_voice_profiles(`ja-voice-profiles.json`)다. 항목은 character_key·voice_profile_id·review_status·first_person·address_v·sentence_endings(필수, 1개 이상)·interjections·politeness·profanity·avoid·style_notes·evidence(source_ids·line_count·counts)·examples다. 근거는 원작 일본어 더빙 대사의 집계이며 counts는 그 수치다. examples는 원작 대사의 string_id·emotion만 인물당 6개 이하로 두고, 한국어 자막·일본어 대사 원문은 저장소·배포물에 넣지 않는다. 원문은 사용자 PC의 설치된 게임 파일에서 추출한 로컬 파일로만 채운다([DIST-24](mod-distribution-specification.md#1-배포-범위와-소유권)). 예시는 말투 참고용으로 줄거리·관계를 드러내지 않는 일상 대사에서 고른다. 음성 활성 요청에만 [프롬프트 규격 6절](prompt-specification.md#6-턴별-생성-절차)대로 전달한다.
 - 화면 presentation.role은 짧은 역할, identity_slots는 원본 identity 목록 키의 비어 있지 않은 짧은 문자열 목록. 누락 슬롯은 원문 표시. 새 특성/관계 추가 및 생성/승인 권한 변경 금지. 신규 성격은 다섯 수준 표시.
 
 ### 2.1. 오리지널 관계 단계
