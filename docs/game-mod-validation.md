@@ -875,3 +875,18 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009021528/manifest.json
 - 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 직전 게임 종료 때 TTS 보조 프로세스 동반 종료 확인. 실게임 표정·입모양 미검증
+
+## DEP-20261009023015 — 입모양 소리 구간 연동과 종료 시 닫기
+
+- 일시: 2026-10-09 02:30:15 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/bridge.lua | 수정 | 구간 알림의 소리 구간(talk)을 읽어 재생 위치에 맞춰 입 열기·닫기, 메뉴로 음성이 멈추면 닫기, 진단 창에 입모양 구간 수 표시 | 말하는 중 쉼과 음성이 끝난 뒤에도 입이 움직이던 문제 해결. talk가 없으면 구간 전체를 소리로 봄 |
+| bin/x64/plugins/cyber_engine_tweaks/mods/anpc/expressions.lua | 수정 | talkBegin·talkOpen·talkPause와 소리 구간 판단(0.05초 먼저 열기, 0.2초 미만 쉼 연결) | 같음 |
+| r6/scripts/ANPC/Entry.reds | 수정 | TalkStart를 TalkBegin·TalkOpen·TalkPause로 분리, 확인 도구 말하기는 변형 전환 | 같음 |
+| r6/scripts/ANPC/Expression.reds | 수정 | 입 닫기·감정 표정 복귀를 ResetFacial 경유로 변경(복귀 0.5초 뒤, 감정 표정이 보일 때 입 열기 0.3초 뒤) | 말하기 표정에서 감정 표정으로 바로 바꾸면 무시돼 입이 계속 움직이던 문제 해결 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261009023015/manifest.json
+- 확인: scripts/check-redscript.ps1 통과(Audioware 있음·없음). 소리 구간을 보내는 TTS 보조 프로세스(게임 폴더 밖)와 함께 동작. 실게임 동작 미검증
