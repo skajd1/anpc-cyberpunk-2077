@@ -1,6 +1,7 @@
+import { selectReadings } from './speech.js';
 import { validateCorePersonality, personalityInstructions, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
 import { AMM_MOTIONS } from './motions.js';
-export const PROMPT_VERSION = '0.19';
+export const PROMPT_VERSION = '0.20';
 export const INTENTS = ['answer', 'ask', 'refuse', 'warn', 'farewell'];
 export const EMOTIONS = ['neutral', 'friendly', 'wary', 'annoyed', 'afraid', 'sad', 'curious'];
 // 음성 활성 응답의 말 빠르기. 세부 규칙은 docs/npc-voice-output-specification.md 2절.
@@ -66,9 +67,8 @@ const speechValid = text => !/[가-힣ㄱ-ㆎ[\]()（）*_#`]/.test(text);
 export function validateReply(raw, allowed, persona, { voice = false } = {}) {
   const textKeys = ['dialogue', 'intent', 'emotion', 'action', 'follow_up'];
   if (!exact(raw, voice ? [...textKeys, 'delivery', 'speech_text'] : textKeys)) throw new Error('invalid_response');
-  if (voice && (!DELIVERIES.includes(raw.delivery) || !text(raw.speech_text, 600))) throw new Error('invalid_response');
   const reply = Object.fromEntries(textKeys.map(key => [key, raw[key]]));
-  const speech = voice && speechValid(raw.speech_text) ? { delivery: raw.delivery, text: raw.speech_text } : null;
+  const speech = voice && DELIVERIES.includes(raw.delivery) && text(raw.speech_text, 600) && speechValid(raw.speech_text) ? { delivery: raw.delivery, text: raw.speech_text } : null;
   const speechError = voice && !speech ? 'speech_text_invalid' : null;
   if (!text(reply.dialogue, 600) || !INTENTS.includes(reply.intent) || !EMOTIONS.includes(reply.emotion) || !(reply.follow_up === null || text(reply.follow_up, 150))) throw new Error('invalid_response');
   let actionValid = reply.action === null;
@@ -87,7 +87,7 @@ export function validateReply(raw, allowed, persona, { voice = false } = {}) {
   return { reply: clone(reply), warning: null, speech, speechError };
 }
 
-export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null, voice = false } = {}) {
+export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null, voice = false, readingTable = null } = {}) {
   // 전체 스키마는 제공자의 구조화 출력 설정으로 전달한다. 본문에는 필드의 의미만 둔다.
   const contract = voice
     ? `출력 필드(이 순서): emotion(${EMOTIONS.join('|')}), delivery(${DELIVERIES.join('|')} 말 빠르기), dialogue(실제 대사. follow_up과 합쳐 45자 이내), follow_up(후속 질문 또는 null), speech_text(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사, 1~600자), intent(${INTENTS.join('|')}), action(허용 후보의 action_id·args 또는 null).`
@@ -113,6 +113,7 @@ export function assemblePrompt(base, persona, context, playerText, { styleExampl
     requestPersona = fixed;
   }
   const { prototype_memory, recent_turns = [], ...requestContext } = context;
+  if (voice) requestContext.ja_readings = selectReadings(readingTable, playerText, persona.display_name, context);
   return {
     instructions,
     input: [

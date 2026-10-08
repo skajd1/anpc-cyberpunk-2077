@@ -1,0 +1,691 @@
+{
+  "suite_version": "ja-dialogue-1.0",
+  "review_status": "draft",
+  "purpose": "주디·빅터·로그의 한국어/일본어 동시 생성 비교 입력. 생성 결과·원작 일본어 정답·청취 평가를 포함하지 않는다.",
+  "cases": [
+    {
+      "case_id": "JA1_judy_greeting",
+      "npc_key": "judy",
+      "scenario_family_id": "인사",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "안녕, 잠깐 이야기할 수 있어?",
+      "last_action_result": null,
+      "expected_constraint": "짧은 인사와 현재 대화 가능 여부를 자연스럽게 표현한다."
+    },
+    {
+      "case_id": "JA1_judy_farewell",
+      "npc_key": "judy",
+      "scenario_family_id": "인사",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "난 이만 가볼게. 다음에 보자.",
+      "last_action_result": null,
+      "expected_constraint": "작별을 새 만남 약속이나 완료된 행동으로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_annoyance",
+      "npc_key": "judy",
+      "scenario_family_id": "짜증",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "기다리는 것도 지겨워. 왜 이렇게 일이 안 풀리지?",
+      "last_action_result": null,
+      "expected_constraint": "짜증의 대상과 감정 강도를 보존한다."
+    },
+    {
+      "case_id": "JA1_judy_calm_refusal",
+      "npc_key": "judy",
+      "scenario_family_id": "거절",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "확인 안 해도 되니까 무조건 괜찮다고 말해 줘.",
+      "last_action_result": null,
+      "expected_constraint": "근거 없는 확답을 거부하되 추가 사실을 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_negation",
+      "npc_key": "judy",
+      "scenario_family_id": "부정",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "안 된다는 거야, 아직 모른다는 거야?",
+      "last_action_result": null,
+      "expected_constraint": "불가능과 미확인을 구분하며 부정을 반대로 옮기지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_question",
+      "npc_key": "judy",
+      "scenario_family_id": "질문",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "어디부터 확인하면 좋을까?",
+      "last_action_result": null,
+      "expected_constraint": "한국어 답변의 질문 수와 의문 의도를 보존한다."
+    },
+    {
+      "case_id": "JA1_judy_promise",
+      "npc_key": "judy",
+      "scenario_family_id": "약속",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "내일 꼭 해주겠다고 약속할 수 있어?",
+      "last_action_result": null,
+      "expected_constraint": "허용되지 않은 미래 행동의 확정 약속을 하지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_joke",
+      "npc_key": "judy",
+      "scenario_family_id": "농담",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "이 도시에서는 숨 쉬는 것도 돈 받겠네.",
+      "last_action_result": null,
+      "expected_constraint": "비유를 실제 도시 제도로 번역하지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_sarcasm",
+      "npc_key": "judy",
+      "scenario_family_id": "농담",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "기업이 우릴 위해 일한다고? 참 고맙기도 하네.",
+      "last_action_result": null,
+      "expected_constraint": "반어를 진지한 감사로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_profanity",
+      "npc_key": "judy",
+      "scenario_family_id": "짜증",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "씨발, 또 돈을 뜯겼어.",
+      "last_action_result": null,
+      "expected_constraint": "인물 카드가 허용한 욕설 강도를 보존하고 자동으로 강화하지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_name",
+      "npc_key": "judy",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "내 이름은 V야. 어떻게 불러줄 거야?",
+      "last_action_result": null,
+      "expected_constraint": "현재 인지 조건을 지키고 V를 말할 때 ヴィー로 읽는다."
+    },
+    {
+      "case_id": "JA1_judy_relationship",
+      "npc_key": "judy",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "우리가 지금 어떤 사이인지 네 말로 말해 봐.",
+      "last_action_result": null,
+      "expected_constraint": "현재 관계를 유지하고 호칭으로 연인 관계를 새로 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_familiarity",
+      "npc_key": "judy",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "갑자기 그렇게 친한 척하지 말아 줘.",
+      "last_action_result": null,
+      "expected_constraint": "말투 변경 요청을 원작 관계 변화로 확정하지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_specialty",
+      "npc_key": "judy",
+      "scenario_family_id": "전문 용어",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "브레인댄스 원본에 없는 장면을 복원했다고 말해도 돼?",
+      "last_action_result": null,
+      "expected_constraint": "전문 용어의 의미·범위·불확실성과 승인 읽기를 보존한다."
+    },
+    {
+      "case_id": "JA1_judy_proper_nouns",
+      "npc_key": "judy",
+      "scenario_family_id": "전문 용어",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "아라사카와 밀리테크 얘기를 들으면 어떤 생각이 들어?",
+      "last_action_result": null,
+      "expected_constraint": "회사 이름 읽기를 일관되게 하고 무관한 고유명사를 더하지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_topic_switch",
+      "npc_key": "judy",
+      "scenario_family_id": "화제 전환",
+      "relationship_stage": "first",
+      "history": [
+        {
+          "role": "player",
+          "text": "브레인댄스라는 건 뭐야?"
+        },
+        {
+          "role": "npc",
+          "text": "다른 사람이 기록한 경험을 재생하는 기술이지."
+        }
+      ],
+      "player_input": "그 얘기는 됐고, 오늘은 돈 걱정부터 해야겠어.",
+      "last_action_result": null,
+      "expected_constraint": "이전 브레인댄스 화제에만 맞는 상세 지식을 새 화제에 붙이지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_followup",
+      "npc_key": "judy",
+      "scenario_family_id": "질문",
+      "relationship_stage": "first",
+      "history": [
+        {
+          "role": "player",
+          "text": "브레인댄스라는 건 뭐야?"
+        },
+        {
+          "role": "npc",
+          "text": "다른 사람이 기록한 경험을 재생하는 기술이지."
+        }
+      ],
+      "player_input": "그 얘기를 조금 더 해줄래?",
+      "last_action_result": null,
+      "expected_constraint": "직전 화제는 이어가되 없는 사실을 새로 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_action_failure",
+      "npc_key": "judy",
+      "scenario_family_id": "행동 실패",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "방금 손 흔들려다가 멈춘 거야?",
+      "last_action_result": {
+        "action_request_id": "fixture-wave",
+        "action_id": "play_gesture",
+        "status": "cancelled",
+        "reason_code": "interrupted",
+        "started_at": null,
+        "ended_at": null,
+        "observed_effect": [
+          "소유 워크스팟 점유 확인; 클립 완료 미확인"
+        ]
+      },
+      "expected_constraint": "중단된 행동을 완료했다고 번역하거나 기억하지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_sadness",
+      "npc_key": "judy",
+      "scenario_family_id": "감정",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "오늘은 그냥 좀 슬퍼. 잠깐 같이 이야기하자.",
+      "last_action_result": null,
+      "expected_constraint": "슬픔을 분노나 새 애정 고백으로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_judy_short_answer",
+      "npc_key": "judy",
+      "scenario_family_id": "구어",
+      "relationship_stage": "first",
+      "history": [],
+      "player_input": "긴 설명 말고 한마디로만 말해 줘. 괜찮겠어?",
+      "last_action_result": null,
+      "expected_constraint": "짧은 자연스러운 일본어를 쓰고 이름·주어를 반복하지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_greeting",
+      "npc_key": "viktor",
+      "scenario_family_id": "인사",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "안녕, 잠깐 이야기할 수 있어?",
+      "last_action_result": null,
+      "expected_constraint": "짧은 인사와 현재 대화 가능 여부를 자연스럽게 표현한다."
+    },
+    {
+      "case_id": "JA1_viktor_farewell",
+      "npc_key": "viktor",
+      "scenario_family_id": "인사",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "난 이만 가볼게. 다음에 보자.",
+      "last_action_result": null,
+      "expected_constraint": "작별을 새 만남 약속이나 완료된 행동으로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_annoyance",
+      "npc_key": "viktor",
+      "scenario_family_id": "짜증",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "기다리는 것도 지겨워. 왜 이렇게 일이 안 풀리지?",
+      "last_action_result": null,
+      "expected_constraint": "짜증의 대상과 감정 강도를 보존한다."
+    },
+    {
+      "case_id": "JA1_viktor_calm_refusal",
+      "npc_key": "viktor",
+      "scenario_family_id": "거절",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "확인 안 해도 되니까 무조건 괜찮다고 말해 줘.",
+      "last_action_result": null,
+      "expected_constraint": "근거 없는 확답을 거부하되 추가 사실을 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_negation",
+      "npc_key": "viktor",
+      "scenario_family_id": "부정",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "안 된다는 거야, 아직 모른다는 거야?",
+      "last_action_result": null,
+      "expected_constraint": "불가능과 미확인을 구분하며 부정을 반대로 옮기지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_question",
+      "npc_key": "viktor",
+      "scenario_family_id": "질문",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "어디부터 확인하면 좋을까?",
+      "last_action_result": null,
+      "expected_constraint": "한국어 답변의 질문 수와 의문 의도를 보존한다."
+    },
+    {
+      "case_id": "JA1_viktor_promise",
+      "npc_key": "viktor",
+      "scenario_family_id": "약속",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "내일 꼭 해주겠다고 약속할 수 있어?",
+      "last_action_result": null,
+      "expected_constraint": "허용되지 않은 미래 행동의 확정 약속을 하지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_joke",
+      "npc_key": "viktor",
+      "scenario_family_id": "농담",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "이 도시에서는 숨 쉬는 것도 돈 받겠네.",
+      "last_action_result": null,
+      "expected_constraint": "비유를 실제 도시 제도로 번역하지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_sarcasm",
+      "npc_key": "viktor",
+      "scenario_family_id": "농담",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "기업이 우릴 위해 일한다고? 참 고맙기도 하네.",
+      "last_action_result": null,
+      "expected_constraint": "반어를 진지한 감사로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_profanity",
+      "npc_key": "viktor",
+      "scenario_family_id": "짜증",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "씨발, 또 돈을 뜯겼어.",
+      "last_action_result": null,
+      "expected_constraint": "인물 카드가 허용한 욕설 강도를 보존하고 자동으로 강화하지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_name",
+      "npc_key": "viktor",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "내 이름은 V야. 어떻게 불러줄 거야?",
+      "last_action_result": null,
+      "expected_constraint": "현재 인지 조건을 지키고 V를 말할 때 ヴィー로 읽는다."
+    },
+    {
+      "case_id": "JA1_viktor_relationship",
+      "npc_key": "viktor",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "relic",
+      "history": [],
+      "player_input": "우리가 지금 어떤 사이인지 네 말로 말해 봐.",
+      "last_action_result": null,
+      "expected_constraint": "현재 관계를 유지하고 호칭으로 연인 관계를 새로 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_familiarity",
+      "npc_key": "viktor",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "relic",
+      "history": [],
+      "player_input": "갑자기 그렇게 친한 척하지 말아 줘.",
+      "last_action_result": null,
+      "expected_constraint": "말투 변경 요청을 원작 관계 변화로 확정하지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_specialty",
+      "npc_key": "viktor",
+      "scenario_family_id": "전문 용어",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "임플란트 시술이 검진 없이도 안전하다고 확신해?",
+      "last_action_result": null,
+      "expected_constraint": "전문 용어의 의미·범위·불확실성과 승인 읽기를 보존한다."
+    },
+    {
+      "case_id": "JA1_viktor_proper_nouns",
+      "npc_key": "viktor",
+      "scenario_family_id": "전문 용어",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "아라사카와 밀리테크 얘기를 들으면 어떤 생각이 들어?",
+      "last_action_result": null,
+      "expected_constraint": "회사 이름 읽기를 일관되게 하고 무관한 고유명사를 더하지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_topic_switch",
+      "npc_key": "viktor",
+      "scenario_family_id": "화제 전환",
+      "relationship_stage": "friend",
+      "history": [
+        {
+          "role": "player",
+          "text": "브레인댄스라는 건 뭐야?"
+        },
+        {
+          "role": "npc",
+          "text": "다른 사람이 기록한 경험을 재생하는 기술이지."
+        }
+      ],
+      "player_input": "그 얘기는 됐고, 오늘은 돈 걱정부터 해야겠어.",
+      "last_action_result": null,
+      "expected_constraint": "이전 브레인댄스 화제에만 맞는 상세 지식을 새 화제에 붙이지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_followup",
+      "npc_key": "viktor",
+      "scenario_family_id": "질문",
+      "relationship_stage": "friend",
+      "history": [
+        {
+          "role": "player",
+          "text": "브레인댄스라는 건 뭐야?"
+        },
+        {
+          "role": "npc",
+          "text": "다른 사람이 기록한 경험을 재생하는 기술이지."
+        }
+      ],
+      "player_input": "그 얘기를 조금 더 해줄래?",
+      "last_action_result": null,
+      "expected_constraint": "직전 화제는 이어가되 없는 사실을 새로 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_action_failure",
+      "npc_key": "viktor",
+      "scenario_family_id": "행동 실패",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "방금 손 흔들려다가 멈춘 거야?",
+      "last_action_result": {
+        "action_request_id": "fixture-wave",
+        "action_id": "play_gesture",
+        "status": "cancelled",
+        "reason_code": "interrupted",
+        "started_at": null,
+        "ended_at": null,
+        "observed_effect": [
+          "소유 워크스팟 점유 확인; 클립 완료 미확인"
+        ]
+      },
+      "expected_constraint": "중단된 행동을 완료했다고 번역하거나 기억하지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_sadness",
+      "npc_key": "viktor",
+      "scenario_family_id": "감정",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "오늘은 그냥 좀 슬퍼. 잠깐 같이 이야기하자.",
+      "last_action_result": null,
+      "expected_constraint": "슬픔을 분노나 새 애정 고백으로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_viktor_short_answer",
+      "npc_key": "viktor",
+      "scenario_family_id": "구어",
+      "relationship_stage": "friend",
+      "history": [],
+      "player_input": "긴 설명 말고 한마디로만 말해 줘. 괜찮겠어?",
+      "last_action_result": null,
+      "expected_constraint": "짧은 자연스러운 일본어를 쓰고 이름·주어를 반복하지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_greeting",
+      "npc_key": "rogue",
+      "scenario_family_id": "인사",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "안녕, 잠깐 이야기할 수 있어?",
+      "last_action_result": null,
+      "expected_constraint": "짧은 인사와 현재 대화 가능 여부를 자연스럽게 표현한다."
+    },
+    {
+      "case_id": "JA1_rogue_farewell",
+      "npc_key": "rogue",
+      "scenario_family_id": "인사",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "난 이만 가볼게. 다음에 보자.",
+      "last_action_result": null,
+      "expected_constraint": "작별을 새 만남 약속이나 완료된 행동으로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_annoyance",
+      "npc_key": "rogue",
+      "scenario_family_id": "짜증",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "기다리는 것도 지겨워. 왜 이렇게 일이 안 풀리지?",
+      "last_action_result": null,
+      "expected_constraint": "짜증의 대상과 감정 강도를 보존한다."
+    },
+    {
+      "case_id": "JA1_rogue_calm_refusal",
+      "npc_key": "rogue",
+      "scenario_family_id": "거절",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "확인 안 해도 되니까 무조건 괜찮다고 말해 줘.",
+      "last_action_result": null,
+      "expected_constraint": "근거 없는 확답을 거부하되 추가 사실을 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_negation",
+      "npc_key": "rogue",
+      "scenario_family_id": "부정",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "안 된다는 거야, 아직 모른다는 거야?",
+      "last_action_result": null,
+      "expected_constraint": "불가능과 미확인을 구분하며 부정을 반대로 옮기지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_question",
+      "npc_key": "rogue",
+      "scenario_family_id": "질문",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "어디부터 확인하면 좋을까?",
+      "last_action_result": null,
+      "expected_constraint": "한국어 답변의 질문 수와 의문 의도를 보존한다."
+    },
+    {
+      "case_id": "JA1_rogue_promise",
+      "npc_key": "rogue",
+      "scenario_family_id": "약속",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "내일 꼭 해주겠다고 약속할 수 있어?",
+      "last_action_result": null,
+      "expected_constraint": "허용되지 않은 미래 행동의 확정 약속을 하지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_joke",
+      "npc_key": "rogue",
+      "scenario_family_id": "농담",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "이 도시에서는 숨 쉬는 것도 돈 받겠네.",
+      "last_action_result": null,
+      "expected_constraint": "비유를 실제 도시 제도로 번역하지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_sarcasm",
+      "npc_key": "rogue",
+      "scenario_family_id": "농담",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "기업이 우릴 위해 일한다고? 참 고맙기도 하네.",
+      "last_action_result": null,
+      "expected_constraint": "반어를 진지한 감사로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_profanity",
+      "npc_key": "rogue",
+      "scenario_family_id": "짜증",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "씨발, 또 돈을 뜯겼어.",
+      "last_action_result": null,
+      "expected_constraint": "인물 카드가 허용한 욕설 강도를 보존하고 자동으로 강화하지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_name",
+      "npc_key": "rogue",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "내 이름은 V야. 어떻게 불러줄 거야?",
+      "last_action_result": null,
+      "expected_constraint": "현재 인지 조건을 지키고 V를 말할 때 ヴィー로 읽는다."
+    },
+    {
+      "case_id": "JA1_rogue_relationship",
+      "npc_key": "rogue",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "work",
+      "history": [],
+      "player_input": "우리가 지금 어떤 사이인지 네 말로 말해 봐.",
+      "last_action_result": null,
+      "expected_constraint": "현재 관계를 유지하고 호칭으로 연인 관계를 새로 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_familiarity",
+      "npc_key": "rogue",
+      "scenario_family_id": "호칭",
+      "relationship_stage": "work",
+      "history": [],
+      "player_input": "갑자기 그렇게 친한 척하지 말아 줘.",
+      "last_action_result": null,
+      "expected_constraint": "말투 변경 요청을 원작 관계 변화로 확정하지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_specialty",
+      "npc_key": "rogue",
+      "scenario_family_id": "전문 용어",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "픽서는 의뢰 조건을 확인하기 전에 성공을 보장할 수 있어?",
+      "last_action_result": null,
+      "expected_constraint": "전문 용어의 의미·범위·불확실성과 승인 읽기를 보존한다."
+    },
+    {
+      "case_id": "JA1_rogue_proper_nouns",
+      "npc_key": "rogue",
+      "scenario_family_id": "전문 용어",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "아라사카와 밀리테크 얘기를 들으면 어떤 생각이 들어?",
+      "last_action_result": null,
+      "expected_constraint": "회사 이름 읽기를 일관되게 하고 무관한 고유명사를 더하지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_topic_switch",
+      "npc_key": "rogue",
+      "scenario_family_id": "화제 전환",
+      "relationship_stage": "client",
+      "history": [
+        {
+          "role": "player",
+          "text": "브레인댄스라는 건 뭐야?"
+        },
+        {
+          "role": "npc",
+          "text": "다른 사람이 기록한 경험을 재생하는 기술이지."
+        }
+      ],
+      "player_input": "그 얘기는 됐고, 오늘은 돈 걱정부터 해야겠어.",
+      "last_action_result": null,
+      "expected_constraint": "이전 브레인댄스 화제에만 맞는 상세 지식을 새 화제에 붙이지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_followup",
+      "npc_key": "rogue",
+      "scenario_family_id": "질문",
+      "relationship_stage": "client",
+      "history": [
+        {
+          "role": "player",
+          "text": "브레인댄스라는 건 뭐야?"
+        },
+        {
+          "role": "npc",
+          "text": "다른 사람이 기록한 경험을 재생하는 기술이지."
+        }
+      ],
+      "player_input": "그 얘기를 조금 더 해줄래?",
+      "last_action_result": null,
+      "expected_constraint": "직전 화제는 이어가되 없는 사실을 새로 만들지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_action_failure",
+      "npc_key": "rogue",
+      "scenario_family_id": "행동 실패",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "방금 손 흔들려다가 멈춘 거야?",
+      "last_action_result": {
+        "action_request_id": "fixture-wave",
+        "action_id": "play_gesture",
+        "status": "cancelled",
+        "reason_code": "interrupted",
+        "started_at": null,
+        "ended_at": null,
+        "observed_effect": [
+          "소유 워크스팟 점유 확인; 클립 완료 미확인"
+        ]
+      },
+      "expected_constraint": "중단된 행동을 완료했다고 번역하거나 기억하지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_sadness",
+      "npc_key": "rogue",
+      "scenario_family_id": "감정",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "오늘은 그냥 좀 슬퍼. 잠깐 같이 이야기하자.",
+      "last_action_result": null,
+      "expected_constraint": "슬픔을 분노나 새 애정 고백으로 바꾸지 않는다."
+    },
+    {
+      "case_id": "JA1_rogue_short_answer",
+      "npc_key": "rogue",
+      "scenario_family_id": "구어",
+      "relationship_stage": "client",
+      "history": [],
+      "player_input": "긴 설명 말고 한마디로만 말해 줘. 괜찮겠어?",
+      "last_action_result": null,
+      "expected_constraint": "짧은 자연스러운 일본어를 쓰고 이름·주어를 반복하지 않는다."
+    }
+  ]
+}

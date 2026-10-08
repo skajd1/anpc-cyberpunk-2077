@@ -21,7 +21,7 @@ execute 허용=배포 실행 지원 ∩ NPC 기능 ∩ 카드 ∩ 현재 상태.
 
 UF-64의 구현 대상은 AMM 2.12.5 등록 목록과 실제 설치 자원을 교차 확인한 손 흔들기·박수·회상 대화 제스처다. 정확한 AnimatedComponent 리그가 Man Average/Woman Average인 자유 군중을 대상으로 하며 Big은 박수만 등록한다. 고유 NPC·장면·기존 워크스팟·현재 무장·미확인 리그는 제외한다. Lua 내부 임시 객체는 Codeware DynamicEntitySystem으로 생성하며 ANPC 고유 태그와 GetDeviceUser로 소유권을 확인한 대상만 정리한다. AMM 자체 재생 함수의 비동기 작업·V 재대상 설정은 사용하지 않는다.
 
-객체 생성/재생 시작 확인은 각각 최대 2초, 시작 요청 후 재생 점유는 최대 5초다. 점유 확인은 실제 클립 재생/완료 확인과 다르다. 현재 어댑터는 succeeded를 만들지 않고 제한 도달 시 cancelled로 정리한다. 자연 완료·반복 방지·시작 블렌딩·위치 보존은 실제 자원 설치 후 검증해야 한다. 공통 ActionRequest/Outcome 포트 전환은 별도 미완료이며 현재 CET 로컬 결과를 공통 계약 구현으로 간주하지 않는다. 외부 자원이 없으면 game allowed_actions에 추가 모션이 없다. 웹은 같은 등록 참조를 selection_only로 제공한다.
+객체 생성/재생 시작 확인은 각각 최대 2초, 시작 요청 후 재생 점유는 최대 5초다. 점유 확인은 실제 클립 재생/완료 확인과 다르다. 현재 어댑터는 succeeded를 만들지 않고 제한 도달 시 cancelled로 정리한다. 자연 완료·반복 방지·시작 블렌딩·위치 보존은 실제 자원 설치 후 검증해야 한다. CET는 시작 수용(accepted), 시작 명령 전달, 소유 워크스팟 점유(running), 시작 실패(failed), 조건 거부(rejected), 제한/외부 중단(cancelled)을 구분한다. 시작 명령·점유 확인만 observed_effect로 남기며 실제 클립 재생·완료·보행 복귀는 추정하지 않는다. 다음 입력에 같은 세션의 마지막 ActionOutcome 형상 결과를 last_action_result로 전달한다. 세션 종료·세계 전환 후 다른 세션에 재사용하지 않는다. 전체 ActionRequest/Outcome 포트·시간 참조 전환은 미완료다. 이동·앉기·동행과 고유 NPC 확대는 후속 범위다. 외부 자원이 없으면 game allowed_actions에 추가 모션이 없다. 웹은 같은 등록 참조를 selection_only로 제공한다.
 
 ## 2. 공통 행동 계약
 

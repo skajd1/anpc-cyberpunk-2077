@@ -49,7 +49,9 @@ local function options(system,id)
   if amm.Poses.activeAnims and amm.Poses.activeAnims[hash] then return {} end
   local available={}
   for _,m in ipairs(catalog or {}) do
-    if depot:ResourceExists(m.ent) and containsAnimation(amm.Poses.anims,m,rig) then
+    local supported=false
+    for _,allowedRig in ipairs(m.rigs or {}) do if allowedRig==rig then supported=true;break end end
+    if supported and depot:ResourceExists(m.ent) and containsAnimation(amm.Poses.anims,m,rig) then
       available[#available+1]=m
     end
   end
@@ -69,36 +71,53 @@ function actions.allowed(system,id)
   return result
 end
 
+local function record(job,status,reason,text)
+  job.status=status
+  local effects=json.array()
+  if job.startRequested then effects[#effects+1]="워크스팟 시작 요청 전달" end
+  if job.occupied then effects[#effects+1]="ANPC 소유 워크스팟 점유 확인; 실제 클립 재생·정상 완료 미확인" end
+  if job.cleanupFailed then effects[#effects+1]="소유 자원 정리 실패; 제어 복귀 미확인" end
+  last={id=job.id,session=job.session,text=text,outcome={action_request_id="cet-motion-" .. job.sequence,
+    action_id="play_gesture",status=status,reason_code=reason or json.null,
+    started_at=json.null,ended_at=json.null,observed_effect=effects}}
+end
 local function cleanup(job)
-  -- GetDeviceUser로 소유권을 증명할 때만 중단한다. 타 모드의 새 워크스팟은 건드리지 않는다.
-  pcall(function()
+  if not job.helperId then return end
+  -- 소유권 검사 실패 시 타 모드의 제어를 정리하지 않는다.
+  local stopped=pcall(function()
     local entities=Game.GetDynamicEntitySystem()
     if not entities:IsTagged(job.helperId,job.tag) then return end
     local workspots=Game.GetWorkspotSystem()
     if same(workspots:GetDeviceUser(job.helperId),job.actor) then workspots:StopInDevice(job.actor) end
   end)
-  pcall(function()
+  local deleted=pcall(function()
     local entities=Game.GetDynamicEntitySystem()
     if entities:IsTagged(job.helperId,job.tag) then entities:DeleteEntity(job.helperId) end
   end)
+  job.cleanupFailed=not stopped or not deleted
 end
-
-function actions.cancel(reason)
+local function finish(status,code,reason)
   if not active then return end
   local job=active;active=nil
   cleanup(job)
-  last={id=job.id,text=job.meaning .. " · 중단됨 (" .. reason .. ")"}
+  record(job,status,code,job.meaning .. (status=="failed" and " · 재생 실패 (" or " · 중단됨 (") .. reason .. ")")
+end
+function actions.cancel(reason)
+  finish("cancelled","interrupted",reason)
 end
 
-function actions.start(system,id,ref)
+function actions.start(system,id,ref,session)
   actions.cancel("새 행동")
+  sequence=sequence+1
+  local job={id=id,session=session,sequence=sequence,meaning=ref,age=0,phase="spawning",tag="ANPC_MOTION_" .. sequence}
+  local function reject(code,text) record(job,"rejected",code,text);return text end
   local ok,available,actor=pcall(options,system,id)
-  if not ok then return "재생 불가 · 상태 확인 실패" end
+  if not ok then return reject("adapter_error","재생 불가 · 상태 확인 실패") end
   local motion
   for _,m in ipairs(available) do if m.ref==ref then motion=m;break end end
-  if not motion then return "재생 거부 · 자원 또는 NPC 상태 변경" end
-  sequence=sequence+1
-  local job={id=id,actor=actor,meaning=motion.meaning,motion=motion,age=0,phase="spawning",tag="ANPC_MOTION_" .. sequence}
+  if not motion then return reject("unsafe_state","재생 거부 · 자원 또는 NPC 상태 변경") end
+  job.actor=actor;job.meaning=motion.meaning;job.motion=motion
+  record(job,"accepted",nil,motion.meaning .. " · 재생 준비")
   local created,err=pcall(function()
     local spec=DynamicEntitySpec.new()
     spec.templatePath=motion.ent;spec.position=actor:GetWorldPosition()
@@ -110,9 +129,11 @@ function actions.start(system,id,ref)
   end)
   if not created or not job.helperId then
     if job.helperId then cleanup(job) end
-    return motion.meaning .. " · 재생 실패 (객체 생성)"
+    local text=motion.meaning .. " · 재생 실패 (객체 생성)"
+    record(job,"failed","adapter_error",text)
+    return text
   end
-  active=job;last=nil
+  active=job
   return motion.meaning .. " · 재생 준비"
 end
 
@@ -135,18 +156,24 @@ function actions.update(delta,system)
         if workspots:IsActorInWorkspot(actor) then actions.cancel("기존 행동 점유");return end
         workspots:PlayInDeviceSimple(helper,actor,false,job.motion.comp,"AMM_WORKSPOT",nil,0,1,nil)
         workspots:SendJumpToAnimEnt(actor,job.motion.name,true)
-        job.phase="starting";job.age=0
-      elseif job.age>=2 then actions.cancel("객체 생성 시간 초과") end
+        job.startRequested=true;job.phase="starting";job.age=0
+        record(job,"accepted",nil,job.meaning .. " · 시작 요청 전달 (재생 미확인)")
+      elseif job.age>=2 then finish("failed","timeout","객체 생성 시간 초과") end
     elseif same(workspots:GetDeviceUser(job.helperId),actor) and workspots:IsActorInWorkspot(actor) then
-      job.phase="running"
-      last={id=job.id,text=job.meaning .. " · 워크스팟 재생 중 (모션 완료 미확인)"}
-      if job.age>=5 then actions.cancel("재생 시간 제한") end
-    elseif job.phase=="running" then actions.cancel("워크스팟 종료 또는 제어 변경")
-    elseif job.age>=2 then actions.cancel("재생 시작 미확인") end
+      job.phase="running";job.occupied=true
+      record(job,"running",nil,job.meaning .. " · 워크스팟 점유 확인 (클립 재생·완료 미확인)")
+      if job.age>=5 then finish("cancelled","timeout","재생 시간 제한") end
+    elseif job.phase=="running" then finish("cancelled","interrupted","워크스팟 종료 또는 제어 변경 · 정상 완료 미확인")
+    elseif job.age>=2 then finish("failed","timeout","재생 시작 미확인") end
   end)
-  if not checked then actions.cancel("재생 오류") end
+  if not checked then finish("failed","adapter_error","재생 오류") end
 end
 
 function actions.result(id) return last and last.id==id and last.text or nil end
+-- 세션이 달라지면 다른 NPC의 결과를 다음 프롬프트에 넘기지 않는다.
+function actions.outcome(session)
+  if not last or session==nil or last.session~=session then return nil end
+  return json.decode(json.encode(last.outcome))
+end
 function actions.reset() actions.cancel("세계 전환");last=nil end
 return actions

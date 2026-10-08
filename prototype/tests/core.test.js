@@ -107,7 +107,7 @@ test('음성 응답은 감정이 먼저인 순서와 일본어 음성 대사를 
   const hangul = validateReply({ ...voiced, speech_text: '잠깐 話せる。' }, ACTIONS, persona, { voice: true });
   assert.equal(hangul.reply.dialogue, reply.dialogue); assert.equal(hangul.speech, null); assert.equal(hangul.speechError, 'speech_text_invalid');
   // 형식 위반은 응답 전체 거부다.
-  assert.throws(() => validateReply({ ...voiced, delivery: 'whisper' }, ACTIONS, persona, { voice: true }), /invalid_response/);
+  assert.equal(validateReply({ ...voiced, delivery: 'whisper' }, ACTIONS, persona, { voice: true }).speech, null);
   assert.throws(() => validateReply(voiced, ACTIONS, persona), /invalid_response/);
   assert.throws(() => validateReply(reply, ACTIONS, persona, { voice: true }), /invalid_response/);
   const prompt = assemblePrompt('베이스 {{OUTPUT_CONTRACT}}', persona, {}, '안녕', { voice: true });

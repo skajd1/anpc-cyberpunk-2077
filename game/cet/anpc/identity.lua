@@ -197,37 +197,8 @@ local function fieldsFor(card,snapshot,stage,resolved)
   end
   return fields
 end
-local function wordAt(text,position)
-  if position<1 or position>#text then return false end
-  while position>1 and text:byte(position)>=128 and text:byte(position)<192 do position=position-1 end
-  local a,b,c=text:byte(position,position+2)
-  if a<128 then return text:sub(position,position):match("[%w_]")~=nil end
-  local code=a<224 and ((a-192)*64+(b or 128)-128) or ((a-224)*4096+((b or 128)-128)*64+(c or 128)-128)
-  return (code>=0xAC00 and code<=0xD7A3) or (code>=0x1100 and code<=0x11FF) or (code>=0x3130 and code<=0x318F)
-    or (code>=0x4E00 and code<=0x9FFF) or (code>=0xC0 and code<=0x2FF)
-end
-local function match(text, term,entity)
-  text,term=text:lower(),term:lower()
-  local position=1
-  while true do
-    local first,last=text:find(term,position,true); if not first then return false end
-    local ending=not wordAt(text,last+1)
-    if entity and not ending then
-      for _,suffix in ipairs({"은","는","을","를","가","이","의","에","에게","한테","에서","부터","까지","로","와","과","랑","이랑","도","만","같은","같이","처럼","보다","라는","라고"}) do
-        if text:sub(last+1,last+#suffix)==suffix and not wordAt(text,last+#suffix+1) then ending=true; break end
-      end
-    elseif not entity and not term:match("^[%w_]+$") then ending=true end
-    if not wordAt(text,first-1) and ending then return true end
-    position=last+1
-  end
-end
-local function score(fact,text)
-  local named,points=false,0
-  for _, alias in ipairs(fact.entity_aliases or {}) do if match(text,alias,true) then named=true end end
-  for _, term in ipairs(fact.trigger_terms or {}) do if not has(fact.entity_aliases,term) and match(text,term) then points=points+1 end end
-  if named then points=points+1 end
-  return named,points
-end
+local retrieval=require("retrieval")
+local score=retrieval.score
 local function ruleView(rule)
   local descriptions={work_question="업무에 관한 질문",ordinary_discussion="일상적인 대화"}
   local tags={}; for _, tag in ipairs(rule.trigger_tags or {}) do tags[#tags+1]=descriptions[tag] or tag end
@@ -269,6 +240,7 @@ function identity.compose(record,request,turns,availableActions)
   local fiction=card.everyday_fiction_policy
   if usable(fiction) and identity.condition(fiction.validity_condition,fields)==true then canon.everyday_fiction_policy={allowed=true,allowed_topics=fiction.allowed_topics,prohibited_claims=fiction.prohibited_claims} end
   local baseline,selected,bounds={}, {},{}
+  local directTopic=false
   local domains={}; for _, d in ipairs(card.knowledge_profile.domains) do domains[d.domain_id]=d.depth end
   local recent=""; for i=math.max(1,#turns-1),#turns do recent=recent .. ' ' .. turns[i].text end
   for _, entry in ipairs(record.knowledge or owners[card.character_key] or {}) do
@@ -284,6 +256,7 @@ function identity.compose(record,request,turns,availableActions)
         and has({"knows","suspects"},entry.certainty) and has({"public","evasive"},entry.disclosure)
         and identity.condition(entry.access_condition,fields)==true and identity.condition(fact.validity_condition,fields)==true
         and not excludedNow and fact.usage_mode~="canon_context" then
+        if relevance>0 then directTopic=true end
         if has(data.world_policy.baseline_fact_ids,fact.id) then baseline[fact.id]=fact
         else
           local named,now=score(fact,request.text); local beforeNamed,before=score(fact,recent)
@@ -300,11 +273,8 @@ function identity.compose(record,request,turns,availableActions)
   end
   local _,commonLength=json.encode(common):gsub("[^\128-\191]","")
   assert(commonLength<=data.world_policy.baseline_max_characters,"context_unavailable")
-  table.sort(selected,function(a,b)
-    for _, key in ipairs({"named","now","beforeNamed","before"}) do local x,y=a[key],b[key]; if x~=y then if type(x)=="boolean" then return x end; return x>y end end
-    return a.fact.id<b.fact.id
-  end)
-  local knowledge,selectedIDs=A(),{}
+  selected=retrieval.rankFacts(selected,directTopic)
+  local knowledge,selectedIDs,tags=A(),{},{}
   for id in pairs(baseline) do selectedIDs[id]=true end
   for i=1,math.min(data.world_policy.detail_max_items,#selected) do
     local entry,fact=selected[i].entry,selected[i].fact
@@ -312,18 +282,22 @@ function identity.compose(record,request,turns,availableActions)
       response_constraint=entry.disclosure=="evasive" and "구체적 내용은 제공되지 않았다. 공개 범위를 추측하지 말고 설명을 요청하거나 말을 아낀다." or nil,
       domain_id=entry.domain_id,required_depth=entry.required_depth,certainty=entry.certainty,disclosure=entry.disclosure,claim_limits=entry.claim_limits}
     selectedIDs[fact.id]=true
+    for _,tag in ipairs(fact.topic_tags or {}) do tags[tag]=true end
   end
   local boundaries=A(); local boundKeys={}; for key in pairs(bounds) do boundKeys[#boundKeys+1]=key end; table.sort(boundKeys)
   for _, key in ipairs(boundKeys) do boundaries[#boundaries+1]={domain_id=key,depth=bounds[key]} end
-  local examples=A()
-  for _, example in ipairs(data.examples) do
+  local eligibleExamples={}
+  for _,example in ipairs(data.examples) do
     if usable(example) and has(card.example_ids,example.id) and has(example.character_keys,card.character_key)
       and identity.condition(example.context_condition,fields)==true then
-      local relevant=false; for _, term in ipairs(example.trigger_terms or {}) do if match(request.text,term) then relevant=true end end
-      local allowed=true; for _, id in ipairs(example.required_fact_ids) do if not selectedIDs[id] then allowed=false end end
-      if allowed and relevant then examples[#examples+1]={id=example.id,input=example.input,sample_dialogue=example.sample_dialogue,expected_intent=example.expected_intent,provenance=example.provenance}; break end
+      local allowed=true;for _,id in ipairs(example.required_fact_ids) do if not selectedIDs[id] then allowed=false end end
+      if allowed then eligibleExamples[#eligibleExamples+1]=example end
     end
   end
+  local examples=A()
+  local best=retrieval.rankExamples(eligibleExamples,request.text,tags)[1]
+  if best then local ex=best.ex;examples[1]={id=ex.id,input=ex.input,sample_dialogue=ex.sample_dialogue,
+    expected_intent=ex.expected_intent,provenance=ex.provenance} end
   local actions=availableActions or json.decode((prompts.characters[card.character_key] or prompts.characters.resident).actions)
   local contextView={common_knowledge=common,knowledge=knowledge,knowledge_boundaries=boundaries,canon_context=canon,
     memory={session_summaries=A()},allowed_actions=actions}

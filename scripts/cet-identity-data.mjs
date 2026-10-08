@@ -1,3 +1,4 @@
+import { exampleTerms } from '../prototype/public/retrieval.js';
 import { readFile } from 'node:fs/promises';
 import { validateCorePersonality } from '../prototype/public/personality.js';
 
@@ -17,8 +18,8 @@ export async function buildIdentityData(bundle) {
       'knowledge_layer', 'category_id', 'usage_mode', 'entity_aliases', 'trigger_terms', 'topic_tags', 'claim_limits'])])),
     knowledge: bundle.knowledge.filter(k => k.owner_key !== 'resident').map(k => pick(k, ['id', 'owner_key', 'fact_id', 'review_status',
       'access_condition', 'certainty', 'disclosure', 'domain_id', 'required_depth', 'claim_limits'])),
-    examples: bundle.examples.map(e => pick(e, ['id', 'character_keys', 'review_status', 'context_condition', 'required_fact_ids',
-      'trigger_terms', 'input', 'sample_dialogue', 'expected_intent', 'provenance'])),
+    examples: bundle.examples.map(e => ({ ...pick(e, ['id', 'character_keys', 'review_status', 'context_condition', 'required_fact_ids',
+      'trigger_terms', 'topic_tags', 'input', 'sample_dialogue', 'expected_intent', 'provenance']), input_terms: exampleTerms(e.input) })),
     world_policy: bundle.worldKnowledge,
     archetypes: crowd.archetypes.map(a => pick(a, ['id', 'title', 'revision', 'review_status', 'runtime_enabled', 'weight',
       'personality_generation', 'background_bounds', 'personal_principles', 'voice_styles', 'identity_rules', 'knowledge_plan',

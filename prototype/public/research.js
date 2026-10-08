@@ -1,3 +1,5 @@
+import { termMatches, entityMatches, factMatch, rankExamples, rankFacts } from './retrieval.js';
+export { termMatches, entityMatches } from './retrieval.js';
 import { evaluateCondition } from './conditions.js';
 export { evaluateCondition } from './conditions.js';
 import { evaluateStoryPolicy, storySignature } from './story.js';
@@ -30,30 +32,6 @@ export function knowledgeBlockReason(card, entry, fact, fields) {
   return null;
 }
 
-
-function normalize(text) { return text.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim(); }
-export function termMatches(text, term) {
-  const escaped = normalize(term).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  if (!escaped) return false;
-  // 한국어 조사·활용 접미사는 허용하되 영문 약어의 부분 일치는 제외.
-  const end = /[가-힣]$/.test(term) ? '' : '(?=$|[^\\p{L}\\p{N}]|(?:는|은|를|을|가|이|의|에|로|와|과|랑)(?=$|[^\\p{L}\\p{N}]))';
-  return new RegExp(`(?<![\\p{L}\\p{N}])${escaped}${end}`, 'u').test(normalize(text));
-}
-
-// 짧은 인명에는 조사·인용 접미사만 허용한다. '로그인'을 '로그'로 인식하지 않는다.
-export function entityMatches(text, alias) {
-  const escaped = normalize(alias).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  if (!escaped) return false;
-  const end = '(?=$|[^\\p{L}\\p{N}]|(?:은|는|을|를|가|이|의|에|에게|한테|에서|부터|까지|로|와|과|랑|이랑|도|만|같은|같이|처럼|보다|라는|라고)(?=$|[^\\p{L}\\p{N}]))';
-  return new RegExp(`(?<![\\p{L}\\p{N}])${escaped}${end}`, 'u').test(normalize(text));
-}
-
-function factMatch(fact, text) {
-  const aliases = fact.entity_aliases ?? [];
-  const named = aliases.some(alias => entityMatches(text, alias));
-  const terms = fact.trigger_terms.filter(term => !aliases.includes(term) && termMatches(text, term)).length;
-  return { named: Number(named), score: terms + Number(named) };
-}
 
 export function resolveRelationshipStage(card, settings) {
   if (card.npc_type === 'crowd') return null;
@@ -128,19 +106,19 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
   const owned = new Set(card.knowledge_ids);
   const current = playerText;
   const recent = context.recent_turns.slice(-2).map(t => t.text).join(' ');
-  const eligible = bundle.knowledge.filter(k => knowledgeBlockReason(card, k, facts.get(k.fact_id), fields) === null);
+  const eligible = bundle.knowledge.filter(k => knowledgeBlockReason(card, k, facts.get(k.fact_id), fields) === null
+    && facts.get(k.fact_id).usage_mode !== 'canon_context');
   const baselineIds = new Set(bundle.worldKnowledge?.baseline_fact_ids ?? []);
   const baseline = settings.configuration === 'card' ? [] : eligible.filter(k => baselineIds.has(k.fact_id));
   const common_knowledge = (bundle.worldKnowledge?.categories ?? []).map(category => ({
     category_id: category.category_id, statements: [...new Set(baseline.filter(k => facts.get(k.fact_id).category_id === category.category_id)
       .map(k => facts.get(k.fact_id).statement))] })).filter(category => category.statements.length);
   if (JSON.stringify(common_knowledge).length > (bundle.worldKnowledge?.baseline_max_characters ?? 3000)) throw new Error('context_unavailable · 공통 지식 예산 초과');
-  const ranked = eligible.map(k => {
+  const ranked = rankFacts(eligible.map(k => {
     const f = facts.get(k.fact_id);
     const now = factMatch(f, current), before = factMatch(f, recent);
     return { k, f, now: now.score, named: now.named, before: before.score, beforeNamed: before.named };
-  }).filter(x => x.now || x.before).sort((a, b) => b.named - a.named || b.now - a.now
-    || b.beforeNamed - a.beforeNamed || b.before - a.before || a.f.id.localeCompare(b.f.id, 'en'));
+  }));
   const selected = settings.configuration === 'card' ? [] : ranked.filter(x => !baseline.some(k => k.fact_id === x.f.id))
     .slice(0, bundle.worldKnowledge?.detail_max_items ?? 3);
   const knowledge = selected.map(({ k, f }) => ({ fact_id: f.id,
@@ -155,16 +133,10 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
   // 반복된 가치 문구를 사실별 해석으로 재전송하지 않는다. 카드를 통해 한 번 전달.
   const factIds = new Set([...selected.map(x => x.f.id), ...baseline.map(k => k.fact_id)]);
   const tags = new Set(selected.flatMap(x => x.f.topic_tags));
-  const examples = settings.configuration !== 'full' ? [] : bundle.examples
+  const examples = settings.configuration !== 'full' ? [] : rankExamples(bundle.examples
     .filter(ex => card.example_ids.includes(ex.id) && ex.character_keys.includes(npcKey)
       && evaluateCondition(ex.context_condition, fields) === true
-      && ex.required_fact_ids.every(id => factIds.has(id)))
-    .map(ex => ({ ex, score: ex.trigger_terms.filter(t => termMatches(current, t)).length
-      + ex.topic_tags.filter(t => tags.has(t)).length
-      + (normalize(ex.input).match(/[\p{L}\p{N}]+/gu) ?? []).map(t => t.replace(/(?:들은|들이|에게|에서|은|는|을|를|만|가|이|의)$/, ''))
-        .filter(t => t.length >= 2 && termMatches(current, t)).length }))
-    .filter(x => x.score > 0)
-    .sort((a, b) => b.score - a.score || a.ex.id.localeCompare(b.ex.id, 'en')).slice(0, 1)
+      && ex.required_fact_ids.every(id => factIds.has(id))), current, tags).slice(0, 1)
     .map(({ ex }) => ({ id: ex.id, input: ex.input, sample_dialogue: ex.sample_dialogue,
       expected_intent: ex.expected_intent, provenance: 'authored_adaptation_draft' }));
   const persona = validatePersona({
@@ -203,7 +175,7 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
       everyday_fiction_policy: clone(persona.everyday_fiction_policy) };
   }
   const reminder = settings.configuration === 'full' ? { hard_limits: card.identity_anchor.hard_limits } : null;
-  return { persona, context: preparedContext, styleExamples: examples, identityReminder: reminder,
+  return { persona, context: preparedContext, styleExamples: examples, identityReminder: reminder, readingTable: bundle.jaReadingTable,
     diagnostics: { npc_key: npcKey, content_version: bundle.version, configuration: settings.configuration,
       development_only: true, story_policy: { enabled: story.enabled, allowed: story.allowed, channel: story.channel, applied_events: story.events.map(e => e.id) }, review_status: card.review_status, runtime_enabled: card.runtime_enabled,
       core_personality: clone(persona.core_personality), personality_prompt_version: PERSONALITY_PROMPT_VERSION,

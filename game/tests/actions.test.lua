@@ -33,6 +33,12 @@ Game={GetResourceDepot=function() return {ArchiveExists=function() return instal
   GetWorkspotSystem=function() return workspots end,GetDynamicEntitySystem=function() return entities end}
 assert(#actions.allowed(system,1)==2)
 rig="man_child";assert(#actions.allowed(system,1)==1);rig="man_base"
+-- 외부 DB에 새 조합이 있어도 검증된 로컬 리그 범위를 자동으로 넓히지 않는다.
+metadata[#metadata+1]={name=motions[1].name,rig="Big",ent=motions[1].ent,comp=motions[1].comp}
+rig="man_big"
+local big=actions.allowed(system,1)
+assert(#big[2].candidates==1 and big[2].candidates[1].ref=="amm_clap")
+rig="man_base"
 installed=false;assert(#actions.allowed(system,1)==1);installed=true
 version="other";assert(#actions.allowed(system,1)==1);version="2.12.5"
 resource=false;assert(#actions.allowed(system,1)==1);resource=true
@@ -45,7 +51,7 @@ spawned=true -- 늦은 소환 완료가 취소된 동작을 시작하지 않는�
 actions.update(0.1,system);assert(played==0)
 actions.start(system,2,"amm_wave");actions.update(0.1,system);assert(played==1 and jumped==1)
 owner=actor;occupied=true;actions.update(0.1,system)
-assert(actions.result(2):find("재생 중"))
+assert(actions.result(2):find("점유 확인"))
 actions.update(5,system);assert(stopped==1 and deleted==2 and actions.result(2):find("시간 제한"))
 assert(not actions.result(2):find("성공"))
 owner=nil;occupied=false
@@ -62,3 +68,33 @@ actions.start(system,6,"amm_wave");spawned=true;resource=false;actions.update(0.
 assert(deleted==6 and played==2 and actions.result(6):find("조건 변경"))
 actions.reset();assert(actions.result(6)==nil)
 print("AMM 자원/리그/점유 제한·실제 재생 호출·소유 객체 취소·늦은 소환·타 모드 보호·허위 성공 방지 통과 (모의 엔진)")
+
+-- 실제 모션 완료를 추정하지 않고 다음 턴에는 같은 세션의 관찰된 상태만 전달한다.
+resource=true;valid=true;occupied=false;owner=nil;spawned=true
+assert(actions.start(system,7,"amm_wave",70):find("준비"))
+assert(actions.outcome(70).status=="accepted" and actions.outcome(71)==nil)
+actions.update(0.1,system)
+assert(actions.outcome(70).status=="accepted" and #actions.outcome(70).observed_effect==1)
+owner=actor;occupied=true;actions.update(0.1,system)
+assert(actions.outcome(70).status=="running" and #actions.outcome(70).observed_effect==2)
+owner=nil;occupied=false;actions.update(0.1,system)
+assert(actions.outcome(70).status=="cancelled" and actions.outcome(70).reason_code=="interrupted")
+assert(actions.result(7):find("정상 완료 미확인"))
+local copy=actions.outcome(70);copy.status="succeeded"
+assert(actions.outcome(70).status=="cancelled")
+actions.start(system,8,"invented",70)
+assert(actions.outcome(70).status=="rejected" and #actions.outcome(70).observed_effect==0)
+spawned=false
+actions.start(system,9,"amm_wave",70);actions.update(2.1,system)
+assert(actions.outcome(70).status=="failed" and actions.outcome(70).reason_code=="timeout")
+spawned=true
+actions.start(system,10,"amm_wave",70);actions.update(0.1,system)
+actions.update(2.1,system)
+assert(actions.outcome(70).status=="failed" and actions.result(10):find("시작 미확인"))
+local create=entities.CreateEntity
+entities.CreateEntity=function()error("spawn failure")end
+actions.start(system,11,"amm_wave",70)
+assert(actions.outcome(70).status=="failed" and actions.outcome(70).reason_code=="adapter_error")
+entities.CreateEntity=create
+actions.reset();assert(actions.outcome(70)==nil)
+print("행동 수용·시작 요청·점유·실패·중단 결과, 세션 분리·정상 완료 오인 방지 통과")

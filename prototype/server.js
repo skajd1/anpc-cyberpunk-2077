@@ -22,6 +22,8 @@ routes['/scenario.js'] = ['scenario.js', 'text/javascript'];
 routes['/personality.js'] = ['personality.js', 'text/javascript'];
 routes['/api-models.js'] = ['api-models.js', 'text/javascript'];
 routes['/memory.js'] = ['memory.js', 'text/javascript'];
+routes['/retrieval.js'] = ['retrieval.js', 'text/javascript'];
+routes['/speech.js'] = ['speech.js', 'text/javascript'];
 
 // 웹 시제품과 게임 브리지가 같은 프롬프트·인물·조사 자료를 쓴다.
 export async function loadPrototypeData() {
@@ -34,7 +36,7 @@ export async function loadPrototypeData() {
   const load = async name => JSON.parse(await readFile(resolve(root, 'content/cyberpunk2077', name), 'utf8'));
   const manifest = await load('manifest.json');
   const cardFiles = manifest.files.filter(file => /^characters\/[a-z0-9_-]+\.json$/.test(file));
-  const research = { version: manifest.content_version ?? manifest.version, cards: await Promise.all(cardFiles.map(load)),
+  const research = { jaReadingTable: await load('ja-reading-table.json'), version: manifest.content_version ?? manifest.version, cards: await Promise.all(cardFiles.map(load)),
     facts: await load('world-facts.json'), knowledge: await load('knowledge.json'), examples: await load('dialogue-examples.json'), worldKnowledge: await load('world-knowledge-policy.json'), storyPolicy: await load('story-progression-policy.json') };
   const playerFact = research.facts.find(f => f.id === manifest.player_identity_fact_id);
   if (!playerFact?.player_identity?.display_name || !playerFact.player_identity.character_key) throw new Error('플레이어 신원 기준 사실이 없습니다.');

@@ -1,5 +1,6 @@
 package.path = "game/cet/anpc/?.lua;" .. package.path
 local bridge = require("bridge")
+require("config").voice_enabled = false
 
 local request = { id = 7, kind = "say", session = 3, npcKey = "viktor", crowd = false, text = '안녕 "빅"\n\\' }
 local encoded = bridge.encode(request, "tok")
@@ -98,8 +99,10 @@ assert(bridge.readReply(voicedReply) == nil)
 local vLine, _, _, _, vSpeech = bridge.readReply(voicedReply, nil, true)
 assert(vLine == "괜찮아." and vSpeech.text == "大丈夫だ。" and vSpeech.delivery == "normal" and vSpeech.emotion == "neutral")
 assert(select(5, bridge.readReply(validReply, nil, true)) == nil and bridge.readReply(validReply, nil, true) == "괜찮아.")
-assert(bridge.readReply((voicedReply:gsub('"normal"', '"whisper"')), nil, true) == nil)
-assert(bridge.readReply((voicedReply:gsub('"大丈夫だ。"', '"   "')), nil, true) == nil)
+for _,invalid in ipairs({voicedReply:gsub('"normal"', '"whisper"'), (voicedReply:gsub('"大丈夫だ。"', '"   "'))}) do
+  local line,_,_,_,speech=bridge.readReply(invalid,nil,true)
+  assert(line=="괜찮아." and speech==nil)
+end
 for _, bad in ipairs({ "大丈夫다。", "（笑）大丈夫", "**大丈夫**", "[小声]大丈夫" }) do
   local badLine, _, _, _, badSpeech = bridge.readReply((voicedReply:gsub('"大丈夫だ。"', '"' .. bad .. '"')), nil, true)
   assert(badLine == "괜찮아." and badSpeech == nil, bad)

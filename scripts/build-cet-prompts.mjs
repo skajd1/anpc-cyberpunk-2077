@@ -87,6 +87,7 @@ lines.push(`  schema = ${long(JSON.stringify(schema))},`);
 lines.push(`  voice_schema = ${long(JSON.stringify(gameSchema(true)))},`);
 lines.push(`  contracts = { text = ${long(contract(false))}, voice = ${long(contract(true))} },`);
 lines.push(`  motions = ${long(JSON.stringify(AMM_MOTIONS))},`);
+lines.push(`  ja_reading_table = ${long(JSON.stringify(data.research.jaReadingTable))},`);
 lines.push(`  story_data = ${long(JSON.stringify(buildGameStoryData()))},`);
 lines.push('  blocked = {');
 for (const [key, reason] of Object.entries(blocked)) lines.push(`    ${key} = ${long(reason)},`);

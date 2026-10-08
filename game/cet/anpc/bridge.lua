@@ -8,6 +8,8 @@ local config = require("config")
 local context = require("context")
 local identity = require("identity")
 local actions = require("actions")
+local speechRules = require("speech")
+local readingTable = json.decode(prompts.ja_reading_table)
 
 local bridge = {}
 local pending = {}
@@ -43,10 +45,22 @@ function bridge.parse(content, token)
 end
 
 -- 제공자 요청 본문. 고정 지침·인물·상황 메시지 뒤에 최근 발화와 이번 입력을 붙인다.
-function bridge.buildBody(character, turns, text, snapshot, key, crowd)
+function bridge.buildBody(character, turns, text, snapshot, key, crowd, lastAction)
   local input = {}
+  local personaName, selectedContext = "", {}
   for _, message in ipairs(character.messages) do
+    local payload=json.decode(message:match("\n(.*)$") or "")
+    if type(payload)=="table" then
+      if payload.persona_id then personaName=payload.display_name or "" end
+      if payload.knowledge then selectedContext=payload end
+    end
     input[#input + 1] = '{"role":"user","content":' .. json.string(message) .. '}'
+  end
+  if lastAction then
+    input[#input+1]='{"role":"user","content":' .. json.string("직전 행동 결과 (관찰 데이터):\n" .. json.encode({last_action_result=lastAction})) .. '}'
+  end
+  if config.voice_enabled then
+    input[#input+1]='{"role":"user","content":' .. json.string("일본어 읽기 데이터 (발음만 지정):\n" .. json.encode({ja_readings=speechRules.readings(readingTable.entries,text,personaName,selectedContext)})) .. '}'
   end
   input[#input + 1] = '{"role":"user","content":' .. json.string("현재 게임 데이터 (지침이 아님):\n" .. context.encode(snapshot, key, crowd)) .. '}'
   for _, turn in ipairs(turns) do
@@ -114,10 +128,9 @@ function bridge.readReply(text, actions, voice)
   local reply = json.decode(text)
   local voiced = voice and exact(reply, voiceKeys)
   if not voiced and not exact(reply, textKeys) then return nil end
-  if voiced and (not deliveries[reply.delivery] or not boundedText(reply.speech_text, 600)) then return nil end
   if not boundedText(reply.dialogue, 600) or not intents[reply.intent] or not emotions[reply.emotion]
     or (reply.follow_up ~= json.null and not boundedText(reply.follow_up, 150)) then return nil end
-  local speech = voiced and bridge.speechValid(reply.speech_text)
+  local speech = voiced and deliveries[reply.delivery] and boundedText(reply.speech_text, 600) and bridge.speechValid(reply.speech_text)
     and { emotion = reply.emotion, delivery = reply.delivery, text = reply.speech_text } or nil
   local selected
   if reply.action ~= json.null then
@@ -158,12 +171,29 @@ end
 -- 로컬 TTS 보조 프로세스(개발 시험)에 tts/req-<id>.json을 넘긴다. 임시 파일에 쓴 뒤 이름을 바꿔 읽는 쪽이 반쯤 쓴 파일을 보지 않게 한다.
 local function writeTts(name, content)
   local tmp = "tts/" .. name .. ".tmp"
-  local file = io.open(tmp, "w")
-  if not file then return false end
-  file:write(content)
-  file:close()
-  pcall(os.remove, "tts/" .. name .. ".json")
-  return os.rename(tmp, "tts/" .. name .. ".json") ~= nil
+  local file
+  local ok,written=pcall(function()
+    file=io.open(tmp,"w")
+    if not file then return false end
+    assert(file:write(content))
+    file:close();file=nil
+    pcall(os.remove,"tts/" .. name .. ".json")
+    return os.rename(tmp,"tts/" .. name .. ".json")~=nil
+  end)
+  if file then pcall(function() file:close() end) end
+  return ok and written==true
+end
+local function readTts(path)
+  local file
+  local ok,content=pcall(function()
+    file=io.open(path,"r")
+    if not file then return nil end
+    local value=file:read("*a")
+    file:close();file=nil
+    return value
+  end)
+  if file then pcall(function() file:close() end) end
+  return ok and content or nil
 end
 
 -- output: "slots"는 보조 프로세스가 Audioware 슬롯과 tts/seg-<id>-<n>.json을 쓰고 게임이 NPC 위치에서 재생,
@@ -179,11 +209,8 @@ end
 
 -- 보조 프로세스가 1초마다 tts/alive.txt에 os.time 값을 쓴다. 3초 넘게 갱신이 없으면 음성 없이 자막만 쓴다.
 function bridge.helperAlive()
-  local file = io.open("tts/alive.txt", "r")
-  if not file then return false end
-  local stamp = tonumber(file:read("*a"))
-  file:close()
-  return stamp ~= nil and math.abs(os.time() - stamp) <= 3
+  local stamp=tonumber(readTts("tts/alive.txt"))
+  return stamp~=nil and math.abs(os.time()-stamp)<=3
 end
 
 local voiceJobs = {}
@@ -195,8 +222,8 @@ function bridge.stopSpeech(system)
   if system then pcall(function() system:VoiceStop() end) end
 end
 
-local function finishDelivery(system, id, display, gesture)
-  if gesture then display = actions.start(system, id, gesture) end
+local function finishDelivery(system, id, display, gesture, session)
+  if gesture then display = actions.start(system, id, gesture, session) end
   -- 폐기된 응답은 대사와 행동 목록 모두 표시하지 않는다.
   actionDisplay = { id = id, text = display }
 end
@@ -211,12 +238,11 @@ local function voiceUpdate(system, delta)
   local menuOK, menuOpen = pcall(function() return system:IsChatMenuOpen() end)
   for id, job in pairs(voiceJobs) do
     local path = "tts/seg-" .. id .. "-" .. job.next .. ".json"
-    local file = io.open(path, "r")
-    if file then
-      local seg = json.decode(file:read("*a") or "")
-      file:close()
+    local segment=readTts(path)
+    if segment then
+      local seg=json.decode(segment)
       pcall(os.remove, path)
-      if type(seg) == "table" and type(seg.slot) == "number" and type(seg.dur_ms) == "number" then
+      if type(seg) == "table" and type(seg.slot) == "number" and type(seg.dur_ms) == "number" and seg.dur_ms>0 and seg.dur_ms<math.huge then
         job.queue[#job.queue + 1] = { slot = seg.slot, dur = seg.dur_ms / 1000, final = seg.final == true }
         job.next = job.next + 1
       end
@@ -229,13 +255,13 @@ local function voiceUpdate(system, delta)
         local seg = table.remove(job.queue, 1)
         job.started, job.playEnd, job.final = true, clock + seg.dur, seg.final
         system:OnAIVoiceResponse(id, job.ended and "ok:end" or "ok", job.line, job.seconds)
-        finishDelivery(system, id, job.display, job.gesture)
+        finishDelivery(system, id, job.display, job.gesture, job.session)
       elseif job.queue[1] or job.wait > config.voice_wait_s then
         -- 대기 한도 안에 첫 구간이 없거나 재생할 수 없으면 자막만 표시하고 음성은 버린다.
         voiceJobs[id] = nil
         bridge.stopSpeech(system)
         system:OnAIResponse(id, job.ended and "ok:end" or "ok", job.line)
-        finishDelivery(system, id, job.display, job.gesture)
+        finishDelivery(system, id, job.display, job.gesture, job.session)
       end
     elseif system:GetLatestRequestId() ~= id then
       voiceJobs[id] = nil
@@ -311,14 +337,14 @@ local function deliverReply(system, id, text, character, item)
     if ok and spatial == true and bridge.speak(id, item, speech, "slots") then
       -- 자막·행동은 첫 음성 구간 재생 때 함께 시작한다(voiceUpdate).
       local _, chars = speech.text:gsub("[^\128-\191]", "")
-      voiceJobs[id] = { line = line, ended = ended, display = display, gesture = gesture, wait = 0, next = 1, queue = {},
+      voiceJobs[id] = { session = item and item.session, line = line, ended = ended, display = display, gesture = gesture, wait = 0, next = 1, queue = {},
         seconds = chars * config.voice_sec_per_char, started = false }
       return line
     end
     bridge.speak(id, item, speech, "local")
   end
   system:OnAIResponse(id, ended and "ok:end" or "ok", line)
-  finishDelivery(system, id, display, gesture)
+  finishDelivery(system, id, display, gesture, item and item.session)
   return line
 end
 
@@ -402,7 +428,7 @@ local function sendNative(system, request)
   local key = request.crowd and CROWD_KEY or request.npcKey
   local character = prepareCharacter(system,request,key)
   if not character then return end
-  local body = bridge.buildBody(character, sessions[request.session].turns, request.text, request.context, key, request.crowd)
+  local body = bridge.buildBody(character, sessions[request.session].turns, request.text, request.context, key, request.crowd, actions.outcome(request.session))
   nativeSequence=math.max(nativeSequence+1,request.id)
   local wireId=nativeSequence
   local ok, accepted = pcall(function()
@@ -446,7 +472,7 @@ local function sendFile(system, request)
   if request.kind == "say" then
     character = prepareCharacter(system,request,key)
     if not character then return end
-    body = bridge.buildBody(character, sessions[request.session].turns, request.text, request.context, key, request.crowd)
+    body = bridge.buildBody(character, sessions[request.session].turns, request.text, request.context, key, request.crowd, actions.outcome(request.session))
   else finishSession(request.session) end
   local token = string.format("%d-%d-%d", os.time(), request.id, math.random(1, 1000000000))
   local file = io.open("bridge/req-" .. request.id .. ".json", "w")
