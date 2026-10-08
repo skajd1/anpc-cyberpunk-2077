@@ -12,3 +12,4 @@ __pycache__/
 *.pyc
 game/cet/anpc/*.local.json
 game/archive/*.local.archive
+game/red4ext/ANPC/*.local.json

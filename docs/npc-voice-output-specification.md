@@ -153,7 +153,7 @@ engine_profile 버전 또는 content_version이 바뀌면 해당 캐시를 무�
 
 ## 6. 실행 구조
 
-- TTS 런타임은 게임 프로세스 밖의 로컬 보조 프로세스다. ANPC.Native가 시작·종료·상태 감시를 맡는다.
+- TTS 런타임은 게임 프로세스 밖의 로컬 보조 프로세스다. ANPC.Native가 시작·종료·상태 감시를 맡는다. 플러그인을 불러올 때(게임 시작) 실행해 메인 메뉴 동안 모델을 불러오고, Windows Job Object에 묶어 게임이 정상·비정상 종료되면 함께 끝낸다. 이미 응답 중인 보조 프로세스(생존 표시 3초 이내)가 있으면 새로 띄우지 않는다. 상태(not_configured·external·running·exited·failed)와 재시작은 CET 진단 창에서 확인한다. 개발판 실행 명령은 플러그인 폴더의 로컬 설정 `tts-helper.local.json`(배포물 제외)에 둔다.
 - 통신은 로컬 파이프 또는 루프백으로만 한다. 루프백 외 바인딩, 원격 주소 설정, 외부 네트워크 전송을 두지 않는다.
 - 보조 프로세스는 낮은 우선순위와 cpu_threads 스레드로 실행한다. 게임 종료·모드 비활성화·연속 실패 시 종료한다.
 - 플레이어에게 Python·CUDA·GPU·별도 TTS 설치를 요구하지 않는다. 설치 구성은 [DIST-23](mod-distribution-specification.md#1-배포-범위와-소유권)을 따른다.

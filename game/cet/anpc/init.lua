@@ -134,6 +134,10 @@ registerForEvent("onDraw", function()
     local native = bridge.nativeVersion()
     ImGui.TextWrapped("AI 연결: " .. (native and ("ANPC.Native " .. native) or "개발 파일 브리지 (ANPC.Native 미설치)"))
     ImGui.TextWrapped("모델: " .. config.model)
+    -- 음성 출력 규격 6절: TTS 보조 프로세스는 ANPC.Native가 게임 시작 때 띄운다(red4ext/plugins/ANPC/tts-helper.local.json).
+    local ttsOK, ttsStatus = pcall(function() return Game.ANPCNative_TtsStatus() end)
+    ImGui.TextWrapped("TTS 보조 프로세스: " .. (ttsOK and tostring(ttsStatus) or "Native 미지원") .. " | 응답 " .. (bridge.helperAlive() and "있음" or "없음(준비 중이거나 꺼짐)"))
+    if ttsOK and ImGui.Button("TTS 재시작") then pcall(function() Game.ANPCNative_TtsRestart() end) end
     if native then
       -- 키는 입력 즉시 자격 증명 관리자에 저장하고 Lua 변수에서 지운다. 저장된 키는 다시 읽지 않는다.
       ImGui.TextWrapped("API 키: " .. (bridge.hasKey() and "저장됨" or "없음") .. (keyNotice ~= "" and (" · " .. keyNotice) or ""))

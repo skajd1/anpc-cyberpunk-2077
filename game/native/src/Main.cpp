@@ -9,6 +9,7 @@
 
 #include "Credentials.hpp"
 #include "HttpWorker.hpp"
+#include "TtsHelper.hpp"
 
 namespace
 {
@@ -85,6 +86,20 @@ Red::CString ANPCNative_ResultText(int32_t aId)
     return it == gReady.end() ? Red::CString("") : Red::CString(it->second.text.c_str());
 }
 
+// TTS 보조 프로세스 상태: not_configured | external | running | exited:<코드> | failed:<사유>
+Red::CString ANPCNative_TtsStatus()
+{
+    return anpc::TtsHelper::Status().c_str();
+}
+
+// 진단 창의 재시작. 이 플러그인이 띄운 보조 프로세스만 끝내고 다시 띄운다.
+Red::CString ANPCNative_TtsRestart()
+{
+    const auto status = anpc::TtsHelper::Restart();
+    LogInfo("TTS helper restart: " + status);
+    return status.c_str();
+}
+
 void ANPCNative_Release(int32_t aId)
 {
     gReady.erase(aId);
@@ -101,6 +116,8 @@ RTTI_DEFINE_GLOBALS({
     RTTI_FUNCTION(ANPCNative_ResultStatus);
     RTTI_FUNCTION(ANPCNative_ResultText);
     RTTI_FUNCTION(ANPCNative_Release);
+    RTTI_FUNCTION(ANPCNative_TtsStatus);
+    RTTI_FUNCTION(ANPCNative_TtsRestart);
 });
 
 RED4EXT_C_EXPORT bool RED4EXT_CALL Main(RED4ext::v1::PluginHandle aHandle, RED4ext::v1::EMainReason aReason,
@@ -114,9 +131,12 @@ RED4EXT_C_EXPORT bool RED4EXT_CALL Main(RED4ext::v1::PluginHandle aHandle, RED4e
         Red::TypeInfoRegistrar::RegisterDiscovered();
         anpc::HttpWorker::Start();
         LogInfo("ANPC.Native 0.1.0 loaded");
+        // 게임 시작과 함께 TTS 보조 프로세스를 띄워 메인 메뉴 동안 모델을 불러오게 한다.
+        LogInfo("TTS helper: " + anpc::TtsHelper::Start());
         break;
     case RED4ext::v1::EMainReason::Unload:
         anpc::HttpWorker::Stop();
+        anpc::TtsHelper::Stop();
         gReady.clear();
         break;
     }

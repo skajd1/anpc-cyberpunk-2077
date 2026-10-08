@@ -25,7 +25,9 @@ $mappings = @(
   @('game/redscript/ANPC', 'r6/scripts/ANPC'),
   @('game/audioware/ANPC', 'r6/audioware/ANPC'),
   # 로컬 빌드 자원(Git 제외 *.local.archive). 예: UF-75 말하기 입모양 ANPC_talk.local.archive
-  @('game/archive', 'archive/pc/mod')
+  @('game/archive', 'archive/pc/mod'),
+  # Native 플러그인 폴더의 로컬 설정(Git 제외 *.local.json). 예: TTS 보조 프로세스 실행 명령 tts-helper.local.json
+  @('game/red4ext/ANPC', 'red4ext/plugins/ANPC')
 )
 $nativePath = 'red4ext/plugins/ANPC/ANPC.Native.dll'
 # 없을 때만 설치하는 경로: Audioware 슬롯 wav는 TTS 보조 프로세스가 실행 중에 덮어쓴다
@@ -93,7 +95,7 @@ if ($PSCmdlet.ParameterSetName -eq 'Deploy') {
   }
   # 소스에서 지운 파일: 소유 목록에 있고 매핑 경로 아래인 것만. Native DLL은 -NativeDll 없이 건드리지 않는다
   foreach ($rel in @($owned.Keys)) {
-    if ($desired.Contains($rel) -or !($mappings | Where-Object { $rel.StartsWith($_[1] + '/') })) { continue }
+    if ($desired.Contains($rel) -or $rel -eq $nativePath -or !($mappings | Where-Object { $rel.StartsWith($_[1] + '/') })) { continue }
     $cur = Get-Sha (Get-GamePath $rel)
     if (!$cur) { continue }
     $items += [pscustomobject]@{ path = $rel; change = '삭제'; from = $null; source = $null; old_sha256 = $cur; new_sha256 = $null; conflict = ($cur -ne $owned[$rel]) }
