@@ -269,7 +269,7 @@ Node.js 22 이상, 추가 패키지 없음. 저장소 루트에서 `npm start` �
 | --- | --- |
 | 의존성 | Audioware 1.9.x(선택). 없으면 보조 프로세스 2D 재생으로 대체 |
 | 등록 | `r6/audioware/ANPC/manifest.yaml`에 `anpc_voice_0`~`7`을 `usage: on-demand`로 선언. 각 슬롯은 0.2초 무음 48kHz wav. on-demand는 재생할 때마다 파일을 다시 읽는다(Audioware `bank/storage.rs` `from_file`) |
-| 구간 | 보조 프로세스가 스트리밍 조각을 구간으로 묶는다. 첫 구간은 버퍼링 시작 조건을 채운 시점까지의 음성, 다음 구간은 앞 구간 재생 중 쌓인 음성. 경계는 구간 끝 300ms 안의 가장 조용한 20ms 지점, 양끝 5ms 페이드 |
+| 구간 | 보조 프로세스가 스트리밍 조각을 구간으로 묶는다. 첫 구간은 버퍼링 시작 조건을 채운 시점까지의 음성, 다음 구간은 앞 구간 재생 중 쌓인 음성. 경계는 구간 끝 300ms 안의 가장 조용한 20ms 지점, 양끝 5ms 페이드. 합성이 재생보다 느리면 쉼(0.12초 이상 무음)에서 구간을 끊고 그 쉼에서 최대 1.5초 더 모은다(음성 출력 규격 4.2-6). 합성 2배 느림 모의 실험에서 단어 중간 끊김 합계 4.3초 → 0.8초, 구간 수 24 → 8 |
 | 파일 쓰기 | 48kHz 16bit mono wav를 임시 파일에 쓰고 원자적 교체. 재생 중이거나 예약된 슬롯은 쓰지 않는다(링 8개). 깨진 파일을 재생하면 Audioware가 패닉할 수 있다 |
 | 알림 | 보조 프로세스 → CET: `tts/seg-<request_id>-<n>.json` {slot, dur_ms, final, talk}. talk는 소리 구간 [[시작ms, 끝ms], ...](20ms RMS가 대사 상위 음량의 15%·최소 -38dBFS 초과, 0.2초 미만 쉼 연결, 0.08초 미만 제외). 없으면 구간 전체를 소리로 본다. CET → 보조 프로세스: 기존 req/stop |
 | 재생 | redscript `AnpcVoice`: 대화 시작 때 `RegisterEmitter(npcID, n"ANPC", EmitterSettings)`, 다른 프레임에 `PlayOnEmitter(n"anpc_voice_<slot>", npcID, n"ANPC")`. CET가 앞 구간 dur_ms가 끝나는 시점에 다음 구간을 재생. 종료 때 `UnregisterEmitter` |
