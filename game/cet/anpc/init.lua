@@ -107,6 +107,12 @@ registerForEvent("onUpdate", function(delta)
   if elapsed >= 0.25 then elapsed = 0; refresh(false) end
 end)
 
+-- 접는 구역. ImGui에 CollapsingHeader가 없는 환경(시험)에서는 항상 펼친다.
+local function section(label)
+  if ImGui.CollapsingHeader then return ImGui.CollapsingHeader(label) end
+  return true
+end
+
 registerForEvent("onDraw", function()
   local actions = bridge.actionText()
   if actions then
@@ -123,24 +129,48 @@ registerForEvent("onDraw", function()
   end
   devtools.draw()
   if not overlay then return end
-  local expanded = ImGui.Begin("ANPC G0/G1 진단")
+  local expanded = ImGui.Begin("ANPC 진단")
   if expanded then
-    ImGui.Text("ANPC " .. version .. " | CET " .. cetVersion)
-    ImGui.Text("redscript " .. redscriptVersion)
-    ImGui.TextWrapped("읽기 전용 개발 진단. 모의 대사는 이 창에만 표시합니다.")
-    ImGui.TextWrapped("상태: " .. status)
-    ImGui.TextWrapped("G2 선택 결과: " .. entryStatus)
-    ImGui.TextWrapped("AI 대기 요청: " .. bridge.pendingCount())
+    -- 요약: 한 줄에 한 구성 요소. 문제 원인은 '최근 음성/얼굴'에서 먼저 본다.
+    ImGui.Text(("ANPC %s · CET %s · redscript %s"):format(version, cetVersion, redscriptVersion))
+    ImGui.TextWrapped("대화: " .. entryStatus .. " · 수집: " .. status)
     local native = bridge.nativeVersion()
-    ImGui.TextWrapped("AI 연결: " .. (native and ("ANPC.Native " .. native) or "개발 파일 브리지 (ANPC.Native 미설치)"))
-    ImGui.TextWrapped("모델: " .. config.model)
-    -- 음성 출력 규격 6절: TTS 보조 프로세스는 ANPC.Native가 게임 시작 때 띄운다(red4ext/plugins/ANPC/tts-helper.local.json).
+    ImGui.TextWrapped(("AI: %s · %s · 키 %s · 대기 %d"):format(native and ("Native " .. native) or "파일 브리지",
+      config.model, native and (bridge.hasKey() and "있음" or "없음") or "-", bridge.pendingCount()))
     local ttsOK, ttsStatus = pcall(function() return Game.ANPCNative_TtsStatus() end)
-    ImGui.TextWrapped("TTS 보조 프로세스: " .. (ttsOK and tostring(ttsStatus) or "Native 미지원") .. " | 응답 " .. (bridge.helperAlive() and "있음" or "없음(준비 중이거나 꺼짐)"))
+    ImGui.TextWrapped(("TTS: %s · 응답 %s · 재생 대기 %d"):format(ttsOK and tostring(ttsStatus) or "Native 미지원",
+      bridge.helperAlive() and "있음" or "없음", bridge.voicePendingCount()))
     if ttsOK and ImGui.Button("TTS 재시작") then pcall(function() Game.ANPCNative_TtsRestart() end) end
-    if native then
+    local recent = bridge.recent()
+    ImGui.TextWrapped("최근 음성: " .. recent.voice)
+    ImGui.TextWrapped("최근 얼굴: " .. recent.face)
+
+    if section("대상") then
+      if ImGui.Button("대상 고정·다시 검사") then mockText = nil; refresh(true) end
+      if state and state.entityID ~= "" then
+        ImGui.TextWrapped(("%s · %s · %.2fm · 같은 객체 %s · 세대 %s"):format(state.recordID, state.entityID,
+          state.distance, tostring(state.sameObject), tostring(state.epoch)))
+        ImGui.TextWrapped(("사망 %s · V 전투 %s · NPC 전투 %s · 장면 %s · HighLevel %s"):format(tostring(state.dead),
+          tostring(state.playerCombat), state.npcStateKnown and tostring(state.npcCombat) or "?",
+          state.sceneKnown and tostring(state.inScene) or "?", tostring(state.highLevel)))
+        if ImGui.Button("G1 모의 대사 재검사") then
+          refresh(false)
+          mockText, status = diagnostics.mock(state, pinnedEpoch)
+        end
+      end
+      if mockText then ImGui.TextWrapped(mockText) end
+    end
+    if section("장면 진입") then
+      if sceneHubs then
+        ImGui.TextWrapped(string.format("원작 장면 허브 %d개 | 선택지 %d개", sceneHubs, sceneChoices))
+        ImGui.TextWrapped("진입 진단: " .. (sceneEntryStatus or "미확인"))
+      else
+        ImGui.TextWrapped("원작 장면 선택지 수집: 미확인")
+      end
+    end
+    if native and section("API 키") then
       -- 키는 입력 즉시 자격 증명 관리자에 저장하고 Lua 변수에서 지운다. 저장된 키는 다시 읽지 않는다.
-      ImGui.TextWrapped("API 키: " .. (bridge.hasKey() and "저장됨" or "없음") .. (keyNotice ~= "" and (" · " .. keyNotice) or ""))
+      if keyNotice ~= "" then ImGui.TextWrapped(keyNotice) end
       keyInput = ImGui.InputText("##anpc_api_key", keyInput, 256, ImGuiInputTextFlags.Password)
       if ImGui.Button("키 저장") then
         keyNotice = (keyInput ~= "" and bridge.saveKey(keyInput)) and "저장했습니다" or "저장 실패"
@@ -149,32 +179,7 @@ registerForEvent("onDraw", function()
       ImGui.SameLine()
       if ImGui.Button("키 삭제") then keyNotice = bridge.deleteKey() and "삭제했습니다" or "삭제 실패" end
     end
-    if sceneHubs then
-      ImGui.TextWrapped(string.format("원작 장면 허브 %d개 | 선택지 %d개", sceneHubs, sceneChoices))
-      if sceneHubs > 0 then
-        ImGui.TextWrapped("G2 장면 진입: 대화 위젯 표시 전용 허브, 마지막 항목에서 ↓ 후 F (보조 R)")
-      end
-      ImGui.TextWrapped("G2 장면 진입 진단: " .. (sceneEntryStatus or "미확인"))
-    else
-      ImGui.TextWrapped("원작 장면 선택지 수집: 미확인")
-    end
-    if ImGui.Button("시선 대상 고정/다시 검사") then mockText = nil; refresh(true) end
-    if state and state.entityID ~= "" then
-      ImGui.TextWrapped("엔티티: " .. state.entityID .. " | 레코드: " .. state.recordID)
-      ImGui.Text(string.format("거리 %.2f m | 동일 객체 %s | 세대 %s", state.distance,
-        tostring(state.sameObject), tostring(state.epoch)))
-      ImGui.Text("사망: " .. tostring(state.dead) .. " | V 전투: " .. tostring(state.playerCombat)
-        .. " | NPC 전투: " .. (state.npcStateKnown and tostring(state.npcCombat) or "unknown"))
-      ImGui.Text("장면: " .. (state.sceneKnown and tostring(state.inScene) or "unknown")
-        .. " | HighLevel: " .. tostring(state.highLevel))
-      if ImGui.Button("G1 모의 대사 재검사") then
-        refresh(false)
-        mockText, status = diagnostics.mock(state, pinnedEpoch)
-      end
-    end
-    if mockText then ImGui.TextWrapped(mockText) end
-    if config.dev_tools then devtools.buttons() end
-    ImGui.TextWrapped("인물/진행 매핑·원작 선택지 handoff·저장 기억: 미구현/미검증")
+    if config.dev_tools and section("시험: 표정·제스처·입모양") then devtools.buttons() end
   end
   ImGui.End()
 end)

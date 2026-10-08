@@ -84,7 +84,7 @@ end
 
 -- CET 오버레이 진단 창 안의 같은 버튼.
 function devtools.buttons()
-  ImGui.TextWrapped("표정·제스처 시험(대화 밖, 바라보는 NPC)")
+  ImGui.TextWrapped("대화 밖에서 바라보는 NPC에 시험한다.")
   if ImGui.Button("시험: NPC 고정") then devtools.pin() end
   if ImGui.Button("시험: 다음 표정") then devtools.face() end
   if ImGui.Button("시험: 다음 제스처") then devtools.gesture() end

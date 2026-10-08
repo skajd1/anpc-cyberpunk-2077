@@ -249,6 +249,10 @@ function bridge.helperAlive()
 end
 
 local voiceJobs = {}
+-- 진단 창용 최근 처리 결과(음성·얼굴). 게임 동작에는 쓰지 않는다.
+local recent = { voice = "없음", face = "없음" }
+local function note(kind, id, text) recent[kind] = ("#%s %s"):format(tostring(id), text) end
+function bridge.recent() return recent end
 
 function bridge.stopSpeech(system)
   if not config.voice_enabled then return end
@@ -260,7 +264,10 @@ end
 
 -- 대사가 보이는 순간 감정 표정(UF-74)과 제스처(UF-64)를 함께 시작한다.
 local function finishDelivery(system, id, display, gesture, session, emotion)
-  if config.expression_enabled then expressions.apply(system, id, emotion) end
+  if config.expression_enabled then
+    local applied = expressions.apply(system, id, emotion)
+    if not voiceJobs[id] or not voiceJobs[id].talking then note("face", id, "표정 " .. tostring(emotion) .. (applied and " 적용" or " 거부")) end
+  end
   if gesture then display = actions.start(system, id, gesture, session) end
   -- 폐기된 응답은 대사와 행동 목록 모두 표시하지 않는다.
   actionDisplay = { id = id, text = display }
@@ -294,17 +301,22 @@ local function voiceUpdate(system, delta)
         job.started, job.playEnd, job.final = true, clock + seg.dur, seg.final
         -- UF-75: 첫 음성과 함께 말하기 입모양을 시작한다.
         if config.lipsync_enabled then job.talking = expressions.talkStart(system, id) end
+        note("voice", id, ("재생 시작 · 첫 구간 %.1f초"):format(job.wait))
+        note("face", id, "입모양 " .. (not config.lipsync_enabled and "꺼짐" or job.talking and "시작"
+          or expressions.talkAvailable() and "거부(대상 조건)" or "자원 없음"))
         system:OnAIVoiceResponse(id, job.ended and "ok:end" or "ok", job.line, job.seconds)
         finishDelivery(system, id, job.display, job.gesture, job.session, job.emotion)
       elseif job.queue[1] or job.wait > config.voice_wait_s then
         -- 대기 한도 안에 첫 구간이 없거나 재생할 수 없으면 자막만 표시하고 음성은 버린다.
         voiceJobs[id] = nil
+        note("voice", id, job.queue[1] and "자막만 · 슬롯 재생 실패" or ("자막만 · 첫 구간 %.1f초 초과"):format(config.voice_wait_s))
         bridge.stopSpeech(system)
         system:OnAIResponse(id, job.ended and "ok:end" or "ok", job.line)
         finishDelivery(system, id, job.display, job.gesture, job.session, job.emotion)
       end
     elseif system:GetLatestRequestId() ~= id then
       voiceJobs[id] = nil
+      note("voice", id, "중단 · 새 요청")
       if job.talking then expressions.talkStop(system) end
     else
       if menuOK and menuOpen then job.playEnd = job.playEnd + delta end
@@ -315,6 +327,7 @@ local function voiceUpdate(system, delta)
         job.final = seg.final
       elseif job.final and clock >= job.playEnd then
         voiceJobs[id] = nil
+        note("voice", id, "재생 완료")
         if job.talking then expressions.talkStop(system) end
       end
     end
@@ -374,16 +387,22 @@ local function deliverReply(system, id, text, character, item)
     system:OnAIResponse(id, "error:invalid_response", "")
     return nil
   end
+  local profile = item and (item.crowd and config.voice_crowd_profile or config.voice_profiles[item.key])
+  if not config.voice_enabled then note("voice", id, "음성 꺼짐")
+  elseif not speech then note("voice", id, "생략 · 일본어 대사 없음·형식 오류")
+  elseif not profile then note("voice", id, "생략 · 음성 프로필 없음(" .. tostring(item and item.key) .. ")")
+  elseif not bridge.helperAlive() then note("voice", id, "생략 · TTS 응답 없음") end
   if speech and bridge.helperAlive() then
     local ok, spatial = pcall(function() return system:VoiceSpatialAvailable() end)
     if ok and spatial == true and bridge.speak(id, item, speech, "slots") then
+      note("voice", id, profile .. " 합성 대기")
       -- 자막·행동은 첫 음성 구간 재생 때 함께 시작한다(voiceUpdate).
       local _, chars = speech.text:gsub("[^\128-\191]", "")
       voiceJobs[id] = { session = item and item.session, line = line, ended = ended, display = display, gesture = gesture, emotion = emotion, wait = 0, next = 1, queue = {},
         seconds = chars * config.voice_sec_per_char, started = false }
       return line
     end
-    bridge.speak(id, item, speech, "local")
+    if bridge.speak(id, item, speech, "local") then note("voice", id, profile .. " 2D 재생(Audioware 없음)") end
   end
   system:OnAIResponse(id, ended and "ok:end" or "ok", line)
   finishDelivery(system, id, display, gesture, item and item.session, emotion)

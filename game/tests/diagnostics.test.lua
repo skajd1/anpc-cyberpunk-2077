@@ -86,15 +86,15 @@ end
 events.onInit()
 events.onOverlayOpen()
 assert(draw():find("redscript test%-redscript"))
+assert(not draw():find("읽기 전용", 1, true) and not draw():find("미구현", 1, true))
 assert(draw():find("원작 장면 허브 1개 | 선택지 5개", 1, true))
-assert(draw():find("G2 장면 진입: 대화 위젯 표시 전용 허브", 1, true))
-assert(draw():find("G2 장면 진입 진단: decorated=1 lastOffer=test", 1, true))
+assert(draw():find("진입 진단: decorated=1 lastOffer=test", 1, true))
 hubFailed = true
 events.onUpdate(0.25)
 assert(not draw():find("선택지 5개", 1, true))
 assert(draw():find("원작 장면 선택지 수집: 미확인", 1, true))
 hubFailed = false
-draw("시선 대상 고정/다시 검사")
+draw("대상 고정·다시 검사")
 assert(draw("G1 모의 대사 재검사"):find("%[G1 모의 대사%]"))
 current.sameObject = false
 events.onUpdate(0.25)

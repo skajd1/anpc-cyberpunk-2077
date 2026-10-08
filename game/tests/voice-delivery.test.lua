@@ -76,12 +76,15 @@ assert(bridge.update(0.1))
 assert(table.concat(events,",")=="talk_stop,voice_play,talk_start,voice_subtitle,gesture" and started==1)
 assert(bridge.update(2) and started==1)
 assert(events[#events]=="talk_stop")
+-- 진단 창의 최근 처리 결과
+assert(bridge.recent().voice=="#1 재생 완료" and bridge.recent().face:find("입모양 시작",1,true))
 request(2)
 local joined="";for _,message in ipairs(calls[#calls].body.input)do joined=joined .. message.content end
 assert(joined:find('"last_action_result":',1,true) and joined:find('"status":"cancelled"',1,true))
 assert(joined:find('"reading":"ヴィー"',1,true))
 
 begin(3);assert(bridge.update(config.voice_wait_s+0.1))
+assert(bridge.recent().voice:find("자막만 · 첫 구간",1,true))
 assert(#responses==1 and responses[1].text=="안녕." and started==1 and bridge.voicePendingCount()==0)
 begin(4);playOK=false;files["tts/seg-4-1.json"]='{"slot":1,"dur_ms":1000,"final":true}'
 assert(bridge.update(0.1) and #responses==1 and started==1)
