@@ -8,6 +8,8 @@ param(
   [Parameter(ParameterSetName = 'Deploy')][string]$Name,
   [Parameter(ParameterSetName = 'Deploy')][string]$NativeDll,
   [Parameter(ParameterSetName = 'Deploy')][Parameter(ParameterSetName = 'Restore')][switch]$Plan,
+  # 게임 실행 중 배포: CET Lua·*.local.json만 바뀔 때 허용. 반영은 CET의 모드 다시 불러오기 또는 TTS 재시작.
+  [Parameter(ParameterSetName = 'Deploy')][switch]$Live,
   [Parameter(ParameterSetName = 'Restore', Mandatory)][string]$Restore,
   [string]$GameRoot,
   [switch]$Force
@@ -23,7 +25,11 @@ $backupRoot = Join-Path $repo 'config.local.backups'
 $mappings = @(
   @('game/cet/anpc', 'bin/x64/plugins/cyber_engine_tweaks/mods/anpc'),
   @('game/redscript/ANPC', 'r6/scripts/ANPC'),
-  @('game/audioware/ANPC', 'r6/audioware/ANPC')
+  @('game/audioware/ANPC', 'r6/audioware/ANPC'),
+  # 로컬 빌드 자원(Git 제외 *.local.archive). 예: UF-75 말하기 입모양 ANPC_talk.local.archive
+  @('game/archive', 'archive/pc/mod'),
+  # Native 플러그인 폴더의 로컬 설정(Git 제외 *.local.json). 예: TTS 보조 프로세스 실행 명령 tts-helper.local.json
+  @('game/red4ext/ANPC', 'red4ext/plugins/ANPC')
 )
 $nativePath = 'red4ext/plugins/ANPC/ANPC.Native.dll'
 # 없을 때만 설치하는 경로: Audioware 슬롯 wav는 TTS 보조 프로세스가 실행 중에 덮어쓴다
@@ -41,7 +47,8 @@ function Get-Sha($path) { if (Test-Path -LiteralPath $path -PathType Leaf) { (Ge
 function Get-GamePath($rel) { Join-Path $GameRoot ($rel -replace '/', '\') }
 function Get-RepoRel($full) { $full.Substring($repo.Length + 1) -replace '\\', '/' }
 function Write-Json($path, $obj) { New-Item -ItemType Directory -Path (Split-Path $path) -Force | Out-Null; [IO.File]::WriteAllText($path, ($obj | ConvertTo-Json -Depth 8), $utf8) }
-function Assert-GameStopped { if (Get-Process -Name Cyberpunk2077 -ErrorAction SilentlyContinue) { throw '게임 실행 중: 게임을 종료한 뒤 다시 실행하세요.' } }
+function Assert-GameStopped { if (!$script:LiveAllowed -and (Get-Process -Name Cyberpunk2077 -ErrorAction SilentlyContinue)) { throw '게임 실행 중: 게임을 종료한 뒤 다시 실행하세요.' } }
+$script:LiveAllowed = $false
 function Format-Kst($iso) {
   $t = [DateTimeOffset]::Parse($iso)
   $o = $t.Offset
@@ -69,6 +76,8 @@ $same = 0
 if ($PSCmdlet.ParameterSetName -eq 'Deploy') {
   $desired = [ordered]@{}
   foreach ($m in $mappings) {
+    # Git에 없는 로컬 빌드 폴더(game/archive)는 없을 수 있다.
+    if (!(Test-Path -LiteralPath (Join-Path $repo $m[0]))) { continue }
     $src = (Resolve-Path -LiteralPath (Join-Path $repo $m[0])).Path
     foreach ($f in Get-ChildItem -LiteralPath $src -File -Recurse) {
       $desired[$m[1] + '/' + ($f.FullName.Substring($src.Length + 1) -replace '\\', '/')] = $f.FullName
@@ -89,7 +98,7 @@ if ($PSCmdlet.ParameterSetName -eq 'Deploy') {
   }
   # 소스에서 지운 파일: 소유 목록에 있고 매핑 경로 아래인 것만. Native DLL은 -NativeDll 없이 건드리지 않는다
   foreach ($rel in @($owned.Keys)) {
-    if ($desired.Contains($rel) -or !($mappings | Where-Object { $rel.StartsWith($_[1] + '/') })) { continue }
+    if ($desired.Contains($rel) -or $rel -eq $nativePath -or !($mappings | Where-Object { $rel.StartsWith($_[1] + '/') })) { continue }
     $cur = Get-Sha (Get-GamePath $rel)
     if (!$cur) { continue }
     $items += [pscustomobject]@{ path = $rel; change = '삭제'; from = $null; source = $null; old_sha256 = $cur; new_sha256 = $null; conflict = ($cur -ne $owned[$rel]) }
@@ -134,6 +143,10 @@ if ($conflicts.Count) { Write-Output '충돌: 마지막 배포 뒤 게임 쪽 �
 
 # 배포 전 검사(DIST-05·DIST-25)
 $checks = [ordered]@{}
+# 바뀌는 .json(설정·로컬 원문 등)은 형식이 맞는지 먼저 확인한다. 깨진 설정은 게임에서 조용히 실패한다.
+foreach ($i in $items | Where-Object { $_.from -and $_.path -like '*.json' }) {
+  try { [IO.File]::ReadAllText($i.from, $utf8) | ConvertFrom-Json | Out-Null } catch { throw "JSON 형식 오류: $($i.source) ($($_.Exception.Message))" }
+}
 if ($PSCmdlet.ParameterSetName -eq 'Deploy') {
   $gen = (& node (Join-Path $repo 'scripts/build-cet-prompts.mjs')) -join "`n"
   if ($LASTEXITCODE -ne 0) { throw '프롬프트 생성 검사 실패' }
@@ -151,6 +164,11 @@ if (!$items.Count) {
   return
 }
 if (!$Name) { throw '-Name으로 배포 이름을 지정하세요.' }
+if ($Live) {
+  $blocked = @($items | Where-Object { !($_.path -like 'bin/x64/plugins/cyber_engine_tweaks/mods/anpc/*.lua' -or $_.path -like '*.local.json') })
+  if ($blocked.Count) { throw ('-Live는 CET Lua·*.local.json 변경만 허용합니다: ' + (($blocked | ForEach-Object { $_.path }) -join ', ')) }
+  $script:LiveAllowed = $true
+}
 if ($conflicts.Count -and !$Force) { throw '충돌 파일이 있어 중단했습니다.' }
 if ($PSCmdlet.ParameterSetName -eq 'Deploy' -and ($items | Where-Object { $_.path -like '*.reds' })) {
   & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $repo 'scripts\check-redscript.ps1') -GameRoot $GameRoot

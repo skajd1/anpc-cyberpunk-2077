@@ -37,7 +37,10 @@ rig="man_child";assert(#actions.allowed(system,1)==1);rig="man_base"
 metadata[#metadata+1]={name=motions[1].name,rig="Big",ent=motions[1].ent,comp=motions[1].comp}
 rig="man_big"
 local big=actions.allowed(system,1)
-assert(#big[2].candidates==1 and big[2].candidates[1].ref=="amm_clap")
+local bigRefs={}
+for _,m in ipairs(motions) do for _,r in ipairs(m.rigs) do if r=="Big" then bigRefs[#bigRefs+1]=m.ref end end end
+assert(#big[2].candidates==#bigRefs and #bigRefs>0)
+for _,c in ipairs(big[2].candidates) do assert(c.ref~="amm_wave") end
 rig="man_base"
 installed=false;assert(#actions.allowed(system,1)==1);installed=true
 version="other";assert(#actions.allowed(system,1)==1);version="2.12.5"

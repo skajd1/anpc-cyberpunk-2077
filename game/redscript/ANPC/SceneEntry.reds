@@ -12,9 +12,8 @@ public class SceneEntryCandidate extends IScriptable {
 }
 
 public class SceneEntryInstaller extends ScriptableService {
-  private let registered: Bool;
-  private let initialized: Int32;
-  private let tracked: array<wref<NPCPuppet>>;
+  // 마지막 검색에서 찾은 V 주변 NPC. 원작 선택지가 떠 있는 동안만 쓴다.
+  private let nearby: array<wref<NPCPuppet>>;
   private let decorated: Int32;
   private let lastOffer: String;
   private let lastSpeaker: String;
@@ -24,13 +23,23 @@ public class SceneEntryInstaller extends ScriptableService {
   private let lastAction: String;
   private let lastCrowd: String;
 
+  // CET 디버그 창 표시용. 상태 코드는 CET labels.lua가 한국어로 바꾼다.
   public func GetStatus() -> String {
-    return "registered=" + ToString(this.registered) + " initialized=" + ToString(this.initialized)
-      + " tracked=" + ToString(ArraySize(this.tracked)) + " decorated=" + ToString(this.decorated)
-      + " lastOffer=" + this.lastOffer + " lastSpeaker=" + this.lastSpeaker
-      + " inputs=" + ToString(this.inputs) + " lastInput=" + this.lastInput
-      + " actions=" + ToString(this.actions) + " lastAction=" + this.lastAction
-      + " lastCrowd=" + this.lastCrowd;
+    return "ANPC 선택지: 표시 " + ToString(this.decorated) + "회 · 최근 " + SceneEntryInstaller.Or(this.lastOffer)
+      + "
+화자: " + SceneEntryInstaller.Or(this.lastSpeaker)
+      + "
+대화 입력: " + ToString(this.inputs) + "회 · 최근 " + SceneEntryInstaller.Or(this.lastInput)
+      + "
+키 입력: " + ToString(this.actions) + "회 · 최근 " + SceneEntryInstaller.Or(this.lastAction)
+      + "
+군중: " + SceneEntryInstaller.Or(this.lastCrowd)
+      + "
+주변 NPC(최근 검색): " + ToString(ArraySize(this.nearby)) + "명";
+  }
+
+  private static func Or(text: String) -> String {
+    return StrLen(text) > 0 ? text : "없음";
   }
 
   public static func Get() -> ref<SceneEntryInstaller> {
@@ -44,8 +53,8 @@ public class SceneEntryInstaller extends ScriptableService {
 
   // 원작 허브 화자의 실측 레코드. 지원 인물 표를 채울 때 CET 진단에서 읽는다.
   public func RecordSpeaker(npc: ref<NPCPuppet>, title: String, key: String, highLevel: Int32) -> Void {
-    this.lastSpeaker = "title=" + SceneEntry.ResolveTitle(title) + " record=" + TDBID.ToStringDEBUG(npc.GetRecordID())
-      + " key=" + key + " crowd=" + ToString(npc.IsCrowd()) + " highLevel=" + ToString(highLevel);
+    this.lastSpeaker = SceneEntry.ResolveTitle(title) + " · 레코드 " + TDBID.ToStringDEBUG(npc.GetRecordID())
+      + " · 인물 " + key + " · 군중 " + ToString(npc.IsCrowd()) + " · V 장면 단계 " + ToString(highLevel);
   }
 
   public func RecordCrowd(reason: String) -> Void {
@@ -62,13 +71,40 @@ public class SceneEntryInstaller extends ScriptableService {
     this.lastAction = reason;
   }
 
+  // 원작 선택지가 뜰 때만 V 주변 4m의 NPC를 찾는다(모든 NPC 생성을 감시하지 않는다). 바라보는 NPC도 넣는다.
+  public func Scan(player: ref<PlayerPuppet>) -> Void {
+    let found: array<wref<NPCPuppet>>;
+    let targeting = GameInstance.GetTargetingSystem(player.GetGame());
+    let query = TSQ_NPC();
+    query.maxDistance = 4.0;
+    query.testedSet = TargetingSet.Complete;
+    query.filterObjectByDistance = true;
+    let parts: array<TS_TargetPartInfo>;
+    targeting.GetTargetParts(player, query, parts);
+    for part in parts {
+      let npc = TS_TargetPartInfo.GetComponent(part).GetEntity() as NPCPuppet;
+      if IsDefined(npc) && !SceneEntryInstaller.Has(found, npc) { ArrayPush(found, npc); }
+    }
+    let look = targeting.GetLookAtObject(player, false, false) as NPCPuppet;
+    if IsDefined(look) && !SceneEntryInstaller.Has(found, look) { ArrayPush(found, look); }
+    this.nearby = found;
+  }
+
+  private static func Has(list: array<wref<NPCPuppet>>, npc: ref<NPCPuppet>) -> Bool {
+    for item in list {
+      let current: ref<NPCPuppet> = item;
+      if current == npc { return true; }
+    }
+    return false;
+  }
+
   // 허브 제목과 이름이 일치하는 화자가 없을 때 가장 가까운 NPC를 진단에만 남긴다.
   public func RecordSpeakerMissing(player: ref<PlayerPuppet>, title: String) -> Void {
     let nearest: ref<NPCPuppet>;
     let nearestDistance = 4.0;
     let i = 0;
-    while i < ArraySize(this.tracked) {
-      let npc: ref<NPCPuppet> = this.tracked[i];
+    while i < ArraySize(this.nearby) {
+      let npc: ref<NPCPuppet> = this.nearby[i];
       if IsDefined(npc) && npc.IsAttached() {
         let distance = Vector4.Distance(npc.GetWorldPosition(), player.GetWorldPosition());
         if distance <= nearestDistance {
@@ -78,10 +114,10 @@ public class SceneEntryInstaller extends ScriptableService {
       }
       i += 1;
     }
-    this.lastSpeaker = "title=" + SceneEntry.ResolveTitle(title) + " speaker=none";
+    this.lastSpeaker = SceneEntry.ResolveTitle(title) + " · 화자 못 찾음";
     if IsDefined(nearest) {
-      this.lastSpeaker += " nearest=" + GetLocalizedText(nearest.GetDisplayName())
-        + " record=" + TDBID.ToStringDEBUG(nearest.GetRecordID());
+      this.lastSpeaker += " · 가장 가까운 NPC " + GetLocalizedText(nearest.GetDisplayName())
+        + "(레코드 " + TDBID.ToStringDEBUG(nearest.GetRecordID()) + ")";
     }
   }
 
@@ -90,8 +126,8 @@ public class SceneEntryInstaller extends ScriptableService {
     let best: ref<NPCPuppet>;
     let bestDistance = 4.0;
     let i = 0;
-    while i < ArraySize(this.tracked) {
-      let npc: ref<NPCPuppet> = this.tracked[i];
+    while i < ArraySize(this.nearby) {
+      let npc: ref<NPCPuppet> = this.nearby[i];
       if IsDefined(npc) && npc.IsAttached() && !npc.IsDead()
         && SceneEntry.TitleMatches(title, npc) {
         let distance = Vector4.Distance(npc.GetWorldPosition(), player.GetWorldPosition());
@@ -103,26 +139,6 @@ public class SceneEntryInstaller extends ScriptableService {
       i += 1;
     }
     return best;
-  }
-
-  private cb func OnLoad() -> Void {
-    GameInstance.GetCallbackSystem().RegisterCallback(n"Entity/Initialize", this, n"OnEntityInitialize", true)
-      .AddTarget(EntityTarget.Type(n"NPCPuppet")).SetLifetime(CallbackLifetime.Forever);
-    this.registered = true;
-  }
-
-  private cb func OnEntityInitialize(event: ref<EntityLifecycleEvent>) -> Void {
-    this.initialized += 1;
-    let npc = event.GetEntity() as NPCPuppet;
-    if !IsDefined(npc) { return; }
-    let alive: array<wref<NPCPuppet>>;
-    let i = 0;
-    while i < ArraySize(this.tracked) {
-      if IsDefined(this.tracked[i]) { ArrayPush(alive, this.tracked[i]); }
-      i += 1;
-    }
-    ArrayPush(alive, npc);
-    this.tracked = alive;
   }
 }
 
@@ -239,6 +255,7 @@ public abstract class SceneEntry {
     if !IsDefined(installer) || !IsDefined(player) { return null; }
     let blocked: ref<SceneEntryCandidate>;
     let hubs = SceneEntry.NativeHubs(player.GetGame());
+    if ArraySize(hubs.choiceHubs) > 0 { installer.Scan(player); }
     let i = 0;
     while i < ArraySize(hubs.choiceHubs) {
       if SceneEntry.IsWaitingHub(hubs.choiceHubs[i]) {
@@ -438,8 +455,8 @@ protected cb func OnAction(action: ListenerAction, consumer: ListenerActionConsu
   let name = ListenerAction.GetName(action);
   let diagnostics = SceneEntryInstaller.Get();
   if IsDefined(diagnostics) {
-    diagnostics.RecordAction(NameToString(name) + ":" + ToString(ListenerAction.GetType(action))
-      + " offered=" + ToString(this.anpcOffered) + " focus=" + ToString(this.anpcFocus));
+    diagnostics.RecordAction(NameToString(name) + " " + ToString(ListenerAction.GetType(action))
+      + " · ANPC 선택지 표시 " + ToString(this.anpcOffered) + " · 선택 중 " + ToString(this.anpcFocus));
   }
   let player = this.GetPlayerControlledObject() as PlayerPuppet;
   if !IsDefined(player) { return false; }

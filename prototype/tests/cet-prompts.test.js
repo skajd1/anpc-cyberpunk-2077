@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { AMM_MOTIONS } from '../public/motions.js';
 
 test('CET 생성 프롬프트는 최신 인물 콘텐츠와 게임의 행동 권한을 반영한다', () => {
   const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -25,7 +26,7 @@ test('CET 생성 프롬프트는 최신 인물 콘텐츠와 게임의 행동 권
   const actions = JSON.parse(viktor.match(/actions = \[=\[\n(.+)\]=\],/)[1]);
   assert.equal(actions.find(a => a.action_id === 'end_conversation').execution_mode, 'execute');
   assert.equal(actions.find(a => a.action_id === 'play_gesture').execution_mode, 'selection_only');
-  assert.deepEqual(actions.find(a => a.action_id === 'play_gesture').candidates.map(c => c.ref), ['test_nod', 'test_shrug', 'test_wave', 'amm_wave', 'amm_clap', 'amm_talk']);
+  assert.deepEqual(actions.find(a => a.action_id === 'play_gesture').candidates.map(c => c.ref), ['test_nod', 'test_shrug', 'test_wave', ...AMM_MOTIONS.map(m => m.ref)]);
   const johnny = result.stdout.split('    johnny = {')[1].split('    resident = {')[0];
   assert.deepEqual(JSON.parse(johnny.match(/actions = \[=\[\n(.+)\]=\],/)[1]).map(a => a.action_id), ['end_conversation']);
   const tracked = readFileSync(new URL('../../game/cet/anpc/prompts.lua', import.meta.url), 'utf8');

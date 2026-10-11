@@ -10,6 +10,11 @@ public class AnpcRequest extends IScriptable {
   public let session: Int32;
   public let npcKey: String;
   public let crowd: Bool;
+  // 원작 목소리 이름과 성별(Female/Male). 군중 TTS 참조 음성 선택에 쓴다.
+  public let voiceTag: String;
+  public let gender: String;
+  // 목소리 이름을 못 읽었을 때 원인 분석용 구조(세션 첫 요청에만).
+  public let voiceDetail: String;
   public let text: String;
   public let context: ref<ContextSnapshot>;
   public let instanceToken: String;
@@ -25,6 +30,9 @@ public class ChatSession extends IScriptable {
   public let player: wref<PlayerPuppet>;
   public let characterKey: String;
   public let crowd: Bool;
+  public let voiceTag: String;
+  public let gender: String;
+  public let voiceDetail: String;
   public let instanceToken: String;
   // 보류 중인 원작 허브 ID. 군중은 -1.
   public let holdHubId: Int32;
@@ -41,6 +49,8 @@ public class ChatSession extends IScriptable {
   // 이동 키가 눌려 있어 미룬 입력칸 열기. 세션 감시에서 이동 축이 0이 되면 연다.
   public let inputDeferred: Bool;
   public let menuRequestedAt: Float;
+  // Tab으로 닫는 중인 입력칸. 완전히 사라진 뒤(입력 차단 해제·알림 종료 후) 원작 메뉴를 연다.
+  public let menuPopup: wref<ChatPopup>;
   // 현재 표시 중인 ANPC 자막 ID. 세션 종료 시 숨긴다.
   public let subtitles: array<CRUID>;
   // 자유 군중의 정지·시선 제어. 군중이 아니거나 워크스팟 점유면 null. 세션 종료·세계 전환에서 해제한다.
@@ -92,6 +102,7 @@ public class AnpcSubtitleCallback extends DelayCallback {
   public static func Timeout() -> Int32 { return 4; }
   public static func EndAfter() -> Int32 { return 5; }
   public static func ResumeMenu() -> Int32 { return 6; }
+  public static func OpenMenu() -> Int32 { return 7; }
 
   public func Call() -> Void {
     if IsDefined(this.entry) { this.entry.OnSubtitleTimer(this); }
@@ -298,6 +309,7 @@ public class ChatPopup extends InGamePopup {
   protected cb func OnHidden() {
     if IsDefined(this.entry) { this.entry.OnChatClosed(this); }
     super.OnHidden();
+    if IsDefined(this.entry) { this.entry.OnChatHidden(this); }
   }
 }
 

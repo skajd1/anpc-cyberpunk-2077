@@ -116,6 +116,8 @@ public class Entry extends ScriptableSystem {
     if IsDefined(this.session) && IsDefined(this.session.control) { this.session.control.Release(); }
     if IsDefined(this.session) && IsDefined(this.session.popup) { this.session.popup.Close(); }
     this.session = null;
+    this.ExpressionReset();
+    this.debugNpc = null;
     this.StopMoveWatch();
     this.crowdNpc = null;
     this.crowdReactedAt = 0.0;
@@ -127,7 +129,7 @@ public class Entry extends ScriptableSystem {
     this.crowdReactedAt = EngineTime.ToFloat(GameInstance.GetSimTime(npc.GetGame()));
     this.crowdRetries = 0;
     let diagnostics = SceneEntryInstaller.Get();
-    if IsDefined(diagnostics) { diagnostics.RecordCrowd("reacted record=" + TDBID.ToStringDEBUG(npc.GetRecordID())); }
+    if IsDefined(diagnostics) { diagnostics.RecordCrowd("원작 대화 반응 · 레코드 " + TDBID.ToStringDEBUG(npc.GetRecordID())); }
     let callback = new CrowdEntryRefresh();
     callback.npc = npc;
     GameInstance.GetDelaySystem(npc.GetGame()).DelayCallback(callback, 1.5, false);
@@ -177,6 +179,17 @@ public class Entry extends ScriptableSystem {
 
   public static func Safe(npc: ref<NPCPuppet>, player: ref<PlayerPuppet>) -> Bool {
     return Equals(Entry.SafeReason(npc, player), "");
+  }
+
+  // 얼굴만 바꾸는 표정·입모양(UF-74/75)의 차단 조건. 원작 대화 허브를 보류한 커뮤니티 인물 세션은 장면 안에서 진행되므로
+  // 장면·대화·워크스팟·시선·탑승 조건은 보지 않는다. 몸을 움직이는 행동은 SafeReason을 쓴다.
+  public static func FaceSafeReason(npc: ref<NPCPuppet>, player: ref<PlayerPuppet>) -> String {
+    if !IsDefined(npc) || !IsDefined(player) || !npc.IsAttached() || !player.IsAttached() { return "missing"; }
+    if npc.IsDead() || player.IsDead() { return "dead"; }
+    if player.IsInCombat() { return "player_combat"; }
+    if IsDefined(npc.GetPuppetStateBlackboard()) && NPCPuppet.IsInCombat(npc) { return "npc_combat"; }
+    if Vector4.Distance(npc.GetWorldPosition(), player.GetWorldPosition()) > Entry.LeaveDistance() { return "too_far"; }
+    return "";
   }
 
   // 차단 조건 이름을 반환한다. 빈 문자열이면 허용. 조건과 순서는 기존 Safe와 같다.
@@ -305,7 +318,7 @@ public class Entry extends ScriptableSystem {
     let hubId = candidate.hubId;
     if !this.IsRootHub(npc, hubId, SceneEntry.HubChoiceNames(player.GetGame(), hubId)) {
       this.sceneOffer = null;
-      if IsDefined(diagnostics) { diagnostics.RecordOffer("not_root_hub=" + ToString(hubId), false); }
+      if IsDefined(diagnostics) { diagnostics.RecordOffer("not_root_hub(" + ToString(hubId) + ")", false); }
       return false;
     }
     if hubId == this.consumedHubId {
@@ -326,7 +339,7 @@ public class Entry extends ScriptableSystem {
     }
     this.retries = 0;
     if IsDefined(diagnostics) {
-      diagnostics.RecordOffer("shown key=" + candidate.characterKey + " hub=" + ToString(hubId), true);
+      diagnostics.RecordOffer("표시 · 인물 " + candidate.characterKey + " · 화면 " + ToString(hubId), true);
     }
     return true;
   }
@@ -537,6 +550,10 @@ public class Entry extends ScriptableSystem {
     session.player = player;
     session.characterKey = characterKey;
     session.crowd = crowd;
+    let voice = NpcVoice.Probe(npc);
+    session.voiceTag = voice.tag;
+    session.gender = voice.gender;
+    session.voiceDetail = voice.detail;
     session.instanceToken = crowd ? this.IdentityToken(npc) : this.worldToken + ":community:" + characterKey;
     session.holdHubId = holdHubId;
     session.epoch = this.epoch;
@@ -616,11 +633,21 @@ public class Entry extends ScriptableSystem {
     }
   }
 
+  // 입력칸의 Tab. 입력칸 닫기는 다음 프레임에 처리되고 입력 차단(ModalPopup 문맥)·알림은 닫힘 애니메이션 뒤에 풀린다.
+  // 그 전에 메뉴를 열면 메뉴가 열린 뒤 차단이 풀리며 메뉴에서 아무 키도 듣지 않았다. 입력칸이 사라진 뒤 연다.
   public func OpenGameMenu(popup: ref<ChatPopup>) -> Void {
     if !IsDefined(this.session) || this.session.popup != popup { return; }
     this.PrepareGameMenu();
     if !IsDefined(this.session) || !this.session.menuSuspended { return; }
-    if !GameMenu.Request(this.GetGameInstance()) { this.QueueMenuResume(this.session); }
+    this.session.menuPopup = popup;
+  }
+
+  public func OnChatHidden(popup: ref<ChatPopup>) -> Void {
+    let session = this.session;
+    let pending: ref<ChatPopup> = IsDefined(session) ? session.menuPopup : null;
+    if !IsDefined(pending) || pending != popup { return; }
+    session.menuPopup = null;
+    this.ScheduleSubtitle(this.GetGameInstance(), AnpcSubtitleCallback.OpenMenu(), this.NextSubtitleId(), 0.05);
   }
 
   private func QueueMenuResume(session: ref<ChatSession>) -> Void {
@@ -678,7 +705,7 @@ public class Entry extends ScriptableSystem {
   public func SubmitChat(text: String) -> Void {
     let session = this.session;
     let diagnostics = SceneEntryInstaller.Get();
-    if IsDefined(diagnostics) { diagnostics.RecordInput("chat_submit len=" + ToString(StrLen(text)) + " session=" + ToString(IsDefined(session))); }
+    if IsDefined(diagnostics) { diagnostics.RecordInput("대사 입력 " + ToString(StrLen(text)) + "자 · 대화 중 " + ToString(IsDefined(session))); }
     if !IsDefined(session) { return; }
     let reason = this.SessionEndReason(session);
     if NotEquals(reason, "") {
@@ -700,6 +727,9 @@ public class Entry extends ScriptableSystem {
     request.session = session.id;
     request.npcKey = session.characterKey;
     request.crowd = session.crowd;
+    request.voiceTag = session.voiceTag;
+    request.gender = session.gender;
+    request.voiceDetail = session.voiceDetail;
     request.text = text;
     request.context = GameContext.Collect(player, session.npc);
     if session.crowd && IsDefined(request.context.npcIdentity) {
@@ -733,7 +763,7 @@ public class Entry extends ScriptableSystem {
     if !IsDefined(session) || session.pendingRequest != requestId { return; }
     session.pendingRequest = -1;
     let diagnostics = SceneEntryInstaller.Get();
-    if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status); }
+    if IsDefined(diagnostics) { diagnostics.RecordInput("AI 응답 #" + ToString(requestId) + " " + status); }
     let game = this.GetGameInstance();
     this.HideSubtitles(session);
     let npc: ref<NPCPuppet> = session.npc;
@@ -777,6 +807,11 @@ public class Entry extends ScriptableSystem {
     }
     let session = this.session;
     if !IsDefined(session) || session != callback.session || callback.epoch != this.epoch { return; }
+    if callback.kind == AnpcSubtitleCallback.OpenMenu() {
+      if !session.menuSuspended || session.menuObservedOpen { return; }
+      if !GameMenu.Request(game) { this.QueueMenuResume(session); }
+      return;
+    }
     if callback.kind == AnpcSubtitleCallback.ResumeMenu() {
       if !session.menuSuspended || !session.menuResumeScheduled || GameMenu.IsOpen(game) { return; }
       session.menuSuspended = false;
@@ -853,6 +888,7 @@ public class Entry extends ScriptableSystem {
     if this.session != session { return; }
     this.HideSubtitles(session);
     this.session = null;
+    this.ExpressionReset();
     if IsDefined(session.control) { session.control.Release(); }
     this.StopMoveWatch();
     this.status.reason = reason;
@@ -938,6 +974,96 @@ public class Entry extends ScriptableSystem {
     this.voiceRegistered = false;
   }
 
+  // ---- 감정 표정(Expression.reds의 NpcExpression). 군중·주요 인물 모두, 대화 중 안전 조건에서만 ----
+  private let expression: ref<NpcExpression>;
+
+  public func ExpressionApply(requestId: Int32, category: Int32, idle: Int32) -> Bool {
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId || session.menuSuspended || NotEquals(this.SessionEndReason(session), "") { return false; }
+    let npc: ref<NPCPuppet> = session.npc;
+    let player: ref<PlayerPuppet> = session.player;
+    if !IsDefined(npc) || NotEquals(Entry.FaceSafeReason(npc, player), "") { return false; }
+    if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
+    return this.expression.Apply(npc, category, idle);
+  }
+
+  public func ExpressionReset() -> Void {
+    if IsDefined(this.expression) { this.expression.Reset(); }
+  }
+
+  // UF-75: 음성 재생 동안 말하기 입모양. TalkBegin은 첫 음성 구간, TalkStop은 마지막 구간 종료·중단.
+  // 그 사이 소리 나는 구간에 TalkOpen, 쉼에 TalkPause(CET가 보조 프로세스의 구간 정보로 판단).
+  private func TalkTarget(requestId: Int32) -> ref<NPCPuppet> {
+    let session = this.session;
+    if !IsDefined(session) || session.latestRequest != requestId || NotEquals(this.SessionEndReason(session), "") { return null; }
+    let npc: ref<NPCPuppet> = session.npc;
+    if !IsDefined(npc) || NotEquals(Entry.FaceSafeReason(npc, session.player), "") { return null; }
+    if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
+    return npc;
+  }
+
+  public func TalkBegin(requestId: Int32) -> Bool {
+    let npc = this.TalkTarget(requestId);
+    return IsDefined(npc) && this.expression.Begin(npc);
+  }
+
+  public func TalkOpen(requestId: Int32, idle: Int32) -> Bool {
+    let npc = this.TalkTarget(requestId);
+    return IsDefined(npc) && this.expression.Open(npc, idle);
+  }
+
+  public func TalkPause() -> Void {
+    if IsDefined(this.expression) { this.expression.Pause(); }
+  }
+
+  public func TalkStop() -> Void {
+    if IsDefined(this.expression) { this.expression.EndTalk(); }
+  }
+
+  public func DebugTalk(idle: Int32) -> Bool {
+    let npc = this.DebugFaceTarget();
+    if !IsDefined(npc) { return false; }
+    if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
+    return this.expression.Begin(npc) && this.expression.Switch(npc, idle);
+  }
+
+  // ---- 개발 확인 도구: 바라보는 NPC를 고정해 표정·제스처를 직접 걸어 본다(세션 밖, CET 단축키 전용) ----
+  private let debugNpc: wref<NPCPuppet>;
+
+  public func DebugPinTarget() -> String {
+    let player = GetPlayer(this.GetGameInstance());
+    if !IsDefined(player) { return "플레이어 없음"; }
+    let target = GameInstance.GetTargetingSystem(this.GetGameInstance()).GetLookAtObject(player, false, false) as NPCPuppet;
+    if !IsDefined(target) { this.debugNpc = null; return "바라보는 NPC 없음"; }
+    let reason = Entry.FaceSafeReason(target, player);
+    if NotEquals(reason, "") { this.debugNpc = null; return "대상 불가: " + reason; }
+    this.debugNpc = target;
+    let body = Entry.SafeReason(target, player);
+    return "고정: " + target.GetDisplayName() + (Equals(body, "") ? "" : " (표정·입모양만, 제스처 불가: " + body + ")");
+  }
+
+  public func DebugMotionTarget() -> ref<NPCPuppet> {
+    let npc: ref<NPCPuppet> = this.debugNpc;
+    let player = GetPlayer(this.GetGameInstance());
+    if !IsDefined(npc) || !IsDefined(player) || NotEquals(Entry.SafeReason(npc, player), "") || IsDefined(GameObject.GetActiveWeapon(npc)) { return null; }
+    return npc;
+  }
+
+  // 표정·입모양 시험 대상: 고정한 NPC가 얼굴 안전 조건을 만족할 때.
+  public func DebugFaceTarget() -> ref<NPCPuppet> {
+    let npc: ref<NPCPuppet> = this.debugNpc;
+    let player = GetPlayer(this.GetGameInstance());
+    if !IsDefined(npc) || NotEquals(Entry.FaceSafeReason(npc, player), "") { return null; }
+    return npc;
+  }
+
+  public func DebugExpression(category: Int32, idle: Int32) -> Bool {
+    let npc = this.DebugFaceTarget();
+    if !IsDefined(npc) { return false; }
+    if !IsDefined(this.expression) { this.expression = new NpcExpression(); }
+    return this.expression.Apply(npc, category, idle);
+  }
+
   // 첫 음성 재생과 함께 자막을 띄운다(음성 출력 규격 4.3). 표시 시간은 글자 수 기준과 예상 음성 길이 중 긴 쪽.
   public func OnAIVoiceResponse(requestId: Int32, status: String, text: String, voiceSeconds: Float) -> Void {
     let session = this.session;
@@ -949,7 +1075,7 @@ public class Entry extends ScriptableSystem {
     }
     session.pendingRequest = -1;
     let diagnostics = SceneEntryInstaller.Get();
-    if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status + " voice"); }
+    if IsDefined(diagnostics) { diagnostics.RecordInput("AI 응답 #" + ToString(requestId) + " " + status + " · 음성"); }
     let game = this.GetGameInstance();
     this.HideSubtitles(session);
     let line = this.NextSubtitleId();
@@ -987,14 +1113,14 @@ private final func PushChoicesToInteractionComponent(interactionComponent: ref<I
     let safe = Equals(blocked, "");
     let diagnostics = SceneEntryInstaller.Get();
     if IsDefined(diagnostics) {
-      diagnostics.RecordCrowd("push layer=" + NameToString(layer) + " choices=" + ToString(ArraySize(appended))
-        + " reacted=" + ToString(reacted) + " safe=" + ToString(safe) + " blocked=" + blocked);
+      diagnostics.RecordCrowd("선택지 갱신 · " + NameToString(layer) + " · 원작 선택지 " + ToString(ArraySize(appended))
+        + "개 · 원작 반응 " + ToString(reacted) + " · 막힘 " + (safe ? "없음" : blocked));
     }
     if !hasEntry && reacted && !safe { entry.RetryCrowd(npc, blocked); }
     if !hasEntry && reacted && safe {
       ArrayPush(appended, entry.CreateChoice(npc, player, layer));
       interactionComponent.SetChoices(appended, layer);
-      if IsDefined(diagnostics) { diagnostics.RecordCrowd("appended layer=" + NameToString(layer)); }
+      if IsDefined(diagnostics) { diagnostics.RecordCrowd("ANPC 선택지 추가 · " + NameToString(layer)); }
     }
   }
 }

@@ -11,3 +11,21 @@ build/
 __pycache__/
 *.pyc
 game/cet/anpc/*.local.json
+game/archive/*.local.archive
+game/red4ext/ANPC/*.local.json
+
+# TTS 실험 도구(tools/tts-lab): 코드만 저장소에 둔다. 모델·가상환경·참조 음성·원작 대사·실행 기록은 넣지 않는다.
+tools/tts-lab/**/__pycache__/
+tools/tts-lab/**/*.wav
+tools/tts-lab/**/*.wem
+tools/tts-lab/**/*.onnx
+tools/tts-lab/**/*.ckpt
+tools/tts-lab/**/*.pth
+tools/tts-lab/**/*.bin
+tools/tts-lab/**/*.json
+tools/tts-lab/**/*.jsonl
+tools/tts-lab/**/*.log
+tools/tts-lab/**/*venv*/
+tools/tts-lab/**/models/
+tools/tts-lab/**/refs/
+tools/tts-lab/**/crowd_refs/

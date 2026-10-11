@@ -80,7 +80,17 @@ ProviderResult ParseResponse(std::string_view aProvider, uint32_t aHttpStatus, c
             result.inputTokens = usage["input_tokens"].get<int32_t>();
         if (usage.contains("output_tokens") && usage["output_tokens"].is_number_integer())
             result.outputTokens = usage["output_tokens"].get<int32_t>();
+        const auto detail = [&usage](const char* aGroup, const char* aField) {
+            if (!usage.contains(aGroup) || !usage[aGroup].is_object() || !usage[aGroup].contains(aField) ||
+                !usage[aGroup][aField].is_number_integer())
+                return -1;
+            return usage[aGroup][aField].get<int32_t>();
+        };
+        result.cachedTokens = detail("input_tokens_details", "cached_tokens");
+        result.reasoningTokens = detail("output_tokens_details", "reasoning_tokens");
     }
+    if (data.contains("model") && data["model"].is_string())
+        result.model = data["model"].get<std::string>();
 
     result.status = "ok";
     result.text = std::move(text);
