@@ -992,3 +992,15 @@
 
 - 백업·복원·해시: config.local.backups/DEP-20261009043444/manifest.json
 - 확인: Lua 시험 통과. 실게임 동작 미검증
+
+## DEP-20261011230354 — TTS 보조 프로세스를 저장소 코드로 실행
+
+- 일시: 2026-10-11 23:03:54 KST (UTC+09:00)
+- 대상/상태: 게임 / 적용 완료
+
+| 변경 파일 | 구분 | 변경 내용 | 이유·영향 |
+| --- | --- | --- | --- |
+| red4ext/plugins/ANPC/tts-helper.local.json | 수정 | 실행 인수를 저장소 tools/tts-lab/helper/tts_helper.py로, 환경 변수 ANPC_TTS_LAB(실험 폴더) 추가 | 보조 프로세스 코드를 저장소로 옮김. 모델·참조 음성 등 자료는 실험 폴더에서 읽음 |
+
+- 백업·복원·해시: config.local.backups/DEP-20261011230354/manifest.json
+- 확인: 게임 밖 단독 실행에서 저장소 코드로 기동·인물 프로필·군중 목소리 437개 로드 확인. 실게임 자동 실행 미검증
