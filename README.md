@@ -50,5 +50,6 @@ PowerShell 7과 Node.js 22 이상에서 `scripts/build-game-package.ps1 -NativeD
 - [게임 배포 절차](docs/deploy.md) — 소스를 게임 폴더에 반영하는 배포 스크립트 사용법·되돌리기·기록 파일
 - [배포 변경 이력](docs/game-mod-validation.md) — 배포별 일시·변경 파일·변경 이유/영향·백업과 복원 기록
 - [NPC 음성 모델 파인튜닝 작업 절차](docs/voice-model-finetuning-guide.md) — 사내 GPU 서버 학습 절차와 학습 기록
+- [영어 NPC 음성 생성·모델 학습 계획](docs/english-tts-plan.md) — 일본어 기준의 영어 음성 확장 단계와 검증 조건
 
-인물·세계관·군중의 기준 데이터와 검수 상태는 [콘텐츠 안내](content/README.md)에서 조회한다. `docs/`에는 스펙과 위 세 문서만 둔다.
+인물·세계관·군중의 기준 데이터와 검수 상태는 [콘텐츠 안내](content/README.md)에서 조회한다.
