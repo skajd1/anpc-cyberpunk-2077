@@ -1,3 +1,7 @@
+import { validateEntities } from '../prototype/public/entities.js';
+import { createHash } from 'node:crypto';
+import { draftLoreReview } from './draft-lore-review.mjs';
+import { normalize } from '../prototype/public/retrieval.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { validateCorePersonality, generateCrowdPersonality, PERSONALITY_AXES } from '../prototype/public/personality.js';
@@ -42,6 +46,11 @@ for(const f of facts)check(categories.has(f.category_id)&&['baseline','selected'
 const common=worldPolicy.categories.map(c=>({category_id:c.category_id,statements:baseline.filter(f=>f?.category_id===c.category_id).map(f=>f.statement)}));
 check(common.every(c=>c.statements.length>0)&&[...JSON.stringify(common)].length<=worldPolicy.baseline_max_characters,'공통 상식 분류 공백·입력 한도 초과');
 check(worldPolicy.detail_max_items===3,'세부 지식 선별 한도 오류');
+for(const key of ['greetings_exact','reset_phrases']){
+ const terms=worldPolicy.recent_topic_policy?.[key];
+ check(Array.isArray(terms)&&terms.length>0&&terms.every(t=>typeof t==='string'&&t.trim())
+  &&new Set(terms.map(normalize)).size===terms.length,'이전 화제 종료 정책 누락·빈 값·중복: '+key);
+}
 const owners=new Set(cards.map(c=>c.character_key));
 const playerFact=ids.get(manifest.player_identity_fact_id);
 check(playerFact?.kind==='world_fact'&&playerFact.player_identity?.character_key==='v'&&playerFact.player_identity?.display_name==='V','플레이어 기준 신원은 V여야 한다');
@@ -52,6 +61,28 @@ for(const k of knowledge){
  check(depths.includes(k.required_depth)&&k.required_depth!=='unknown','지식 요구 깊이 오류: '+k.id);
 }
 for(const k of knowledge){check(ids.get(k.fact_id)?.kind==='world_fact','지식 사실 참조 오류: '+k.id);check(owners.has(k.owner_key),'지식 소유자 오류: '+k.id);condition(k.access_condition,k.id);if(k.fact_id==='RELIC_V')check(JSON.stringify(k.access_condition).includes('content.player_disclosure.relic'),'렐릭 공개 조건 누락: '+k.id);}
+// 평가 파일은 작성 검증에서만 읽는다. 실행 로더의 의존성으로 만들지 않는다.
+const reviewRows=await draftLoreReview();
+const review=JSON.parse(fs.readFileSync('content/evaluation/lore-review-result-v1.json','utf8'));
+check(review.schema_version==='anpc-lore-review-result-1.0'&&review.scope==='perspective_only','관점 검수 결과 범위 오류');
+check(review.source_sha256===createHash('sha256').update(JSON.stringify(reviewRows)).digest('hex'),'관점 검수 원안 변경·해시 불일치');
+check(Array.isArray(review.items)&&review.items.length===reviewRows.length&&new Set(review.items.map(r=>r.knowledge_id)).size===reviewRows.length,'관점 검수 누락·중복');
+for(const r of review.items??[]){
+ const original=reviewRows.find(row=>row.knowledge_id===r.knowledge_id);
+ check(original&&original.npc_key===r.npc_key&&original.proposal.perspective===r.original_perspective,'관점 검수 원문·인물 불일치: '+r.knowledge_id);
+ check(['accept','revise','hold','pending'].includes(r.decision),'관점 검수 판정 오류: '+r.knowledge_id);
+ const final=r.decision==='accept'?r.original_perspective:r.decision==='revise'?r.edited_perspective?.trim():null;
+ check(r.final_perspective===final,'관점 검수 확정 문장 불일치: '+r.knowledge_id);
+}
+for(const k of knowledge){
+ const p=k.perspective;if(p===undefined)continue;
+ check(p&&typeof p.text==='string'&&p.text.trim().length>0&&[...p.text].length<=60,'관점 길이·본문 오류: '+k.id);
+ check(['draft','approved'].includes(p?.review_status),'관점 검수 상태 오류: '+k.id);
+ if(p?.review_status==='approved'){
+  const r=review.items.find(r=>r.knowledge_id===k.id&&r.npc_key===k.owner_key);
+  check(p.review_ref==='lore-review-result-v1.json#'+k.id&&r&&['accept','revise'].includes(r.decision)&&r.final_perspective===p.text,'관점 승인 근거·문장 불일치: '+k.id);
+ }
+}
 for(const c of cards){
  try { validateCorePersonality(c.core_personality); } catch(error) { check(false,c.id+' / '+error.message); }
  check(Array.isArray(c.personal_principles)&&c.personal_principles.length>0&&c.personal_principles.every(p=>typeof p==='string'&&p.trim()),'개인 원칙 누락: '+c.id);
@@ -158,6 +189,7 @@ for(const archetype of crowd.archetypes){
 for(const file of manifest.files)check(fs.existsSync(path.join(root,file)),'자료 파일 누락: '+file);
 // 일본어 음성 읽기 표기표: 한국어 표기 중복 없음, 공식 표기 필수, 읽기는 가나·중점·장음만, 근거는 등록 출처.
 const readings=read('ja-reading-table.json'), terms=new Set();
+errors.push(...validateEntities(read('entities.json'),facts,readings));
 for(const entry of readings.entries){
  check(!terms.has(entry.term),'읽기 표기 중복: '+entry.term); terms.add(entry.term);
  check(typeof entry.ja_display==='string'&&entry.ja_display.trim().length>0,'일본어판 표기 누락: '+entry.term);

@@ -1,0 +1,69 @@
+{
+  "version": "lore-review-1.0",
+  "runtime_enabled": false,
+  "note": "검수 전 제안은 결과 해시·원문 대조를 위해 보존한다. 관점 문장 검수 결과는 review_result_file을 참조한다. certainty·importance·인지 조건·출시 승인은 별도이며 런타임에서 자동 반영하지 않는다.",
+  "candidates": [
+    {
+      "knowledge_id": "K_JUDY_BD_EDITING",
+      "review_status": "draft",
+      "proposed_perspective": "내 작업에선 원본의 감각 정보를 분석하고 조절하는 게 핵심이야.",
+      "proposed_certainty": "knows",
+      "proposed_importance": 3,
+      "evidence_refs": [
+        "BD_EDITING",
+        "JUDY_BACKGROUND"
+      ]
+    },
+    {
+      "knowledge_id": "K_JUDY_BD_RISK",
+      "review_status": "draft",
+      "proposed_perspective": "기록이나 편집이 제대로 안 된 BD는 쓰는 사람에게 위험해.",
+      "proposed_certainty": "knows",
+      "proposed_importance": 3,
+      "evidence_refs": [
+        "BD_RISK"
+      ]
+    },
+    {
+      "knowledge_id": "K_JUDY_JUDY_BD_CALIBRATION",
+      "review_status": "draft",
+      "proposed_perspective": "체험 전에 감각 프로필을 보정하고 분석을 안내하는 게 내 역할이야.",
+      "proposed_certainty": "knows",
+      "proposed_importance": 3,
+      "evidence_refs": [
+        "JUDY_BD_CALIBRATION"
+      ]
+    },
+    {
+      "knowledge_id": "K_PANAM_PANAM_CLAN_FRIENDS",
+      "review_status": "draft",
+      "proposed_perspective": "미치와 스콜피온은 내가 가까이 지내 온 알데칼도 동료들이야.",
+      "proposed_certainty": "knows",
+      "proposed_importance": 3,
+      "evidence_refs": [
+        "PANAM_CLAN_FRIENDS"
+      ]
+    },
+    {
+      "knowledge_id": "K_PANAM_PANAM_CORP_INDEPENDENCE",
+      "review_status": "draft",
+      "proposed_perspective": "클랜이 기업에 기대는 건 반대야. 그 문제로 사울과 의견이 달랐어.",
+      "proposed_certainty": "knows",
+      "proposed_importance": 3,
+      "evidence_refs": [
+        "PANAM_CORP_INDEPENDENCE"
+      ]
+    },
+    {
+      "knowledge_id": "K_PANAM_PANAM_CARGO_EXPERIENCE",
+      "review_status": "draft",
+      "proposed_perspective": "미치와 도시 사이의 화물을 운반한 경험은 있어.",
+      "proposed_certainty": "knows",
+      "proposed_importance": 3,
+      "evidence_refs": [
+        "PANAM_CARGO_EXPERIENCE"
+      ]
+    }
+  ],
+  "review_result_file": "lore-review-result-v1.json"
+}

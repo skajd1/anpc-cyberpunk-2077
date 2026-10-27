@@ -1,0 +1,342 @@
+{
+  "suite_version": "lore-dialogue-1.0",
+  "review_status": "draft",
+  "note": "검수된 관점 6개의 전달 효과를 비교하는 작성 진단 입력이다. 원작 말투·일본어 품질 정답이나 출시 승인 자료가 아니다. 동일 베이스에서 관점 필드 유무만 바꾸며 과거 버전 전체와의 비교가 아니다.",
+  "configuration": "full",
+  "voice_order": "ja_first",
+  "repetitions": 2,
+  "cases": [
+    {
+      "case_id": "bd_editing_direct",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "direct",
+      "player_input": "BD 원본 감각 편집은 어떻게 하는 거야?",
+      "history": [],
+      "expected_fact_ids": [
+        "BD_EDITING"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "bd_editing_paraphrase",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "paraphrase",
+      "player_input": "브레인댄스 편집에서 네가 맡는 핵심은 뭐야?",
+      "history": [],
+      "expected_fact_ids": [
+        "BD_EDITING"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "bd_risk_direct",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "direct",
+      "player_input": "불법 BD는 안전한 거야?",
+      "history": [],
+      "expected_fact_ids": [
+        "BD_RISK"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "bd_risk_paraphrase",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "paraphrase",
+      "player_input": "기록이 이상한 BD도 그냥 써도 돼?",
+      "history": [],
+      "expected_fact_ids": [
+        "BD_RISK"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "judy_bd_calibration_direct",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "direct",
+      "player_input": "BD 체험 전에 감각 프로필 보정은 왜 해?",
+      "history": [],
+      "expected_fact_ids": [
+        "JUDY_BD_CALIBRATION"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "judy_bd_calibration_paraphrase",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "paraphrase",
+      "player_input": "BD 분석 전에 내가 따로 준비할 게 있어?",
+      "history": [],
+      "expected_fact_ids": [
+        "JUDY_BD_CALIBRATION"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "panam_clan_friends_direct",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "direct",
+      "player_input": "미치랑 스콜피온은 너랑 어떤 사이야?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CLAN_FRIENDS"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "panam_clan_friends_paraphrase",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "paraphrase",
+      "player_input": "알데칼도 동료 중 미치랑 스콜피온은 어때?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CLAN_FRIENDS"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "panam_corp_independence_direct",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "direct",
+      "player_input": "사울이 바이오테크니카에 기대려는 건 어떻게 생각해?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CORP_INDEPENDENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "panam_corp_independence_paraphrase",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "paraphrase",
+      "player_input": "알데칼도가 기업 지원을 받으면 편하지 않아?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CORP_INDEPENDENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "panam_cargo_experience_direct",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "direct",
+      "player_input": "미치랑 화물 운송한 적 있어?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "panam_cargo_experience_paraphrase",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "paraphrase",
+      "player_input": "미치랑 도시 사이에 화물을 나르기도 했어?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "사실·확실성 보존",
+        "인물다운 자연스러운 말투",
+        "관점 문장 복사·반복 의존",
+        "일본어 구어와 한국어 자막의 의미 일치"
+      ]
+    },
+    {
+      "case_id": "judy_topic_shift",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "topic_shift",
+      "player_input": "안녕. 잠깐 인사만 하러 왔어.",
+      "history": [
+        {
+          "role": "player",
+          "text": "BD 편집은 어때?"
+        },
+        {
+          "role": "npc",
+          "text": "원본의 감각 정보를 분석하고 조절하는 일이야."
+        }
+      ],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "BD_EDITING",
+        "BD_RISK",
+        "JUDY_BD_CALIBRATION"
+      ],
+      "review_focus": [
+        "새 인사에 이전 지식·관점을 억지로 반복하지 않음"
+      ]
+    },
+    {
+      "case_id": "panam_topic_shift",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "topic_shift",
+      "player_input": "안녕. 잠깐 인사만 하러 왔어.",
+      "history": [
+        {
+          "role": "player",
+          "text": "미치랑 화물 운송했어?"
+        },
+        {
+          "role": "npc",
+          "text": "미치랑 화물을 나른 적은 있지."
+        }
+      ],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "PANAM_CLAN_FRIENDS",
+        "PANAM_CORP_INDEPENDENCE",
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "review_focus": [
+        "새 인사에 이전 지식·관점을 억지로 반복하지 않음"
+      ]
+    },
+    {
+      "case_id": "panam_corp_stage_early",
+      "npc_key": "panam",
+      "relationship_stage": "first",
+      "family": "stage_boundary",
+      "player_input": "사울이 바이오테크니카에 기대려는 건 너랑 의견이 달라?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "PANAM_CORP_INDEPENDENCE"
+      ],
+      "review_focus": [
+        "현재 단계에서 제공된 사실만 사용",
+        "플레이어의 전제를 원작 사실로 승격하지 않음"
+      ]
+    },
+    {
+      "case_id": "panam_corp_stage_allowed",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "stage_boundary",
+      "player_input": "사울이 바이오테크니카에 기대려는 건 너랑 의견이 달라?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CORP_INDEPENDENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "현재 단계에서 제공된 사실만 사용",
+        "플레이어의 전제를 원작 사실로 승격하지 않음"
+      ]
+    },
+    {
+      "case_id": "panam_other_npc_experience",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "owner_boundary",
+      "player_input": "주디처럼 BD 감각 프로필을 직접 보정해 본 적 있어?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "JUDY_BD_CALIBRATION"
+      ],
+      "review_focus": [
+        "다른 인물의 직접 경험을 자기 경험으로 주장하지 않음",
+        "미제공 경험을 확인된 무지·미경험으로 확정하지 않음"
+      ]
+    },
+    {
+      "case_id": "judy_other_npc_experience",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "owner_boundary",
+      "player_input": "너도 미치랑 화물 운송한 적 있어?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "review_focus": [
+        "다른 인물의 직접 경험을 자기 경험으로 주장하지 않음",
+        "미제공 경험을 확인된 무지·미경험으로 확정하지 않음"
+      ]
+    }
+  ]
+}

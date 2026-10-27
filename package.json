@@ -9,7 +9,8 @@
     "check:contracts": "node scripts/validate-contracts.mjs",
     "check:story": "node scripts/validate-story-policy.mjs",
     "game-bridge": "node prototype/game-bridge.js",
-    "build:cet-prompts": "node scripts/build-cet-prompts.mjs > game/cet/anpc/prompts.lua"
+    "build:cet-prompts": "node scripts/build-cet-prompts.mjs > game/cet/anpc/prompts.lua",
+    "check:retrieval": "node scripts/evaluate-retrieval.mjs"
   },
   "engines": {
     "node": ">=22"

@@ -9,15 +9,15 @@ export async function buildIdentityData(bundle) {
   const [manifest, crowd, crowdKnowledge] = await Promise.all([read('manifest.json'), read('crowd-archetypes.json'), read('crowd-knowledge-policy.json')]);
   for (const card of bundle.cards) validateCorePersonality(card.core_personality);
   return {
-    version: manifest.content_version, runtime_enabled: manifest.runtime_enabled, generator_version: 'cet-identity-1.0',
+    version: manifest.content_version, runtime_enabled: manifest.runtime_enabled, generator_version: 'cet-identity-1.1',
     cards: Object.fromEntries(bundle.cards.filter(c => c.npc_type !== 'crowd').map(c => [c.character_key,
       pick(c, ['character_key', 'display_name', 'revision', 'review_status', 'runtime_enabled', 'core_personality', 'personal_principles',
         'background', 'lived_context', 'voice_style', 'speech_rules', 'forbidden_claims', 'identity_rules', 'goals', 'relationship_stages',
         'dialogue_conditions', 'knowledge_ids', 'knowledge_profile', 'example_ids', 'fallback_lines', 'everyday_fiction_policy'])])),
     facts: Object.fromEntries(bundle.facts.map(f => [f.id, pick(f, ['id', 'statement', 'review_status', 'validity_condition', 'spoiler_scope',
-      'knowledge_layer', 'category_id', 'usage_mode', 'entity_aliases', 'trigger_terms', 'topic_tags', 'claim_limits'])])),
+      'knowledge_layer', 'category_id', 'usage_mode', 'entity_aliases', 'trigger_terms', 'search_phrases', 'topic_tags', 'claim_limits'])])),
     knowledge: bundle.knowledge.filter(k => k.owner_key !== 'resident').map(k => pick(k, ['id', 'owner_key', 'fact_id', 'review_status',
-      'access_condition', 'certainty', 'disclosure', 'domain_id', 'required_depth', 'claim_limits'])),
+      'access_condition', 'certainty', 'disclosure', 'domain_id', 'required_depth', 'claim_limits', 'perspective'])),
     examples: bundle.examples.map(e => ({ ...pick(e, ['id', 'character_keys', 'review_status', 'context_condition', 'required_fact_ids',
       'trigger_terms', 'topic_tags', 'input', 'sample_dialogue', 'expected_intent', 'provenance']), input_terms: exampleTerms(e.input) })),
     world_policy: bundle.worldKnowledge,

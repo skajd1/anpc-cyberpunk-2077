@@ -1035,6 +1035,37 @@
         "session_id": "session-example",
         "summary": "V가 파란색을 좋아한다고 말했고 예시 인물과 근황을 나눈 대화였다."
       }
+    },
+    "knowledge_reviewed_perspective": {
+      "contract": "knowledge.view",
+      "contract_version": "1.0",
+      "scope": {
+        "game_id": "cyberpunk2077",
+        "mod_id": "anpc",
+        "save_scope": "save-example",
+        "actor": {
+          "kind": "community",
+          "key": "panam"
+        }
+      },
+      "data": {
+        "items": [
+          {
+            "fact_id": "PANAM_CARGO_EXPERIENCE",
+            "domain_id": "nomad_life",
+            "required_depth": "practical",
+            "certainty": "knows",
+            "disclosure": "public",
+            "statement": "팬앰은 미치와 도시 사이의 화물을 운반한 경험이 있다",
+            "response_constraint": null,
+            "claim_limits": [
+              "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다"
+            ],
+            "perspective": "미치랑 화물을 나른 적은 있지."
+          }
+        ],
+        "boundaries": []
+      }
     }
   },
   "invalid": [
@@ -1237,6 +1268,30 @@
       "path": "/data/speech_text",
       "operation": "set",
       "value": "こんにちは。"
+    },
+    {
+      "name": "빈 관점 문장",
+      "base": "knowledge_reviewed_perspective",
+      "path": "/data/items/0/perspective",
+      "operation": "set",
+      "value": ""
+    },
+    {
+      "name": "관점 60자 초과",
+      "base": "knowledge_reviewed_perspective",
+      "path": "/data/items/0/perspective",
+      "operation": "set",
+      "value": "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가"
+    },
+    {
+      "name": "관점에 검수 메타데이터 혼입",
+      "base": "knowledge_reviewed_perspective",
+      "path": "/data/items/0/perspective",
+      "operation": "set",
+      "value": {
+        "text": "미치랑 화물을 나른 적은 있지.",
+        "review_status": "approved"
+      }
     }
   ],
   "calls": [

@@ -4,19 +4,43 @@ local function wordAt(text,position)
   if position<1 or position>#text then return false end
   while position>1 and text:byte(position)>=128 and text:byte(position)<192 do position=position-1 end
   local a,b,c=text:byte(position,position+2)
-  if a<128 then return text:sub(position,position):match("[%w_]")~=nil end
+  if a<128 then return text:sub(position,position):match("[%w]")~=nil end
   local code=a<224 and ((a-192)*64+(b or 128)-128) or ((a-224)*4096+((b or 128)-128)*64+(c or 128)-128)
   return (code>=0xAC00 and code<=0xD7A3) or (code>=0x1100 and code<=0x11FF) or (code>=0x3130 and code<=0x318F)
     or (code>=0x3040 and code<=0x30FF) or (code>=0x4E00 and code<=0x9FFF) or (code>=0xC0 and code<=0x2FF)
 end
+local function codepoint(char)
+  local a,b,c,d=char:byte(1,4)
+  if a<128 then return a end
+  if a<224 then return (a-192)*64+b-128 end
+  if a<240 then return (a-224)*4096+(b-128)*64+c-128 end
+  return (a-240)*262144+(b-128)*4096+(c-128)*64+d-128
+end
+local function hangul(code)
+  return string.char(224+math.floor(code/4096),128+math.floor(code/64)%64,128+code%64)
+end
 local function normalize(text)
-  -- 웹의 NFKC와 공유하는 입력 범위: 전각 ASCII·일본어 전각 공백.
-  text=text:gsub("[\239][\188\189][\128-\191]",function(c)
-    local a,b,d=c:byte(1,3);local code=(a-224)*4096+(b-128)*64+d-128
-    if code>=0xFF01 and code<=0xFF5E then return string.char(code-0xFEE0) end
-    return c
-  end):gsub("　"," ")
-  return text:lower():gsub("%s+"," "):match("^%s*(.-)%s*$")
+  -- UTF-8 분해형 한글을 조합한다. CET LuaJIT에는 utf8/Unicode 정규화 라이브러리가 없다.
+  local chars={}
+  for char in text:gmatch("[%z\1-\127\194-\244][\128-\191]*") do chars[#chars+1]=char end
+  local result,i={},1
+  while i<=#chars do
+    local char=chars[i]
+    local code=codepoint(char)
+    local nextCode=chars[i+1] and codepoint(chars[i+1])
+    if code>=0x1100 and code<=0x1112 and nextCode and nextCode>=0x1161 and nextCode<=0x1175 then
+      code=0xAC00+(code-0x1100)*588+(nextCode-0x1161)*28;i=i+1
+      nextCode=chars[i+1] and codepoint(chars[i+1]);char=hangul(code)
+    end
+    if code>=0xAC00 and code<=0xD7A3 and (code-0xAC00)%28==0 and nextCode and nextCode>=0x11A8 and nextCode<=0x11C2 then
+      code=code+nextCode-0x11A7;char=hangul(code);i=i+1
+    end
+    if code>=0xFF01 and code<=0xFF5E then char=string.char(code-0xFEE0)
+    elseif code==0x3000 or code==0xA0 or code==0x1680 or (code>=0x2000 and code<=0x200A)
+      or code==0x2028 or code==0x2029 or code==0x202F or code==0x205F or code==0xFEFF then char=" " end
+    result[#result+1]=char;i=i+1
+  end
+  return table.concat(result):lower():gsub("%s+"," "):match("^%s*(.-)%s*$")
 end
 local function match(text, term,entity)
   text,term=normalize(text),normalize(term)
@@ -27,7 +51,7 @@ local function match(text, term,entity)
     local ending=not wordAt(text,last+1)
     if not ending then
       for _,suffix in ipairs({"은","는","을","를","가","이","의","에","에게","한테","에서","부터","까지","로","와","과","랑","이랑","도","만","같은","같이","처럼","보다","라는","라고"}) do
-        if (entity or ({["은"]=true,["는"]=true,["을"]=true,["를"]=true,["가"]=true,["이"]=true,["의"]=true,["에"]=true,["로"]=true,["와"]=true,["과"]=true,["랑"]=true})[suffix]) and text:sub(last+1,last+#suffix)==suffix and not wordAt(text,last+#suffix+1) then ending=true; break end
+        if (entity or ({["은"]=true,["는"]=true,["을"]=true,["를"]=true,["가"]=true,["이"]=true,["의"]=true,["에"]=true,["로"]=true,["와"]=true,["과"]=true,["랑"]=true,["이랑"]=true,["도"]=true,["만"]=true})[suffix]) and text:sub(last+1,last+#suffix)==suffix and not wordAt(text,last+#suffix+1) then ending=true; break end
       end
     end
     if not entity then
@@ -42,25 +66,40 @@ local function match(text, term,entity)
   end
 end
 local function score(fact,text)
-  local named,points=false,0
+  local named,points,phrases=false,0,0
   for _, alias in ipairs(fact.entity_aliases or {}) do if match(text,alias,true) then named=true end end
   for _, term in ipairs(fact.trigger_terms or {}) do if not has(fact.entity_aliases,term) and match(text,term) then points=points+1 end end
+  for _,term in ipairs(fact.search_phrases or {}) do if match(text,term) then phrases=phrases+1 end end
   if named then points=points+1 end
-  return named,points
+  return named,points+phrases,phrases
 end
 
 retrieval.match=match
 retrieval.score=score
-function retrieval.rankFacts(candidates,direct)
+function retrieval.allowsRecentTopic(text,policy)
+  local input=normalize(text)
+  while true do
+    local changed=false
+    for _,ending in ipairs({".","!","?","。","…"}) do
+      if input:sub(-#ending)==ending then input=input:sub(1,-#ending-1):match("^%s*(.-)%s*$");changed=true;break end
+    end
+    if not changed then break end
+  end
+  for _,greeting in ipairs(policy and policy.greetings_exact or {}) do if input==normalize(greeting) then return false end end
+  for _,phrase in ipairs(policy and policy.reset_phrases or {}) do if match(text,phrase,false) then return false end end
+  return true
+end
+function retrieval.rankFacts(candidates,direct,allowRecent)
   direct=direct or false
   for _,item in ipairs(candidates) do if item.now>0 then direct=true;break end end
   local result={}
   for _,item in ipairs(candidates) do
-    if (direct and item.now>0) or (not direct and item.before>0) then result[#result+1]=item end
+    if (direct and item.now>0) or (not direct and allowRecent~=false and item.before>0) then result[#result+1]=item end
   end
   table.sort(result,function(a,b)
-    for _,key in ipairs({"named","now","beforeNamed","before"}) do
+    for _,key in ipairs({"named","phrases","now","beforeNamed","beforePhrases","before"}) do
       local x,y=a[key],b[key]
+      if x==nil then x=0 end;if y==nil then y=0 end
       if x~=y then if type(x)=="boolean" then return x end;return x>y end
     end
     return a.fact.id<b.fact.id

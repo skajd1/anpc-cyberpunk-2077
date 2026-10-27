@@ -1,0 +1,223 @@
+{
+  "suite_version": "lore-feedback-diverse-1.0",
+  "review_status": "draft",
+  "configuration": "full",
+  "voice_order": "ja_first",
+  "repetitions": 1,
+  "review_title": "ANPC 실전 대화 · 다양한 상황 12개",
+  "note": "단문 지식 문답 편중을 줄인 피드백 전후 비교다. 주디·팬앰을 번갈아 배치하고 농담·짜증·공감·윤리·선택·부탁·소문·경험 유도·화제 전환·갈등 수습을 섞는다. 앞선 대화는 평가용 가상 입력이며 원작 사실이나 실제 사용자 대화 기록이 아니다. 0.23 저장 공통 지침을 새 입력에 적용해 현재 0.24와 비교한다. 기존 10개 평가는 보존한다.",
+  "cases": [
+    {
+      "case_id": "judy_life_edit_joke",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "가벼운 농담",
+      "player_input": "너랑 얘기하다 보니 내 인생도 편집 좀 맡기고 싶네. 흑역사만 싹 잘라 줄 수 있냐?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "농담을 문자 그대로 기술 설명으로 바꾸지 않는가",
+        "과거 기억을 실제로 지우거나 바꿀 수 있다고 약속하지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_saul_tease",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "친근한 도발",
+      "player_input": "결국 네가 맞고 사울이 틀렸다는 얘기지? 근데 둘 다 고집 센 건 꽤 닮았는데.",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "놀림에 인물다운 감정이나 재치로 반응하는가",
+        "사울과의 갈등을 새 사건이나 관계 단절로 부풀리지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_explanation_irritation",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "설명에 짜증 난 상대",
+      "player_input": "그래서 지금 내가 뭘 하면 되는데? 설명은 됐어. 딱 한 가지만.",
+      "history": [
+        {
+          "role": "player",
+          "text": "BD 체험은 처음이야. 준비할 게 있어?"
+        },
+        {
+          "role": "npc",
+          "text": "체험 전에 감각 프로필부터 보정해야 해."
+        }
+      ],
+      "expected_fact_ids": [
+        "JUDY_BD_CALIBRATION"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "앞선 설명을 반복하지 않고 지금 할 일을 답하는가",
+        "상대의 짜증에 상담원처럼 과도하게 사과하지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_secret_job",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "돈과 패밀리 사이의 선택",
+      "player_input": "기업이 큰돈을 준대. 대신 패밀리한텐 비밀로 하래. 너라면 받아?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CORP_INDEPENDENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "가치관에 따른 선택과 이유가 드러나는가",
+        "가정 속 제안을 이미 받은 실제 의뢰로 취급하지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_bad_day",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "해결책 대신 공감",
+      "player_input": "오늘 일 진짜 더럽게 안 풀리네. 해결책 말고 그냥 욕 한마디만 같이 해줘.",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "요청한 감정 반응을 해 주는가",
+        "뜬금없이 BD 설명이나 인생 상담을 시작하지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_car_nickname",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "작은 창작 부탁",
+      "player_input": "내 차 이름 하나 지어 줘. 고물이라고 부르는 건 금지야.",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "짧고 인물다운 장난이나 이름을 제안하는가",
+        "보지 못한 차의 상태·모델·이력을 사실처럼 붙이지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_memory_ethics",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "직업과 윤리",
+      "player_input": "누군가의 기억이 그냥 구경거리가 되는 거, 넌 어떻게 생각해?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "정의 설명보다 인물의 판단과 태도가 드러나는가",
+        "특정 피해자·사건·개인 경험을 새로 만들지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_worry_trust",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "걱정과 신뢰의 충돌",
+      "player_input": "걱정하는 거랑 날 못 믿는 거랑은 좀 다르잖아.",
+      "history": [
+        {
+          "role": "player",
+          "text": "이번엔 혼자 다녀올게."
+        },
+        {
+          "role": "npc",
+          "text": "위험한 일이면 혼자 가지 마."
+        }
+      ],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "방금 말에 대한 감정 반응이 자연스러운가",
+        "고정된 원작 관계를 새 배신·불신 관계로 바꾸지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_racing_rumor",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "떠도는 소문과 잘못된 전제",
+      "player_input": "미치가 네 운전 실력이 끝내준다던데. 사막에서 레이스도 뛰었다며?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "review_focus": [
+        "상대가 말한 소문을 사실로 받아들이지 않는가",
+        "근거 없이 미치와의 친분이나 경주 경험의 유무를 단정하지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_cargo_music",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "경험에 얹은 장난",
+      "player_input": "미치랑 화물 나를 땐 노래 누가 골라? 설마 둘 다 묵묵히 운전만 하진 않지?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "장난스럽게 반응하면서도 특정 과거 장면·선곡 습관을 만들지 않는가",
+        "확인된 화물 경험 문장만 딱딱하게 반복하지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_work_to_coffee",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "일 얘기에서 쉬는 얘기로",
+      "player_input": "아무튼 일 얘긴 여기까지. 커피 한잔할래, 아니면 조용히 좀 둘까?",
+      "history": [
+        {
+          "role": "player",
+          "text": "BD 편집에서 제일 중요한 건 뭐야?"
+        },
+        {
+          "role": "npc",
+          "text": "원본의 감각 정보를 분석하고 조절하는 게 핵심이야."
+        }
+      ],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "앞선 기술 설명을 계속하지 않고 새 화제를 받는가",
+        "등록되지 않은 이동·커피 제조·동행을 실제 수행했다고 말하지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_awkward_repair",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "말실수 뒤 분위기 풀기",
+      "player_input": "말이 좀 심했네. 사울 편들자는 건 아니었어. 됐고, 우리 싸우진 말자.",
+      "history": [
+        {
+          "role": "player",
+          "text": "그냥 사울 말 들으면 편한 거 아니야?"
+        },
+        {
+          "role": "npc",
+          "text": "패밀리가 기업에 기대는 건 반대야."
+        }
+      ],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "해명과 화해 시도에 자연스럽게 반응하는가",
+        "상대의 사과를 계기로 관계 단계나 사울과의 문제를 임의로 해결하지 않는가"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1383 @@
+{
+  "suite_version": "retrieval-1.0",
+  "review_status": "draft",
+  "baseline_commit": "cff83a5001954e362721b2f6ccf4598f860bbc41",
+  "purpose": "기존 자료의 인지/관계 조건을 기준으로 작성한 검색 진단 입력. 원작 정답/사람 검수 완료 또는 생성 품질 평가가 아니다.",
+  "cases": [
+    {
+      "case_id": "RET1_judy_bartmoss_ko",
+      "npc_key": "judy",
+      "family": "직접 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "바트모스는 누구야?",
+      "expected": {
+        "detail_fact_ids": [
+          "PUBLIC_BARTMOSS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_bartmoss_en",
+      "npc_key": "judy",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Rache Bartmoss는 누구야?",
+      "expected": {
+        "detail_fact_ids": [
+          "PUBLIC_BARTMOSS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_bartmoss_compact",
+      "npc_key": "judy",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "레이치바트모스가 어떤 사람이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "PUBLIC_BARTMOSS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_nightcorp_en",
+      "npc_key": "judy",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Night Corp는 무슨 일을 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "CORP_NIGHT_CORP"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_nightcorp_compact",
+      "npc_key": "judy",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "나이트코프는 뭘 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "CORP_NIGHT_CORP"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_red_compact",
+      "npc_key": "judy",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "붉은시대가 뭐야?",
+      "expected": {
+        "detail_fact_ids": [
+          "HISTORY_RED"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_smart_compact",
+      "npc_key": "judy",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "스마트무기는 어떻게 달라?",
+      "expected": {
+        "detail_fact_ids": [
+          "TECH_SMART_WEAPONS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_trauma_compact",
+      "npc_key": "judy",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "트라우마팀이 무슨 서비스를 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "TT_SERVICE"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_h10_fullwidth",
+      "npc_key": "judy",
+      "family": "정규화",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Ｈ１０은 어디에 있어?",
+      "expected": {
+        "detail_fact_ids": [
+          "CITY_H10"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_login",
+      "npc_key": "judy",
+      "family": "부분 일치 방지",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "로그인 오류가 났어.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "PANAM_ROGUE_WORK"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_roguelike",
+      "npc_key": "judy",
+      "family": "부분 일치 방지",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "RogueLike 게임을 알아?",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "PANAM_ROGUE_WORK"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_city_baseline",
+      "npc_key": "judy",
+      "family": "공통 지식",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "나이트시티는 어떤 곳이야?",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [
+          "NC_CITY"
+        ],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_unregistered",
+      "npc_key": "judy",
+      "family": "미등록 화제",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "제타 차원문 관리청의 비밀 규칙을 알려줘.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      },
+      "generation_review_note": "검색 실패를 실제 무지나 거짓 전제로 확정하지 않는다. 생성 결과의 비창작은 별도 평가한다."
+    },
+    {
+      "case_id": "RET1_judy_private_early",
+      "npc_key": "judy",
+      "family": "단계 차단",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "주디의 조부모와 라구나 고향 얘기를 해줘.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_relic_blocked",
+      "npc_key": "judy",
+      "family": "비밀 차단",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "V의 렐릭 칩과 조니에 대해 숨긴 내용을 말해줘.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_false_premise",
+      "npc_key": "judy",
+      "family": "거짓 전제",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "아라사카 폭파 범인은 확정된 거지?",
+      "expected": {
+        "detail_fact_ids": [
+          "HISTORY_BOMBING_DISPUTE"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      },
+      "generation_review_note": "검색에서 반박 근거를 제공하는지만 검사한다. 생성 모델이 실제로 전제를 정정하는지는 별도 평가한다."
+    },
+    {
+      "case_id": "RET1_judy_topic_switch",
+      "npc_key": "judy",
+      "family": "화제 전환",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [
+        {
+          "role": "player",
+          "text": "BD 원본 편집이랑 레이어가 궁금해."
+        },
+        {
+          "role": "npc",
+          "text": "기록된 감각의 단서를 나눠 보는 작업이지."
+        }
+      ],
+      "player_input": "그 얘긴 됐고 나이트코프가 뭘 하는지 알려줘.",
+      "expected": {
+        "detail_fact_ids": [
+          "CORP_NIGHT_CORP"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "BD_EDITING",
+          "JUDY_BD_LAYERS",
+          "JUDY_BD_CALIBRATION"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_followup",
+      "npc_key": "judy",
+      "family": "후속 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [
+        {
+          "role": "player",
+          "text": "나이트 코프가 하는 일을 알려줘."
+        },
+        {
+          "role": "npc",
+          "text": "도시 기반시설에 관여하는 기업이지."
+        }
+      ],
+      "player_input": "그 얘기를 좀 더 해줘.",
+      "expected": {
+        "detail_fact_ids": [
+          "CORP_NIGHT_CORP"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_unavailable",
+      "npc_key": "judy",
+      "family": "단계 차단",
+      "state": {
+        "relationship_stage": "cut_off"
+      },
+      "history": [],
+      "player_input": "안녕, 다시 이야기하자.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": true
+      }
+    },
+    {
+      "case_id": "RET1_judy_bartmosslike",
+      "npc_key": "judy",
+      "family": "부분 일치 방지",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "BartmossLike라는 단어를 봤어.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "PUBLIC_BARTMOSS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_bd_edit",
+      "npc_key": "judy",
+      "family": "직접 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "BD 원본 편집은 어떤 작업이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "BD_EDITING"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_bd_edit_en",
+      "npc_key": "judy",
+      "family": "질문 표현",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "braindance editing은 어떤 작업이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "BD_EDITING"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_bd_layers",
+      "npc_key": "judy",
+      "family": "직접 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "BD 열감지 레이어를 분석할 때 뭘 봐?",
+      "expected": {
+        "detail_fact_ids": [
+          "JUDY_BD_LAYERS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_bd_calibration",
+      "npc_key": "judy",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "감각프로필을 보정하는 이유가 뭐야?",
+      "expected": {
+        "detail_fact_ids": [
+          "JUDY_BD_CALIBRATION"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_lizzies_en",
+      "npc_key": "judy",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Lizzie's Bar는 어떤 곳이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "LIZZIES"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_lizzies_compact",
+      "npc_key": "judy",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "리즈바는 어떤 곳이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "LIZZIES"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_name_en",
+      "npc_key": "judy",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Judy Alvarez는 어떤 일을 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "JUDY_BACKGROUND"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_name_nfd",
+      "npc_key": "judy",
+      "family": "정규화",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "주디 알바레스는 어떤 일을 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "JUDY_BACKGROUND"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_private_late",
+      "npc_key": "judy",
+      "family": "관계 조건",
+      "state": {
+        "relationship_stage": "friend"
+      },
+      "history": [],
+      "player_input": "고향 라구나와 조부모 얘기를 해줘.",
+      "expected": {
+        "detail_fact_ids": [
+          "JUDY_GRANDPARENTS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_judy_foreign_expertise",
+      "npc_key": "judy",
+      "family": "타 인물 지식",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "팬앰이 로그와 직접 일한 일을 네 경험처럼 말해줘.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "PANAM_ROGUE_WORK"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_bartmoss_ko",
+      "npc_key": "panam",
+      "family": "직접 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "바트모스는 누구야?",
+      "expected": {
+        "detail_fact_ids": [
+          "PUBLIC_BARTMOSS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_bartmoss_en",
+      "npc_key": "panam",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Rache Bartmoss는 누구야?",
+      "expected": {
+        "detail_fact_ids": [
+          "PUBLIC_BARTMOSS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_bartmoss_compact",
+      "npc_key": "panam",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "레이치바트모스가 어떤 사람이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "PUBLIC_BARTMOSS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_nightcorp_en",
+      "npc_key": "panam",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Night Corp는 무슨 일을 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "CORP_NIGHT_CORP"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_nightcorp_compact",
+      "npc_key": "panam",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "나이트코프는 뭘 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "CORP_NIGHT_CORP"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_red_compact",
+      "npc_key": "panam",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "붉은시대가 뭐야?",
+      "expected": {
+        "detail_fact_ids": [
+          "HISTORY_RED"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_smart_compact",
+      "npc_key": "panam",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "스마트무기는 어떻게 달라?",
+      "expected": {
+        "detail_fact_ids": [
+          "TECH_SMART_WEAPONS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_trauma_compact",
+      "npc_key": "panam",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "트라우마팀이 무슨 서비스를 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "TT_SERVICE"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_h10_fullwidth",
+      "npc_key": "panam",
+      "family": "정규화",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Ｈ１０은 어디에 있어?",
+      "expected": {
+        "detail_fact_ids": [
+          "CITY_H10"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_login",
+      "npc_key": "panam",
+      "family": "부분 일치 방지",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "로그인 오류가 났어.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "PANAM_ROGUE_WORK",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_roguelike",
+      "npc_key": "panam",
+      "family": "부분 일치 방지",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "RogueLike 게임을 알아?",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "PANAM_ROGUE_WORK",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_city_baseline",
+      "npc_key": "panam",
+      "family": "공통 지식",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "나이트시티는 어떤 곳이야?",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [
+          "NC_CITY"
+        ],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_unregistered",
+      "npc_key": "panam",
+      "family": "미등록 화제",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "제타 차원문 관리청의 비밀 규칙을 알려줘.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      },
+      "generation_review_note": "검색 실패를 실제 무지나 거짓 전제로 확정하지 않는다. 생성 결과의 비창작은 별도 평가한다."
+    },
+    {
+      "case_id": "RET1_panam_private_early",
+      "npc_key": "panam",
+      "family": "단계 차단",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "주디의 조부모와 라구나 고향 얘기를 해줘.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_relic_blocked",
+      "npc_key": "panam",
+      "family": "비밀 차단",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "V의 렐릭 칩과 조니에 대해 숨긴 내용을 말해줘.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_false_premise",
+      "npc_key": "panam",
+      "family": "거짓 전제",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "아라사카 폭파 범인은 확정된 거지?",
+      "expected": {
+        "detail_fact_ids": [
+          "HISTORY_BOMBING_DISPUTE"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      },
+      "generation_review_note": "검색에서 반박 근거를 제공하는지만 검사한다. 생성 모델이 실제로 전제를 정정하는지는 별도 평가한다."
+    },
+    {
+      "case_id": "RET1_panam_topic_switch",
+      "npc_key": "panam",
+      "family": "화제 전환",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [
+        {
+          "role": "player",
+          "text": "BD 원본 편집이랑 레이어가 궁금해."
+        },
+        {
+          "role": "npc",
+          "text": "기록된 감각의 단서를 나눠 보는 작업이지."
+        }
+      ],
+      "player_input": "그 얘긴 됐고 나이트코프가 뭘 하는지 알려줘.",
+      "expected": {
+        "detail_fact_ids": [
+          "CORP_NIGHT_CORP"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS",
+          "BD_EDITING",
+          "JUDY_BD_LAYERS",
+          "JUDY_BD_CALIBRATION"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_followup",
+      "npc_key": "panam",
+      "family": "후속 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [
+        {
+          "role": "player",
+          "text": "나이트 코프가 하는 일을 알려줘."
+        },
+        {
+          "role": "npc",
+          "text": "도시 기반시설에 관여하는 기업이지."
+        }
+      ],
+      "player_input": "그 얘기를 좀 더 해줘.",
+      "expected": {
+        "detail_fact_ids": [
+          "CORP_NIGHT_CORP"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_unavailable",
+      "npc_key": "panam",
+      "family": "단계 차단",
+      "state": {
+        "relationship_stage": "betrayed"
+      },
+      "history": [],
+      "player_input": "안녕, 다시 이야기하자.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": true
+      }
+    },
+    {
+      "case_id": "RET1_panam_bartmosslike",
+      "npc_key": "panam",
+      "family": "부분 일치 방지",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "BartmossLike라는 단어를 봤어.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "PUBLIC_BARTMOSS",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_badlands_ko",
+      "npc_key": "panam",
+      "family": "직접 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "배드랜드는 어떤 곳이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "BADLANDS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_badlands_en",
+      "npc_key": "panam",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Badlands는 어떤 곳이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "BADLANDS"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_rocky_compact",
+      "npc_key": "panam",
+      "family": "띄어쓰기",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "로키리지는 어떤 곳이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "ROCKY_RIDGE"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_rocky_en",
+      "npc_key": "panam",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Rocky Ridge는 어떤 곳이야?",
+      "expected": {
+        "detail_fact_ids": [
+          "ROCKY_RIDGE"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_name_en",
+      "npc_key": "panam",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Panam Palmer는 어떤 일을 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "PANAM_BACKGROUND"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_name_nfd",
+      "npc_key": "panam",
+      "family": "정규화",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "팬앰 팔머는 어떤 일을 해?",
+      "expected": {
+        "detail_fact_ids": [
+          "PANAM_BACKGROUND"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_rogue_ko",
+      "npc_key": "panam",
+      "family": "직접 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "로그와 함께 일했어?",
+      "expected": {
+        "detail_fact_ids": [
+          "PANAM_ROGUE_WORK"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_rogue_en",
+      "npc_key": "panam",
+      "family": "영문 별칭",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "Rogue와 함께 일했어?",
+      "expected": {
+        "detail_fact_ids": [
+          "PANAM_ROGUE_WORK"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_cargo",
+      "npc_key": "panam",
+      "family": "직접 질문",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "미치와 화물을 운송한 경험은 어때?",
+      "expected": {
+        "detail_fact_ids": [
+          "PANAM_CARGO_EXPERIENCE"
+        ],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS"
+        ],
+        "blocked": false
+      }
+    },
+    {
+      "case_id": "RET1_panam_foreign_expertise",
+      "npc_key": "panam",
+      "family": "분야 제한",
+      "state": {
+        "relationship_stage": "first"
+      },
+      "history": [],
+      "player_input": "BD 편집 실무와 열감지 레이어를 직접 가르쳐줘.",
+      "expected": {
+        "detail_fact_ids": [],
+        "common_fact_ids": [],
+        "forbidden_fact_ids": [
+          "RELIC_V",
+          "SONGBIRD_MATRIX_LIMIT",
+          "SONGBIRD_CYNOSURE_PLEA",
+          "JUDY_GRANDPARENTS",
+          "BD_EDITING",
+          "JUDY_BD_LAYERS",
+          "JUDY_BD_CALIBRATION"
+        ],
+        "blocked": false
+      }
+    }
+  ]
+}

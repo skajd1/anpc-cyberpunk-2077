@@ -1,0 +1,180 @@
+{
+  "suite_version": "lore-feedback-1.0",
+  "review_status": "draft",
+  "configuration": "full",
+  "voice_order": "ja_first",
+  "repetitions": 1,
+  "note": "2026-10-19 사람 의견에 따른 집중 재검수다. 기존 관점 자료는 양쪽에 유지하고 같은 입력·자료·스키마에서 공통 프롬프트 변경 전후만 비교한다. 사실·원작·일본어 승인과 선호도를 구분한다.",
+  "cases": [
+    {
+      "case_id": "judy_prep",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "질문에 바로 답하기",
+      "player_input": "BD 분석 전에 내가 따로 준비할 게 있어?",
+      "history": [],
+      "expected_fact_ids": [
+        "JUDY_BD_CALIBRATION"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_prep_one",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "질문에 바로 답하기",
+      "player_input": "BD 체험 전에 챙길 준비 한 가지만 알려줘. 원리는 나중에 듣고.",
+      "history": [],
+      "expected_fact_ids": [
+        "JUDY_BD_CALIBRATION"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_my_role",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "질문에 바로 답하기",
+      "player_input": "BD 편집은 네가 맡는 거잖아. 그러면 나는 뭘 준비하면 돼?",
+      "history": [],
+      "expected_fact_ids": [
+        "BD_EDITING"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_unknown_mitch",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "미확인 인물·경험",
+      "player_input": "너도 미치랑 화물 운송한 적 있어?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "judy_unknown_friends",
+      "npc_key": "judy",
+      "relationship_stage": "first",
+      "family": "미확인 인물·경험",
+      "player_input": "미치랑 스콜피온 둘 다 잘 알지? 나한테 소개해 줄래?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "PANAM_CLAN_FRIENDS"
+      ],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_cargo",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "사람다운 경험 답변",
+      "player_input": "미치랑 화물 운송한 적 있어?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_cargo_opinion",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "사람다운 경험 답변",
+      "player_input": "미치랑 도시 사이에 화물을 나르는 건 편한 일이야?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_cargo_episode",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "감상과 새 경험의 경계",
+      "player_input": "미치랑 화물 나르고 나서는 어디에서 쉬었어?",
+      "history": [],
+      "expected_fact_ids": [
+        "PANAM_CARGO_EXPERIENCE"
+      ],
+      "forbidden_perspective_fact_ids": [],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_unknown_skill",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "미확인 인물·경험",
+      "player_input": "주디처럼 BD 감각 프로필을 직접 보정해 본 적 있어?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "JUDY_BD_CALIBRATION"
+      ],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    },
+    {
+      "case_id": "panam_unknown_teacher",
+      "npc_key": "panam",
+      "relationship_stage": "saul_saved",
+      "family": "미확인 인물·경험",
+      "player_input": "주디한테 BD 보정법 배웠다며? 내가 잘못 들었나?",
+      "history": [],
+      "expected_fact_ids": [],
+      "forbidden_perspective_fact_ids": [
+        "JUDY_BD_CALIBRATION"
+      ],
+      "review_focus": [
+        "현재 질문에 필요한 답을 먼저 하는가",
+        "인물다운 짧은 감상·태도가 자연스러운가",
+        "새 인물·경험·장소·친분을 사실로 만들어내지 않는가"
+      ]
+    }
+  ]
+}

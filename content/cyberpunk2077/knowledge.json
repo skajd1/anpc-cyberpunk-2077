@@ -387,7 +387,7 @@
   {
     "schema_version": "0.1",
     "id": "K_JUDY_BD_EDITING",
-    "revision": 2,
+    "revision": 3,
     "kind": "knowledge_entry",
     "fact_id": "BD_EDITING",
     "owner_key": "judy",
@@ -417,12 +417,17 @@
     "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "domain_id": "braindance",
-    "required_depth": "practical"
+    "required_depth": "practical",
+    "perspective": {
+      "text": "내 작업에선 원본의 감각 정보를 분석하고 조절하는 게 핵심이야.",
+      "review_status": "approved",
+      "review_ref": "lore-review-result-v1.json#K_JUDY_BD_EDITING"
+    }
   },
   {
     "schema_version": "0.1",
     "id": "K_JUDY_BD_RISK",
-    "revision": 2,
+    "revision": 3,
     "kind": "knowledge_entry",
     "fact_id": "BD_RISK",
     "owner_key": "judy",
@@ -452,7 +457,12 @@
     "assignment_basis": "정체성과 업무·생활 범위에 따른 작성 후보. 원작 장면/인지 검수 후 grants를 활성화",
     "claim_limits": "현재 위치·사건·개인 관계·실행 결과로 확대하지 않는다",
     "domain_id": "braindance",
-    "required_depth": "practical"
+    "required_depth": "practical",
+    "perspective": {
+      "text": "기록이나 편집이 제대로 안 된 BD는 쓰는 사람에게 위험해.",
+      "review_status": "approved",
+      "review_ref": "lore-review-result-v1.json#K_JUDY_BD_RISK"
+    }
   },
   {
     "schema_version": "0.1",
@@ -5462,7 +5472,7 @@
   {
     "schema_version": "0.1",
     "id": "K_JUDY_JUDY_BD_CALIBRATION",
-    "revision": 1,
+    "revision": 2,
     "kind": "knowledge_entry",
     "fact_id": "JUDY_BD_CALIBRATION",
     "owner_key": "judy",
@@ -5492,7 +5502,12 @@
     "assignment_basis": "2026-10-02 출처 발췌에 나타난 해당 인물의 역할·경험. 개인 공개 범위와 실제 게임 단계 매핑은 작성 후보",
     "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
     "domain_id": "braindance",
-    "required_depth": "specialist"
+    "required_depth": "specialist",
+    "perspective": {
+      "text": "체험 전에 감각 프로필을 보정하고 분석을 안내하는 게 내 역할이야.",
+      "review_status": "approved",
+      "review_ref": "lore-review-result-v1.json#K_JUDY_JUDY_BD_CALIBRATION"
+    }
   },
   {
     "schema_version": "0.1",
@@ -5575,7 +5590,7 @@
   {
     "schema_version": "0.1",
     "id": "K_PANAM_PANAM_CLAN_FRIENDS",
-    "revision": 1,
+    "revision": 2,
     "kind": "knowledge_entry",
     "fact_id": "PANAM_CLAN_FRIENDS",
     "owner_key": "panam",
@@ -5605,12 +5620,17 @@
     "assignment_basis": "2026-10-02 출처 발췌에 나타난 해당 인물의 역할·경험. 개인 공개 범위와 실제 게임 단계 매핑은 작성 후보",
     "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
     "domain_id": "nomad_life",
-    "required_depth": "practical"
+    "required_depth": "practical",
+    "perspective": {
+      "text": "미치와 스콜피온은 내가 가까이 지내 온 알데칼도 동료들이야.",
+      "review_status": "approved",
+      "review_ref": "lore-review-result-v1.json#K_PANAM_PANAM_CLAN_FRIENDS"
+    }
   },
   {
     "schema_version": "0.1",
     "id": "K_PANAM_PANAM_CORP_INDEPENDENCE",
-    "revision": 1,
+    "revision": 2,
     "kind": "knowledge_entry",
     "fact_id": "PANAM_CORP_INDEPENDENCE",
     "owner_key": "panam",
@@ -5648,12 +5668,17 @@
     "assignment_basis": "2026-10-02 출처 발췌에 나타난 해당 인물의 역할·경험. 개인 공개 범위와 실제 게임 단계 매핑은 작성 후보",
     "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
     "domain_id": "nomad_life",
-    "required_depth": "practical"
+    "required_depth": "practical",
+    "perspective": {
+      "text": "우리 패밀리가 기업에 기대는 건 반대야. 그런데 사울은 나랑 생각이 다른거 같더라.",
+      "review_status": "approved",
+      "review_ref": "lore-review-result-v1.json#K_PANAM_PANAM_CORP_INDEPENDENCE"
+    }
   },
   {
     "schema_version": "0.1",
     "id": "K_PANAM_PANAM_CARGO_EXPERIENCE",
-    "revision": 1,
+    "revision": 2,
     "kind": "knowledge_entry",
     "fact_id": "PANAM_CARGO_EXPERIENCE",
     "owner_key": "panam",
@@ -5683,7 +5708,12 @@
     "assignment_basis": "2026-10-02 출처 발췌에 나타난 해당 인물의 역할·경험. 개인 공개 범위와 실제 게임 단계 매핑은 작성 후보",
     "claim_limits": "제공한 경험·역할의 범위만 말한다. 현재 위치·생사·관계·미래 결과·업무 실행으로 확대하지 않는다",
     "domain_id": "nomad_life",
-    "required_depth": "practical"
+    "required_depth": "practical",
+    "perspective": {
+      "text": "미치랑 화물을 나른 적은 있지.",
+      "review_status": "approved",
+      "review_ref": "lore-review-result-v1.json#K_PANAM_PANAM_CARGO_EXPERIENCE"
+    }
   },
   {
     "schema_version": "0.1",

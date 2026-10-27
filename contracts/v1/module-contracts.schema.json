@@ -1045,6 +1045,11 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "perspective": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
         }
       }
     },

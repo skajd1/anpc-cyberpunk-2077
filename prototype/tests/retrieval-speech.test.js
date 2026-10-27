@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { loadPrototypeData } from '../server.js';
-import { termMatches, entityMatches, factMatch, rankFacts, rankExamples, exampleTerms } from '../public/retrieval.js';
+import { termMatches, entityMatches, factMatch, rankFacts, rankExamples, exampleTerms, allowsRecentTopic } from '../public/retrieval.js';
 import { selectReadings, jaVoiceData } from '../public/speech.js';
 import { assemblePrompt, responseSchema } from '../public/core.js';
 import { prepareJaEvaluation } from '../../scripts/prepare-ja-evaluation.mjs';
@@ -25,6 +25,20 @@ test('새 화제는 이전 화제만 맞는 상세 지식을 제외하며 모호
     { id: 'B', trigger_terms: ['돈', '크롬'], topic_tags: ['work'], input: '크롬은?' }
   ];
   assert.deepEqual(rankExamples(examples, '돈과 크롬', new Set(['work'])).map(x => x.ex.id), ['B', 'C', 'A']);
+});
+
+test('인사·명시적 화제 종료는 이전 화제만 차단하고 실제 질문·후속 질문은 유지한다', () => {
+  const policy = bundle.worldKnowledge.recent_topic_policy;
+  for (const text of ['안녕', '안녕하세요!', '안녕…', '안녕！？', '안녕. 잠깐 인사만 하러 왔어.', '그 얘기는 그만하자', '다른 얘기 하자']) {
+    assert.equal(allowsRecentTopic(text, policy), false, text);
+    assert.deepEqual(rankFacts([{ f: { id: 'old' }, now: 0, before: 2 }], allowsRecentTopic(text, policy)), []);
+  }
+  for (const text of ['그 얘기 더 해줘', '그건 왜?', '안녕, BD 편집을 더 알려줘', '안녕이라는 말을 했어?']) assert.equal(allowsRecentTopic(text, policy), true, text);
+  const ranked = rankFacts([{ f: { id: 'new' }, now: 1, before: 0 }, { f: { id: 'old' }, now: 0, before: 9 }], false);
+  assert.deepEqual(ranked.map(x => x.f.id), ['new']);
+  const risk = bundle.facts.find(f => f.id === 'BD_RISK');
+  for (const text of ['기록이 이상한 BD도 그냥 써도 돼?', '잘못 기록된 BD만 써봤어', '잘못 편집된 BD이랑 비교해줘', '기록이 이상한 브레인댄스는?']) assert.ok(factMatch(risk, text).score > 0, text);
+  for (const text of ['기록이 이상해', '기록이 이상한 BD도넛', '기록이 이상한 BDmania']) assert.equal(factMatch(risk, text).score, 0, text);
 });
 
 test('승인 읽기는 현재 인물·질문·선별 공개 지식에만 적용하고 비음성 요청에서는 제외한다', () => {
@@ -98,7 +112,9 @@ const luaAvailable = !spawnSync(lua, ['-v']).error;
 test('실제 Lua와 웹의 동일 입력 지식·예시·읽기 순서를 비교한다', { skip: !luaAvailable && 'Lua 실행기가 필요합니다(ANPC_LUA로 지정 가능).' }, () => {
   const texts = ['로그인 오류', '로그에게 물어봐', 'Rogue는 누구야?', 'V는?', 'Ｖ는?', 'BD를 알아?', '브레인댄스 원본 복원',
     '주디 알바레스', '아라사카와 밀리테크', '돈 에디 크롬', '그 얘기는 됐고 돈은?', '그 얘기 더 해줘', '안녕',
-    '블랙월과 넷워치', '팬앰 팔머와 알데칼도스', '나이트   시티', 'ジャッキーは', 'ログイン'];
+    '블랙월과 넷워치', '팬앰 팔머와 알데칼도스', '나이트   시티', 'ジャッキーは', 'ログイン', '_V', '주디 알바레스', 'Night\u00a0Corp',
+    '안녕…', '안녕！？', '안녕. 잠깐 인사만 하러 왔어.', '그 얘기는 그만하자', '안녕, BD 편집을 더 알려줘',
+    '기록이 이상한 BD도 그냥 써도 돼?', 'BD만', 'BD이랑', 'BD도넛'];
   const terms = ['', 'V', 'BD', 'Rogue', '로그', '주디', '나이트 시티', 'ジャッキー'];
   const matches = texts.flatMap(text => terms.flatMap(term => [false, true].map(entity => ({ text, term, entity,
     expected: (entity ? entityMatches : termMatches)(text, term) }))));
@@ -107,7 +123,7 @@ test('실제 Lua와 웹의 동일 입력 지식·예시·읽기 순서를 비교
   const turns = texts.map(text => {
     const recent = '브레인댄스 원본 복원';
     const ranked = rankFacts(facts.map(f => { const now = factMatch(f, text), before = factMatch(f, recent);
-      return { f, now: now.score, named: now.named, before: before.score, beforeNamed: before.named }; })).slice(0, 3);
+      return { f, now: now.score, named: now.named, before: before.score, beforeNamed: before.named, phrases: now.phrases, beforePhrases: before.phrases }; }), allowsRecentTopic(text, bundle.worldKnowledge.recent_topic_policy)).slice(0, 3);
     const tags = [...new Set(ranked.flatMap(x => x.f.topic_tags))];
     const context = { knowledge: ranked.map(x => ({ statement: x.f.statement })) };
     return { text, recent, tags, context, persona: '주디 알바레스', fact_ids: ranked.map(x => x.f.id),
@@ -117,7 +133,7 @@ test('실제 Lua와 웹의 동일 입력 지식·예시·읽기 순서를 비교
   const directory = mkdtempSync(join(tmpdir(), 'anpc-parity-'));
   try {
     const path = join(directory, 'fixture.json');
-    writeFileSync(path, JSON.stringify({ matches, facts, examples, readings: bundle.jaReadingTable, turns }));
+    writeFileSync(path, JSON.stringify({ matches, facts, examples, readings: bundle.jaReadingTable, turns, recent_topic_policy: bundle.worldKnowledge.recent_topic_policy }));
     const result = spawnSync(lua, ['game/tests/retrieval-parity.lua', path], { encoding: 'utf8' });
     assert.equal(result.status, 0, result.stdout + result.stderr);
   } finally { rmSync(directory, { recursive: true, force: true }); }

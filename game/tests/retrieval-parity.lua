@@ -9,11 +9,11 @@ end
 for _,item in ipairs(suite.turns) do
   local candidates={}
   for _,fact in ipairs(suite.facts) do
-    local named,now=retrieval.score(fact,item.text)
-    local beforeNamed,before=retrieval.score(fact,item.recent)
-    candidates[#candidates+1]={fact=fact,named=named,now=now,beforeNamed=beforeNamed,before=before}
+    local named,now,phrases=retrieval.score(fact,item.text)
+    local beforeNamed,before,beforePhrases=retrieval.score(fact,item.recent)
+    candidates[#candidates+1]={fact=fact,named=named,now=now,beforeNamed=beforeNamed,before=before,phrases=phrases,beforePhrases=beforePhrases}
   end
-  local ranked=retrieval.rankFacts(candidates)
+  local ranked=retrieval.rankFacts(candidates,nil,retrieval.allowsRecentTopic(item.text,suite.recent_topic_policy))
   local ids=json.array();for i=1,math.min(3,#ranked) do ids[#ids+1]=ranked[i].fact.id end
   assert(json.encode(ids)==json.encode(item.fact_ids),"지식 차이: " .. item.text)
   local tags={};for _,tag in ipairs(item.tags) do tags[tag]=true end

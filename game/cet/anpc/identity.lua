@@ -259,8 +259,8 @@ function identity.compose(record,request,turns,availableActions)
         if relevance>0 then directTopic=true end
         if has(data.world_policy.baseline_fact_ids,fact.id) then baseline[fact.id]=fact
         else
-          local named,now=score(fact,request.text); local beforeNamed,before=score(fact,recent)
-          if now>0 or named or before>0 or beforeNamed then selected[#selected+1]={entry=entry,fact=fact,named=named,now=now,beforeNamed=beforeNamed,before=before} end
+          local named,now,phrases=score(fact,request.text); local beforeNamed,before,beforePhrases=score(fact,recent)
+          if now>0 or named or before>0 or beforeNamed then selected[#selected+1]={entry=entry,fact=fact,named=named,now=now,beforeNamed=beforeNamed,before=before,phrases=phrases,beforePhrases=beforePhrases} end
         end
       end
     end
@@ -273,7 +273,7 @@ function identity.compose(record,request,turns,availableActions)
   end
   local _,commonLength=json.encode(common):gsub("[^\128-\191]","")
   assert(commonLength<=data.world_policy.baseline_max_characters,"context_unavailable")
-  selected=retrieval.rankFacts(selected,directTopic)
+  selected=retrieval.rankFacts(selected,directTopic,retrieval.allowsRecentTopic(request.text,data.world_policy.recent_topic_policy))
   local knowledge,selectedIDs,tags=A(),{},{}
   for id in pairs(baseline) do selectedIDs[id]=true end
   for i=1,math.min(data.world_policy.detail_max_items,#selected) do
@@ -281,6 +281,12 @@ function identity.compose(record,request,turns,availableActions)
     knowledge[#knowledge+1]={fact_id=fact.id,statement=entry.disclosure=="public" and fact.statement or nil,
       response_constraint=entry.disclosure=="evasive" and "구체적 내용은 제공되지 않았다. 공개 범위를 추측하지 말고 설명을 요청하거나 말을 아낀다." or nil,
       domain_id=entry.domain_id,required_depth=entry.required_depth,certainty=entry.certainty,disclosure=entry.disclosure,claim_limits=entry.claim_limits}
+    local perspective=entry.perspective
+    if entry.disclosure=="public" and perspective and perspective.review_status=="approved"
+      and type(perspective.text)=="string" and perspective.text:find("%S") then
+      local _,length=perspective.text:gsub("[^\128-\191]","")
+      if length<=60 then knowledge[#knowledge].perspective=perspective.text end
+    end
     selectedIDs[fact.id]=true
     for _,tag in ipairs(fact.topic_tags or {}) do tags[tag]=true end
   end
@@ -315,7 +321,9 @@ function identity.compose(record,request,turns,availableActions)
       .. (persona.game_identity.adult_humor_allowed and "\n현재 NPC의 성인 유머 조건은 충족된다. 허용된 비노골적 농담을 선택할 수 있다."
         or "\n현재 NPC의 성인 유머 조건은 충족되지 않는다. 성적 농담과 플러팅은 하지 않는다.")
   end
-  return {instructions=base,messages=messages,actions=json.encode(actions)}
+  local source=prompts.characters[card.character_key]
+  return {instructions=base,messages=messages,actions=json.encode(actions),
+    ja_voice_profile=source and source.ja_voice_profile,ja_voice_examples=source and source.ja_voice_examples}
 end
 
 function identity.prepare(request,turns,now,system,availableActions)

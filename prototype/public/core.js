@@ -1,7 +1,7 @@
 import { selectReadings } from './speech.js';
 import { validateCorePersonality, personalityInstructions, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
 import { AMM_MOTIONS } from './motions.js';
-export const PROMPT_VERSION = '0.21';
+export const PROMPT_VERSION = '0.25';
 export const INTENTS = ['answer', 'ask', 'refuse', 'warn', 'farewell'];
 export const EMOTIONS = ['neutral', 'friendly', 'wary', 'annoyed', 'afraid', 'sad', 'curious'];
 // 음성 활성 응답의 말 빠르기. 세부 규칙은 docs/npc-voice-output-specification.md 2절.
@@ -94,7 +94,7 @@ const voiceContract = order => order === 'ja_first'
   ? `출력 필드(이 순서): emotion(${EMOTIONS.join('|')}), delivery(${DELIVERIES.join('|')} 말 빠르기), speech_text(이 인물이 지금 일본어로 실제 말할 구어 대사 원문, 1~600자. 후속 질문이 있으면 끝에 포함), dialogue(speech_text의 대사를 같은 순서·의미로 옮긴 한국어 구어 자막. follow_up과 합쳐 45자 이내), follow_up(speech_text 끝의 후속 질문을 옮긴 한국어 또는 null), intent(${INTENTS.join('|')}), action(허용 후보의 action_id·args 또는 null).`
   : `출력 필드(이 순서): emotion(${EMOTIONS.join('|')}), delivery(${DELIVERIES.join('|')} 말 빠르기), dialogue(실제 대사. follow_up과 합쳐 45자 이내), follow_up(후속 질문 또는 null), speech_text(dialogue와 follow_up을 같은 순서·의미로 옮긴 일본어 구어 대사, 1~600자), intent(${INTENTS.join('|')}), action(허용 후보의 action_id·args 또는 null).`;
 
-export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null, voice = false, readingTable = null, jaVoice = null, voiceOrder = 'ja_first' } = {}) {
+export function assemblePrompt(base, persona, context, playerText, { styleExamples = [], identityReminder = null, voice = false, readingTable = null, entityBook = null, jaVoice = null, voiceOrder = 'ja_first' } = {}) {
   // 전체 스키마는 제공자의 구조화 출력 설정으로 전달한다. 본문에는 필드의 의미만 둔다.
   if (!VOICE_ORDERS.includes(voiceOrder)) throw new Error('알 수 없는 음성 원문 순서입니다.');
   const contract = voice
@@ -121,7 +121,7 @@ export function assemblePrompt(base, persona, context, playerText, { styleExampl
     requestPersona = fixed;
   }
   const { prototype_memory, recent_turns = [], ...requestContext } = context;
-  if (voice) requestContext.ja_readings = selectReadings(readingTable, playerText, persona.display_name, context);
+  if (voice) requestContext.ja_readings = selectReadings(readingTable, playerText, persona.display_name, context, entityBook);
   return {
     instructions,
     input: [

@@ -1,14 +1,23 @@
 local json=require("json")
 local retrieval=require("retrieval")
 local speech={}
-function speech.readings(entries,text,name,context)
+function speech.readings(entries,text,name,context,entities)
   local sources={text or "",name or ""}
   for _,knowledge in ipairs(context.knowledge or {}) do sources[#sources+1]=knowledge.statement or "" end
+  local mapped={}
+  for _,entity in ipairs(entities or {}) do
+    local found=false
+    for _,alias in ipairs(entity.aliases) do
+      for _,source in ipairs(sources) do if retrieval.match(source,alias,true) then found=true;break end end
+      if found then break end
+    end
+    if found then for _,term in ipairs(entity.reading_terms) do mapped[term]=true end end
+  end
   local selected={}
   for _,entry in ipairs(entries or {}) do
     if entry.review_status=="approved" then
       for _,source in ipairs(sources) do
-        if retrieval.match(source,entry.term,true) then selected[#selected+1]=entry;break end
+        if mapped[entry.term] or retrieval.match(source,entry.term,true) then selected[#selected+1]=entry;break end
       end
     end
   end

@@ -1,0 +1,239 @@
+{
+  "schema_version": "0.1",
+  "revision": 1,
+  "status": "기존 사실·별칭을 연결한 검색용 초안. 원작 인지 승인이나 미확인 일본어 읽기를 추가하지 않는다.",
+  "entities": [
+    {
+      "entity_id": "person.judy",
+      "type": "person",
+      "aliases": [
+        "주디",
+        "주디 알바레스",
+        "Judy",
+        "Judy Alvarez"
+      ],
+      "reading_terms": [
+        "주디",
+        "주디 알바레스"
+      ],
+      "evidence_refs": [
+        "JUDY_BACKGROUND"
+      ]
+    },
+    {
+      "entity_id": "person.panam",
+      "type": "person",
+      "aliases": [
+        "팬앰",
+        "팬앰 팔머",
+        "Panam",
+        "Panam Palmer"
+      ],
+      "reading_terms": [
+        "팬앰",
+        "팬앰 팔머"
+      ],
+      "evidence_refs": [
+        "PANAM_BACKGROUND"
+      ]
+    },
+    {
+      "entity_id": "person.johnny",
+      "type": "person",
+      "aliases": [
+        "조니",
+        "조니 실버핸드",
+        "Johnny",
+        "Johnny Silverhand"
+      ],
+      "reading_terms": [
+        "조니",
+        "조니 실버핸드"
+      ],
+      "evidence_refs": [
+        "SAMURAI_JOHNNY"
+      ]
+    },
+    {
+      "entity_id": "person.rogue",
+      "type": "person",
+      "aliases": [
+        "로그",
+        "로그 아멘디아레스",
+        "Rogue",
+        "Rogue Amendiares"
+      ],
+      "reading_terms": [
+        "로그",
+        "로그 아멘디아레스"
+      ],
+      "evidence_refs": [
+        "ROGUE_BACKGROUND",
+        "PANAM_ROGUE_WORK"
+      ]
+    },
+    {
+      "entity_id": "person.kerry",
+      "type": "person",
+      "aliases": [
+        "케리",
+        "케리 유로다인",
+        "Kerry",
+        "Kerry Eurodyne"
+      ],
+      "reading_terms": [
+        "케리",
+        "케리 유로다인"
+      ],
+      "evidence_refs": [
+        "KERRY_BACKGROUND"
+      ]
+    },
+    {
+      "entity_id": "person.smasher",
+      "type": "person",
+      "aliases": [
+        "아담 스매셔",
+        "스매셔",
+        "Adam Smasher",
+        "Smasher"
+      ],
+      "reading_terms": [],
+      "evidence_refs": [
+        "PUBLIC_SMASHER"
+      ]
+    },
+    {
+      "entity_id": "person.bartmoss",
+      "type": "person",
+      "aliases": [
+        "레이치 바트모스",
+        "바트모스",
+        "Rache Bartmoss"
+      ],
+      "reading_terms": [],
+      "evidence_refs": [
+        "PUBLIC_BARTMOSS"
+      ]
+    },
+    {
+      "entity_id": "place.night_city",
+      "type": "place",
+      "aliases": [
+        "나이트 시티",
+        "Night City"
+      ],
+      "reading_terms": [
+        "나이트 시티"
+      ],
+      "evidence_refs": [
+        "NC_CITY"
+      ]
+    },
+    {
+      "entity_id": "organization.night_corp",
+      "type": "organization",
+      "aliases": [
+        "나이트 코프",
+        "Night Corp"
+      ],
+      "reading_terms": [],
+      "evidence_refs": [
+        "CORP_NIGHT_CORP"
+      ]
+    },
+    {
+      "entity_id": "place.lizzies",
+      "type": "place",
+      "aliases": [
+        "리즈 바",
+        "Lizzie's Bar"
+      ],
+      "reading_terms": [],
+      "evidence_refs": [
+        "LIZZIES"
+      ]
+    },
+    {
+      "entity_id": "place.rocky_ridge",
+      "type": "place",
+      "aliases": [
+        "로키 리지",
+        "Rocky Ridge"
+      ],
+      "reading_terms": [],
+      "evidence_refs": [
+        "ROCKY_RIDGE"
+      ]
+    },
+    {
+      "entity_id": "place.badlands",
+      "type": "place",
+      "aliases": [
+        "배드랜드",
+        "Badlands"
+      ],
+      "reading_terms": [
+        "배드랜드"
+      ],
+      "evidence_refs": [
+        "BADLANDS"
+      ]
+    },
+    {
+      "entity_id": "organization.trauma_team",
+      "type": "organization",
+      "aliases": [
+        "트라우마 팀",
+        "Trauma Team"
+      ],
+      "reading_terms": [
+        "트라우마 팀"
+      ],
+      "evidence_refs": [
+        "TT_SERVICE"
+      ]
+    },
+    {
+      "entity_id": "concept.red_era",
+      "type": "concept",
+      "aliases": [
+        "붉은 시대",
+        "Time of the Red",
+        "레드 시대"
+      ],
+      "reading_terms": [],
+      "evidence_refs": [
+        "HISTORY_RED"
+      ]
+    },
+    {
+      "entity_id": "concept.smart_weapon",
+      "type": "concept",
+      "aliases": [
+        "스마트 무기",
+        "Smart Weapon",
+        "Smart Weapons"
+      ],
+      "reading_terms": [],
+      "evidence_refs": [
+        "TECH_SMART_WEAPONS"
+      ]
+    },
+    {
+      "entity_id": "concept.braindance",
+      "type": "concept",
+      "aliases": [
+        "브레인댄스",
+        "Braindance",
+        "BD"
+      ],
+      "reading_terms": [
+        "브레인댄스"
+      ],
+      "evidence_refs": [
+        "BD_EXPERIENCE"
+      ]
+    }
+  ]
+}

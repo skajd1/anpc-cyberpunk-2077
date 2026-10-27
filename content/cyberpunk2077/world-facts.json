@@ -2,7 +2,7 @@
   {
     "schema_version": "0.1",
     "id": "NC_CITY",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "나이트 시티는 권력·부·신체 개조가 두드러지는 대도시다",
     "source": {
@@ -29,7 +29,10 @@
     "review_status": "source_checked",
     "usage_mode": "answer",
     "category_id": "night_city",
-    "injection_mode": "baseline"
+    "injection_mode": "baseline",
+    "entity_ids": [
+      "place.night_city"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -197,7 +200,7 @@
   {
     "schema_version": "0.1",
     "id": "BD_EXPERIENCE",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "브레인댄스는 기록한 사람의 감각·경험을 재체험하는 기술이다",
     "source": {
@@ -224,12 +227,15 @@
     "review_status": "source_checked",
     "usage_mode": "answer",
     "category_id": "technology",
-    "injection_mode": "baseline"
+    "injection_mode": "baseline",
+    "entity_ids": [
+      "concept.braindance"
+    ]
   },
   {
     "schema_version": "0.1",
     "id": "BD_EDITING",
-    "revision": 2,
+    "revision": 3,
     "kind": "world_fact",
     "statement": "BD 편집은 감각 정보를 조절하고 원본을 분석하는 작업을 포함한다",
     "source": {
@@ -260,12 +266,16 @@
     "review_status": "source_checked",
     "usage_mode": "answer",
     "category_id": "technology",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "search_phrases": [
+      "braindance editing",
+      "BD editing"
+    ]
   },
   {
     "schema_version": "0.1",
     "id": "BD_RISK",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "안전하게 기록·편집되지 않은 BD는 이용자에게 위험할 수 있다",
     "source": {
@@ -294,7 +304,13 @@
     "review_status": "source_checked",
     "usage_mode": "answer",
     "category_id": "technology",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "search_phrases": [
+      "기록이 이상한 BD",
+      "잘못 기록된 BD",
+      "잘못 편집된 BD",
+      "기록이 이상한 브레인댄스"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -463,7 +479,7 @@
   {
     "schema_version": "0.1",
     "id": "TT_SERVICE",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "트라우마 팀은 무장 응급 의료 서비스를 제공한다",
     "source": {
@@ -490,7 +506,10 @@
     "review_status": "source_checked",
     "usage_mode": "answer",
     "category_id": "corporations",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "entity_ids": [
+      "organization.trauma_team"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -822,7 +841,7 @@
   {
     "schema_version": "0.1",
     "id": "BADLANDS",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "배드랜드에는 사막과 도시 외곽의 넓은 황무지가 있다",
     "source": {
@@ -849,12 +868,15 @@
     "review_status": "source_checked",
     "usage_mode": "answer",
     "category_id": "night_city",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "entity_ids": [
+      "place.badlands"
+    ]
   },
   {
     "schema_version": "0.1",
     "id": "ROCKY_RIDGE",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "로키 리지는 배드랜드의 버려진 마을이다",
     "source": {
@@ -880,7 +902,10 @@
     "review_status": "source_checked",
     "usage_mode": "answer",
     "category_id": "night_city",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "entity_ids": [
+      "place.rocky_ridge"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -980,7 +1005,7 @@
   {
     "schema_version": "0.1",
     "id": "LIZZIES",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "리즈 바는 목스의 거점이자 BD 클럽이다",
     "source": {
@@ -1009,7 +1034,10 @@
     "review_status": "source_checked",
     "usage_mode": "answer",
     "category_id": "night_city",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "entity_ids": [
+      "place.lizzies"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -1310,7 +1338,7 @@
   {
     "schema_version": "0.1",
     "id": "SAMURAI_JOHNNY",
-    "revision": 2,
+    "revision": 3,
     "kind": "world_fact",
     "statement": "조니 실버핸드는 SAMURAI의 프런트맨으로 알려진 반기업 로커보이다",
     "source": {
@@ -1345,7 +1373,10 @@
       "Johnny Silverhand"
     ],
     "category_id": "people",
-    "injection_mode": "baseline"
+    "injection_mode": "baseline",
+    "entity_ids": [
+      "person.johnny"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -1383,7 +1414,7 @@
   {
     "schema_version": "0.1",
     "id": "JUDY_BACKGROUND",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "리즈 바를 기반으로 활동하는 BD 기술자다",
     "source": {
@@ -1409,12 +1440,15 @@
     "review_status": "source_checked",
     "usage_mode": "restricted",
     "category_id": "people",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "entity_ids": [
+      "person.judy"
+    ]
   },
   {
     "schema_version": "0.1",
     "id": "PANAM_BACKGROUND",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "알데칼도와 가족 유대를 가진 노마드이며 첫 만남 무렵에는 독립 용병 일을 한다",
     "source": {
@@ -1440,7 +1474,10 @@
     "review_status": "source_checked",
     "usage_mode": "restricted",
     "category_id": "people",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "entity_ids": [
+      "person.panam"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -1538,7 +1575,7 @@
   {
     "schema_version": "0.1",
     "id": "ROGUE_BACKGROUND",
-    "revision": 2,
+    "revision": 3,
     "kind": "world_fact",
     "statement": "로그 아멘디아레스는 애프터라이프를 운영하는 유명 픽서이며, 나이트 시티에서 전설적인 솔로 출신이자 픽서들의 여왕으로 알려져 있다.",
     "source": {
@@ -1573,7 +1610,10 @@
       "Rogue Amendiares"
     ],
     "category_id": "people",
-    "injection_mode": "baseline"
+    "injection_mode": "baseline",
+    "entity_ids": [
+      "person.rogue"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -1609,7 +1649,7 @@
   {
     "schema_version": "0.1",
     "id": "KERRY_BACKGROUND",
-    "revision": 2,
+    "revision": 3,
     "kind": "world_fact",
     "statement": "케리 유로다인은 SAMURAI 출신이며, 2077년에는 성공한 솔로 음악가로 널리 알려져 있다.",
     "source": {
@@ -1642,7 +1682,10 @@
       "Kerry Eurodyne"
     ],
     "category_id": "people",
-    "injection_mode": "baseline"
+    "injection_mode": "baseline",
+    "entity_ids": [
+      "person.kerry"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -4703,7 +4746,7 @@
   {
     "schema_version": "0.1",
     "id": "PANAM_ROGUE_WORK",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "팬앰은 나이트 시티에서 용병으로 일하며 픽서 로그의 의뢰를 맡았던 경험이 있다.",
     "source": {
@@ -4738,12 +4781,15 @@
     "review_status": "source_checked",
     "usage_mode": "restricted",
     "category_id": "people",
-    "injection_mode": "selected"
+    "injection_mode": "selected",
+    "entity_ids": [
+      "person.rogue"
+    ]
   },
   {
     "schema_version": "0.1",
     "id": "PUBLIC_SMASHER",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "아담 스매셔는 아라사카에 고용된 전신 개조 용병으로 악명 높다.",
     "source": {
@@ -4778,12 +4824,15 @@
       "스매셔",
       "Adam Smasher",
       "Smasher"
+    ],
+    "entity_ids": [
+      "person.smasher"
     ]
   },
   {
     "schema_version": "0.1",
     "id": "PUBLIC_BARTMOSS",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "레이치 바트모스는 데이터크래시와 연결된 전설적인 넷러너다.",
     "source": {
@@ -4816,6 +4865,9 @@
       "레이치 바트모스",
       "바트모스",
       "Rache Bartmoss"
+    ],
+    "entity_ids": [
+      "person.bartmoss"
     ]
   },
   {
@@ -5219,7 +5271,7 @@
   {
     "schema_version": "0.1",
     "id": "CORP_NIGHT_CORP",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "나이트 코프는 나이트 시티의 도로·철도·상하수도 같은 공공 기반시설 사업에 관여한다.",
     "source": {
@@ -5247,7 +5299,10 @@
     ],
     "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "entity_ids": [
+      "organization.night_corp"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -5684,7 +5739,7 @@
   {
     "schema_version": "0.1",
     "id": "HISTORY_RED",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "붉은 시대는 제4차 기업 전쟁 뒤 대기 오염과 붉은 하늘, 파괴된 공급망을 겪던 역사적 시기다.",
     "source": {
@@ -5712,7 +5767,10 @@
     ],
     "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "entity_ids": [
+      "concept.red_era"
+    ]
   },
   {
     "schema_version": "0.1",
@@ -6284,7 +6342,7 @@
   {
     "schema_version": "0.1",
     "id": "TECH_SMART_WEAPONS",
-    "revision": 1,
+    "revision": 2,
     "kind": "world_fact",
     "statement": "스마트 무기는 유도 탄환을 사용하며 스마트 조준에는 호환되는 스마트 링크가 필요하다.",
     "source": {
@@ -6312,7 +6370,10 @@
     ],
     "claim_limits": "공개 개요만 인정. 직접 경험·현재 사건·개인 비밀·실행 성공을 추론하지 않는다.",
     "review_status": "source_checked",
-    "usage_mode": "answer"
+    "usage_mode": "answer",
+    "entity_ids": [
+      "concept.smart_weapon"
+    ]
   },
   {
     "schema_version": "0.1",

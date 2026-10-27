@@ -1,4 +1,4 @@
-import { termMatches, entityMatches, factMatch, rankExamples, rankFacts } from './retrieval.js';
+import { termMatches, entityMatches, factMatch, rankExamples, rankFacts, allowsRecentTopic } from './retrieval.js';
 export { termMatches, entityMatches } from './retrieval.js';
 import { evaluateCondition } from './conditions.js';
 export { evaluateCondition } from './conditions.js';
@@ -12,6 +12,14 @@ export const CONFIGURATIONS = {
 };
 const clone = value => structuredClone(value);
 export const KNOWLEDGE_DEPTHS = ['unknown', 'awareness', 'familiar', 'practical', 'specialist'];
+
+// 지식의 허용·관련성 선별 뒤에만 호출한다. 개발 초안 허용도 관점의 승인을 대신하지 않는다.
+export function reviewedPerspective(entry) {
+  const perspective = entry.perspective;
+  return entry.disclosure === 'public' && perspective?.review_status === 'approved'
+    && typeof perspective.text === 'string' && perspective.text.trim().length > 0
+    && [...perspective.text].length <= 60 ? perspective.text : null;
+}
 
 export function permitsKnowledge(card, entry) {
   const domain = card.knowledge_profile?.domains.find(d => d.domain_id === entry.domain_id);
@@ -118,15 +126,16 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
   const ranked = rankFacts(eligible.map(k => {
     const f = facts.get(k.fact_id);
     const now = factMatch(f, current), before = factMatch(f, recent);
-    return { k, f, now: now.score, named: now.named, before: before.score, beforeNamed: before.named };
-  }));
+    return { k, f, now: now.score, named: now.named, before: before.score, beforeNamed: before.named, phrases: now.phrases, beforePhrases: before.phrases };
+  }), allowsRecentTopic(current, bundle.worldKnowledge?.recent_topic_policy));
   const selected = settings.configuration === 'card' ? [] : ranked.filter(x => !baseline.some(k => k.fact_id === x.f.id))
     .slice(0, bundle.worldKnowledge?.detail_max_items ?? 3);
   const knowledge = selected.map(({ k, f }) => ({ fact_id: f.id,
     ...(k.disclosure === 'public' ? { statement: f.statement } : {
       response_constraint: '구체적 내용은 제공되지 않았다. 공개 범위를 추측하지 말고 추가 설명을 요청하거나 말을 아낀다.' }),
     domain_id: k.domain_id, required_depth: k.required_depth,
-    certainty: k.certainty, disclosure: k.disclosure, claim_limits: k.claim_limits }));
+    certainty: k.certainty, disclosure: k.disclosure, claim_limits: k.claim_limits,
+    ...(reviewedPerspective(k) ? { perspective: reviewedPerspective(k) } : {}) }));
   const relevantDomains = new Set(bundle.knowledge.filter(k =>
     facts.has(k.fact_id) && factMatch(facts.get(k.fact_id), current).score > 0).map(k => k.domain_id));
   const topicBounds = [...relevantDomains].sort().map(domain_id => ({ domain_id,
@@ -176,7 +185,7 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
       everyday_fiction_policy: clone(persona.everyday_fiction_policy) };
   }
   const reminder = settings.configuration === 'full' ? { hard_limits: card.identity_anchor.hard_limits } : null;
-  return { persona, context: preparedContext, styleExamples: examples, identityReminder: reminder, readingTable: bundle.jaReadingTable,
+  return { persona, context: preparedContext, styleExamples: examples, identityReminder: reminder, readingTable: bundle.jaReadingTable, entityBook: bundle.entityBook,
     jaVoice: jaVoiceData(bundle.jaVoiceProfiles, bundle.jaStyleExamples, npcKey),
     diagnostics: { npc_key: npcKey, content_version: bundle.version, configuration: settings.configuration,
       development_only: true, story_policy: { enabled: story.enabled, allowed: story.allowed, channel: story.channel, applied_events: story.events.map(e => e.id) }, review_status: card.review_status, runtime_enabled: card.runtime_enabled,

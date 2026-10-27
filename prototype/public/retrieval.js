@@ -3,7 +3,7 @@ export function termMatches(text, term) {
   const escaped = normalize(term).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   if (!escaped) return false;
   // 한국어 조사·활용 접미사는 허용하되 영문 약어의 부분 일치는 제외.
-  const end = /[가-힣]$/.test(term) ? '' : '(?=$|[^\\p{L}\\p{N}]|(?:는|은|를|을|가|이|의|에|로|와|과|랑)(?=$|[^\\p{L}\\p{N}]))';
+  const end = /[가-힣]$/.test(term) ? '' : '(?=$|[^\\p{L}\\p{N}]|(?:는|은|를|을|가|이|의|에|로|와|과|랑|이랑|도|만)(?=$|[^\\p{L}\\p{N}]))';
   return new RegExp(`(?<![\\p{L}\\p{N}])${escaped}${end}`, 'u').test(normalize(text));
 }
 
@@ -18,8 +18,9 @@ export function entityMatches(text, alias) {
 export function factMatch(fact, text) {
   const aliases = fact.entity_aliases ?? [];
   const named = aliases.some(alias => entityMatches(text, alias));
+  const phrases = (fact.search_phrases ?? []).filter(term => termMatches(text, term)).length;
   const terms = fact.trigger_terms.filter(term => !aliases.includes(term) && termMatches(text, term)).length;
-  return { named: Number(named), score: terms + Number(named) };
+  return { named: Number(named), score: terms + phrases + Number(named), phrases };
 }
 
 // 웹과 CET 생성기가 같은 토큰을 쓴다. Lua에서 한국어 형태를 다시 추정하지 않는다.
@@ -39,10 +40,16 @@ export function rankExamples(examples, current, tags) {
     .sort((a, b) => b.score - a.score || (a.ex.id < b.ex.id ? -1 : a.ex.id > b.ex.id ? 1 : 0));
 }
 // 새 화제의 직접 일치가 하나라도 있으면 이전 화제만 맞는 상세 지식은 버린다.
-export function rankFacts(candidates) {
+export function allowsRecentTopic(text, policy) {
+  const input = normalize(text).replace(/[.!?。]+$/u, '').trim();
+  return !(policy?.greetings_exact ?? []).some(greeting => normalize(greeting) === input)
+    && !(policy?.reset_phrases ?? []).some(phrase => termMatches(text, phrase));
+}
+
+export function rankFacts(candidates, allowRecent = true) {
   const direct = candidates.some(x => x.now > 0);
-  return candidates.filter(x => direct ? x.now > 0 : x.before > 0)
-    .sort((a, b) => Number(b.named) - Number(a.named) || b.now - a.now
-      || Number(b.beforeNamed) - Number(a.beforeNamed) || b.before - a.before
+  return candidates.filter(x => direct ? x.now > 0 : allowRecent && x.before > 0)
+    .sort((a, b) => Number(b.named) - Number(a.named) || (b.phrases ?? 0) - (a.phrases ?? 0) || b.now - a.now
+      || Number(b.beforeNamed) - Number(a.beforeNamed) || (b.beforePhrases ?? 0) - (a.beforePhrases ?? 0) || b.before - a.before
       || (a.f.id < b.f.id ? -1 : a.f.id > b.f.id ? 1 : 0));
 }

@@ -1,6 +1,6 @@
 # 모드 공통 데이터 및 모듈 입출력 규격
 
-규격 버전: 1.2 (2026-10-08). 목표 계약. 구현 상태: [개발·검증 계획](development-validation.md).
+규격 버전: 1.3 (2026-10-15). 목표 계약. 구현 상태: [개발·검증 계획](development-validation.md).
 
 ## 1. 기준과 범위
 
@@ -242,6 +242,7 @@ ModuleManifest/ModulePlan은 호스트 구성 자료이며 Envelope·LLM 입력�
 
 - CommonKnowledgeView: category_id + statements[]의 배열. category_id와 범위는 공통 스키마 참조. 허용된 공개 개요만 포함.
 - KnowledgeView.common_knowledge·PromptContext.common_knowledge는 선택 필드. 생략 시 빈 배열. 상세 items/knowledge와 사실 중복 제외.
+- KnowledgeItemView.perspective는 선택 문자열이며 생략 시 관점 없음이다. 검수 참조·상태는 로컬 작성 자료에만 남기고, 공개 가능한 상세 진술에 연결된 검수 문장만 전송한다. 선택·공개·발화 정책은 [지식 규격 6.0절](npc-knowledge-specification.md#60-검수된-인물-관점)을 따른다. 기존 입력·포트 순서·출력 개수는 유지한다.
 - PromptContext.recent_turns는 조립 전의 내부 TurnView 배열. ModelInput의 context는 recent_turns를 제외한 PromptContextData로 직렬화.
 - ModelInput.data_messages 순서: persona → 선택 style_examples → 음성 요청의 선택 ja_voice → context → 선택 identity_reminder → recent_turn 반복 → player_input.
 - recent_turn: kind=recent_turn, role=user/assistant, content=실제 표시한 원문. player→user, npc→assistant. 역할을 높은 지침으로 변환하거나 현재 입력을 중복 추가하지 않음.

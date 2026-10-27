@@ -1,6 +1,6 @@
 # 콘텐츠 데이터 규격
 
-규격 버전: 0.7 (2026-10-08). 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
+규격 버전: 0.8 (2026-10-15). 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
 
 신규 성격은 [Big Five 규격](personality-specification.md). 기존 identity/군중 세 슬롯은 호환 입력이며 신규 성격과 동시 적용·자동 환산 금지. 구현 상태: [개발·검증 계획](development-validation.md).
 
@@ -136,7 +136,8 @@ compatibility_rules는 금지 trait_id 집합+조건. 작성 갈등 해소 기�
 - 조건 형태는 공통 Condition 참조. 등록 필드만 사용. 빈 all/any·스크립트 금지. unknown은 충족하지 않으며 not 반전 금지.
 - 필수 공개 조건 누락/불명은 비공개. knows는 출처+인지 조건 충족, suspects는 추정 유지, unaware 실제 내용 제외.
 - disclosure: public/evasive/withheld. interpretation으로 사실 수정 금지.
-- 선택 색인: 역할/지역/화제 태그, usage_mode(background/answer/restricted). 접근 조건 대체 금지.
+- 선택 색인: entity_ids(개체 참조), search_phrases(작성 질문 표현), 역할/지역/화제 태그, usage_mode(background/answer/restricted). 접근 조건 대체 금지.
+- entities.json의 별칭·읽기·근거 참조 규칙은 [NPC 지식 규격 9절](npc-knowledge-specification.md#9-검색용-개체-색인)을 따른다. 검색 색인은 작성 사실을 승인하거나 공통 KnowledgeView 타입을 확장하지 않는다.
 - 요청은 허용 최소 진술·확실성·해석·주장 한도만. 출처는 로컬 보존.
 
 ### 4.1. 인물별 분야와 지식 깊이

@@ -1,3 +1,4 @@
+import { entityAliases } from '../prototype/public/entities.js';
 // 게임 CET 모드용 인물별 고정 프롬프트 데이터를 만든다.
 // 고정 정체성과 단계에 의존하지 않는 공통 지식만 저장한다. 현재 관찰·인지·최근 발화는 CET가 붙인다.
 // 사용: node scripts/build-cet-prompts.mjs > game/cet/anpc/prompts.lua
@@ -93,6 +94,7 @@ lines.push(`  voice_schema = ${long(JSON.stringify(gameSchema(true)))},`);
 lines.push(`  contracts = { text = ${long(contract(false))}, voice = ${long(contract(true))} },`);
 lines.push(`  motions = ${long(JSON.stringify(AMM_MOTIONS))},`);
 lines.push(`  ja_reading_table = ${long(JSON.stringify(data.research.jaReadingTable))},`);
+lines.push(`  ja_reading_entities = ${long(JSON.stringify(data.research.entityBook.entities.map(entity => ({ aliases: entityAliases(entity), reading_terms: entity.reading_terms }))))},`);
 lines.push(`  story_data = ${long(JSON.stringify(buildGameStoryData()))},`);
 lines.push('  blocked = {');
 for (const [key, reason] of Object.entries(blocked)) lines.push(`    ${key} = ${long(reason)},`);

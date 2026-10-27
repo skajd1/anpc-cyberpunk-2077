@@ -1,3 +1,4 @@
+import { indexFactEntities, validateEntities } from './public/entities.js';
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { randomBytes } from 'node:crypto';
@@ -24,6 +25,7 @@ routes['/api-models.js'] = ['api-models.js', 'text/javascript'];
 routes['/memory.js'] = ['memory.js', 'text/javascript'];
 routes['/retrieval.js'] = ['retrieval.js', 'text/javascript'];
 routes['/speech.js'] = ['speech.js', 'text/javascript'];
+routes['/entities.js'] = ['entities.js', 'text/javascript'];
 
 // 웹 시제품과 게임 브리지가 같은 프롬프트·인물·조사 자료를 쓴다.
 export async function loadPrototypeData() {
@@ -35,11 +37,14 @@ export async function loadPrototypeData() {
   const personas = JSON.parse(await readFile(resolve(root, 'prototype/personas.json'), 'utf8'));
   const load = async name => JSON.parse(await readFile(resolve(root, 'content/cyberpunk2077', name), 'utf8'));
   const manifest = await load('manifest.json');
+  const entityBook = await load('entities.json');
   const cardFiles = manifest.files.filter(file => /^characters\/[a-z0-9_-]+\.json$/.test(file));
   // 일본어 말투 예시 원문은 Git 제외 로컬 파일(설치된 게임 파일에서 추출)이다. 없으면 프로필만 쓴다.
   const jaStyleExamples = await readFile(resolve(root, 'game/cet/anpc/ja_style_examples.local.json'), 'utf8').then(JSON.parse, error => { if (error.code === 'ENOENT') return null; throw error; });
   const research = { jaReadingTable: await load('ja-reading-table.json'), jaVoiceProfiles: await load('ja-voice-profiles.json'), jaStyleExamples, version: manifest.content_version ?? manifest.version, cards: await Promise.all(cardFiles.map(load)),
-    facts: await load('world-facts.json'), knowledge: await load('knowledge.json'), examples: await load('dialogue-examples.json'), worldKnowledge: await load('world-knowledge-policy.json'), storyPolicy: await load('story-progression-policy.json') };
+    entityBook, facts: indexFactEntities(await load('world-facts.json'), entityBook), knowledge: await load('knowledge.json'), examples: await load('dialogue-examples.json'), worldKnowledge: await load('world-knowledge-policy.json'), storyPolicy: await load('story-progression-policy.json') };
+  const entityErrors = validateEntities(entityBook, research.facts, research.jaReadingTable);
+  if (entityErrors.length) throw new Error(entityErrors.join(' / '));
   const playerFact = research.facts.find(f => f.id === manifest.player_identity_fact_id);
   if (!playerFact?.player_identity?.display_name || !playerFact.player_identity.character_key) throw new Error('플레이어 신원 기준 사실이 없습니다.');
   const playerIdentity = { ...playerFact.player_identity, fact_id: playerFact.id, claim_limits: playerFact.claim_limits };

@@ -1,0 +1,94 @@
+{
+  "schema_version": "anpc-lore-review-result-1.0",
+  "scope": "perspective_only",
+  "source_sha256": "08e04457093b36e287ae9d259c441e84f5bf1ed83488e019cdb713f143454886",
+  "exported_at": "2026-10-15T08:40:17.406Z",
+  "completed_count": 6,
+  "overall_note": "",
+  "items": [
+    {
+      "knowledge_id": "K_JUDY_BD_EDITING",
+      "decision": "accept",
+      "edited_perspective": "내 작업에선 원본의 감각 정보를 분석하고 조절하는 게 핵심이야.",
+      "comment": "",
+      "checks": {
+        "fact_confirmed": true,
+        "experience_supported": false,
+        "voice_appropriate": false
+      },
+      "npc_key": "judy",
+      "original_perspective": "내 작업에선 원본의 감각 정보를 분석하고 조절하는 게 핵심이야.",
+      "final_perspective": "내 작업에선 원본의 감각 정보를 분석하고 조절하는 게 핵심이야."
+    },
+    {
+      "knowledge_id": "K_JUDY_BD_RISK",
+      "decision": "accept",
+      "edited_perspective": "기록이나 편집이 제대로 안 된 BD는 쓰는 사람에게 위험해.",
+      "comment": "",
+      "checks": {
+        "fact_confirmed": true,
+        "experience_supported": false,
+        "voice_appropriate": false
+      },
+      "npc_key": "judy",
+      "original_perspective": "기록이나 편집이 제대로 안 된 BD는 쓰는 사람에게 위험해.",
+      "final_perspective": "기록이나 편집이 제대로 안 된 BD는 쓰는 사람에게 위험해."
+    },
+    {
+      "knowledge_id": "K_JUDY_JUDY_BD_CALIBRATION",
+      "decision": "accept",
+      "edited_perspective": "체험 전에 감각 프로필을 보정하고 분석을 안내하는 게 내 역할이야.",
+      "comment": "",
+      "checks": {
+        "fact_confirmed": true,
+        "experience_supported": false,
+        "voice_appropriate": false
+      },
+      "npc_key": "judy",
+      "original_perspective": "체험 전에 감각 프로필을 보정하고 분석을 안내하는 게 내 역할이야.",
+      "final_perspective": "체험 전에 감각 프로필을 보정하고 분석을 안내하는 게 내 역할이야."
+    },
+    {
+      "knowledge_id": "K_PANAM_PANAM_CLAN_FRIENDS",
+      "decision": "accept",
+      "edited_perspective": "미치와 스콜피온은 내가 가까이 지내 온 알데칼도 동료들이야.",
+      "comment": "",
+      "checks": {
+        "fact_confirmed": true,
+        "experience_supported": false,
+        "voice_appropriate": false
+      },
+      "npc_key": "panam",
+      "original_perspective": "미치와 스콜피온은 내가 가까이 지내 온 알데칼도 동료들이야.",
+      "final_perspective": "미치와 스콜피온은 내가 가까이 지내 온 알데칼도 동료들이야."
+    },
+    {
+      "knowledge_id": "K_PANAM_PANAM_CORP_INDEPENDENCE",
+      "decision": "revise",
+      "edited_perspective": "우리 패밀리가 기업에 기대는 건 반대야. 그런데 사울은 나랑 생각이 다른거 같더라.",
+      "comment": "클랜이라는 단어 안씀 / 말투",
+      "checks": {
+        "fact_confirmed": true,
+        "experience_supported": false,
+        "voice_appropriate": false
+      },
+      "npc_key": "panam",
+      "original_perspective": "클랜이 기업에 기대는 건 반대야. 그 문제로 사울과 의견이 달랐어.",
+      "final_perspective": "우리 패밀리가 기업에 기대는 건 반대야. 그런데 사울은 나랑 생각이 다른거 같더라."
+    },
+    {
+      "knowledge_id": "K_PANAM_PANAM_CARGO_EXPERIENCE",
+      "decision": "revise",
+      "edited_perspective": "미치랑 화물을 나른 적은 있지.",
+      "comment": "말투가 너무 딱딱함",
+      "checks": {
+        "fact_confirmed": false,
+        "experience_supported": false,
+        "voice_appropriate": false
+      },
+      "npc_key": "panam",
+      "original_perspective": "미치와 도시 사이의 화물을 운반한 경험은 있어.",
+      "final_perspective": "미치랑 화물을 나른 적은 있지."
+    }
+  ]
+}
