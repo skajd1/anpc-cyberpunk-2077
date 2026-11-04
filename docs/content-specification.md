@@ -1,6 +1,6 @@
 # 콘텐츠 데이터 규격
 
-규격 버전: 0.8 (2026-10-15). 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
+규격 버전: 0.9. 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
 
 신규 성격은 [Big Five 규격](personality-specification.md). 기존 identity/군중 세 슬롯은 호환 입력이며 신규 성격과 동시 적용·자동 환산 금지. 구현 상태: [개발·검증 계획](development-validation.md).
 
@@ -142,7 +142,7 @@ compatibility_rules는 금지 trait_id 집합+조건. 작성 갈등 해소 기�
 
 ### 4.1. 인물별 분야와 지식 깊이
 
-knowledge_profile: version, default_depth, exposure_background, domains, response_rules.
+knowledge_profile: version(현재 1.1), default_depth, exposure_background, domains, response_rules.
 
 exposure_background: 출처 배경·생활/업무 맥락·evidence_refs·provenance. domains 항목: domain_id, depth, basis, evidence_refs, rationale, review_status.
 
@@ -159,6 +159,8 @@ basis: source_role(확인 역할), authored_candidate(작성 후보), unverified
 미등록 default_depth=unknown. required_depth는 unknown 제외. 승인 분야 상한 ≥ required_depth일 때만 제공. 높은 사실을 낮은 수준으로 재표시 금지. 이름 인지는 별도 awareness 진술 작성.
 
 certainty=확실성, depth=설명 범위, disclosure=공개. unknown은 근거 부족, unaware는 확인된 무지. 배분/갱신은 NPC 지식 규격.
+
+이 깊이는 원래 보유한 작성 지식의 선별 상한이다. 플레이어가 전한 설명을 대화에서 받아들여 이해·추론하는 정책은 [NPC 지식 규격](npc-knowledge-specification.md#62-플레이어가-전한-정보의-수용)을 따르며, 수용만으로 domains·knowledge_ids·전문 경력을 변경하지 않는다.
 
 ## 5. 반응 규칙과 대사 예시
 

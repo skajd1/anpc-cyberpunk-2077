@@ -37,7 +37,7 @@ export function withTestCrowds(bundle, personas) {
     background: { summary: p.background.text }, lived_context: { occupation: p.current_goals.join(' · ') },
     identity_anchor: { core_values: p.identity.beliefs, hard_limits: p.identity.taboos }, identity_rules: [],
     knowledge_ids: [], example_ids: [], knowledge_profile: { domains: ['city_life', 'public_figures'].map(domain_id => ({ domain_id, depth: 'familiar' })),
-      response_rules: ['공개 개요만 알고 직접 만남·전문 경험·비밀을 만들어내지 않는다.'] }
+      response_rules: ['보유 지식은 공개 개요 수준이며 플레이어가 전한 타당한 설명으로 대화·추론을 이어갈 수 있다. 직접 만남·전문 경험·비밀을 새로 만들지 않는다.'] }
   }));
   for (const card of crowds) for (const fact of common) {
     const id = `K_${card.character_key.toUpperCase()}_${fact.id}`;

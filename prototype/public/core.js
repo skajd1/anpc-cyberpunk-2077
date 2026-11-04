@@ -1,7 +1,7 @@
 import { selectReadings } from './speech.js';
 import { validateCorePersonality, personalityInstructions, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
 import { AMM_MOTIONS } from './motions.js';
-export const PROMPT_VERSION = '0.25';
+export const PROMPT_VERSION = '0.26';
 export const INTENTS = ['answer', 'ask', 'refuse', 'warn', 'farewell'];
 export const EMOTIONS = ['neutral', 'friendly', 'wary', 'annoyed', 'afraid', 'sad', 'curious'];
 // 음성 활성 응답의 말 빠르기. 세부 규칙은 docs/npc-voice-output-specification.md 2절.

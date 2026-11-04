@@ -211,7 +211,7 @@ test('별칭 선별은 영문 부분 일치를 막고 BD의 한국어 조사를 
 test('인지 체크·카드만 구성·직업 배경으로 분야 상한과 누락한 사실을 우회하지 않는다', () => {
   for (const configuration of ['card','knowledge','full']) {
     const result=compileResearchTurn({bundle,npcKey:'panam',settings:{...config('panam'),configuration},context,playerText:'BD 제작 과정을 설명해줘'});
-    assert.ok(result.persona.knowledge_profile.response_rules.some(r=>r.includes('사전 지식')));
+    assert.deepEqual(result.persona.knowledge_profile.response_rules,bundle.cards.find(c=>c.character_key==='panam').knowledge_profile.response_rules);
     assert.ok(!result.context.knowledge.some(k=>k.fact_id==='BD_EDITING'));
     assert.equal(result.context.common_knowledge.length>0, configuration!=='card');
     assert.ok(!result.context.knowledge.some(k=>k.domain_id==='braindance'));

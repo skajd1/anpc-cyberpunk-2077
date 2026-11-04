@@ -90,7 +90,7 @@ for(const c of cards){
   check(typeof c.presentation.role==='string'&&c.presentation.role.trim().length>0,'표시 역할 오류: '+c.id);
  }
  const profile=c.knowledge_profile;
- check(profile?.version==='1.0'&&profile.default_depth==='unknown','인지 프로필 누락: '+c.id);
+ check(profile?.version==='1.1'&&profile.default_depth==='unknown','인지 프로필 누락·버전 오류: '+c.id);
  const domains=profile?.domains??[];
  check(domains.length>0&&new Set(domains.map(d=>d.domain_id)).size===domains.length,'인지 분야 누락·중복: '+c.id);
  for(const d of domains){

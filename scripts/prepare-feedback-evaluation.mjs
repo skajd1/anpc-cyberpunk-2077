@@ -19,7 +19,7 @@ export async function captureFeedbackRequests({ suitePath = new URL('../content/
     const prepared = compileResearchTurn({ bundle, npcKey: item.npc_key, playerText: item.player_input,
       settings: { allowDraft: true, configuration: suite.configuration, alive: true, free: true, basicKnowledge: true,
         relationshipStage: item.relationship_stage, relicKnown: false, relicDisclosed: false },
-      context: { observations: {}, recent_turns: item.history, memory: null, last_action_result: null } });
+      context: { observations: {}, recent_turns: item.history, memory: item.memory ?? null, last_action_result: null } });
     const prompt = assemblePrompt(base, prepared.persona, prepared.context, item.player_input,
       { ...prepared, voice: true, voiceOrder: suite.voice_order });
     const selected = prepared.context.knowledge;

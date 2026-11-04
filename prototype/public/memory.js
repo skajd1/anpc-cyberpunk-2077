@@ -26,8 +26,8 @@ export async function makeSummaryInput(events) {
     at: { session_id: e.session_id ?? null, sequence, game_time: null, recorded_at_utc: null }, payload: { text: e.text } }));
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(source_events)));
   return { source_events, existing_relevant_memories: [], source_digest: [...new Uint8Array(digest)].map(v => v.toString(16).padStart(2, '0')).join(''),
-    policy_version: 'session-memory-1.0', summarizer_version: 'session-summary-1.0',
-    local_constraints: ['한 세션의 전체 대화를 한 문장 정도로 정리', '대화 내용이며 게임 사실·인물 지식·원작 관계의 근거가 아님', '복장 관찰을 별도 보존하지 않음'] };
+    policy_version: 'session-memory-1.1', summarizer_version: 'session-summary-1.1',
+    local_constraints: ['한 세션의 전체 대화를 한 문장 정도로 정리', '설명받은 내용과 수용·유보를 출처와 함께 남겨 다음 대화에 활용', '대화 내용을 확인된 게임 사실·자기 목격·원래 보유한 전문성·원작 관계로 바꾸지 않음', '복장 관찰을 별도 보존하지 않음'] };
 }
 export class TestMemory {
   constructor() { this.records = []; this.generation = 0; this.pending = null; this.status = 'ready'; this.lastUsage = null; }

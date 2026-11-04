@@ -146,7 +146,7 @@ local function makeCrowd(request)
     lived_context={background_bounds={allowed=archetype.background_bounds.allowed,prohibited=archetype.background_bounds.prohibited}},
     forbidden_claims=archetype.background_bounds.prohibited,identity_rules=archetype.identity_rules,goals=A(),relationship_stages=A(),
     speech_rules=style.speech_rules,
-    knowledge_profile={default_depth="unknown",domains=A(),response_rules=A({"부여된 사실의 개요만 사용하며 직접 경험·전문 절차·사적 관계는 만들지 않는다."})},
+    knowledge_profile={default_depth="unknown",domains=A(),response_rules=A({"부여된 보유 지식은 개요 수준이며 플레이어가 전한 타당한 설명을 대화·추론에 활용할 수 있다. 직접 경험·전문 자격·사적 관계는 새로 만들지 않는다."})},
     knowledge_ids=A(),example_ids=archetype.example_ids,fallback_lines=archetype.fallback_lines,everyday_fiction_policy=archetype.everyday_fiction_policy}
   local required,optional={},{}
   local bundles={common=true}
