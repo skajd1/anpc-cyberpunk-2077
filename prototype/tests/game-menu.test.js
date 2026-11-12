@@ -9,20 +9,20 @@ function body(source,name){
   const m=new RegExp('(?:public|private|protected) (?:static )?(?:cb )?func '+name+'\\([^)]*\\)(?:\\s*->\\s*[\\w<>]+)?\\s*\\{').exec(source);
   assert.ok(m,name);let level=1,start=m.index+m[0].length,end=start;
   for(;level&&end<source.length;end++){if(source[end]==='{')level++;if(source[end]==='}')level--;}
-  return source.slice(start,end-1).replace(/\blet (\w+): [\w<>]+/g,(_,n)=>'let '+n)
-    .replace(/\bif\s+([^{}]+?)\s*\{/g,'if ($1) {').replace(/\bwhile\s+([^{}]+?)\s*\{/g,'while ($1) {').replace(/n"([^"]+)"/g,'"$1"');
+  return source.slice(start,end-1).replace(/\blet (\w+): array<[\w<>]+>;/g,'let $1=[];').replace(/\blet (\w+): [\w<>]+/g,(_,n)=>'let '+n)
+    .replace(/\bif\s+([^{}]+?)\s*\{/g,'if ($1) {').replace(/\bwhile\s+([^{}]+?)\s*\{/g,'while ($1) {').replace(/Cast<\w+>\(/g,'Number(').replace(/(?<![\\\w])n"([^"]+)"/g,'"$1"');
 }
 function compile(source,name,args,env){return new Function(...Object.keys(env),...args,body(source,name)).bind(null,...Object.values(env));}
 function fixture(){
-  const runtime={inMenu:false,time:0,events:[],opened:[],ended:[],timers:[],delayed:[],requests:0,messages:[]};
+  const runtime={shown:[],hidden:[],inMenu:false,time:0,events:[],opened:[],ended:[],timers:[],delayed:[],requests:0,messages:[]};
   const makeActor=id=>({id,attached:true,dead:false,combat:false,mounted:false,workspot:false,IsAttached(){return this.attached;},IsDead(){return this.dead;},IsInCombat(){return this.combat;},GetWorldPosition(){return 0;},
     GetGame(){return runtime;},GetEntityID(){return this.id;},GetPlayerStateMachineBlackboard(){return {GetInt(){return runtime.tier??0;}};}});
   const npc=makeActor('npc'),player=makeActor('player');
-  const session={epoch:1,npc,player,pendingRequest:-1,holdHubId:-1,hangulMode:true,inputDraft:'',inputDraftCaret:0,menuSuspended:false};
-  const entry={session,epoch:1,uiController:{},outbox:[],worldToken:'w1',GetGameInstance(){return runtime;},NextSubtitleId(){return 123;},
+  const session={epoch:1,npc,player,pendingRequest:-1,holdHubId:-1,hangulMode:true,inputDraft:'',inputDraftCaret:0,menuSuspended:false,name:'빅터',subtitles:[],history:[],segments:[],segmentSeconds:[],segmentIndex:0,segmentGen:0};
+  const entry={session,epoch:1,uiController:{},outbox:[],worldToken:'w1',GetGameInstance(){return runtime;},NextSubtitleId(){return this.subtitleSeq=(this.subtitleSeq??0)+1;},
     EndSession(s,reason){runtime.ended.push(reason);if(this.session===s)this.session=null;},
     ScheduleSubtitle(game,kind,id,delay){runtime.timers.push({kind,id,delay,session:this.session,epoch:this.epoch});},
-    HideSubtitles(){},OnAIResponse(id,status){runtime.responses??=[];runtime.responses.push({id,status});},ScheduleWatch(){}};
+    OnAIResponse(id,status){runtime.responses??=[];runtime.responses.push({id,status});},ScheduleWatch(){}};
   const defs={UI_System:{IsInMenu:'isInMenu'},MenuEventBlackboard:{MenuEventToTrigger:'menuEvent'},PlayerStateMachine:{HighLevel:'highLevel'}};
   const scene={IsEntityInScene:id=>runtime.inScene?.includes(id)??false,IsEntityInDialogue:id=>runtime.inDialogue?.includes(id)??false};
   const bb={GetBool(){return runtime.inMenu;},SetName(key,value){runtime.events.push(value);}};
@@ -30,29 +30,34 @@ function fixture(){
     EngineTime:{ToFloat:v=>v},GameInstance:{GetSimTime:()=>runtime.time,GetBlackboardSystem:()=>({Get:()=>bb}),GetQuestsSystem:()=>({GetFact:key=>runtime[key]??0}),GetSceneSystem:()=>({GetScriptInterface:()=>scene}),GetWorkspotSystem:()=>({IsActorInWorkspot:a=>a.workspot}),GetDelaySystem:()=>({DelayCallback:(callback,delay)=>runtime.delayed.push({callback,delay})})},
     GetAllBlackboardDefs:()=>defs,Vector4:{Distance:()=>0},Entry:{LeaveDistance:()=>6,ShowMessage:(game,text)=>runtime.messages.push(text)},NPCPuppet:{IsInCombat:a=>a.combat},
     SceneEntry:{NativeHubs:()=>({choiceHubs:[{id:1}]})},ArraySize:a=>a.length,
-    AnpcSubtitleCallback:{Hide:()=>0,Reopen:()=>2,Watch:()=>3,Timeout:()=>4,EndAfter:()=>5,ResumeMenu:()=>6},
+    AnpcSubtitleCallback:Object.assign(class{},{Hide:()=>0,Reopen:()=>2,Watch:()=>3,Timeout:()=>4,EndAfter:()=>5,ResumeMenu:()=>6,Segment:()=>7}),
+    MinF:Math.min,MaxF:Math.max,MinI:Math.min,MaxI:Math.max,ArrayClear:a=>{a.length=0;},ArrayErase:(a,i)=>a.splice(i,1),ArraySize:a=>a.length,
+    AnpcSubtitles:{Show(game,id,speaker,name,text,duration,persistent){runtime.shown.push({id,name,text,duration,persistent});},Hide(game,id){runtime.hidden.push(id);}},
     GetMountedVehicle:a=>a.mounted?{}:null,StrBeginsWith:(a,b)=>a.startsWith(b),StrAfterFirst:(a,b)=>a.slice(a.indexOf(b)+b.length),StrLen:a=>a.length,ArrayPush:(a,v)=>a.push(v),AnpcRequest:class{},SceneEntryInstaller:{Get:()=>null},
     GameMenu:{},ChatPopup:{Create(e,mode,text,caret){runtime.opened.push({mode,text,caret});return {Open(){}};}}};
   for(const [name,args]of [['IsOpen',['game']],['Request',['game']]])env.GameMenu[name]=compile(menuSource,name,args,env);
   env.Entry.FailureMessage=compile(entrySource,'FailureMessage',['status'],env);
   env.Entry.IdleSeconds=compile(entrySource,'IdleSeconds',[],env);
+  env.Entry.HistoryWindow=compile(entrySource,'HistoryWindow',[],env);
   env.UTF8StrMid=(t,i,n)=>[...t].slice(i,i+n).join('');env.ToString=String;env.StrContains=(a,b)=>a.includes(b);
   // UF-19/20 제출 검사 본문도 제품 소스(Session.reds)를 그대로 실행한다.
   env.AnpcInput={};
   for(const [name,args]of [['MaxChars',[]],['CharCount',['text']],['IsSpace',['c']],['IsBlank',['text']],['Check',['text']],['Notice',['reason','text']]])env.AnpcInput[name]=compile(popupSource,name,args,env);
   env.ChatPopup.HintText=compile(popupSource,'HintText',[],env);
+  for(const [name,args]of [['Duration',['text']],['SegmentChars',[]],['HistoryChars',[]],['IsSentenceEnd',['text','index']],['BreakAt',['text','start','limit']],['Split',['text','limit']]])env.AnpcSubtitles[name]=compile(popupSource,name,args,env);
   // 별도 메뉴 규칙을 복제하지 않고 제품 메서드 본문을 모의 엔진에서 실행한다.
-  for(const [name,args]of [['PrepareGameMenu',[]],['OpenGameMenu',['popup']],['QueueMenuResume',['session']],['OnChatMenuChanged',['inMenu']],['OpenInput',['session']],['SessionEndReason',['session']],['ProtectedReason',['session']],['QueueCancel',['session','requestId']],['CancelPending',['session']],['OnEscape',[]],['OnAIResponse',['requestId','status','text']],['IsWaitingForReply',['requestId']],['OnSubtitleTimer',['callback']],['OnChatClosed',['popup']],['IsChatMenuOpen',[]],['NoteActivity',[]],['IdleReason',['session']]]){
+  for(const [name,args]of [['PrepareGameMenu',[]],['OpenGameMenu',['popup']],['QueueMenuResume',['session']],['OnChatMenuChanged',['inMenu']],['OpenInput',['session']],['SessionEndReason',['session']],['ProtectedReason',['session']],['QueueCancel',['session','requestId']],['CancelPending',['session']],['OnEscape',[]],['OnAIResponse',['requestId','status','text']],['IsWaitingForReply',['requestId']],['OnSubtitleTimer',['callback']],['OnChatClosed',['popup']],['IsChatMenuOpen',[]],['NoteActivity',[]],['IdleReason',['session']],['HideSubtitles',['session']],['HideShown',['session']],['PresentLine',['session','npc','text','status','voiceSeconds']],['ShowNextSegment',['session']],['AddHistory',['session','speaker','text']],['GetHistoryCount',[]],['GetHistoryText',['back']],['OnAIVoiceResponse',['requestId','status','text','voiceSeconds']]]){
     const run=new Function(...Object.keys(env),...args,body(entrySource,name));entry[name]=function(...values){return run.call(this,...Object.values(env),...values);};
   }
   entry.SubmitChat=text=>{runtime.submitted=text;};
   const popup={entry,closing:false,held:[],pendingClose:false,pendingText:'',submitted:false,GetGame:()=>runtime,
+    history:{text:'',SetText(t){this.text=t;}},historyBack:0,
     hint:{text:'기본',opacity:0.7,SetText(t){this.text=t;},SetOpacity(o){this.opacity=o;}},noticeShown:false,
     input:{text:'안녕하세요',composing:'',caret:3,FinishComposition(){runtime.finished=true;this.text+=this.composing;this.composing='';},GetText(){return this.text;},GetCaretPosition(){return this.caret;},Clear(){this.text='';}},
     IsHangulMode:()=>false,Close(){this.closing=true;runtime.closes=(runtime.closes??0)+1;entry.OnChatClosed(this);},WasSubmitted(){return this.submitted;}};
-  const keyEnv={...env,EInputAction:{IACT_Release:'release',IACT_Press:'press'},EInputKey:{IK_Tab:'tab',IK_Enter:'enter',IK_Escape:'escape'},
+  const keyEnv={...env,EInputAction:{IACT_Release:'release',IACT_Press:'press'},EInputKey:{IK_Tab:'tab',IK_Enter:'enter',IK_Escape:'escape',IK_PageUp:'pageup',IK_PageDown:'pagedown'},
     StrLen:s=>s.length,ArrayContains:(a,v)=>a.includes(v),ArrayPush:(a,v)=>a.push(v),ArrayRemove:(a,v)=>{const i=a.indexOf(v);if(i>=0)a.splice(i,1);},ChatCloseTimeout:class{}};
-  for(const [name,args]of [['GetDraft',[]],['GetDraftCaret',[]],['OnChatKey',['event']],['RequestClose',['text']],['FinishClose',[]],['ShowNotice',['text']],['ClearNotice',[]]]){
+  for(const [name,args]of [['GetDraft',[]],['GetDraftCaret',[]],['OnChatKey',['event']],['RequestClose',['text']],['FinishClose',[]],['ShowNotice',['text']],['ClearNotice',[]],['ScrollHistory',['delta']],['RefreshHistory',[]]]){
     const run=new Function(...Object.keys(keyEnv),...args,body(popupSource,name));popup[name]=function(...values){return run.call(this,...Object.values(keyEnv),...values);};
   }
   session.popup=popup;
@@ -226,7 +231,7 @@ test('UF-19 공백만/빈 입력은 전송하지 않고 입력을 유지하며 �
     assert.equal(f.runtime.ended.length,0);assert.equal(f.runtime.delayed.length,0);
     assert.match(f.popup.hint.text,/내용을 입력/);assert.equal(f.popup.hint.opacity,1);
     // 다음 키 입력에서 기본 안내로 돌아간다.
-    f.press('a',{},'press');assert.equal(f.popup.hint.text,'Enter 보내기 · Esc 종료 · Tab 캐릭터/인벤토리 · 한/영 또는 Shift+Space 전환');assert.equal(f.popup.hint.opacity,0.7);
+    f.press('a',{},'press');assert.equal(f.popup.hint.text,f.env.ChatPopup.HintText());assert.equal(f.popup.hint.opacity,0.7);
   }
   // 공백이 섞인 실제 글자는 그대로 전송한다(앞뒤 공백을 임의로 바꾸지 않는다).
   const g=fixture();g.popup.input.text='  안녕  ';g.press('enter');assert.equal(g.runtime.submitted,'  안녕  ');
@@ -258,8 +263,8 @@ test('UF-19/20 조합 중인 글자는 Enter에서 확정한 뒤 검사·전송�
 
 test('UF-19/20 입력칸을 거치지 않는 직접 제출도 같은 검사를 통과해야 한다',()=>{
   const submitFor=g=>{
-    const env={...g.env,AnpcSubtitleCallback:Object.assign(class{},g.env.AnpcSubtitleCallback),SceneEntryInstaller:{Get:()=>null},
-      AnpcSubtitles:{Show(){}},GameContext:{Collect:()=>({npcIdentity:null})},GetLocalizedText:t=>t,AnpcRequest:class{}};
+    const env={...g.env,SceneEntryInstaller:{Get:()=>null},
+      GameContext:{Collect:()=>({npcIdentity:null})},GetLocalizedText:t=>t,AnpcRequest:class{}};
     const run=new Function(...Object.keys(env),'text',body(entrySource,'SubmitChat'));
     g.session.popup=null;g.session.subtitles=[];g.entry.outbox=[];g.entry.requestSeq=0;
     return text=>run.call(g.entry,...Object.values(env),text);
@@ -297,4 +302,99 @@ test('UF-31 active 유휴 60초는 입력/UI 활동 기준이며 응답 대기·
   f.runtime.time=118;watch(f);assert.equal(f.runtime.ended.length,0);f.runtime.time=120;watch(f);assert.deepEqual(f.runtime.ended,['session_idle']);
   f=fixture();f.session.lastActivity=0;f.runtime.time=40;
   assert.equal(f.entry.IdleReason(f.session),'');f.runtime.time=61;assert.equal(f.entry.IdleReason(f.session),'session_idle');
+});
+
+test('UF-26 긴 대사는 같은 발화 순서로 나뉘고 글자·순서를 보존한다',()=>{
+  const {env}=fixture();const split=(t,n=60)=>env.AnpcSubtitles.Split(t,n);
+  assert.deepEqual(split('짧은 대사야.'),['짧은 대사야.']);
+  assert.deepEqual(split('가'.repeat(60)),['가'.repeat(60)],'경계: 정확히 한도는 한 조각');
+  assert.deepEqual(split('가'.repeat(61)),['가'.repeat(60),'가']);
+  // 공백·문장 끝이 없으면 한도에서 자른다.
+  assert.deepEqual(split('나'.repeat(130)),['나'.repeat(60),'나'.repeat(60),'나'.repeat(10)]);
+  // 문장 끝을 우선한다.
+  const long='첫 번째 문장은 이렇게 길게 이어진다고 해보자. 두 번째 문장은 조금 더 길게 이어지고 있다고 하자! 세 번째 문장도 마지막까지 나와야 한다… 네 번째 문장은 그다음에 이어서 계속 말하고 있는 중이다. 끝.';
+  const parts=split(long);
+  assert.ok(parts.length>=2);for(const part of parts){assert.ok([...part].length<=60,part);assert.ok(part===part.trim(),'앞뒤 공백 없음');}
+  assert.equal(parts.join(' ').replace(/\s+/g,''),long.replace(/\s+/g,''),'순서·내용 보존');
+  assert.match(parts[0],/[.!]$/);
+  // 공백 경계 분할과 영문 소수점은 끊지 않는다.
+  const spaced=split('word '.repeat(30).trim());assert.ok(spaced.every(p=>[...p].length<=60)&&spaced.join(' ')==='word '.repeat(30).trim());
+  assert.equal(split('3.5'+'가'.repeat(70))[0].includes('3.5'),true);
+  assert.equal(env.AnpcSubtitles.Duration('가'),3);assert.equal(env.AnpcSubtitles.Duration('가'.repeat(200)),10);
+});
+
+test('UF-26 수용된 대사는 조각을 차례로 표시하고 마지막 조각은 다음 대사·종료까지 유지한다',()=>{
+  const f=fixture();f.session.popup=null;f.session.pendingRequest=5;f.session.latestRequest=5;
+  const long='첫 문장은 충분히 길어서 한 자막에 다 담기지 않는다. 둘째 문장도 이어서 말한다. 셋째 문장은 마지막으로 이어서 나온다.';
+  f.entry.OnAIResponse(5,'ok',long);
+  const segments=[...f.session.segments];assert.ok(segments.length>=2);
+  assert.equal(f.runtime.shown.length,1);assert.equal(f.runtime.shown[0].text,segments[0]);assert.equal(f.runtime.shown[0].persistent,false);
+  assert.equal(f.runtime.shown[0].duration,f.session.segmentSeconds[0]);
+  const segmentTimers=()=>f.runtime.delayed.filter(d=>d.callback.kind===7);
+  assert.equal(segmentTimers().length,1);assert.equal(segmentTimers()[0].delay,f.session.segmentSeconds[0]);
+  // 조각 타이머가 순서대로 다음 조각을 표시하고 앞 조각은 내린다.
+  let fired=0;
+  while(segmentTimers().length>fired){
+    const timer=segmentTimers()[fired++];f.entry.OnSubtitleTimer(timer.callback);
+  }
+  assert.deepEqual(f.runtime.shown.map(s=>s.text),segments);
+  assert.deepEqual(f.runtime.shown.map(s=>s.persistent),segments.map((_,i)=>i===segments.length-1),'마지막 조각만 유지');
+  assert.equal(f.runtime.hidden.length,segments.length-1,'앞 조각만 내림');
+  // 입력 재개(Reopen)는 전체 표시 시간 뒤에 한 번, Hide 타이머는 없다.
+  const total=f.session.segmentSeconds.reduce((a,b)=>a+b,0);
+  const reopen=f.runtime.timers.filter(t=>t.kind===2);assert.equal(reopen.length,1);assert.ok(Math.abs(reopen[0].delay-(total+0.3))<1e-9);
+  assert.equal(f.runtime.timers.filter(t=>t.kind===0).length,0);
+  // 새 입력(HideSubtitles)은 마지막 조각을 내리고 남은 조각 타이머를 무효화한다.
+  const g=fixture();g.session.popup=null;g.session.pendingRequest=6;g.entry.OnAIResponse(6,'ok',long);
+  const staleTimer=g.runtime.delayed.find(d=>d.callback.kind===7).callback;
+  g.entry.HideSubtitles(g.session);g.entry.OnSubtitleTimer(staleTimer);
+  assert.equal(g.runtime.shown.length,1,'폐기된 조각은 표시하지 않는다');
+  // 짧은 대사는 한 조각이며 자체 숨김 타이머 없이 유지된다.
+  const h=fixture();h.session.popup=null;h.session.pendingRequest=7;h.entry.OnAIResponse(7,'ok','괜찮아.');
+  assert.equal(h.runtime.shown.length,1);assert.equal(h.runtime.shown[0].persistent,true);assert.equal(h.runtime.hidden.length,0);
+  assert.equal(h.runtime.delayed.filter(d=>d.callback.kind===7).length,0);
+  // 종료 대사는 표시가 끝난 뒤 종료로 이어진다.
+  const e=fixture();e.session.popup=null;e.session.pendingRequest=8;e.entry.OnAIResponse(8,'ok:end','그럼 이만.');
+  assert.ok(e.runtime.timers.some(t=>t.kind===5));
+});
+
+test('UF-26 음성 응답은 표시 시간을 음성 길이 이상으로 늘리고 조각 길이에 비례해 나눈다',()=>{
+  const f=fixture();f.session.popup=null;f.session.pendingRequest=9;
+  const long='첫 문장은 충분히 길어서 한 자막에 다 담기지 않는다. 둘째 문장도 이어서 말한다. 셋째 문장은 마지막으로 이어서 나온다.';
+  f.entry.OnAIVoiceResponse(9,'ok',long,25);
+  const total=f.session.segmentSeconds.reduce((a,b)=>a+b,0);assert.ok(Math.abs(total-25.3)<1e-9,String(total));
+  f.entry.OnAIVoiceResponse(9,'ok',long,60);
+  const g=fixture();g.session.popup=null;g.session.pendingRequest=10;g.entry.OnAIVoiceResponse(10,'ok',long,60);
+  assert.ok(Math.abs(g.session.segmentSeconds.reduce((a,b)=>a+b,0)-30)<1e-9,'최대 30초');
+});
+
+test('UF-26 활성 세션의 확정 발화를 순서대로 기록하고 열람한다(폐기 응답·오류 제외)',()=>{
+  const f=fixture();f.session.popup=null;
+  f.entry.AddHistory(f.session,'V','안녕');
+  f.session.pendingRequest=1;f.entry.OnAIResponse(1,'ok','어서 와.');
+  f.session.pendingRequest=2;f.entry.OnAIResponse(2,'error:timeout','');
+  f.entry.AddHistory(f.session,'V','한 가지 물어볼게. '+'길게 '.repeat(120));
+  f.session.pendingRequest=3;f.entry.OnAIResponse(3,'ok','그래, 말해봐.');
+  const lines=f.session.history;
+  assert.equal(lines[0],'V: 안녕');assert.equal(lines[1],'빅터: 어서 와.');
+  assert.ok(lines.every(l=>[...l].length<=4+56+4),'표시 줄 길이 상한');
+  assert.equal(lines.at(-1),'빅터: 그래, 말해봐.');assert.ok(!lines.some(l=>l.includes('timeout')));
+  assert.ok(lines.some(l=>l.startsWith('    ')),'긴 발화의 이어지는 줄은 들여쓴다');
+  // 창은 최신 6줄이며 뒤로 올라가면 과거 줄을 본다.
+  const count=f.entry.GetHistoryCount();assert.ok(count>6);
+  assert.equal(f.entry.GetHistoryText(0).split('\n').length,6);assert.ok(f.entry.GetHistoryText(0).endsWith('빅터: 그래, 말해봐.'));
+  assert.equal(f.entry.GetHistoryText(count-6).split('\n')[0],'V: 안녕');
+  // 입력칸에서 PgUp/PgDn으로 3줄씩 넘기고 범위를 벗어나지 않는다.
+  f.press('pageup');assert.equal(f.popup.historyBack,3);assert.equal(f.popup.history.text,f.entry.GetHistoryText(3));
+  for(let i=0;i<20;i++)f.press('pageup');assert.equal(f.popup.historyBack,count-6);
+  for(let i=0;i<20;i++)f.press('pagedown');assert.equal(f.popup.historyBack,0);assert.equal(f.popup.history.text,f.entry.GetHistoryText(0));
+  // 세션이 없으면 기록을 노출하지 않는다.
+  f.entry.session=null;assert.equal(f.entry.GetHistoryText(0),'');assert.equal(f.entry.GetHistoryCount(),0);
+});
+
+test('UF-26/SR-11 세션 정리 경로(종료·재설정)는 유지형 자막을 내린다',()=>{
+  assert.match(body(entrySource,'EndSession'),/this\.HideSubtitles\(session\)/);
+  assert.match(body(entrySource,'Reset'),/this\.HideSubtitles\(this\.session\)/);
+  const f=fixture();f.session.popup=null;f.session.pendingRequest=1;f.entry.OnAIResponse(1,'ok','괜찮아.');
+  assert.equal(f.runtime.hidden.length,0);f.entry.HideSubtitles(f.session);assert.equal(f.runtime.hidden.length,1);assert.equal(f.session.subtitles.length,0);
 });

@@ -68,20 +68,3 @@ public abstract class AnpcAudioware {
   @if(!ModuleExists("Audioware"))
   public static func Stop(game: GameInstance, id: EntityID, slot: Int32) -> Void {}
 }
-
-public abstract class AnpcVoiceSubtitles {
-  public static func Show(game: GameInstance, id: CRUID, speaker: ref<GameObject>, speakerName: String, text: String, duration: Float) -> Void {
-    let line: scnDialogLineData;
-    line.id = id;
-    line.text = text;
-    line.type = scnDialogLineType.Regular;
-    line.speaker = speaker;
-    line.speakerName = speakerName;
-    line.isPersistent = false;
-    line.duration = duration;
-    let lines: array<scnDialogLineData>;
-    ArrayPush(lines, line);
-    GameInstance.GetBlackboardSystem(game).Get(GetAllBlackboardDefs().UIGameData)
-      .SetVariant(GetAllBlackboardDefs().UIGameData.ShowDialogLine, ToVariant(lines), true);
-  }
-}

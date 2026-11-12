@@ -45,21 +45,30 @@ public class ChatSession extends IScriptable {
   public let lastActivity: Float;
   // 현재 표시 중인 ANPC 자막 ID. 세션 종료 시 숨긴다.
   public let subtitles: array<CRUID>;
+  // UF-26: 확정 발화(V 제출·수용된 NPC 대사)를 순서대로 보존한 표시 줄. 활성 세션 동안만 열람하며 세션 종료와 함께 사라진다.
+  public let history: array<String>;
+  // 긴 대사를 순서대로 나눈 자막 조각과 조각별 표시 시간. 마지막 조각은 다음 수용 대사·세션 종료까지 유지한다.
+  public let segments: array<String>;
+  public let segmentSeconds: array<Float>;
+  public let segmentIndex: Int32;
+  // 숨김·새 대사·종료마다 올려 늦은 조각 타이머를 무효화한다.
+  public let segmentGen: Int32;
   // 자유 군중의 정지·시선 제어. 군중이 아니거나 워크스팟 점유면 null. 세션 종료·세계 전환에서 해제한다.
   public let control: ref<NpcControl>;
 }
 
 // 원작 자막 UI(UIGameData.ShowDialogLine/HideDialogLine)로 ANPC 대사를 표시한다.
+// UF-26/runtime 7절: persistent 자막은 다음 수용 대사·세션 종료까지 유지하고 Hide로만 내린다.
 public abstract class AnpcSubtitles {
-  public static func Show(game: GameInstance, id: CRUID, speaker: ref<GameObject>, speakerName: String, text: String) -> Void {
+  public static func Show(game: GameInstance, id: CRUID, speaker: ref<GameObject>, speakerName: String, text: String, duration: Float, persistent: Bool) -> Void {
     let line: scnDialogLineData;
     line.id = id;
     line.text = text;
     line.type = scnDialogLineType.Regular;
     line.speaker = speaker;
     line.speakerName = speakerName;
-    line.isPersistent = false;
-    line.duration = AnpcSubtitles.Duration(text);
+    line.isPersistent = persistent;
+    line.duration = duration;
     let lines: array<scnDialogLineData>;
     ArrayPush(lines, line);
     GameInstance.GetBlackboardSystem(game).Get(GetAllBlackboardDefs().UIGameData)
@@ -73,10 +82,61 @@ public abstract class AnpcSubtitles {
       .SetVariant(GetAllBlackboardDefs().UIGameData.HideDialogLine, ToVariant(ids), true);
   }
 
-  // 글자 수 기반 표시 시간 3~10초.
+  // 글자 수 기반 읽기 시간 3~10초. 조각 하나가 이 시간 동안 보인 뒤 다음 조각으로 넘어간다.
   public static func Duration(text: String) -> Float {
-    let seconds = 2.0 + 0.08 * Cast<Float>(StrLen(text));
+    let seconds = 2.0 + 0.08 * Cast<Float>(AnpcInput.CharCount(text));
     return MinF(10.0, MaxF(3.0, seconds));
+  }
+
+  // 한 자막 조각의 최대 글자 수와 기록 한 줄의 최대 글자 수.
+  public static func SegmentChars() -> Int32 { return 60; }
+  public static func HistoryChars() -> Int32 { return 56; }
+
+  private static func IsSentenceEnd(text: String, index: Int32) -> Bool {
+    let c = UTF8StrMid(text, index, 1);
+    if Equals(c, "!") || Equals(c, "?") || Equals(c, "…") || Equals(c, "。") || Equals(c, "！") || Equals(c, "？") { return true; }
+    if Equals(c, ".") {
+      let next = UTF8StrMid(text, index + 1, 1);
+      return Equals(next, "") || Equals(next, " ");
+    }
+    return false;
+  }
+
+  // start부터 최대 limit글자 안에서 끊을 끝 위치(제외). 문장 끝을 우선하고 없으면 공백, 둘 다 없으면 limit에서 자른다.
+  // 앞쪽 절반 이내의 끝점은 조각이 너무 짧아지므로 쓰지 않는다.
+  private static func BreakAt(text: String, start: Int32, limit: Int32) -> Int32 {
+    let sentence = -1;
+    let space = -1;
+    let i = 0;
+    while i < limit {
+      if AnpcSubtitles.IsSentenceEnd(text, start + i) { sentence = start + i + 1; }
+      if Equals(UTF8StrMid(text, start + i, 1), " ") { space = start + i + 1; }
+      i += 1;
+    }
+    let half = start + limit / 2;
+    if sentence >= half { return sentence; }
+    if space >= half { return space; }
+    return start + limit;
+  }
+
+  // 긴 대사를 같은 발화 순서로 limit글자 이하 조각으로 나눈다. 글자를 버리거나 순서를 바꾸지 않으며(앞뒤 공백 제외) 짧으면 한 조각이다.
+  public static func Split(text: String, limit: Int32) -> array<String> {
+    let parts: array<String>;
+    let total = AnpcInput.CharCount(text);
+    let start = 0;
+    while total - start > limit {
+      let cut = AnpcSubtitles.BreakAt(text, start, limit);
+      let head = UTF8StrMid(text, start, cut - start);
+      while StrLen(head) > 0 && Equals(UTF8StrMid(head, AnpcInput.CharCount(head) - 1, 1), " ") {
+        head = UTF8StrMid(head, 0, AnpcInput.CharCount(head) - 1);
+      }
+      if StrLen(head) > 0 { ArrayPush(parts, head); }
+      start = cut;
+      while Equals(UTF8StrMid(text, start, 1), " ") { start += 1; }
+    }
+    if total - start > 0 { ArrayPush(parts, UTF8StrMid(text, start, total - start)); }
+    if ArraySize(parts) == 0 { ArrayPush(parts, text); }
+    return parts;
   }
 }
 
@@ -94,6 +154,8 @@ public class AnpcSubtitleCallback extends DelayCallback {
   public static func Timeout() -> Int32 { return 4; }
   public static func EndAfter() -> Int32 { return 5; }
   public static func ResumeMenu() -> Int32 { return 6; }
+  // 긴 대사의 다음 자막 조각 표시(requestId에 조각 세대를 담는다).
+  public static func Segment() -> Int32 { return 7; }
 
   public func Call() -> Void {
     if IsDefined(this.entry) { this.entry.OnSubtitleTimer(this); }
@@ -162,6 +224,9 @@ public class ChatPopup extends InGamePopup {
   private let pendingText: String;
   private let hint: ref<inkText>;
   private let noticeShown: Bool;
+  // UF-26: 활성 세션의 확정 발화 기록 보기. 0이면 최신, 값이 클수록 과거로 올라간 줄 수.
+  private let history: ref<inkText>;
+  private let historyBack: Int32;
 
   public static func Create(entry: ref<Entry>, hangulMode: Bool, opt draft: String, opt caret: Int32) -> ref<ChatPopup> {
     let popup = new ChatPopup();
@@ -172,7 +237,20 @@ public class ChatPopup extends InGamePopup {
     return popup;
   }
 
-  public static func HintText() -> String { return "Enter 보내기 · Esc 종료 · Tab 캐릭터/인벤토리 · 한/영 또는 Shift+Space 전환"; }
+  public static func HintText() -> String { return "Enter 보내기 · Esc 종료 · PgUp/PgDn 대화 기록 · Tab 캐릭터/인벤토리 · 한/영 또는 Shift+Space 전환"; }
+
+  // 기록 줄을 PgUp(과거)/PgDn(최신)으로 3줄씩 넘긴다. 범위를 벗어나지 않는다.
+  private func ScrollHistory(delta: Int32) -> Void {
+    if !IsDefined(this.entry) { return; }
+    let maxBack = MaxI(0, this.entry.GetHistoryCount() - Entry.HistoryWindow());
+    this.historyBack = MinI(maxBack, MaxI(0, this.historyBack + delta));
+    this.RefreshHistory();
+  }
+
+  private func RefreshHistory() -> Void {
+    if !IsDefined(this.history) || !IsDefined(this.entry) { return; }
+    this.history.SetText(this.entry.GetHistoryText(this.historyBack));
+  }
 
   public func WasSubmitted() -> Bool { return this.submitted; }
 
@@ -234,6 +312,19 @@ public class ChatPopup extends InGamePopup {
     column.SetChildMargin(inkMargin(0.0, 0.0, 0.0, 8.0));
     column.Reparent(this.m_container);
 
+    let history = new inkText();
+    history.SetName(n"history");
+    history.SetFontFamily("base\\gameplay\\gui\\fonts\\raj\\raj.inkfontfamily");
+    history.SetFontStyle(n"Regular");
+    history.SetFontSize(22);
+    history.SetHAlign(inkEHorizontalAlign.Left);
+    history.SetFitToContent(true);
+    history.SetOpacity(0.85);
+    history.SetStyle(r"base\\gameplay\\gui\\common\\main_colors.inkstyle");
+    history.BindProperty(n"tintColor", n"MainColors.Red");
+    history.Reparent(column);
+    this.history = history;
+
     let row = new inkHorizontalPanel();
     row.SetName(n"inputRow");
     row.SetHAlign(inkEHorizontalAlign.Center);
@@ -278,6 +369,7 @@ public class ChatPopup extends InGamePopup {
     hint.Reparent(column);
     this.hint = hint;
     this.UpdateMode();
+    this.RefreshHistory();
   }
 
   protected cb func OnInitialize() {
@@ -330,6 +422,8 @@ public class ChatPopup extends InGamePopup {
       if IsDefined(this.entry) { this.entry.OpenGameMenu(this); }
       return;
     }
+    if Equals(key, EInputKey.IK_PageUp) { this.ScrollHistory(3); return; }
+    if Equals(key, EInputKey.IK_PageDown) { this.ScrollHistory(-3); return; }
     if Equals(key, EInputKey.IK_Enter) {
       this.input.FinishComposition();
       let text = this.input.GetText();

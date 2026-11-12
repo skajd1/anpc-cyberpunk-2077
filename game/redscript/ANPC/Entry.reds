@@ -115,6 +115,8 @@ public class Entry extends ScriptableSystem {
     ArrayClear(this.rootChoices);
     if IsDefined(this.session) && IsDefined(this.session.control) { this.session.control.Release(); }
     if IsDefined(this.session) && IsDefined(this.session.popup) { this.session.popup.Close(); }
+    // 로드·재설치·종료에서 유지형 자막이 남지 않게 한다.
+    if IsDefined(this.session) { this.HideSubtitles(this.session); }
     this.session = null;
     this.StopMoveWatch();
     this.crowdNpc = null;
@@ -755,8 +757,10 @@ public class Entry extends ScriptableSystem {
     }
     this.HideSubtitles(session);
     let playerLine = this.NextSubtitleId();
-    AnpcSubtitles.Show(game, playerLine, player, "V", text);
+    // V의 제출 대사는 응답(또는 취소·종료)이 이를 대체할 때까지 유지한다.
+    AnpcSubtitles.Show(game, playerLine, player, "V", text, AnpcSubtitles.Duration(text), true);
     ArrayPush(session.subtitles, playerLine);
+    this.AddHistory(session, "V", text);
     this.requestSeq += 1;
     session.pendingRequest = this.requestSeq;
     session.latestRequest = this.requestSeq;
@@ -812,13 +816,87 @@ public class Entry extends ScriptableSystem {
       this.ScheduleSubtitle(game, AnpcSubtitleCallback.Reopen(), this.NextSubtitleId(), 0.5);
       return;
     }
-    let line = this.NextSubtitleId();
-    AnpcSubtitles.Show(game, line, npc, session.name, text);
-    ArrayPush(session.subtitles, line);
-    let duration = AnpcSubtitles.Duration(text);
-    this.ScheduleSubtitle(game, AnpcSubtitleCallback.Hide(), line, duration);
+    this.PresentLine(session, npc, text, status, 0.0);
+  }
+
+  // UF-26: 수용된 대사를 기록에 남기고 같은 발화 순서로 나눈 자막을 차례로 표시한다. 마지막 조각은 다음 수용 대사·세션 종료까지 유지한다.
+  // voiceSeconds가 있으면(음성 재생) 전체 표시 시간을 음성 길이 이상으로 늘리고 조각 길이에 비례해 나눈다.
+  private func PresentLine(session: ref<ChatSession>, npc: ref<NPCPuppet>, text: String, status: String, voiceSeconds: Float) -> Void {
+    let game = this.GetGameInstance();
+    this.HideSubtitles(session);
+    this.AddHistory(session, session.name, text);
+    session.segments = AnpcSubtitles.Split(text, AnpcSubtitles.SegmentChars());
+    ArrayClear(session.segmentSeconds);
+    let sum = 0.0;
+    let i = 0;
+    while i < ArraySize(session.segments) {
+      sum += AnpcSubtitles.Duration(session.segments[i]);
+      i += 1;
+    }
+    let total = voiceSeconds > 0.0 ? MinF(30.0, MaxF(sum, voiceSeconds + 0.3)) : sum;
+    i = 0;
+    while i < ArraySize(session.segments) {
+      ArrayPush(session.segmentSeconds, total * AnpcSubtitles.Duration(session.segments[i]) / sum);
+      i += 1;
+    }
+    session.segmentIndex = 0;
+    this.ShowNextSegment(session);
     let next = Equals(status, "ok:end") ? AnpcSubtitleCallback.EndAfter() : AnpcSubtitleCallback.Reopen();
-    this.ScheduleSubtitle(game, next, line, duration + 0.3);
+    this.ScheduleSubtitle(game, next, this.NextSubtitleId(), total + 0.3);
+  }
+
+  // 앞 조각을 내리고 다음 조각을 표시한다. 마지막이 아니면 조각 시간 뒤 다음 조각 타이머를 예약한다.
+  private func ShowNextSegment(session: ref<ChatSession>) -> Void {
+    let npc: ref<NPCPuppet> = session.npc;
+    if session.segmentIndex >= ArraySize(session.segments) || !IsDefined(npc) { return; }
+    let game = this.GetGameInstance();
+    this.HideShown(session);
+    let index = session.segmentIndex;
+    session.segmentIndex += 1;
+    let last = session.segmentIndex >= ArraySize(session.segments);
+    let id = this.NextSubtitleId();
+    AnpcSubtitles.Show(game, id, npc, session.name, session.segments[index], session.segmentSeconds[index], last);
+    ArrayPush(session.subtitles, id);
+    if !last {
+      let callback = new AnpcSubtitleCallback();
+      callback.entry = this;
+      callback.kind = AnpcSubtitleCallback.Segment();
+      callback.requestId = session.segmentGen;
+      callback.epoch = this.epoch;
+      callback.session = session;
+      GameInstance.GetDelaySystem(game).DelayCallback(callback, session.segmentSeconds[index], false);
+    }
+  }
+
+  // 확정 발화를 표시 줄로 나눠 순서대로 쌓는다. 첫 줄에만 화자를 붙인다.
+  private func AddHistory(session: ref<ChatSession>, speaker: String, text: String) -> Void {
+    let parts = AnpcSubtitles.Split(text, AnpcSubtitles.HistoryChars());
+    let i = 0;
+    while i < ArraySize(parts) {
+      ArrayPush(session.history, (i == 0 ? speaker + ": " : "    ") + parts[i]);
+      i += 1;
+    }
+  }
+
+  public static func HistoryWindow() -> Int32 { return 6; }
+
+  public func GetHistoryCount() -> Int32 {
+    return IsDefined(this.session) ? ArraySize(this.session.history) : 0;
+  }
+
+  // back줄만큼 과거로 올라간 위치에서 끝나는 HistoryWindow줄. 활성 세션이 없으면 빈 문자열.
+  public func GetHistoryText(back: Int32) -> String {
+    let session = this.session;
+    if !IsDefined(session) { return ""; }
+    let last = ArraySize(session.history) - MaxI(0, back);
+    let first = MaxI(0, last - Entry.HistoryWindow());
+    let text = "";
+    let i = first;
+    while i < last {
+      text += (i > first ? "\n" : "") + session.history[i];
+      i += 1;
+    }
+    return text;
   }
 
   // 실패 응답의 한국어 안내(UF-59: 한도 차단은 사유와 설정 위치를 알려준다).
@@ -853,6 +931,11 @@ public class Entry extends ScriptableSystem {
     }
     let session = this.session;
     if !IsDefined(session) || session != callback.session || callback.epoch != this.epoch { return; }
+    if callback.kind == AnpcSubtitleCallback.Segment() {
+      // 새 대사·취소·종료로 조각 세대가 바뀌었으면 이전 조각을 표시하지 않는다.
+      if callback.requestId == session.segmentGen { this.ShowNextSegment(session); }
+      return;
+    }
     if callback.kind == AnpcSubtitleCallback.ResumeMenu() {
       if !session.menuSuspended || !session.menuResumeScheduled || GameMenu.IsOpen(game) { return; }
       session.menuSuspended = false;
@@ -913,7 +996,16 @@ public class Entry extends ScriptableSystem {
     }
   }
 
+  // 표시 중인 자막을 내린다. 대기 중인 분할 조각도 폐기한다(세대 증가).
   private func HideSubtitles(session: ref<ChatSession>) -> Void {
+    this.HideShown(session);
+    session.segmentGen += 1;
+    ArrayClear(session.segments);
+    ArrayClear(session.segmentSeconds);
+    session.segmentIndex = 0;
+  }
+
+  private func HideShown(session: ref<ChatSession>) -> Void {
     let game = this.GetGameInstance();
     let i = 0;
     while i < ArraySize(session.subtitles) {
@@ -1082,15 +1174,7 @@ public class Entry extends ScriptableSystem {
     if NotEquals(blocked, "") { this.EndSession(session, blocked); return; }
     let diagnostics = SceneEntryInstaller.Get();
     if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status + " voice"); }
-    let game = this.GetGameInstance();
-    this.HideSubtitles(session);
-    let line = this.NextSubtitleId();
-    let duration = MinF(30.0, MaxF(AnpcSubtitles.Duration(text), voiceSeconds + 0.3));
-    AnpcVoiceSubtitles.Show(game, line, npc, session.name, text, duration);
-    ArrayPush(session.subtitles, line);
-    this.ScheduleSubtitle(game, AnpcSubtitleCallback.Hide(), line, duration);
-    let next = Equals(status, "ok:end") ? AnpcSubtitleCallback.EndAfter() : AnpcSubtitleCallback.Reopen();
-    this.ScheduleSubtitle(game, next, line, duration + 0.3);
+    this.PresentLine(session, npc, text, status, voiceSeconds);
   }
 }
 
