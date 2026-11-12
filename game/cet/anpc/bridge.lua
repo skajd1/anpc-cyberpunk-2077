@@ -652,7 +652,8 @@ function bridge.update(delta)
   clock = clock + delta
   local ok = pcall(function()
     local system = entry()
-    if not system then return end
+    -- 로드 화면·메인 메뉴로 Entry가 사라지면 진행 중인 행동 어댑터(워크스팟·도우미 객체)를 정리한다(행동 규격 8절).
+    if not system then actions.cancel("게임 상태 변경");return end
     local scopeOK,scope=pcall(function() return system:GetWorldToken() end)
     if scopeOK and scope and scope~="" then
       if worldToken and worldToken~=scope then bridge.reset(memorySystem()~=nil) end

@@ -410,3 +410,15 @@ latestRequest = 41; waiting = true
 assert(bridge.update(0.3) and responses[#responses].id == 41 and responses[#responses].status == "ok")
 bridge.reset()
 print("요청 취소·시한 만료 시 네이티브 취소·늦은 결과 폐기·재입력 검사 통과")
+
+-- Entry가 사라지는 상태(로드 화면·메인 메뉴)에서는 진행 중인 행동 어댑터를 취소한다(행동 규격 8절).
+do
+  local actionsModule, cancels, savedGet = require("actions"), {}, Game.GetScriptableSystemsContainer
+  local originalCancel = actionsModule.cancel
+  actionsModule.cancel = function(reason) cancels[#cancels + 1] = reason end
+  Game.GetScriptableSystemsContainer = function() return { Get = function() return nil end } end
+  bridge.update(0.3)
+  assert(#cancels == 1 and cancels[1] == "게임 상태 변경", "Entry 소실 시 행동 취소")
+  actionsModule.cancel, Game.GetScriptableSystemsContainer = originalCancel, savedGet
+end
+print("Entry 소실 시 행동 어댑터 취소 검사 통과")

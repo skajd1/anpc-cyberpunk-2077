@@ -69,3 +69,17 @@ test('커뮤니티 허브 진입은 허브가 떠 있는 동안 막힌 조건을
   assert.match(retry,/candidate\.hubId >= 0 \{[\s\S]*RefreshDialogs\(game\)/);
   assert.match(retry,/this\.ScheduleRetry\(player\);/);
 });
+
+test('소멸·해제된 NPC에는 명령을 보내지 않고 참조만 버린다(행동 규격 8절)',()=>{
+  const release=block(control,'public func Release(');
+  assert.ok(release.indexOf('this.npc = null;')<release.indexOf('!npc.IsAttached()'));
+  assert.match(release,/if !IsDefined\(npc\) \|\| !npc\.IsAttached\(\) \{ return; \}\s*NpcControl\.StopCommand/);
+  assert.match(block(control,'public func Maintain('),/!npc\.IsAttached\(\) \|\| npc\.IsDead\(\)/);
+});
+
+test('수치 상수가 행동 규격 3절과 같다',()=>{
+  const spec=readFileSync(new URL('../../docs/npc-action-scope.md',import.meta.url),'utf8');
+  assert.match(spec,/정지 명령 20초, 10초마다 갱신/); assert.match(spec,/12도 이상/); assert.match(spec,/0\.5m 넘게/); assert.match(spec,/최대 8회/);
+  assert.match(control,/HoldSeconds\(\) -> Float \{ return 20\.0; \}/); assert.match(control,/DriftMeters\(\) -> Float \{ return 0\.5; \}/);
+  assert.match(control,/AbsF\(delta\) < 12\.0/); assert.match(control,/this\.attempt >= 8/); assert.match(control,/attempt == 0 \? 0\.2 : 0\.5/);
+});

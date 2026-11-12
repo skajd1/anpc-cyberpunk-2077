@@ -45,7 +45,7 @@ public class NpcControl extends IScriptable {
   // 세션 감시(0.3초)에서 호출한다. 걷기 시작했으면 다시 멈추고, 정지 명령을 갱신하며 V가 움직였다면 다시 바라본다.
   public func Maintain() -> Void {
     let npc: ref<NPCPuppet> = this.npc;
-    if !this.engaged || !IsDefined(npc) || npc.IsDead() { return; }
+    if !this.engaged || !IsDefined(npc) || !npc.IsAttached() || npc.IsDead() { return; }
     // AMM 제스처·원작 반응 등 워크스팟이 몸을 소유하는 동안에는 싸우지 않는다.
     if NpcControl.InWorkspot(npc) { return; }
     let game = npc.GetGame();
@@ -76,7 +76,8 @@ public class NpcControl extends IScriptable {
     let look = this.lookAt;
     this.holdCmd = null;
     this.lookAt = null;
-    if !IsDefined(npc) { return; }
+    // 소멸·해제된 객체에는 호출하지 않고 참조만 폐기한다(행동 규격 8절).
+    if !IsDefined(npc) || !npc.IsAttached() { return; }
     NpcControl.StopCommand(npc, hold);
     if IsDefined(look) { LookAtRemoveEvent.QueueRemoveLookatEvent(npc, look); }
     // 정지 명령을 거두는 것만으로는 30초 넘게 서 있었다. 이 객체가 멈춘 차선 이동만 바로 되돌린다.
