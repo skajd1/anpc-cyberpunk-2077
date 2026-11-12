@@ -10,6 +10,8 @@ local config = {
   allow_draft_content = false,
   -- 제공자 요청 전체 제한 시간. redscript는 40초 뒤 실패로 처리한다.
   timeout_ms = 30000,
+  -- 비용 원장·한도 설정 파일(게임 저장과 독립된 사용자별 로컬 파일, CET 모드 폴더 기준). false면 메모리에만 둔다(시험용).
+  budget_file = "anpc_budget.json",
   -- 한 세션에서 다음 요청에 넣을 최근 발화 수.
   recent_turns = 6,
   -- NPC 일본어 음성(개발 시험). 켜면 음성 출력 스키마를 요청하고 tts/req-<id>.json을 써서 로컬 TTS 보조 프로세스에 넘긴다.

@@ -76,8 +76,10 @@ ImGui = {
   End = function() end,
   Text = function(text) drawn[#drawn + 1] = text end,
   TextWrapped = function(text) drawn[#drawn + 1] = text end,
-  Button = function(label) return pressed == label end
+  Button = function(label) return pressed == label end,
+  InputText = function(_, value) return value end
 }
+require("config").budget_file = false -- 시험이 실제 비용 원장 파일을 만들지 않게 한다.
 local function draw(button)
   pressed, drawn = button, {}
   events.onDraw()
@@ -89,6 +91,8 @@ assert(draw():find("redscript test%-redscript"))
 assert(draw():find("원작 장면 허브 1개 | 선택지 5개", 1, true))
 assert(draw():find("G2 장면 진입: 대화 위젯 표시 전용 허브", 1, true))
 assert(draw():find("G2 장면 진입 진단: decorated=1 lastOffer=test", 1, true))
+assert(draw():find("비용(추정", 1, true) and draw():find("단가 미설정", 1, true))
+assert(draw("비용 설정 적용"):find("적용했습니다", 1, true))
 hubFailed = true
 events.onUpdate(0.25)
 assert(not draw():find("선택지 5개", 1, true))

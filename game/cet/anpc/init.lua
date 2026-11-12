@@ -1,6 +1,7 @@
 local diagnostics = require("diagnostics")
 local bridge = require("bridge")
 local config = require("config")
+local budget = require("budget")
 local version = "0.1.0-g0-g1"
 local overlay, elapsed = false, 0
 local state, pinnedEpoch, mockText
@@ -9,6 +10,7 @@ local entryStatus = "entry_not_selected"
 local sceneEntryStatus
 local status = "초기화 대기"
 local keyInput, keyNotice = "", ""
+local budgetForm, budgetMessage, budgetNotice, budgetNoticeUntil = nil, "", nil, 0
 local cetVersion = "unknown"
 local redscriptVersion = "unknown"
 
@@ -78,7 +80,7 @@ registerForEvent("onInit", function()
   if not ok then print("[ANPC] redscript 버전 조회 실패: " .. tostring(redVersion)) end
 end)
 
-registerForEvent("onOverlayOpen", function() overlay = true; refresh(false) end)
+registerForEvent("onOverlayOpen", function() overlay = true; budgetForm = nil; refresh(false) end)
 registerForEvent("onOverlayClose", function()
   overlay = false
   state, pinnedEpoch, mockText = nil, nil, nil
@@ -105,6 +107,18 @@ registerForEvent("onUpdate", function(delta)
 end)
 
 registerForEvent("onDraw", function()
+  -- 비용 한도 80% 안내는 한 번만 받아 15초 표시한다(비용 규격 6절).
+  local fresh = bridge.budgetNotice()
+  if fresh then budgetNotice, budgetNoticeUntil = fresh, os.time() + 15 end
+  if budgetNotice and os.time() <= budgetNoticeUntil then
+    ImGui.SetNextWindowPos(32, 260, ImGuiCond.Always)
+    ImGui.SetNextWindowSize(420, 0, ImGuiCond.Always)
+    ImGui.SetNextWindowBgAlpha(0.75)
+    local noticeFlags = ImGuiWindowFlags.NoTitleBar + ImGuiWindowFlags.NoResize + ImGuiWindowFlags.NoMove
+      + ImGuiWindowFlags.NoInputs + ImGuiWindowFlags.NoSavedSettings + ImGuiWindowFlags.AlwaysAutoResize
+    if ImGui.Begin("ANPC 비용##anpc_budget_notice", noticeFlags) then ImGui.TextWrapped(budgetNotice) end
+    ImGui.End()
+  end
   local actions = bridge.actionText()
   if actions then
     ImGui.SetNextWindowPos(32, 320, ImGuiCond.Always)
@@ -141,6 +155,27 @@ registerForEvent("onDraw", function()
       ImGui.SameLine()
       if ImGui.Button("키 삭제") then keyNotice = bridge.deleteKey() and "삭제했습니다" or "삭제 실패" end
     end
+    -- 비용 원장·한도(UF-05/59). 값을 비우면 해제하며 한도는 기본 미설정이다. 단가는 사용자가 확인한 값을 넣는다.
+    local sum = budget.summary()
+    ImGui.TextWrapped(string.format("비용(추정 %s): 확정 $%.4f · 미확정+진행 예약 $%.4f · 호출 %d (사용량 불명 %d)",
+      sum.day, sum.settled_usd, sum.unsettled_usd + sum.inflight_usd, sum.calls, sum.unknown_calls))
+    if not sum.priced then ImGui.TextWrapped("단가 미설정: 비용 추정·한도 검사는 단가를 입력해야 동작합니다.") end
+    if sum.unreadable then
+      ImGui.TextWrapped("비용 원장 파일을 읽지 못해 요청을 차단했습니다 (손상본은 .corrupt로 보관). 새 원장으로 시작하면 이전 지출 기록은 복원되지 않습니다.")
+      if ImGui.Button("새 원장으로 시작") then budget.resetUnreadable(); budgetForm = nil end
+    end
+    if sum.persist_failed then ImGui.TextWrapped("비용 원장 파일을 저장하지 못했습니다 (재시작 시 유지되지 않음).") end
+    budgetForm = budgetForm or budget.formValues()
+    for _, field in ipairs(budget.fields) do
+      ImGui.Text(field.label)
+      budgetForm[field.name] = ImGui.InputText("##anpc_budget_" .. field.name, budgetForm[field.name], 24)
+    end
+    if ImGui.Button("비용 설정 적용") then
+      local errors = budget.applyForm(budgetForm)
+      budgetMessage = #errors == 0 and "적용했습니다 (다음 요청부터)" or table.concat(errors, " / ")
+      budgetForm = nil
+    end
+    if budgetMessage ~= "" then ImGui.TextWrapped(budgetMessage) end
     if sceneHubs then
       ImGui.TextWrapped(string.format("원작 장면 허브 %d개 | 선택지 %d개", sceneHubs, sceneChoices))
       if sceneHubs > 0 then

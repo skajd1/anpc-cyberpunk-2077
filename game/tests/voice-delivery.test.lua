@@ -1,6 +1,7 @@
 package.path="game/cet/anpc/?.lua;" .. package.path
 local json,config,prompts=require("json"),require("config"),require("prompts")
 config.voice_enabled=true
+config.budget_file=false -- 시험이 실제 비용 원장 파일을 만들지 않게 한다.
 local option={action_id="play_gesture",execution_mode="execute",candidates=json.array({{ref="amm_wave",meaning="손 흔들기"}}),args={gesture_ref={values=json.array({"amm_wave"})}}}
 prompts.characters.resident.actions=json.encode(json.array({option}))
 local events,started,outcome={},0,nil

@@ -1,6 +1,7 @@
 package.path = "game/cet/anpc/?.lua;" .. package.path
 local bridge = require("bridge")
 require("config").voice_enabled = false
+require("config").budget_file = false -- 시험이 실제 비용 원장 파일을 만들지 않게 한다.
 
 local request = { id = 7, kind = "say", session = 3, npcKey = "viktor", crowd = false, text = '안녕 "빅"\n\\' }
 local encoded = bridge.encode(request, "tok")

@@ -85,6 +85,19 @@ Red::CString ANPCNative_ResultText(int32_t aId)
     return it == gReady.end() ? Red::CString("") : Red::CString(it->second.text.c_str());
 }
 
+// 제공자 응답의 usage 토큰. 제공되지 않았거나 알 수 없는 요청은 -1이며 비용 원장은 이를 미확정으로 둔다.
+int32_t ANPCNative_ResultInputTokens(int32_t aId)
+{
+    const auto it = gReady.find(aId);
+    return it == gReady.end() ? -1 : it->second.inputTokens;
+}
+
+int32_t ANPCNative_ResultOutputTokens(int32_t aId)
+{
+    const auto it = gReady.find(aId);
+    return it == gReady.end() ? -1 : it->second.outputTokens;
+}
+
 void ANPCNative_Release(int32_t aId)
 {
     gReady.erase(aId);
@@ -100,6 +113,8 @@ RTTI_DEFINE_GLOBALS({
     RTTI_FUNCTION(ANPCNative_PollId);
     RTTI_FUNCTION(ANPCNative_ResultStatus);
     RTTI_FUNCTION(ANPCNative_ResultText);
+    RTTI_FUNCTION(ANPCNative_ResultInputTokens);
+    RTTI_FUNCTION(ANPCNative_ResultOutputTokens);
     RTTI_FUNCTION(ANPCNative_Release);
 });
 

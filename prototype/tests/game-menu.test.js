@@ -34,6 +34,7 @@ function fixture(){
     GetMountedVehicle:a=>a.mounted?{}:null,StrBeginsWith:(a,b)=>a.startsWith(b),StrAfterFirst:(a,b)=>a.slice(a.indexOf(b)+b.length),StrLen:a=>a.length,ArrayPush:(a,v)=>a.push(v),AnpcRequest:class{},SceneEntryInstaller:{Get:()=>null},
     GameMenu:{},ChatPopup:{Create(e,mode,text,caret){runtime.opened.push({mode,text,caret});return {Open(){}};}}};
   for(const [name,args]of [['IsOpen',['game']],['Request',['game']]])env.GameMenu[name]=compile(menuSource,name,args,env);
+  env.Entry.FailureMessage=compile(entrySource,'FailureMessage',['status'],env);
   // 별도 메뉴 규칙을 복제하지 않고 제품 메서드 본문을 모의 엔진에서 실행한다.
   for(const [name,args]of [['PrepareGameMenu',[]],['OpenGameMenu',['popup']],['QueueMenuResume',['session']],['OnChatMenuChanged',['inMenu']],['OpenInput',['session']],['SessionEndReason',['session']],['ProtectedReason',['session']],['QueueCancel',['session','requestId']],['CancelPending',['session']],['OnEscape',[]],['OnAIResponse',['requestId','status','text']],['IsWaitingForReply',['requestId']],['OnSubtitleTimer',['callback']],['OnChatClosed',['popup']],['IsChatMenuOpen',[]]]){
     const run=new Function(...Object.keys(env),...args,body(entrySource,name));entry[name]=function(...values){return run.call(this,...Object.values(env),...values);};
@@ -199,4 +200,11 @@ test('SR-02 OnAction: 응답 대기·자막 차례의 Esc는 일시정지 메뉴
   assert.equal(call(),true);assert.equal(original,0);assert.equal(f.session.pendingRequest,-1);
   f.session.popup={};assert.equal(call(),true);assert.equal(original,1); // 입력칸이 열려 있으면 원작 처리로 넘긴다.
   f.entry.session=null;call();assert.equal(original,2);
+});
+
+test('SR-06/UF-59 비용 한도 차단은 한도 도달 사유와 설정 위치를 안내한다',()=>{
+  const f=fixture();f.session.popup=null;f.session.pendingRequest=12;
+  f.entry.OnAIResponse(12,'error:budget_exceeded','');
+  assert.equal(f.runtime.messages.length,1);assert.match(f.runtime.messages[0],/비용 한도에 도달/);assert.match(f.runtime.messages[0],/ANPC 비용 설정/);
+  assert.equal(f.session.pendingRequest,-1);assert.ok(f.runtime.timers.some(t=>t.kind===2),'같은 대화의 입력 차례 복귀');
 });

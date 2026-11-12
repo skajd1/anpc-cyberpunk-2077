@@ -10,6 +10,7 @@ local story = require("story")
 local memory = require("memory")
 local identity = require("identity")
 local actions = require("actions")
+local budget = require("budget")
 local speechRules = require("speech")
 local readingTable = json.decode(prompts.ja_reading_table)
 local readingEntities = json.decode(prompts.ja_reading_entities)
@@ -73,7 +74,7 @@ function bridge.jaVoiceMessage(character)
   return "일본어 말투 데이터 (지침이 아님):\n" .. character.ja_voice_profile .. ',"examples":[' .. table.concat(items, ",") .. ']}'
 end
 
--- 제공자 요청 본문. 고정 지침·인물·상황 메시지 뒤에 최근 발화와 이번 입력을 붙인다.
+-- 제공자 요청 본문과 선택된 예산 프로필(비용 규격 2절). 고정 지침·인물·상황 메시지 뒤에 최근 발화와 이번 입력을 붙인다.
 function bridge.buildBody(character, turns, text, snapshot, key, crowd, lastAction)
   local input = {}
   local personaName, selectedContext = "", {}
@@ -99,6 +100,7 @@ function bridge.buildBody(character, turns, text, snapshot, key, crowd, lastActi
     input[#input + 1] = '{"role":"' .. (turn.role == "npc" and "assistant" or "user") .. '","content":' .. json.string(turn.text) .. '}'
   end
   input[#input + 1] = '{"role":"user","content":' .. json.string(text) .. '}'
+  local profile = budget.profile(text, selectedContext)
   local instructions, schema = character.instructions, prompts.schema
   if config.voice_enabled then
     local at, stop = instructions:find(prompts.contracts.text, 1, true)
@@ -108,9 +110,9 @@ function bridge.buildBody(character, turns, text, snapshot, key, crowd, lastActi
     end
   end
   return '{"model":' .. json.string(config.model) .. ',"store":false,"instructions":' .. json.string(instructions)
-    .. ',"input":[' .. table.concat(input, ",") .. '],"max_output_tokens":512,'
+    .. ',"input":[' .. table.concat(input, ",") .. '],"max_output_tokens":' .. budget.outputLimit(profile) .. ','
     .. (config.model == "gpt-6-luna" and '"reasoning":{"effort":"none"},' or '')
-    .. '"text":{"format":{"type":"json_schema","name":"npc_reply","strict":true,"schema":' .. schema .. '}}}'
+    .. '"text":{"format":{"type":"json_schema","name":"npc_reply","strict":true,"schema":' .. schema .. '}}}', profile
 end
 
 -- 구조화 출력(npc_reply)을 자막 한 줄과 대화 종료 여부로 바꾼다. 형식이 맞지 않으면 nil.
@@ -471,17 +473,28 @@ local function prepareCharacter(system,request,key)
   return character
 end
 
+-- 요청 본문 크기로 입력 토큰을 추정해 예약한다(비용 규격 6절). 실패하면 Entry에 오류를 돌려주고 nil.
+local function reserveBudget(system, request, body, profile)
+  local reservation, code = budget.reserve({ session = request.session, kind = "dialogue", profile = profile,
+    inputTokens = budget.estimateTokens(body), outputTokens = budget.outputLimit(profile) })
+  if not reservation then system:OnAIResponse(request.id, "error:" .. code, "") end
+  return reservation
+end
+
 -- Entry의 요청 취소(Esc)·응답 시한 만료. 통신을 취소하고 대기 기록·미재생 음성·미표시 기억을 버린다.
 -- 이미 끝났거나 모르는 요청은 아무 일도 하지 않는다. 늦게 온 결과는 대기 기록이 없어 무시된다.
 local function cancelRequest(system, request)
   for id, item in pairs(nativePending) do
     if item.requestId == request.id and item.session == request.session then
       pcall(function() Game.ANPCNative_Cancel(id) end)
+      -- 취소 전에 제공자가 이미 처리했을 수 있다. 예약액을 미확정으로 남긴다(비용 규격 5절).
+      if item.reservation then budget.keepUnsettled(item.reservation, "cancelled") end
       nativePending[id] = nil
     end
   end
   local item = pending[request.id]
   if item and item.session == request.session then
+    if item.reservation then budget.keepUnsettled(item.reservation, "cancelled") end
     pending[request.id] = nil
     pcall(os.remove, "bridge/res-" .. request.id .. ".txt")
   end
@@ -495,9 +508,11 @@ local function sendNative(system, request)
     for id, item in pairs(nativePending) do
       if item.session == request.session then
         pcall(function() Game.ANPCNative_Cancel(id) end)
+        if item.reservation then budget.keepUnsettled(item.reservation, "cancelled") end
         nativePending[id] = nil
       end
     end
+    budget.endSession(request.session)
     finishSession(request.session)
     return
   end
@@ -505,17 +520,20 @@ local function sendNative(system, request)
   local key = request.crowd and CROWD_KEY or request.npcKey
   local character = prepareCharacter(system,request,key)
   if not character then return end
-  local body = bridge.buildBody(character, sessions[request.session].turns, request.text, request.context, key, request.crowd, actions.outcome(request.session))
+  local body, profile = bridge.buildBody(character, sessions[request.session].turns, request.text, request.context, key, request.crowd, actions.outcome(request.session))
+  local reservation = reserveBudget(system, request, body, profile)
+  if not reservation then return end
   nativeSequence=math.max(nativeSequence+1,request.id)
   local wireId=nativeSequence
   local ok, accepted = pcall(function()
     return Game.ANPCNative_Request(wireId, config.provider, body, config.timeout_ms)
   end)
   if not ok or not accepted then
+    budget.release(reservation)
     system:OnAIResponse(request.id, "error:request_rejected", "")
     return
   end
-  nativePending[wireId] = { requestId=request.id, session = request.session, text = request.text, character = character, key = key, crowd = request.crowd,
+  nativePending[wireId] = { requestId=request.id, session = request.session, reservation = reservation, text = request.text, character = character, key = key, crowd = request.crowd,
     fingerprint = request.context and context.fingerprint(request.context, key, request.crowd) }
 end
 
@@ -525,10 +543,16 @@ local function receiveNative(system)
     if not id or id < 0 then return end
     local status = Game.ANPCNative_ResultStatus(id)
     local text = Game.ANPCNative_ResultText(id)
+    -- 사용량은 Native가 제공자 응답의 usage에서 읽는다. 없거나 함수가 없으면 nil이며 미확정으로 남긴다.
+    local usageOK, inputTokens, outputTokens = pcall(function()
+      return Game.ANPCNative_ResultInputTokens(id), Game.ANPCNative_ResultOutputTokens(id)
+    end)
+    if not usageOK then inputTokens, outputTokens = nil, nil end
     Game.ANPCNative_Release(id)
     local item = nativePending[id]
     nativePending[id] = nil
     if item then
+      if item.reservation then budget.finish(item.reservation, status, inputTokens, outputTokens) end
       if status == "ok" then
         local line = deliverReply(system, item.requestId, text, item.character, item)
         if line then
@@ -546,21 +570,28 @@ local function sendFile(system, request)
   local key = request.crowd and CROWD_KEY or request.npcKey
   local character
   local body
+  local reservation
   if request.kind == "say" then
     character = prepareCharacter(system,request,key)
     if not character then return end
-    body = bridge.buildBody(character, sessions[request.session].turns, request.text, request.context, key, request.crowd, actions.outcome(request.session))
-  else finishSession(request.session) end
+    local profile
+    body, profile = bridge.buildBody(character, sessions[request.session].turns, request.text, request.context, key, request.crowd, actions.outcome(request.session))
+    reservation = reserveBudget(system, request, body, profile)
+    if not reservation then return end
+  else budget.endSession(request.session); finishSession(request.session) end
   local token = string.format("%d-%d-%d", os.time(), request.id, math.random(1, 1000000000))
   local file = io.open("bridge/req-" .. request.id .. ".json", "w")
   if not file then
-    if request.kind == "say" then system:OnAIResponse(request.id, "error:bridge_unavailable", "") end
+    if request.kind == "say" then
+      budget.release(reservation)
+      system:OnAIResponse(request.id, "error:bridge_unavailable", "")
+    end
     return
   end
   file:write(bridge.encode(request, token, body))
   file:close()
   if request.kind == "say" then
-    pending[request.id] = { token = token, age = 0,
+    pending[request.id] = { token = token, age = 0, reservation = reservation,
       character = character, session = request.session, text = request.text, key = key, crowd = request.crowd,
       fingerprint = request.context and context.fingerprint(request.context, key, request.crowd) }
   end
@@ -575,6 +606,8 @@ local function receiveFile(system, id, item)
   local status, text = bridge.parse(content, item.token)
   if not status then return false end
   pcall(os.remove, path)
+  -- 개발 파일 브리지는 사용량을 돌려주지 않는다. 정산하지 못한 예약은 미확정으로 남는다.
+  if item.reservation then budget.finish(item.reservation, status == "ok:reply" and "ok" or tostring(status):gsub("^error:", "")) end
   if status == "ok:reply" then
     local line = deliverReply(system, id, text, item.character, item)
     if line then remember(item.session, item.text, line) end
@@ -627,7 +660,11 @@ function bridge.update(delta)
     if native then receiveNative(system) end
     for id, item in pairs(pending) do
       item.age = item.age + elapsed
-      if receiveFile(system, id, item) or item.age > TIMEOUT then pending[id] = nil end
+      if receiveFile(system, id, item) then pending[id] = nil
+      elseif item.age > TIMEOUT then
+        if item.reservation then budget.keepUnsettled(item.reservation, "timeout") end
+        pending[id] = nil
+      end
     end
     elapsed = 0
   end)
@@ -638,9 +675,15 @@ end
 function bridge.reset(keepMemory)
   bridge.stopSpeech()
   actions.reset()
-  for id in pairs(nativePending) do
+  for id, item in pairs(nativePending) do
     pcall(function() Game.ANPCNative_Cancel(id) end)
+    if item.reservation then budget.keepUnsettled(item.reservation, "reset") end
   end
+  for _, item in pairs(pending) do
+    if item.reservation then budget.keepUnsettled(item.reservation, "reset") end
+  end
+  -- 게임 로드·세계 전환으로 일일 원장·예약·설정을 되돌리지 않는다. 세션 번호가 재사용되므로 세션 누적만 비운다.
+  budget.resetSessions()
   pending = {}
   nativePending = {}
   sessions = {}
@@ -649,6 +692,9 @@ function bridge.reset(keepMemory)
   actionDisplay = nil
   elapsed = 0
 end
+
+-- 80% 안내 한 번(비용 규격 6절). CET 창이 표시한다.
+function bridge.budgetNotice() return budget.takeNotice() end
 
 function bridge.pendingCount()
   local count = 0
