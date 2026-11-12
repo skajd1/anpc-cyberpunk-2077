@@ -87,11 +87,27 @@ assert(bridge.readReply((validReply:gsub('"괜찮아%."', '"   "'))) == nil)
 assert(bridge.readReply((validReply:gsub('"괜찮아%."', '"' .. string.rep("가", 601) .. '"'))) == nil)
 assert(bridge.readReply((validReply:gsub('"괜찮아%."', '"' .. string.rep("가", 600) .. '"'))) ~= nil)
 assert(bridge.readReply((validReply:gsub('"follow_up":null', '"follow_up":"' .. string.rep("가", 151) .. '"'))) == nil)
-assert(bridge.readReply((validReply:gsub('"action":null', '"action":{"action_id":"face_player","args":{"duration_s":2}}'))) == nil)
-assert(bridge.readReply((validReply:gsub('"action":null', '"action":{"action_id":"end_conversation","args":{"extra":1}}'))) == nil)
-assert(bridge.readReply((validReply:gsub('"action":null', '"action":{"action_id":"end_conversation","args":[]}'))) == nil)
+-- SR-10: 허용 밖 행동은 행동만 제거하고 독립 대사는 유지한다. 대사·필드 위반은 전체 거부다.
+local function withAction(reply, action) return (reply:gsub('"action":null', '"action":' .. action)) end
+for _, action in ipairs({ '{"action_id":"face_player","args":{"duration_s":2}}', '{"action_id":"end_conversation","args":{"extra":1}}',
+  '{"action_id":"end_conversation","args":[]}', '{"action_id":"end_conversation"}', '"face_player"' }) do
+  local kept, keptEnded, keptDisplay, keptGesture, keptSpeech = bridge.readReply(withAction(validReply, action))
+  assert(kept == "괜찮아." and keptEnded == false and keptDisplay:find("행동 제거", 1, true) and keptGesture == nil and keptSpeech == nil, action)
+end
 assert(bridge.readReply((validReply:gsub('"follow_up":null', '"follow_up":null,"extra":1'))) == nil)
-assert(bridge.readReply((validReply:gsub('"answer"', '"farewell"'):gsub('"follow_up":null', '"follow_up":"또?"'))) == nil)
+assert(bridge.readReply((validReply:gsub('"answer"', '"farewell"'):gsub('"follow_up":null', '"follow_up":"또?"'))) == nil, "이별 뒤 후속 질문은 대사 형식 위반")
+-- 이별 대사의 다른 행동은 충돌이므로 제거하고 이별 대사는 유지(종료)한다.
+local farewellKept, farewellEnded = bridge.readReply(withAction(validReply:gsub('"answer"', '"farewell"'), '{"action_id":"face_player","args":{"duration_s":2}}'))
+assert(farewellKept == "괜찮아." and farewellEnded == true)
+-- 제거한 행동에 의존하는 대사(실행 약속·성공 주장)는 작성된 안전 대사로 대체하고 대화를 이어간다. 대체 대사가 없으면 전체 거부.
+local promise = (validReply:gsub('"괜찮아%."', '"바로 해줄게."'))
+promise = withAction(promise, '{"action_id":"face_player","args":{"duration_s":2}}')
+local safe, safeEnded, safeDisplay, safeGesture, safeSpeech = bridge.readReply(promise, nil, false, "지금 그걸 해주겠다고 말할 순 없어.")
+assert(safe == "지금 그걸 해주겠다고 말할 순 없어." and safeEnded == false and safeDisplay:find("안전 대사", 1, true) and safeGesture == nil and safeSpeech == nil)
+assert(bridge.readReply(promise) == nil and bridge.readReply(promise, nil, false, "") == nil)
+assert(bridge.readReply((validReply:gsub('"follow_up":null', '"follow_up":"같이 가자"')), nil, false, "대체") == "괜찮아. 같이 가자", "행동이 없으면 대사는 그대로")
+-- 유효한 행동 요청은 이전처럼 통과한다.
+assert(bridge.readReply(withAction(validReply, '{"action_id":"end_conversation","args":{}}')) == "괜찮아.")
 print("게임 응답 필드·열거값·글자 수·실행 가능한 행동 검사 통과")
 
 -- 음성 형태: voice가 참일 때만 delivery·speech_text를 받고, speech_text가 일본어 구어가 아니면 음성만 생략한다.
@@ -184,11 +200,14 @@ local actions = json.decode(require("prompts").characters.viktor.actions)
 local gestureReply = validReply:gsub('"action":null', '"action":{"action_id":"play_gesture","args":{"gesture_ref":"test_nod"}}')
 local line, ended, display = bridge.readReply(gestureReply, actions)
 assert(line == "괜찮아." and ended == false and display == "가볍게 고개를 끄덕임 · 선택만 됨 (실행 미지원)")
-assert(bridge.readReply(gestureReply:gsub('test_nod', 'arbitrary_asset'), actions) == nil)
-assert(bridge.readReply(gestureReply:gsub('"gesture_ref":"test_nod"', '"gesture_ref":"test_nod","extra":1'), actions) == nil)
-assert(bridge.readReply(gestureReply:gsub('"answer"', '"farewell"'), actions) == nil)
-assert(bridge.readReply(gestureReply, json.decode(require("prompts").characters.johnny.actions)) == nil)
-assert(bridge.readReply(gestureReply) == nil)
+-- 후보 밖 자산·여분 인수·이별 충돌·권한 없는 인물의 제스처는 행동만 제거하고 대사는 유지한다.
+for _, bad in ipairs({ { gestureReply:gsub('test_nod', 'arbitrary_asset'), actions }, { gestureReply:gsub('"gesture_ref":"test_nod"', '"gesture_ref":"test_nod","extra":1'), actions },
+  { gestureReply, json.decode(require("prompts").characters.johnny.actions) }, { gestureReply, nil } }) do
+  local keptLine, keptEnded, keptDisplay, keptGesture = bridge.readReply(bad[1], bad[2])
+  assert(keptLine == "괜찮아." and keptEnded == false and keptGesture == nil and keptDisplay:find("행동 제거", 1, true))
+end
+local keptFarewell, farewellDone, _, farewellGesture = bridge.readReply((gestureReply:gsub('"answer"', '"farewell"')), actions)
+assert(keptFarewell == "괜찮아." and farewellDone == true and farewellGesture == nil)
 
 queue[1] = { id = 20, kind = "say", session = 10, npcKey = "viktor", crowd = false, text = "그렇구나" }
 local countBefore = #nativeCalls

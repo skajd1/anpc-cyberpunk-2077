@@ -65,6 +65,10 @@ export function responseSchema({ voice = false, voiceOrder = 'ja_first' } = {}) 
 // speech_text는 일본어 구어만 허용한다. 한글·지문 괄호·마크다운이 섞이면 음성만 생략한다.
 const speechValid = text => !/[가-힣ㄱ-ㆎ[\]()（）*_#`]/.test(text);
 
+// 실행 약속·성공 주장·행동 지시 표지. 목록은 프롬프트 명세 8절이 기준이며 CET bridge.actionMarkers와 같다(시험이 일치를 검사한다).
+export const ACTION_MARKERS = ['줄게', '할게', '해줄', '해 줄', '보여줄', '따라와', '따라갈', '같이 가', '가자', '안내', '데려', '열어', '흔들', '박수', '멈출', '멈춰', '앉을게', '서 있을게'];
+const dependsOnAction = (...texts) => texts.some(text => typeof text === 'string' && ACTION_MARKERS.some(marker => text.includes(marker)));
+
 export function validateReply(raw, allowed, persona, { voice = false } = {}) {
   const textKeys = ['dialogue', 'intent', 'emotion', 'action', 'follow_up'];
   if (!exact(raw, voice ? [...textKeys, 'delivery', 'speech_text'] : textKeys)) throw new Error('invalid_response');
@@ -80,10 +84,17 @@ export function validateReply(raw, allowed, persona, { voice = false } = {}) {
       ? rule.values.includes(a.args[key])
       : typeof a.args[key] === 'number' && Number.isFinite(a.args[key]) && a.args[key] >= rule.min && a.args[key] <= rule.max);
   }
-  if (reply.intent === 'farewell' && (reply.follow_up !== null || (reply.action && reply.action.action_id !== 'end_conversation'))) actionValid = false;
-  // 안전 대체 대사는 일본어 음성 대사가 없으므로 자막만 표시한다.
-  if (!actionValid) return { reply: { dialogue: persona.fallback_lines.unavailable_action, intent: 'refuse', emotion: 'neutral', action: null, follow_up: null }, warning: '허용되지 않은 행동·인수: 원문 대신 인물의 안전 대사를 표시했습니다.',
-    speech: null, speechError: voice ? 'speech_text_invalid' : null };
+  // 이별 뒤 후속 질문은 대사 형식 위반이다. 이별과 다른 행동의 충돌은 행동 검증 실패다.
+  if (reply.intent === 'farewell' && reply.follow_up !== null) throw new Error('invalid_response');
+  if (reply.intent === 'farewell' && reply.action && reply.action.action_id !== 'end_conversation') actionValid = false;
+  if (!actionValid) {
+    // 허용 밖 행동은 제거한다. 대사가 제거한 행동에 의존하지 않으면 유지하고, 의존하거나 불명이면 안전 대체 대사를 쓴다(프롬프트 명세 8절).
+    // 안전 대체 대사는 일본어 음성 대사가 없으므로 자막만 표시한다.
+    if (dependsOnAction(reply.dialogue, reply.follow_up)) return { reply: { dialogue: persona.fallback_lines.unavailable_action, intent: 'refuse', emotion: 'neutral', action: null, follow_up: null },
+      warning: '허용되지 않은 행동·인수: 원문 대신 인물의 안전 대사를 표시했습니다.', speech: null, speechError: voice ? 'speech_text_invalid' : null };
+    if (persona.voice_style.forbidden_phrases?.some(phrase => reply.dialogue.includes(phrase))) throw new Error('invalid_response');
+    return { reply: { ...clone(reply), action: null }, warning: '허용되지 않은 행동·인수: 행동만 제거하고 대사는 유지했습니다.', speech, speechError };
+  }
   if (persona.voice_style.forbidden_phrases?.some(phrase => reply.dialogue.includes(phrase))) throw new Error('invalid_response');
   return { reply: clone(reply), warning: null, speech, speechError };
 }

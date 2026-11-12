@@ -162,37 +162,70 @@ function bridge.speechReadable(value)
   return (value:gsub("Ｖ", "V"):gsub("%f[%w]V%f[%W]", "ヴィー"))
 end
 
+-- 실행 약속·성공 주장·행동 지시 표지(프롬프트 명세 8절 목록과 같다. 시험이 명세와 일치를 검사한다).
+-- 행동을 제거한 뒤 대사에 이 표지가 있으면 대사가 제거한 행동에 의존한다고 보고 함께 폐기한다.
+bridge.actionMarkers = { "줄게", "할게", "해줄", "해 줄", "보여줄", "따라와", "따라갈", "같이 가", "가자", "안내", "데려", "열어", "흔들", "박수", "멈출", "멈춰", "앉을게", "서 있을게" }
+function bridge.dependsOnAction(...)
+  for _, text in ipairs({ ... }) do
+    if type(text) == "string" then
+      for _, marker in ipairs(bridge.actionMarkers) do
+        if text:find(marker, 1, true) then return true end
+      end
+    end
+  end
+  return false
+end
+
+-- 행동 제안 하나를 허용 목록·인수·권한으로 검사한다. 통과하면 선택된 ActionOption, 아니면 nil(호출자가 행동만 제거한다).
+local function checkAction(action, options)
+  if not exact(action, { action_id = true, args = true }) then return nil end
+  for _, option in ipairs(options) do
+    if option.action_id == action.action_id then
+      if option.action_id == "end_conversation" then
+        return exact(action.args, {}) and option or nil
+      elseif option.action_id == "play_gesture" and (option.execution_mode == "selection_only" or option.execution_mode == "execute") then
+        if not exact(action.args, { gesture_ref = true }) then return nil end
+        for _, candidate in ipairs(option.candidates or {}) do
+          if candidate.ref == action.args.gesture_ref then return option end
+        end
+      end
+      return nil
+    end
+  end
+  return nil
+end
+
 -- voice가 참이면 음성 형태(delivery·speech_text 포함)도 받는다. 다섯째 반환값은 음성 요청 또는 nil.
-function bridge.readReply(text, actions, voice)
+-- 대사·필드·열거 위반은 전체 거부(nil)이고, 허용 밖 행동은 행동만 제거한다(런타임 5절·프롬프트 8절).
+-- 제거 뒤 대사에 실행 약속 표지가 있으면 fallbackLine(작성된 안전 대사)로 대체하며 fallbackLine이 없으면 전체 거부한다.
+function bridge.readReply(text, actions, voice, fallbackLine)
   local reply = json.decode(text)
   local voiced = voice and exact(reply, voiceKeys)
   if not voiced and not exact(reply, textKeys) then return nil end
   if not boundedText(reply.dialogue, 600) or not intents[reply.intent] or not emotions[reply.emotion]
     or (reply.follow_up ~= json.null and not boundedText(reply.follow_up, 150)) then return nil end
+  -- 이별 대사 뒤에 후속 질문을 잇는 것은 대사 형식 위반이다.
+  if reply.intent == "farewell" and reply.follow_up ~= json.null then return nil end
   local speech = voiced and deliveries[reply.delivery] and boundedText(reply.speech_text, 600) and bridge.speechValid(reply.speech_text)
     and { emotion = reply.emotion, delivery = reply.delivery, text = bridge.speechReadable(reply.speech_text) } or nil
-  local selected
+  local selected, removed
   if reply.action ~= json.null then
-    if not exact(reply.action, { action_id = true, args = true }) then return nil end
-    for _, option in ipairs(actions or { { action_id = "end_conversation", args = {}, execution_mode = "execute" } }) do
-      if option.action_id == reply.action.action_id then selected = option; break end
-    end
-    if not selected then return nil end
-    if selected.action_id == "end_conversation" then
-      if not exact(reply.action.args, {}) then return nil end
-    elseif selected.action_id == "play_gesture" and (selected.execution_mode == "selection_only" or selected.execution_mode == "execute") then
-      if not exact(reply.action.args, { gesture_ref = true }) then return nil end
-      local found = false
-      for _, candidate in ipairs(selected.candidates or {}) do
-        if candidate.ref == reply.action.args.gesture_ref then found = true; break end
-      end
-      if not found then return nil end
-    else return nil end
+    selected = checkAction(reply.action, actions or { { action_id = "end_conversation", args = {}, execution_mode = "execute" } })
+    -- 이별 대사의 다른 행동은 충돌이므로 제거한다.
+    if selected and reply.intent == "farewell" and selected.action_id ~= "end_conversation" then selected = nil end
+    removed = selected == nil
   end
-  if reply.intent == "farewell" and (reply.follow_up ~= json.null
-    or (selected and selected.action_id ~= "end_conversation")) then return nil end
   local line = reply.dialogue
   if reply.follow_up ~= json.null then line = line .. " " .. reply.follow_up end
+  if removed then
+    if bridge.dependsOnAction(reply.dialogue, reply.follow_up) then
+      if type(fallbackLine) ~= "string" or fallbackLine == "" then return nil end
+      -- 안전 대체 대사는 일본어 음성이 없으므로 자막만 표시하고 대화를 이어간다.
+      return fallbackLine, false, "허용되지 않은 행동 · 안전 대사 표시", nil, nil
+    end
+    local display = "허용되지 않은 행동 제거 · 대사만 표시"
+    return line, reply.intent == "farewell", display, nil, speech
+  end
   local ended = reply.intent == "farewell" or (type(reply.action) == "table" and reply.action.action_id == "end_conversation")
   local display = "추가 행동 없음"
   if ended then display = "대화 종료 · 대사 후 실행"
@@ -385,7 +418,7 @@ local function deliverReply(system, id, text, character, item)
       return nil
     end
   end
-  local line, ended, display, gesture, speech = bridge.readReply(text, character and json.decode(character.actions), config.voice_enabled)
+  local line, ended, display, gesture, speech = bridge.readReply(text, character and json.decode(character.actions), config.voice_enabled, character and character.fallback_line)
   if not line then
     system:OnAIResponse(id, "error:invalid_response", "")
     return nil

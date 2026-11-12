@@ -38,6 +38,16 @@ test('잘못된 행동·범위·여분 인수는 원문 대사까지 안전 대�
   }
   assert.throws(() => validateReply({ ...reply, debug: 'secret' }, ACTIONS, personas[0]), /invalid_response/);
 });
+test('잘못된 행동은 독립 대사를 유지하고 행동만 제거한다', () => {
+  const result = validateReply({ ...reply, dialogue: '그건 곤란해.', action: { action_id: 'attack', args: {} } }, ACTIONS, personas[0]);
+  assert.equal(result.reply.action, null); assert.equal(result.reply.dialogue, '그건 곤란해.'); assert.ok(result.warning);
+});
+test('행동 표지 목록은 웹·CET·명세가 일치한다', async () => {
+  const { readFileSync } = await import('node:fs'); const { ACTION_MARKERS } = await import('../public/core.js');
+  const lua = readFileSync(new URL('../../game/cet/anpc/bridge.lua', import.meta.url), 'utf8').match(/bridge\.actionMarkers = \{([^}]*)\}/)[1].match(/"([^"]+)"/g).map(x => x.slice(1, -1));
+  const spec = readFileSync(new URL('../../docs/prompt-specification.md', import.meta.url), 'utf8').match(/표지 목록[^\n]*:\s*([^\n]+)/)[1].split(',').map(x => x.trim());
+  assert.deepEqual(lua, ACTION_MARKERS); assert.deepEqual(spec, ACTION_MARKERS);
+});
 test('수치는 인지 규칙 없이 프롬프트에 노출되지 않고 사용자 지시는 별도 입력이다', () => {
   const e = ready(); e.changeWorld({ level: 60, street_cred: 50, quest_stage: 'after' });
   const context = e.context(); assert.equal(context.observations.level, undefined); assert.deepEqual(context.knowledge, []);

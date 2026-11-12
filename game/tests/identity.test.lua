@@ -54,6 +54,9 @@ assert(#context.canon_context.current_goals==0 and context.canon_context.relatio
 assert(context.canon_context.everyday_fiction_policy.allowed)
 assert(persona.identity==nil and persona.traits==nil and persona.core_personality==nil and persona.seed==nil)
 assert(persona.voice_style.speech_rules and persona.knowledge_profile.domains==nil)
+-- SR-10: 허용 밖 행동 제거 뒤 독립성 불명일 때 쓰는 작성된 안전 대사가 카드에서 전달된다. 응답 해석기가 이를 사용한다.
+assert(type(character.fallback_line)=="string" and character.fallback_line~="")
+assert(require("bridge").readReply('{"dialogue":"바로 해줄게.","intent":"answer","emotion":"neutral","action":{"action_id":"invented","args":{}},"follow_up":null}',nil,false,character.fallback_line)==character.fallback_line)
 a.context.streetCred=50; a.text="권총과 임플란트는 어때?"
 local _,again=identity.prepare(a,{},20,system)
 assert(again==record and same(record.core,firstCore) and record.seed==firstSeed and same(record.knowledge,firstKnowledge))

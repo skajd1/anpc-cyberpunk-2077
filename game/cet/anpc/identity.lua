@@ -327,7 +327,9 @@ function identity.compose(record,request,turns,availableActions)
   end
   local source=prompts.characters[card.character_key]
   return {instructions=base,messages=messages,actions=json.encode(actions),
-    ja_voice_profile=source and source.ja_voice_profile,ja_voice_examples=source and source.ja_voice_examples}
+    ja_voice_profile=source and source.ja_voice_profile,ja_voice_examples=source and source.ja_voice_examples,
+    -- 허용 밖 행동 제거 뒤 독립성을 확인할 수 없을 때 쓰는 작성된 안전 대사(프롬프트 명세 8절).
+    fallback_line=card.fallback_lines and card.fallback_lines.unavailable_action}
 end
 
 function identity.prepare(request,turns,now,system,availableActions)

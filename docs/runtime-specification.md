@@ -70,7 +70,7 @@ PromptAssembly → ModelInput → ProviderResult → DialogueReply. 공통 스�
 
 - 모델 출력은 dialogue/intent/emotion/action/follow_up만. 음성 활성 시 delivery/speech_text를 더하며 필드 순서·검사는 [음성 출력 규격 2절](npc-voice-output-specification.md#2-응답-계약-추가)을 따른다. 봉투/식별자는 호스트 부여. action은 제안이며 완료 아님.
 - 빈 대사·미등록 필드/열거·잘못된 인수 거부. 금기/대사 형식 위반은 전체 거부.
-- 잘못된 행동은 제거. 대사가 독립적일 때만 유지, 불명이면 안전 대체 대사. 정적 검사+지원 품질 프로필 적용.
+- 잘못된 행동은 제거. 대사가 독립적일 때만 유지, 불명이면 안전 대체 대사([판정 기준](prompt-specification.md#8-예외-응답-계약)). 정적 검사+지원 품질 프로필 적용.
 - execution_mode/candidate는 ActionOption, catalog_version은 ActionRequest. 모델의 모드/어댑터/자산 경로 변경 금지.
 - 현재 일상 허용은 CanonView만 전달. 출력 필드/평가 모델 추가 없음.
 - 실제 표시 대사와 실행기 확정 결과만 사건 등록. 요약은 SessionSummarizer.propose의 SessionSummary이며 모델의 {summary}에 세션 ID를 호스트가 부여한다. SummaryCandidates는 이전 구현 호환용이다.
