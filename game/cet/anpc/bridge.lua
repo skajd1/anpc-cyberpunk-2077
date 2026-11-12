@@ -489,6 +489,7 @@ local function prepareCharacter(system,request,key)
     system:OnAIResponse(request.id,"error:story_blocked",""); return nil
   end
   sessions[request.session]=sessions[request.session] or {turns={}}
+  sessions[request.session].npcKey,sessions[request.session].crowd=request.npcKey,request.crowd
   local transcript=sessions[request.session].allTurns
   if transcript then
     local _,size=json.encode(transcript):gsub("[^\128-\191]","")
@@ -728,6 +729,49 @@ function bridge.reset(keepMemory)
 end
 
 -- 80% 안내 한 번(비용 규격 6절). CET 창이 표시한다.
+-- UF-56 기억 삭제. npcKey가 없으면 전부, 있으면 그 커뮤니티 NPC만. 키·비용 원장/설정·오리지널 저장은 건드리지 않는다.
+-- 진행 중 대화 기록을 비우고, 해당 세션의 대기 요청·음성 작업을 무효화해 늦은 응답이 기억에 다시 들어오지 않게 한다.
+function bridge.memoryList() return identity.memoryList() end
+function bridge.forgetMemory(npcKey)
+  local affected = {}
+  for id, session in pairs(sessions) do
+    if npcKey == nil or (session.npcKey == npcKey and not session.crowd) then
+      affected[id] = true
+      session.turns = {}
+      if session.allTurns then session.allTurns = json.array() end
+    end
+  end
+  local entryOK, system = pcall(entry)
+  if not entryOK then system = nil end
+  local function notify(requestId)
+    if system then pcall(function() system:OnAIResponse(requestId, "error:memory_cleared", "") end) end
+  end
+  for id, item in pairs(nativePending) do
+    if affected[item.session] then
+      pcall(function() Game.ANPCNative_Cancel(id) end)
+      if item.reservation then budget.keepUnsettled(item.reservation, "memory_cleared") end
+      nativePending[id] = nil
+      notify(item.requestId)
+    end
+  end
+  for id, item in pairs(pending) do
+    if affected[item.session] then
+      if item.reservation then budget.keepUnsettled(item.reservation, "memory_cleared") end
+      pending[id] = nil
+      pcall(os.remove, "bridge/res-" .. id .. ".txt")
+      notify(id)
+    end
+  end
+  local stopVoice = false
+  for id, job in pairs(voiceJobs) do
+    if affected[job.session] then voiceJobs[id] = nil; stopVoice = true end
+  end
+  if stopVoice then bridge.stopSpeech(system) end
+  local removed = identity.forget(npcKey)
+  memory.forget()
+  return removed
+end
+
 function bridge.budgetNotice() return budget.takeNotice() end
 
 function bridge.pendingCount()

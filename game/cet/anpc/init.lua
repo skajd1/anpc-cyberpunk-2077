@@ -10,6 +10,7 @@ local entryStatus = "entry_not_selected"
 local sceneEntryStatus
 local status = "초기화 대기"
 local keyInput, keyNotice = "", ""
+local forgetTarget, forgetMessage = nil, ""
 local budgetForm, budgetMessage, budgetNotice, budgetNoticeUntil = nil, "", nil, 0
 local cetVersion = "unknown"
 local redscriptVersion = "unknown"
@@ -80,7 +81,7 @@ registerForEvent("onInit", function()
   if not ok then print("[ANPC] redscript 버전 조회 실패: " .. tostring(redVersion)) end
 end)
 
-registerForEvent("onOverlayOpen", function() overlay = true; budgetForm = nil; refresh(false) end)
+registerForEvent("onOverlayOpen", function() overlay = true; budgetForm = nil; forgetTarget = nil; refresh(false) end)
 registerForEvent("onOverlayClose", function()
   overlay = false
   state, pinnedEpoch, mockText = nil, nil, nil
@@ -176,6 +177,21 @@ registerForEvent("onDraw", function()
       budgetForm = nil
     end
     if budgetMessage ~= "" then ImGui.TextWrapped(budgetMessage) end
+    -- 기억 삭제(UF-56): 두 번 눌러 확인한다. API 키·비용 원장/설정·게임 저장·관계는 지우지 않는다.
+    local memoryItems, crowdRecords = bridge.memoryList()
+    ImGui.TextWrapped(string.format("저장된 NPC 기억: 인물 %d명 · 군중 기록 %d개 (키·비용·게임 저장은 지우지 않음)", #memoryItems, crowdRecords))
+    local function forgetButton(label, target, key)
+      if forgetTarget == target then
+        if ImGui.Button("정말 삭제: " .. label .. "##anpc_forget_" .. target) then
+          forgetMessage = string.format("%s 기억 삭제 완료 (기록 %d개)", label, bridge.forgetMemory(key)); forgetTarget = nil
+        end
+        ImGui.SameLine()
+        if ImGui.Button("취소##anpc_forget_cancel_" .. target) then forgetTarget = nil end
+      elseif ImGui.Button("삭제: " .. label .. "##anpc_forget_" .. target) then forgetTarget = target end
+    end
+    for _, item in ipairs(memoryItems) do forgetButton(string.format("%s (요약 %d)", item.name or item.npc_key, item.summaries), "npc:" .. item.npc_key, item.npc_key) end
+    forgetButton("전체", "all", nil)
+    if forgetMessage ~= "" then ImGui.TextWrapped(forgetMessage) end
     if sceneHubs then
       ImGui.TextWrapped(string.format("원작 장면 허브 %d개 | 선택지 %d개", sceneHubs, sceneChoices))
       if sceneHubs > 0 then

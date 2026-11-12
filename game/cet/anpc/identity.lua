@@ -384,6 +384,28 @@ function identity.prune(now,system)
 end
 function identity.reset() records={}; revision=revision+1 end
 
+-- UF-56 기억 삭제. 사용자가 고른 범위의 요약·생성 특성만 버린다(npcKey 없으면 커뮤니티·군중 전부).
+-- 고정 인물 카드(콘텐츠)·API 키·비용 원장은 다루지 않는다. 진행 중 세션의 연결은 다음 요청이 새 기록으로 다시 만든다.
+-- 반환: 삭제한 기록 수
+function identity.forget(npcKey)
+  local removed=0
+  for key in pairs(records) do
+    if npcKey==nil or key=='community:' .. npcKey then records[key]=nil; removed=removed+1 end
+  end
+  if removed>0 then revision=revision+1 end
+  return removed
+end
+-- 삭제 UI용 목록. 요약이 있는 커뮤니티 NPC {npc_key=, name=, summaries=수} npc_key 순과 군중 기록 수.
+function identity.memoryList()
+  local list,crowd={},0
+  for key,record in pairs(records) do
+    if record.card.npc_type=="crowd" then crowd=crowd+1
+    elseif #record.summaries>0 then list[#list+1]={npc_key=(key:gsub("^community:","")),name=record.card.display_name or record.card.name,summaries=#record.summaries} end
+  end
+  table.sort(list,function(a,b) return a.npc_key<b.npc_key end)
+  return list,crowd
+end
+
 -- 저장 연결(memory.lua)용 단일 접점. 커뮤니티 기억만 다룬다. 군중 기억은 저장에 넣지 않는다.
 function identity.revision() return revision end
 function identity.contentVersion() return data.version end

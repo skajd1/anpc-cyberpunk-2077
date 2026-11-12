@@ -902,6 +902,7 @@ public class Entry extends ScriptableSystem {
   // 실패 응답의 한국어 안내(UF-59: 한도 차단은 사유와 설정 위치를 알려준다).
   public static func FailureMessage(status: String) -> String {
     if Equals(status, "error:context_changed") { return "[ANPC] 대기 중 상태가 바뀌었습니다. 다시 입력해주세요."; }
+    if Equals(status, "error:memory_cleared") { return "[ANPC] 기억이 삭제되어 대기 중이던 요청을 취소했습니다."; }
     if Equals(status, "error:budget_exceeded") { return "[ANPC] 비용 한도에 도달해 요청하지 않았습니다. CET 창의 ANPC 비용 설정을 확인하세요."; }
     return "[ANPC] AI 응답 실패: " + (StrBeginsWith(status, "error:") ? StrAfterFirst(status, ":") : "empty_reply");
   }

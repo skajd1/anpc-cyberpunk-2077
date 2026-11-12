@@ -221,6 +221,13 @@ test('SR-06/UF-59 비용 한도 차단은 한도 도달 사유와 설정 위치�
   assert.equal(f.session.pendingRequest,-1);assert.ok(f.runtime.timers.some(t=>t.kind===2),'같은 대화의 입력 차례 복귀');
 });
 
+test('UF-56 기억 삭제로 무효화된 대기 요청은 삭제 사유를 안내하고 입력 차례로 복귀한다',()=>{
+  const f=fixture();f.session.popup=null;f.session.pendingRequest=13;
+  f.entry.OnAIResponse(13,'error:memory_cleared','');
+  assert.equal(f.runtime.messages.length,1);assert.match(f.runtime.messages[0],/기억이 삭제/);
+  assert.equal(f.session.pendingRequest,-1);
+});
+
 test('UF-19 공백만/빈 입력은 전송하지 않고 입력을 유지하며 호출·자막·기억을 만들지 않는다',()=>{
   const blanks=['','   ','\t\n','\r\n ','\u00a0','\u200b','\u3000\u3000',' \u3000\t\u200b '];
   for(const blank of blanks){

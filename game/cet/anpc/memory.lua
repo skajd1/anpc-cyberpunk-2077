@@ -145,6 +145,9 @@ function memory.sync(system, inProgress, extraRevision)
   return result
 end
 
+-- UF-56: 삭제 뒤 이전 세대의 늦은 기록이 다시 들어오지 않게 세대를 올리고 다음 저장용 묶음을 다시 만든다.
+-- 이미 저장된 묶음 파일은 고치지 않는다(다음 저장 때 삭제 결과가 반영된다).
+function memory.forget() generation = generation + 1; staged = { ref = nil, revision = nil } end
 function memory.reset() lastToken = nil; staged = { ref = nil, revision = nil }; generation = 0 end
 memory.digest = digest
 memory.generation = function() return generation end
