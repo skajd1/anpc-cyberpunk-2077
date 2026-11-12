@@ -90,10 +90,24 @@ files["tts/seg-6-1.json"]='{"slot":1,"dur_ms":1000,"final":true}'
 request(7)
 assert(#responses==0 and started==0 and bridge.voicePendingCount()==0)
 bridge.reset()
+-- 음성 첫 구간을 기다리는 중 Esc로 요청을 취소하면 음성·자막·행동·발화 기록이 모두 폐기된다(UF-23).
+begin(8)
+local firstInputSize=#calls[#calls].body.input
+assert(bridge.voicePendingCount()==1)
+waiting=false;latest=-1 -- Entry.CancelPending이 pending/latest를 비운 뒤 취소 요청을 보낸다.
+queue[#queue+1]={kind="cancel",id=8,session=44}
+assert(bridge.update(0.3) and bridge.voicePendingCount()==0)
+files["tts/seg-8-1.json"]='{"slot":1,"dur_ms":1000,"final":true}'
+assert(bridge.update(config.voice_wait_s+0.1))
+assert(#responses==0 and started==0 and #events==0)
+request(9)
+joined="";for _,message in ipairs(calls[#calls].body.input)do joined=joined .. message.content end
+assert(#calls[#calls].body.input==firstInputSize and not joined:find("last_action_result",1,true))
+bridge.reset()
 -- 음성 형식 오류가 유효한 제스처 선택·자막을 무효화하지 않는다.
 for _,bad in ipairs({"", "한국어", string.rep("あ",601)}) do
   local invalid=json.decode(json.encode(reply));invalid.speech_text=bad
   local line,_,_,gesture,speech=bridge.readReply(json.encode(invalid),{option},true)
   assert(line=="안녕." and gesture=="amm_wave" and speech==nil)
 end
-print("첫 음성·자막·행동 동기화, TTS 시간 초과/재생/파일 오류 대체, 늦은 음성 폐기, 다음 턴 결과 전달 통과")
+print("첫 음성·자막·행동 동기화, TTS 시간 초과/재생/파일 오류 대체, 늦은 음성 폐기, 다음 턴 결과 전달, 음성 대기 중 요청 취소의 기억·행동 폐기 통과")

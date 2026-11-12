@@ -21,6 +21,7 @@ add_library(ANPC.Native SHARED
   src/Credentials.cpp
   src/HttpWorker.cpp
   src/Provider.cpp
+  src/RequestLedger.cpp
 )
 target_link_libraries(ANPC.Native PRIVATE RED4ext::SDK RedLib nlohmann_json::nlohmann_json winhttp advapi32)
 target_compile_options(ANPC.Native PRIVATE /W4 /utf-8 /permissive- /Zc:__cplusplus)
@@ -32,4 +33,9 @@ if(BUILD_TESTING)
     target_include_directories(ANPC.Provider.Tests PRIVATE src)
     target_link_libraries(ANPC.Provider.Tests PRIVATE nlohmann_json::nlohmann_json)
     add_test(NAME provider-response COMMAND ANPC.Provider.Tests)
+
+    # 접수 기준 마감·취소·상태 회수 논리는 WinHTTP 없이 검사한다.
+    add_executable(ANPC.RequestLedger.Tests tests/RequestLedger.test.cpp src/RequestLedger.cpp)
+    target_include_directories(ANPC.RequestLedger.Tests PRIVATE src)
+    add_test(NAME request-ledger COMMAND ANPC.RequestLedger.Tests)
 endif()

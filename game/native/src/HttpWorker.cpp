@@ -6,50 +6,35 @@
 #include <algorithm>
 #include <chrono>
 #include <condition_variable>
-#include <deque>
 #include <mutex>
 #include <thread>
-#include <unordered_set>
 
 #include "Credentials.hpp"
 #include "Provider.hpp"
+#include "RequestLedger.hpp"
 
 namespace anpc
 {
 namespace
 {
-using Clock = std::chrono::steady_clock;
-
-struct Job
-{
-    int32_t id;
-    std::string provider;
-    std::string body;
-    uint32_t timeoutMs;
-};
+using Clock = LedgerClock;
 
 constexpr size_t kMaxBody = 256 * 1024;
 constexpr size_t kMaxResponse = 2 * 1024 * 1024;
-constexpr size_t kMaxQueue = 8;
 constexpr uint32_t kMinTimeoutMs = 1000;
 constexpr uint32_t kMaxTimeoutMs = 120000;
 
 std::mutex gMutex;
 std::condition_variable gWake;
-std::deque<Job> gQueue;
-std::deque<CompletedRequest> gDone;
-std::unordered_set<int32_t> gCancelled;
+// 접수·대기·진행·완료 상태와 접수 기준 마감 시간. gMutex로 보호한다.
+RequestLedger gLedger;
 bool gRunning = false;
 std::thread gWorker;
 std::thread gWatchdog;
 HINTERNET gSession = nullptr;
 
-// 진행 중인 요청. 감시 스레드가 전체 마감 시간 초과·취소 시 핸들을 닫아 동기 호출을 끝낸다.
+// 진행 중인 요청의 WinHTTP 핸들. 감시 스레드·취소가 닫아 동기 호출을 끝낸다. 만료·취소 여부는 gLedger가 기록한다.
 HINTERNET gActiveRequest = nullptr;
-int32_t gActiveId = -1;
-Clock::time_point gDeadline;
-bool gActiveTimedOut = false;
-bool gActiveCancelled = false;
 
 std::wstring Widen(std::string_view aText)
 {
@@ -61,19 +46,15 @@ std::wstring Widen(std::string_view aText)
     return wide;
 }
 
-void CloseActiveLocked(bool aTimedOut)
+void CloseActiveLocked()
 {
     if (!gActiveRequest)
         return;
     WinHttpCloseHandle(gActiveRequest);
     gActiveRequest = nullptr;
-    if (aTimedOut)
-        gActiveTimedOut = true;
-    else
-        gActiveCancelled = true;
 }
 
-CompletedRequest Execute(const Job& aJob)
+CompletedRequest Execute(const LedgerJob& aJob)
 {
     CompletedRequest done;
     done.id = aJob.id;
@@ -111,17 +92,16 @@ CompletedRequest Execute(const Job& aJob)
         return done;
     }
 
-    const int timeout = static_cast<int>(aJob.timeoutMs);
+    // 각 단계 제한은 접수 기준 남은 시간을 넘지 않게 한다(0은 무제한이라 최소 1ms).
+    const auto remaining = std::chrono::duration_cast<std::chrono::milliseconds>(aJob.deadline - Clock::now()).count();
+    const int timeout = static_cast<int>(std::clamp<long long>(remaining, 1, aJob.timeoutMs));
     WinHttpSetTimeouts(request, timeout, timeout, timeout, timeout);
     {
         std::lock_guard lock(gMutex);
         gActiveRequest = request;
-        gActiveId = aJob.id;
-        gDeadline = Clock::now() + std::chrono::milliseconds(aJob.timeoutMs);
-        gActiveTimedOut = false;
-        gActiveCancelled = gCancelled.erase(aJob.id) > 0;
-        if (gActiveCancelled)
-            CloseActiveLocked(false);
+        // 대기열에서 꺼낸 뒤 통신 핸들이 열리기 전에 취소·만료됐으면 바로 닫는다.
+        if (gLedger.ActiveCancelled() || gLedger.ActiveTimedOut())
+            CloseActiveLocked();
     }
 
     bool ok = WinHttpSendRequest(request, headers.c_str(), static_cast<DWORD>(-1),
@@ -167,8 +147,6 @@ CompletedRequest Execute(const Job& aJob)
         body.resize(offset + read);
     }
 
-    bool timedOut = false;
-    bool cancelled = false;
     {
         std::lock_guard lock(gMutex);
         if (gActiveRequest == request)
@@ -176,17 +154,11 @@ CompletedRequest Execute(const Job& aJob)
             WinHttpCloseHandle(request);
             gActiveRequest = nullptr;
         }
-        gActiveId = -1;
-        timedOut = gActiveTimedOut;
-        cancelled = gActiveCancelled;
     }
     WinHttpCloseHandle(connect);
 
-    if (cancelled)
-        done.status = "cancelled";
-    else if (timedOut)
-        done.status = "timeout";
-    else if (tooLarge)
+    // 취소·만료는 RequestLedger::Finish가 결과를 버리거나 timeout으로 바꾼다.
+    if (tooLarge)
         done.status = "response_too_large";
     else if (!ok)
         done.status = "network_error";
@@ -205,36 +177,38 @@ void WorkerLoop()
 {
     for (;;)
     {
-        Job job;
+        std::optional<LedgerJob> job;
         {
             std::unique_lock lock(gMutex);
-            gWake.wait(lock, [] { return !gRunning || !gQueue.empty(); });
+            gWake.wait(lock, [&] {
+                if (!gRunning)
+                    return true;
+                job = gLedger.Begin(Clock::now());
+                return job.has_value();
+            });
             if (!gRunning)
                 return;
-            job = std::move(gQueue.front());
-            gQueue.pop_front();
         }
 
-        const auto started = Clock::now();
-        auto done = Execute(job);
+        auto done = Execute(*job);
         done.elapsedMs = static_cast<uint32_t>(
-            std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - started).count());
-        SecureZeroMemory(job.body.data(), job.body.size());
+            std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - job->enqueuedAt).count());
+        SecureZeroMemory(job->body.data(), job->body.size());
 
         std::lock_guard lock(gMutex);
-        if (done.status != "cancelled")
-            gDone.push_back(std::move(done));
+        gLedger.Finish(std::move(done));
     }
 }
 
+// 접수 시점 기준 마감을 넘긴 대기·진행 요청을 즉시 만료시키고 진행 중 핸들을 닫는다.
 void WatchdogLoop()
 {
     std::unique_lock lock(gMutex);
     while (gRunning)
     {
         gWake.wait_for(lock, std::chrono::milliseconds(100));
-        if (gActiveRequest && Clock::now() > gDeadline)
-            CloseActiveLocked(true);
+        if (gLedger.ExpireDue(Clock::now()))
+            CloseActiveLocked();
     }
 }
 } // namespace
@@ -273,8 +247,8 @@ void HttpWorker::Stop()
         if (!gRunning)
             return;
         gRunning = false;
-        gQueue.clear();
-        CloseActiveLocked(false);
+        gLedger.Clear();
+        CloseActiveLocked();
     }
     gWake.notify_all();
     if (gWorker.joinable())
@@ -283,8 +257,7 @@ void HttpWorker::Stop()
         gWatchdog.join();
 
     std::lock_guard lock(gMutex);
-    gDone.clear();
-    gCancelled.clear();
+    gLedger.Clear();
     if (gSession)
     {
         WinHttpCloseHandle(gSession);
@@ -299,40 +272,30 @@ bool HttpWorker::Enqueue(int32_t aId, std::string aProvider, std::string aBody, 
 
     {
         std::lock_guard lock(gMutex);
-        if (!gRunning || !gSession || gQueue.size() >= kMaxQueue)
+        if (!gRunning || !gSession)
             return false;
-        gQueue.push_back(
-            Job{aId, std::move(aProvider), std::move(aBody), std::clamp(aTimeoutMs, kMinTimeoutMs, kMaxTimeoutMs)});
+        // 마감은 접수 시각부터 센다. 대기열에서 기다린 시간도 포함한다.
+        if (!gLedger.Enqueue(aId, std::move(aProvider), std::move(aBody),
+                             std::clamp(aTimeoutMs, kMinTimeoutMs, kMaxTimeoutMs), Clock::now()))
+            return false;
     }
     gWake.notify_all();
     return true;
 }
 
+// 접수된 요청(대기·진행·미회수 완료)이면 true. 모르는 ID는 아무 상태도 남기지 않고 false.
 bool HttpWorker::Cancel(int32_t aId)
 {
     std::lock_guard lock(gMutex);
-    const auto queued = std::find_if(gQueue.begin(), gQueue.end(), [aId](const Job& job) { return job.id == aId; });
-    if (queued != gQueue.end())
-    {
-        gQueue.erase(queued);
-        return true;
-    }
-    if (gActiveId == aId)
-    {
-        CloseActiveLocked(false);
-        return true;
-    }
-    gCancelled.insert(aId);
-    return false;
+    const auto result = gLedger.Cancel(aId);
+    if (result == RequestLedger::CancelResult::Active)
+        CloseActiveLocked();
+    return result != RequestLedger::CancelResult::Unknown;
 }
 
 std::optional<CompletedRequest> HttpWorker::Poll()
 {
     std::lock_guard lock(gMutex);
-    if (gDone.empty())
-        return std::nullopt;
-    auto done = std::move(gDone.front());
-    gDone.pop_front();
-    return done;
+    return gLedger.Poll();
 }
 } // namespace anpc

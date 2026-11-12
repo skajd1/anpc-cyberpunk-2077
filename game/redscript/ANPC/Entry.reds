@@ -649,6 +649,8 @@ public class Entry extends ScriptableSystem {
     if !npc.IsAttached() || !player.IsAttached() { return "session_target_lost"; }
     if npc.IsDead() || player.IsDead() || player.IsInCombat() || NPCPuppet.IsInCombat(npc) { return "session_state_blocked"; }
     if Vector4.Distance(npc.GetWorldPosition(), player.GetWorldPosition()) > Entry.LeaveDistance() { return "session_left"; }
+    let protectedReason = this.ProtectedReason(session);
+    if NotEquals(protectedReason, "") { return protectedReason; }
     // 개인 메뉴 중에는 숨겨진 오리지널 대화 선택지의 표시 여부를 종료 근거로 삼지 않는다.
     if session.menuSuspended { return ""; }
     if session.holdHubId >= 0 {
@@ -661,6 +663,39 @@ public class Entry extends ScriptableSystem {
       }
       if !found { return "session_scene_ended"; }
     }
+    return "";
+  }
+
+  // UF-46: 시작 때와 같은 보호 조건(메뉴·탑승·워크스팟·새 장면·시네마틱)을 유지 중에도 다시 적용한다.
+  // 요청 직전(SubmitChat)·대기 중 감시·표시 직전(OnAIResponse)과 IsWaitingForReply가 SessionEndReason으로 이 판정을 쓴다.
+  // 허용 예외: UF-62 Tab 메뉴 보류 중의 메뉴 상태, 보류한 원작 허브(UF-15)의 장면 참여·HighLevel 2.
+  // 보류 허브가 사라지는 경우(새 장면·퀘스트 제어)는 SessionEndReason의 허브 검사가 종료한다.
+  private func ProtectedReason(session: ref<ChatSession>) -> String {
+    let npc: ref<NPCPuppet> = session.npc;
+    let player: ref<PlayerPuppet> = session.player;
+    let game = player.GetGame();
+    let hold = session.holdHubId >= 0;
+    if !session.menuSuspended {
+      let menu = GameInstance.GetBlackboardSystem(game).Get(GetAllBlackboardDefs().UI_System);
+      if !IsDefined(menu) || menu.GetBool(GetAllBlackboardDefs().UI_System.IsInMenu) { return "session_menu_opened"; }
+    }
+    if IsDefined(GetMountedVehicle(player)) || IsDefined(GetMountedVehicle(npc)) { return "session_mounted"; }
+    let bb = player.GetPlayerStateMachineBlackboard();
+    let sceneSystem = GameInstance.GetSceneSystem(game);
+    let workspots = GameInstance.GetWorkspotSystem(game);
+    if !IsDefined(bb) || !IsDefined(sceneSystem) || !IsDefined(workspots) || !IsDefined(sceneSystem.GetScriptInterface()) {
+      return "session_state_blocked";
+    }
+    let tier = bb.GetInt(GetAllBlackboardDefs().PlayerStateMachine.HighLevel);
+    if tier < 0 || tier > (hold ? 2 : 1) { return "session_scene_changed"; }
+    // 보류 허브는 원작 장면 안이라 장면·대화 참여가 정상이다. 군중·일반 세션은 시작 때와 같이 막는다.
+    if hold { return ""; }
+    let scene = sceneSystem.GetScriptInterface();
+    if scene.IsEntityInScene(npc.GetEntityID()) || scene.IsEntityInDialogue(npc.GetEntityID())
+      || scene.IsEntityInDialogue(player.GetEntityID()) || (tier == 0 && scene.IsEntityInScene(player.GetEntityID())) {
+      return "session_scene_changed";
+    }
+    if workspots.IsActorInWorkspot(player) { return "session_player_workspot"; }
     return "";
   }
 
@@ -732,6 +767,9 @@ public class Entry extends ScriptableSystem {
     let session = this.session;
     if !IsDefined(session) || session.pendingRequest != requestId { return; }
     session.pendingRequest = -1;
+    // 표시 직전 보호 조건 재검사. 달라졌으면 대사·행동 없이 세션을 끝낸다.
+    let blocked = this.SessionEndReason(session);
+    if NotEquals(blocked, "") { this.EndSession(session, blocked); return; }
     let diagnostics = SceneEntryInstaller.Get();
     if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status); }
     let game = this.GetGameInstance();
@@ -793,6 +831,8 @@ public class Entry extends ScriptableSystem {
           GameInstance.GetDelaySystem(game).DelayCallback(callback, 1.0, false);
           return;
         }
+        // 응답 시한이 끝난 요청은 통신 쪽도 취소하고 늦은 결과를 버린다.
+        this.QueueCancel(session, callback.requestId);
         this.OnAIResponse(callback.requestId, "error:timeout", "");
       }
       return;
@@ -836,6 +876,48 @@ public class Entry extends ScriptableSystem {
       i += 1;
     }
     ArrayClear(session.subtitles);
+  }
+
+  // CET 브리지가 이 요청의 통신·대기 기록·미표시 음성/기억을 정리하게 한다(kind=cancel, id=대상 요청).
+  private func QueueCancel(session: ref<ChatSession>, requestId: Int32) -> Void {
+    let request = new AnpcRequest();
+    request.id = requestId;
+    request.kind = "cancel";
+    request.session = session.id;
+    request.instanceToken = session.instanceToken;
+    request.worldToken = this.worldToken;
+    request.crowd = session.crowd;
+    request.npcKey = session.characterKey;
+    ArrayPush(this.outbox, request);
+  }
+
+  // UF-23: 응답 대기 중 요청만 취소하고 같은 대화의 V 차례로 돌아간다. 이후 도착한 응답·행동·음성·기억은
+  // pendingRequest/latestRequest 불일치로 폐기된다(CET는 IsWaitingForReply·GetLatestRequestId로 확인).
+  private func CancelPending(session: ref<ChatSession>) -> Void {
+    let requestId = session.pendingRequest;
+    if requestId < 0 { return; }
+    session.pendingRequest = -1;
+    session.latestRequest = -1;
+    this.QueueCancel(session, requestId);
+    this.HideSubtitles(session);
+    let game = this.GetGameInstance();
+    let diagnostics = SceneEntryInstaller.Get();
+    if IsDefined(diagnostics) { diagnostics.RecordInput("request_cancelled #" + ToString(requestId)); }
+    Entry.ShowMessage(game, "[ANPC] 요청을 취소했습니다. 다시 입력해주세요.");
+    this.ScheduleSubtitle(game, AnpcSubtitleCallback.Reopen(), this.NextSubtitleId(), 0.1);
+  }
+
+  // UF-23/24: 입력칸이 없는 차례의 Esc. 응답 대기면 요청만 취소하고, 자막·재생 차례면 대화를 끝낸다.
+  // 입력칸이 열려 있으면 ChatPopup이 처리하고, 메뉴 보류 중이면 원작 메뉴에 맡긴다. 처리했으면 true.
+  public func OnEscape() -> Bool {
+    let session = this.session;
+    if !IsDefined(session) || session.menuSuspended || IsDefined(session.popup) { return false; }
+    if session.pendingRequest >= 0 {
+      this.CancelPending(session);
+    } else {
+      this.EndSession(session, "session_closed");
+    }
+    return true;
   }
 
   // Enter로 닫힌 입력칸은 응답 차례로 넘어가고, Esc로 닫히면 세션을 끝낸다.
@@ -948,6 +1030,8 @@ public class Entry extends ScriptableSystem {
       return;
     }
     session.pendingRequest = -1;
+    let blocked = this.SessionEndReason(session);
+    if NotEquals(blocked, "") { this.EndSession(session, blocked); return; }
     let diagnostics = SceneEntryInstaller.Get();
     if IsDefined(diagnostics) { diagnostics.RecordInput("ai_response #" + ToString(requestId) + " " + status + " voice"); }
     let game = this.GetGameInstance();

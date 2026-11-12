@@ -248,6 +248,16 @@ function bridge.helperAlive()
   return stamp~=nil and math.abs(os.time()-stamp)<=3
 end
 
+-- 표시되지 않은 응답의 발화 기록을 되돌린다(음성 첫 구간을 기다리는 중 요청이 취소된 경우).
+local function forget(sessionId)
+  local session = sessions[sessionId]
+  if not session then return end
+  for _ = 1, 2 do
+    table.remove(session.turns)
+    if session.allTurns then table.remove(session.allTurns) end
+  end
+end
+
 local voiceJobs = {}
 
 function bridge.stopSpeech(system)
@@ -285,6 +295,8 @@ local function voiceUpdate(system, delta)
     if not job.started then
       job.wait = job.wait + delta
       if not system:IsWaitingForReply(id) then
+        -- 취소·종료·보호 조건 변화로 표시되지 못한 응답은 발화 기록에서도 뺀다.
+        forget(job.session)
         voiceJobs[id] = nil
       elseif job.queue[1] and playSegment(system, id, job, job.queue[1]) then
         local seg = table.remove(job.queue, 1)
@@ -448,6 +460,25 @@ local function prepareCharacter(system,request,key)
   return character
 end
 
+-- Entry의 요청 취소(Esc)·응답 시한 만료. 통신을 취소하고 대기 기록·미재생 음성·미표시 기억을 버린다.
+-- 이미 끝났거나 모르는 요청은 아무 일도 하지 않는다. 늦게 온 결과는 대기 기록이 없어 무시된다.
+local function cancelRequest(system, request)
+  for id, item in pairs(nativePending) do
+    if item.requestId == request.id and item.session == request.session then
+      pcall(function() Game.ANPCNative_Cancel(id) end)
+      nativePending[id] = nil
+    end
+  end
+  local item = pending[request.id]
+  if item and item.session == request.session then
+    pending[request.id] = nil
+    pcall(os.remove, "bridge/res-" .. request.id .. ".txt")
+  end
+  local job = voiceJobs[request.id]
+  if job and job.session == request.session and not job.started then forget(request.session) end
+  voiceJobs[request.id] = nil
+end
+
 local function sendNative(system, request)
   if request.kind == "end" then
     for id, item in pairs(nativePending) do
@@ -556,7 +587,10 @@ function bridge.update(delta)
     for _ = 1, 8 do
       local request = system:TakeRequest()
       if not request or not IsDefined(request) then break end
-      if not request.worldToken or not worldToken or request.worldToken==worldToken then
+      if request.kind=="cancel" and (not request.worldToken or not worldToken or request.worldToken==worldToken) then
+        cancelRequest(system, request)
+        bridge.stopSpeech(system)
+      elseif not request.worldToken or not worldToken or request.worldToken==worldToken then
         if request.kind=="say" then actions.cancel("새 입력") end
         -- 새 입력·대화 종료 때 재생 중이거나 대기 중인 음성을 멈춘다(음성 출력 규격 5절).
         bridge.stopSpeech(system)

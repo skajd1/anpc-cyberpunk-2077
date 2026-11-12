@@ -230,6 +230,21 @@ assert(bridge.actionText() == display)
 bridge.reset()
 print("단일 호출의 행동 선택·인물별 권한·패널 전달·늦은 결과 폐기 검사 통과")
 
+-- 개발 파일 경로의 요청 취소: 대기 기록과 이미 도착한 응답 파일을 버리고 늦은 응답을 받지 않는다.
+Game.ANPCNative_Version = nil
+queue[1] = { id = 50, kind = "say", session = 15, npcKey = "viktor", crowd = false, text = "파일 경로 취소" }
+assert(bridge.update(0.3) and bridge.pendingCount() == 1)
+token = files["bridge/req-50.json"]:match('"token":"([^"]+)"')
+waiting = false; latestRequest = -1
+queue[1] = { id = 50, kind = "cancel", session = 15 }
+assert(bridge.update(0.3) and bridge.pendingCount() == 0)
+responseCount = #responses
+files["bridge/res-50.txt"] = token .. "\nok:reply\n" .. validReply
+assert(bridge.update(0.3) and #responses == responseCount)
+bridge.reset()
+Game.ANPCNative_Version = function() return "0.1.0" end
+print("개발 파일 경로 요청 취소·늦은 응답 무시 검사 통과")
+
 -- 모델이 본 복장·인지 조건이 응답 전에 달라지면 대사·행동·발화 기록을 모두 버린다.
 Game.ANPCNative_Version = function() return "0.1.0" end
 local snapshot = { observationKnown=true, canObserve=true, outfitKnown=true,
@@ -348,3 +363,30 @@ queue[1]={id=203,kind="end",session=60,npcKey="resident",crowd=true,worldToken=s
 assert(bridge.update(0.3) and cancelled[#cancelled]==wire and bridge.pendingCount()==0)
 menuOpen=false;bridge.reset()
 print("UF-62 메뉴 중 응답/행동 보류·복귀 뒤 현재 복장 재검사·추가 호출 없음·메뉴 중 종료 취소 검사 통과")
+
+-- UF-23·SR-05: Esc 취소·응답 시한 만료는 kind=cancel로 전달돼 통신을 취소하고 늦은 결과를 폐기한다.
+queue[1] = { id = 40, kind = "say", session = 14, npcKey = "misty", crowd = false, text = "취소할 요청" }
+assert(bridge.update(0.3) and bridge.pendingCount() == 1)
+local cancelWire = nativeCalls[#nativeCalls].id
+local cancelledBefore = #cancelled
+waiting = false; latestRequest = -1 -- Entry.CancelPending 뒤 상태.
+queue[1] = { id = 40, kind = "cancel", session = 14 }
+assert(bridge.update(0.3))
+assert(#cancelled == cancelledBefore + 1 and cancelled[#cancelled] == cancelWire and bridge.pendingCount() == 0)
+responseCount = #responses
+results[cancelWire] = { status = "ok", text = validReply }
+assert(bridge.update(0.3) and #responses == responseCount and results[cancelWire] == nil)
+-- 모르는·이미 끝난 요청의 취소는 네이티브를 호출하지 않는다(미등록 ID 누적 없음).
+queue[1] = { id = 40, kind = "cancel", session = 14 }
+queue[2] = { id = 999, kind = "cancel", session = 14 }
+assert(bridge.update(0.3) and #cancelled == cancelledBefore + 1)
+-- 취소 뒤 재입력은 새 전송 번호로 정상 처리된다. 다른 세션의 같은 요청 번호 취소는 영향이 없다.
+queue[1] = { id = 41, kind = "say", session = 14, npcKey = "misty", crowd = false, text = "다시 물어볼게" }
+assert(bridge.update(0.3) and nativeCalls[#nativeCalls].id ~= cancelWire and bridge.pendingCount() == 1)
+queue[1] = { id = 41, kind = "cancel", session = 77 }
+assert(bridge.update(0.3) and bridge.pendingCount() == 1)
+results[nativeCalls[#nativeCalls].id] = { status = "ok", text = validReply }
+latestRequest = 41; waiting = true
+assert(bridge.update(0.3) and responses[#responses].id == 41 and responses[#responses].status == "ok")
+bridge.reset()
+print("요청 취소·시한 만료 시 네이티브 취소·늦은 결과 폐기·재입력 검사 통과")

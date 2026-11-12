@@ -1,6 +1,6 @@
 # 개발 및 검증 계획
 
-갱신: 2026-10-27. 개발에 필요한 현재 상태·남은 결함·작업 순서·환경·검증 방법·실측값만 둔다. 제품 동작의 기준은 [전체 명세](full-specification.md)와 분야별 규격이다. 날짜별 작업 경과는 git 기록, 게임에 실제 적용한 파일 변경은 [배포 변경 이력](game-mod-validation.md)을 본다.
+갱신: 2026-11-12. 개발에 필요한 현재 상태·남은 결함·작업 순서·환경·검증 방법·실측값만 둔다. 제품 동작의 기준은 [전체 명세](full-specification.md)와 분야별 규격이다. 날짜별 작업 경과는 git 기록, 게임에 실제 적용한 파일 변경은 [배포 변경 이력](game-mod-validation.md)을 본다.
 
 ## 1. 현재 상태
 
@@ -10,8 +10,8 @@
 | --- | --- | --- |
 | 웹 시제품 | 인물 대화·2명 비교·모의 상황·세션 기억·모의 저장/로드·OpenAI/Codex 연결 | Node 자동 검사, 모의 응답 브라우저 확인, 일부 실제 API |
 | 게임 진입 (G2) | 커뮤니티 오리지널 선택지 아래·군중 기본 반응 뒤 ANPC 항목 | 빅터·미스티·로그 메인 대화와 군중 GenericTalk 뒤 표시·선택 실게임 확인 |
-| 입력·자막 | ModalPopup 입력·두벌식 조합·ANPC 자막·Tab 메뉴 보류(UF-62) | 기존 모델의 AI 자막 실게임 확인. 현재판 회귀·Tab 실게임 미확인 |
-| Native | WinHTTP·Credential Manager·완료 큐·요청 취소 | GitHub Actions Windows 빌드. 새 CTest 로컬 빌드·실게임 재검증 미수행 |
+| 입력·자막 | ModalPopup 입력·두벌식 조합·ANPC 자막·Tab 메뉴 보류(UF-62)·입력칸 없는 차례의 Esc 취소/종료(SR-02) | 기존 모델의 AI 자막 실게임 확인. 현재판 회귀·Tab·Esc 실게임 미확인 |
+| Native | WinHTTP·Credential Manager·완료 큐·요청 취소·접수 기준 전체 시한(RequestLedger, SR-05) | GitHub Actions Windows 빌드. RequestLedger 단위 검사는 Linux g++로 통과. 변경한 HttpWorker의 Windows 빌드·CTest·실게임 재검증 미수행 |
 | 정체성·관찰 | 12명 카드·군중 생성 정체성·스캔 표시 신원·복장/무장/지역/평판 | Lua/CLI·모의 상태의 실제 API. 실게임 대조 미완 |
 | 진행·관계 | 주디·팬앰·조니의 일지 경로·fact 읽기(UF-66) | 정적 분석. 나머지 인물·실게임 binding 미검증 |
 | 행동 | 행동 선택 패널·AMM 제스처 어댑터, 세션별 last_action_result·시작/점유/실패/중단 구분 | 실제 클립 완료 신호·기본 제어와 충돌·보행 복귀는 실게임 미검증. succeeded 미발급 |
@@ -27,11 +27,11 @@ P1은 잘못된 게임 상태 적용·제어 고립·비용·필수 보호에 �
 
 | ID | 명세 | 현재 코드 근거 | 수용 기준 |
 | --- | --- | --- | --- |
-| SR-01 · P1 | UF-45~47 | [Entry](../game/redscript/ANPC/Entry.reds)의 유지 판정이 대상 존재/부착/사망/전투/거리/보류 대화만 검사. 메뉴·탑승·워크스팟·새 장면 미검사 | 보류 예외를 구분한 유지 판정. 요청 전/대기/표시 직전 보호 조건 변화 회귀 |
-| SR-02 · P1 | UF-23/24 | [ChatPopup.OnChatKey](../game/redscript/ANPC/Session.reds)의 Esc가 열린 입력칸에만 연결. waiting 요청만 취소하는 경로 없음 | 모든 차례 종료, waiting 취소→active, 늦은 대사/행동/기억 폐기 |
+| SR-01 · P1 | UF-45~47 | 구현: [Entry.ProtectedReason](../game/redscript/ANPC/Entry.reds)이 유지 판정(SessionEndReason)에 메뉴·탑승·시네마틱/HighLevel·새 장면·플레이어 워크스팟을 시작 조건과 같게 적용하고, 요청 직전(SubmitChat)·대기 감시·표시 직전(OnAIResponse/OnAIVoiceResponse)·CET 수용(IsWaitingForReply)에서 쓴다. 예외: UF-62 메뉴 보류 중 메뉴 상태, 보류 원작 허브의 장면 참여·HighLevel 2(허브 소멸은 기존 검사). 자동 검사: Node 모의 엔진 통과. redscript는 구문 검사만 통과(게임 번들 없어 타입 컴파일 미수행). 실게임 미확인: ANPC 입력칸·군중 정지 중 IsInMenu/장면 판정의 오탐 여부 | 실게임에서 메뉴·탑승·워크스팟·새 장면 진입 시 종료와 늦은 응답 미표시, 보류 허브·Tab 메뉴 예외 유지 확인 |
+| SR-02 · P1 | UF-23/24 | 구현: 입력칸 없는 차례의 Esc를 [GameMenu.OnAction](../game/redscript/ANPC/GameMenu.reds)이 받아 [Entry.OnEscape](../game/redscript/ANPC/Entry.reds)로 전달. 대기 중이면 pending/latest 요청을 비우고 kind=cancel을 보내 같은 대화의 입력 차례로 복귀, 자막·재생 차례면 대화 종료. [bridge](../game/cet/anpc/bridge.lua)는 취소 시 Native 취소·대기 기록·미재생 음성·미표시 발화 기록을 버림. 자동 검사: Node 모의 엔진·Lua 모의 통과. 실게임 미확인: Esc 액션 이름 OpenPauseMenu와 눌림/뗌 시점(틀리면 일시정지 메뉴가 열려 SR-01로 종료됨) | 실게임에서 입력/대기/자막 모든 차례 종료, waiting 취소→active, 늦은 대사/행동/기억 폐기 확인 |
 | SR-03 · P1 | UF-13~15/36 | [Context](../game/redscript/ANPC/Context.reds)가 relationshipKnown을 실제 단계로 채우지 않음. [config](../game/cet/anpc/config.lua)의 allow_draft_content=true | 인물별 식별·허용 단계·사망/연애/사건 인지 매핑. 공개판에서 초안/불명 차단 |
 | SR-04 · P1 | UF-54/55 | [identity.reset](../game/cet/anpc/identity.lua)이 모든 기록을 비움. SaveBundle/저장 앵커 없음 | [기억 규격 3.1](memory-specification.md#31-게임-저장과-기억-묶음의-연결) 저장·복원·미래 기억 회귀 |
-| SR-05 · P1 | UF-23/45/57/60 | Entry의 40초 timeout이 Native 취소로 전달되지 않음. [HttpWorker](../game/native/src/HttpWorker.cpp)의 deadline이 통신 시작 시 계산되고 Cancel이 미등록 ID를 계속 쌓음 | 접수 기준 전체 시한·만료 즉시 취소·상태 회수. 대기열/시간 초과 뒤 재입력 경합 검사 |
+| SR-05 · P1 | UF-23/45/57/60 | 구현: Entry의 40초 시한 만료도 kind=cancel로 Native에 전달. [HttpWorker](../game/native/src/HttpWorker.cpp)가 [RequestLedger](../game/native/src/RequestLedger.cpp)로 마감을 접수 시각부터 계산(대기열 포함), 감시 스레드가 대기·진행 요청을 즉시 만료·핸들 닫기, 미등록 ID 취소는 상태를 남기지 않고 미회수 완료 결과는 취소 시 회수, 같은 ID 중복 접수 거부. 자동 검사: RequestLedger 단위 검사(Linux g++)·Lua 모의 통과. 미확인: 수정한 HttpWorker의 Windows 빌드·CTest 등록·실게임 시한/취소 동작. timeout_ms 설정값(config 30000)과 규격 기본 15000의 차이는 미정리 | 접수 기준 전체 시한·만료 즉시 취소·상태 회수. 대기열/시간 초과 뒤 재입력 경합 검사 |
 | SR-06 · P1 | UF-05/59 | [bridge.buildBody](../game/cet/anpc/bridge.lua)가 항상 max_output_tokens=512. 토큰 예산·원장·예약·설정 UI 없음 | [비용 규격](api-cost-specification.md)의 예산·개인 한도·예약/정산. 로드로 지출 초기화 금지 |
 | SR-07 · P2 | UF-19/20 | StrLen==0만 거름. 공백 요청 가능, 200자 제출 경계 검사 없음 | 공백·200자·조합 확정·직접 제출 검사 |
 | SR-08 · P2 | UF-31 | 유휴 시각 갱신 없음 | 입력/UI 활동 기준 60초, waiting과 구분 |

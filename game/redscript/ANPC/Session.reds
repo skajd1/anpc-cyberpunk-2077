@@ -101,6 +101,7 @@ public class AnpcSubtitleCallback extends DelayCallback {
 // 중앙 하단에 입력칸과 안내 한 줄만 둔다. 게임 입력은 ModalPopup 게임 문맥으로만 막고
 // 화면 상태 전환·비네트·시간 감속·배경 흐림은 쓰지 않는다(화면 상태 전환 시 게임 화면이 검게 가려졌다).
 // 입력칸이 떠 있는 동안 자막이 보이지 않아 V 차례에만 연다.
+// 입력칸이 없는 차례(응답 대기·자막)의 Esc는 GameMenu.OnAction → Entry.OnEscape가 처리한다(대기는 요청 취소, 그 외는 종료).
 public class ChatPopup extends InGamePopup {
   private let mode: ref<inkText>;
   private let input: ref<HangulTextInput>;
