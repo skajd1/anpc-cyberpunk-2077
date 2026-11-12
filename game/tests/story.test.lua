@@ -98,6 +98,8 @@ assert(rel.status=="known" and rel.stage=="first" and rel.resolved.met==true)
 assert(story.relationship(snapshot({},{sq026_13_maiko_money=1}),"judy").status=="blocked")
 assert(story.relationship(snapshot({pisces="completed",pyramid_song="completed"},{sq030_judy_lover=1}),"judy").stage=="partner")
 assert(story.relationship({}, "judy").status=="unknown")
+local manual=snapshot();manual.story=nil;manual.relationshipKnown=true;manual.relationshipStage="first"
+assert(story.relationship(manual,"judy").stage=="first")
 -- 개발 채널: 수동 주입 단계는 unbound 인물에만 받고, 불명은 차단하지 않는다.
 local injected=snapshot();injected.relationshipKnown=true;injected.relationshipStage="relic"
 assert(story.relationship(injected,"viktor").stage=="relic" and story.relationship(injected,"viktor").injected==true)

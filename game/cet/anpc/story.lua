@@ -114,15 +114,20 @@ end
 function story.relationship(snapshot,key)
   local binding=story.binding(key)
   local result={status="unknown",binding=binding}
-  if binding.mode=="unbound" then
+  local function injection()
     local s=snapshot or {}
     if config.allow_draft_content==true and s.relationshipKnown==true and type(s.relationshipStage)=="string" and s.relationshipStage~="" then
-      result.status="known";result.stage=s.relationshipStage;result.injected=true
-    else result.reason="binding_unavailable" end
+      result.status="known";result.stage=s.relationshipStage;result.injected=true;return true
+    end
+  end
+  if binding.mode=="unbound" then
+    if not injection() then result.reason="binding_unavailable" end
     return result
   end
   local resolved=story.resolve(snapshot,key)
   result.resolved=resolved
+  -- 게임 진행 스냅샷이 없는 입력(웹 시제품·평가 하네스)은 개발 채널의 수동 단계를 기존처럼 받는다.
+  if not resolved and injection() then return result end
   if not resolved then result.reason="story_unavailable"
   elseif resolved.blocked then result.status="blocked";result.reason=resolved.blocked
   elseif resolved.stage then result.status="known";result.stage=resolved.stage
