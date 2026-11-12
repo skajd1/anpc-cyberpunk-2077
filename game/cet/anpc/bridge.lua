@@ -6,6 +6,8 @@ local json = require("json")
 local prompts = require("prompts")
 local config = require("config")
 local context = require("context")
+local story = require("story")
+local memory = require("memory")
 local identity = require("identity")
 local actions = require("actions")
 local speechRules = require("speech")
@@ -341,6 +343,13 @@ local function entry()
   return system
 end
 
+-- 저장 연결 시스템(ANPC.MemorySave). 없거나 조회가 실패하면 nil이며 이때 월드 변경은 기억을 모두 비운다(저장별 기억 보류).
+local function memorySystem()
+  local ok, system = pcall(function() return Game.GetScriptableSystemsContainer():Get("ANPC.MemorySave") end)
+  if ok and system and IsDefined(system) then return system end
+  return nil
+end
+
 function bridge.nativeVersion()
   local ok, version = pcall(function() return Game.ANPCNative_Version() end)
   if ok and type(version) == "string" and version ~= "" then return version end
@@ -414,9 +423,11 @@ function bridge.deleteKey()
   return ok and deleted == true
 end
 
+local turnRevision = 0
 local function remember(sessionId, playerText, npcLine)
   local session = sessions[sessionId]
   if not session then return end
+  turnRevision = turnRevision + 1
   session.turns[#session.turns + 1] = { role = "player", text = playerText }
   session.turns[#session.turns + 1] = { role = "npc", text = npcLine }
   session.allTurns = session.allTurns or json.array()
@@ -439,7 +450,7 @@ local function prepareCharacter(system,request,key)
   end
   local character=prompts.characters[key]
   if not character then system:OnAIResponse(request.id,"error:community_profile_missing",""); return nil end
-  if prompts.blocked[key] and (not request.context or request.context.relationshipKnown~=true) then
+  if prompts.blocked[key] and (not request.context or story.relationship(request.context,key).status~="known") then
     system:OnAIResponse(request.id,"error:story_blocked",""); return nil
   end
   sessions[request.session]=sessions[request.session] or {turns={}}
@@ -578,8 +589,16 @@ function bridge.update(delta)
     if not system then return end
     local scopeOK,scope=pcall(function() return system:GetWorldToken() end)
     if scopeOK and scope and scope~="" then
-      if worldToken and worldToken~=scope then bridge.reset() end
+      if worldToken and worldToken~=scope then bridge.reset(memorySystem()~=nil) end
       worldToken=scope
+    end
+    -- 저장 연결: 로드·새 게임이면 저장 자료로 교체(없으면 빈 기억), 평소에는 다음 저장용 묶음을 최신으로 둔다.
+    local memorySystemNow=memorySystem()
+    if memorySystemNow then
+      local memoryOK=pcall(memory.sync,memorySystemNow,function(sessionId)
+        local session=sessions[sessionId];return session and session.allTurns or nil
+      end,function() return turnRevision end)
+      if not memoryOK then pcall(identity.reset) end
     end
     actions.update(delta,system)
     if config.voice_enabled then voiceUpdate(system, delta) end
@@ -615,7 +634,8 @@ function bridge.update(delta)
   return ok
 end
 
-function bridge.reset()
+-- keepMemory: 빠른 이동 같은 세계 전환에서는 저장 연결이 있을 때 커뮤니티 기억을 유지하고 군중·진행 중 세션만 버린다.
+function bridge.reset(keepMemory)
   bridge.stopSpeech()
   actions.reset()
   for id in pairs(nativePending) do
@@ -624,7 +644,7 @@ function bridge.reset()
   pending = {}
   nativePending = {}
   sessions = {}
-  identity.reset()
+  if keepMemory then identity.suspend() else identity.reset(); memory.reset() end
   worldToken = nil
   actionDisplay = nil
   elapsed = 0

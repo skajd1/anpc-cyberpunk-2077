@@ -1,11 +1,13 @@
 -- ANPC AI 연결 설정. 키는 여기에 넣지 않는다(CET 창에서 Windows 자격 증명 관리자에 저장).
-return {
+local config = {
   -- auto: ANPC.Native가 있으면 사용하고, 없으면 개발 파일 브리지(prototype/game-bridge.js)를 쓴다.
   transport = "auto",
   provider = "openai",
   model = "gpt-6-luna",
-  -- 현재 게임판은 조사 초안을 쓰는 개발 시험판이다. false에서는 승인 자료만 허용한다.
-  allow_draft_content = true,
+  -- 채널: public(기본)은 초안·불명 콘텐츠를 항상 차단한다(DIST-06). development는 config_dev.lua가 있을 때만 켜진다.
+  channel = "public",
+  -- 초안 허용은 config_dev.lua(개발 전용, 공개 패키지에서 제외)로만 true가 된다. 기본 false는 승인·검증 자료만 허용한다.
+  allow_draft_content = false,
   -- 제공자 요청 전체 제한 시간. redscript는 40초 뒤 실패로 처리한다.
   timeout_ms = 30000,
   -- 한 세션에서 다음 요청에 넣을 최근 발화 수.
@@ -22,3 +24,8 @@ return {
   -- 3D 음성 재생 음량(Audioware 1.0 기준). 원작 NPC 음성과 비교해 맞춘다.
   voice_volume = 1.0
 }
+
+local ok, dev = pcall(require, "config_dev")
+if ok and type(dev) == "table" then for k, v in pairs(dev) do config[k] = v end end
+if config.channel ~= "development" then config.channel = "public"; config.allow_draft_content = false end
+return config

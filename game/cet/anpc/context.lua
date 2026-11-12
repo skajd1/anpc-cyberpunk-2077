@@ -40,9 +40,10 @@ function context.encode(snapshot, key, crowd, includeTime)
     end
   end
   local recognized = crowd == true and type(s.streetCred) == "number" and s.streetCred >= 40
+  local rel=crowd~=true and story.relationship(s,key) or nil
   local nameKnown = recognized or (crowd ~= true and ((key == "viktor" and s.viktorVisitConfirmed == true)
-    or (s.relationshipKnown == true and s.relationshipStage ~= "")))
-  local resolved=crowd~=true and story.resolve(s,key) or nil
+    or (rel.status=="known" and rel.injected==true)))
+  local resolved=rel and rel.resolved
   if resolved and not resolved.blocked and resolved.met then nameKnown=true end
   local observe = s.observationKnown == true and tostring(observable) or "null"
   local weaponKnown = observable and s.weaponKnown == true
@@ -61,7 +62,7 @@ end
 function context.fingerprint(snapshot,key,crowd)
   local s=snapshot or {}
   local archetypes={}; for _, id in ipairs(s.crowdArchetypeIDs or {}) do archetypes[#archetypes+1]=id end; table.sort(archetypes)
-  return context.encode(s,key,crowd,false) .. ':' .. tostring(s.relationshipKnown==true) .. ':' .. tostring(s.relationshipStage or '')
+  return context.encode(s,key,crowd,false) .. ':' .. tostring(crowd~=true and story.relationship(s,key).stage or '')
     .. ':' .. tostring(s.npcAliveConfirmed) .. ':' .. tostring(s.npcFreeConfirmed)
     .. ':' .. tostring(s.crowdEvidenceKnown==true) .. ':' .. table.concat(archetypes,',')
     .. ':' .. json.encode(context.npcIdentity(s))

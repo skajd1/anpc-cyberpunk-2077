@@ -13,9 +13,10 @@
 | 입력·자막 | ModalPopup 입력·두벌식 조합·ANPC 자막·Tab 메뉴 보류(UF-62)·입력칸 없는 차례의 Esc 취소/종료(SR-02) | 기존 모델의 AI 자막 실게임 확인. 현재판 회귀·Tab·Esc 실게임 미확인 |
 | Native | WinHTTP·Credential Manager·완료 큐·요청 취소·접수 기준 전체 시한(RequestLedger, SR-05) | GitHub Actions Windows 빌드. RequestLedger 단위 검사는 Linux g++로 통과. 변경한 HttpWorker의 Windows 빌드·CTest·실게임 재검증 미수행 |
 | 정체성·관찰 | 12명 카드·군중 생성 정체성·스캔 표시 신원·복장/무장/지역/평판 | Lua/CLI·모의 상태의 실제 API. 실게임 대조 미완 |
-| 진행·관계 | 주디·팬앰·조니의 일지 경로·fact 읽기(UF-66) | 정적 분석. 나머지 인물·실게임 binding 미검증 |
+| 진행·관계 | 주디·팬앰·조니의 일지 경로·fact 읽기(UF-66), [story.relationship](../game/cet/anpc/story.lua)의 인물별 단계·차단 판정, 공개/개발 채널 구분(SR-03) | 정적 분석·Lua 모의 상태. 세 인물도 runtime_verified=false라 공개 채널에서는 모두 차단. 나머지 인물은 binding 없음(불명). 실게임 binding 미검증 |
 | 행동 | 행동 선택 패널·AMM 제스처 어댑터, 세션별 last_action_result·시작/점유/실패/중단 구분 | 실제 클립 완료 신호·기본 제어와 충돌·보행 복귀는 실게임 미검증. succeeded 미발급 |
-| 저장별 기억·비용 원장 | 미구현 | SR-04·SR-06 |
+| 저장별 기억 | [memory.lua](../game/cet/anpc/memory.lua)의 SaveBundle 캡처·검증·복원, [MemorySave.reds](../game/redscript/ANPC/MemorySave.reds)의 persistent 배열·저장 앵커(SR-04) | Lua 모의 MemorySave와 계약 스키마 검사 통과. redscript는 구문 검사만. 저장 훅·persistent 바이트·로드 시점은 실게임 미확인 |
+| 비용 원장 | 미구현 | SR-06 |
 | 제품 설치/복원/제거 | 개발 ZIP 생성기만 | SR-12·SR-13 |
 | NPC 음성 | 응답 계약(DialogueReplyVoice)·프롬프트 0.19(음성 시 대사 45자 안내, 감정 sad 추가)·웹 응답 검사의 음성 옵션(기본 꺼짐), 일본어 읽기 표기표(65개 중 58개 일본어판 공식 자료로 확인). 파인튜닝 v1(주디·빅터·로그), 개발용 TTS 보조 프로세스·CET 음성 응답 연결, Audioware 슬롯 3D 재생(설계안 A)·환경 효과·가림·음량 | Node·계약·콘텐츠 검사. 설계안 A 3D 재생 실게임 확인. 인물별 참조 음성 재선정 중. 실제 API 음성 대사 품질·Native TTS·voice_profile 콘텐츠 미착수 |
 | 프롬프트 캐싱·플레이어 음성 입력 | 규격만 | 6절 계획 |
@@ -29,8 +30,8 @@ P1은 잘못된 게임 상태 적용·제어 고립·비용·필수 보호에 �
 | --- | --- | --- | --- |
 | SR-01 · P1 | UF-45~47 | 구현: [Entry.ProtectedReason](../game/redscript/ANPC/Entry.reds)이 유지 판정(SessionEndReason)에 메뉴·탑승·시네마틱/HighLevel·새 장면·플레이어 워크스팟을 시작 조건과 같게 적용하고, 요청 직전(SubmitChat)·대기 감시·표시 직전(OnAIResponse/OnAIVoiceResponse)·CET 수용(IsWaitingForReply)에서 쓴다. 예외: UF-62 메뉴 보류 중 메뉴 상태, 보류 원작 허브의 장면 참여·HighLevel 2(허브 소멸은 기존 검사). 자동 검사: Node 모의 엔진 통과. redscript는 구문 검사만 통과(게임 번들 없어 타입 컴파일 미수행). 실게임 미확인: ANPC 입력칸·군중 정지 중 IsInMenu/장면 판정의 오탐 여부 | 실게임에서 메뉴·탑승·워크스팟·새 장면 진입 시 종료와 늦은 응답 미표시, 보류 허브·Tab 메뉴 예외 유지 확인 |
 | SR-02 · P1 | UF-23/24 | 구현: 입력칸 없는 차례의 Esc를 [GameMenu.OnAction](../game/redscript/ANPC/GameMenu.reds)이 받아 [Entry.OnEscape](../game/redscript/ANPC/Entry.reds)로 전달. 대기 중이면 pending/latest 요청을 비우고 kind=cancel을 보내 같은 대화의 입력 차례로 복귀, 자막·재생 차례면 대화 종료. [bridge](../game/cet/anpc/bridge.lua)는 취소 시 Native 취소·대기 기록·미재생 음성·미표시 발화 기록을 버림. 자동 검사: Node 모의 엔진·Lua 모의 통과. 실게임 미확인: Esc 액션 이름 OpenPauseMenu와 눌림/뗌 시점(틀리면 일시정지 메뉴가 열려 SR-01로 종료됨) | 실게임에서 입력/대기/자막 모든 차례 종료, waiting 취소→active, 늦은 대사/행동/기억 폐기 확인 |
-| SR-03 · P1 | UF-13~15/36 | [Context](../game/redscript/ANPC/Context.reds)가 relationshipKnown을 실제 단계로 채우지 않음. [config](../game/cet/anpc/config.lua)의 allow_draft_content=true | 인물별 식별·허용 단계·사망/연애/사건 인지 매핑. 공개판에서 초안/불명 차단 |
-| SR-04 · P1 | UF-54/55 | [identity.reset](../game/cet/anpc/identity.lua)이 모든 기록을 비움. SaveBundle/저장 앵커 없음 | [기억 규격 3.1](memory-specification.md#31-게임-저장과-기억-묶음의-연결) 저장·복원·미래 기억 회귀 |
+| SR-03 · P1 | UF-13~15/36 | 구현: [story.relationship/allowed](../game/cet/anpc/story.lua)가 인물별 단계·차단(사망·연애·사건 인지 포함)을 한 곳에서 판정해 [identity](../game/cet/anpc/identity.lua)·[context](../game/cet/anpc/context.lua)·[bridge](../game/cet/anpc/bridge.lua)가 공유한다. binding은 주디·팬앰·조니만 정적 근거(game-state-bindings의 npc_scopes·fact_bindings, runtime_verified 생성)가 있고 나머지 9명은 unbound=불명이다. [Context.reds](../game/redscript/ANPC/Context.reds)의 relationshipKnown/Stage는 제거했고 단계는 StorySnapshot에서만 판정한다. 채널: [config](../game/cet/anpc/config.lua) 기본은 public·allow_draft_content=false이고 개발 전용 [config_dev.lua](../game/cet/anpc/config_dev.lua)가 있을 때만 초안을 허용한다. [build-game-package.ps1](../scripts/build-game-package.ps1)은 공개 채널에서 config_dev.lua를 제외하고 기본 채널이 public인지 검사한다. 공개 채널은 runtime_verified binding과 확인된 단계가 없으면 story_blocked다(현재 모든 인물 차단). 자동 검사: Lua 모의 통과(story.test.lua). 미확인: 세 인물 외 binding·사망/분기 fact 의미(npc_scopes semantic_review=pending), 실게임 fact·일지 값. 현재 동작: 개발 채널의 불명 인물은 단계 없이 허용하며 jackie·kerry·evelyn·songbird는 계속 차단 | 인물별 식별·허용 단계·사망/연애/사건 인지 매핑. 공개판에서 초안/불명 차단. 남은 일: 나머지 인물의 binding 근거 확보와 세 인물의 실게임 검증 |
+| SR-04 · P1 | UF-54/55 | 구현: [memory.lua](../game/cet/anpc/memory.lua)가 커뮤니티 기억(요약·진행 중 수용 발화)을 계약 SaveBundle(memory.save-bundle)로 캡처하고 game_save_ref·범위·정책/콘텐츠 버전·digest를 검사해 복원한다. [MemorySave.reds](../game/redscript/ANPC/MemorySave.reds)가 저장별 persistent 바이트·숫자 앵커(회차·체크포인트)를 저장 직전에 갱신하고 로드 때 앵커와 맞는 바이트만 돌려준다. [bridge](../game/cet/anpc/bridge.lua)는 세션 토큰이 바뀌면(로드·새 게임) 저장 자료로 교체하고 없으면 빈 기억으로 시작하며, 빠른 이동은 군중·진행 세션만 버리고 커뮤니티 기억을 유지한다. 저장 시스템이 없으면 이전처럼 월드 변경에 기억을 비운다. 계약은 변경하지 않았다. 자동 검사: Lua 모의 MemorySave(과거 저장 로드의 미래 기억 제거·슬롯 덮어쓰기·앵커/범위/버전/digest 불일치 빈 기억·상한)와 생성 묶음의 계약 스키마 통과. 실게임 미확인(MemorySave.reds에 격리): Session/BeforeSave 콜백 등록·핸들러 시그니처, persistent array<Uint8>/array<Int32> 저장·크기·모드 제거 후 저장, OnAttach/OnRestored 순서, CET의 array<Uint8> 변환, 묶음 상한 128KB(잠정). Lua가 변경 때마다 최신 묶음을 미리 맡기므로 저장 직전 1프레임 이내 변경은 빠질 수 있다 | [기억 규격 3.1](memory-specification.md#31-게임-저장과-기억-묶음의-연결) 저장·복원·미래 기억 회귀. 남은 일: 위 미확인 항목의 실게임 시험과 통과 전까지 저장별 기억 활성 보류 |
 | SR-05 · P1 | UF-23/45/57/60 | 구현: Entry의 40초 시한 만료도 kind=cancel로 Native에 전달. [HttpWorker](../game/native/src/HttpWorker.cpp)가 [RequestLedger](../game/native/src/RequestLedger.cpp)로 마감을 접수 시각부터 계산(대기열 포함), 감시 스레드가 대기·진행 요청을 즉시 만료·핸들 닫기, 미등록 ID 취소는 상태를 남기지 않고 미회수 완료 결과는 취소 시 회수, 같은 ID 중복 접수 거부. 자동 검사: RequestLedger 단위 검사(Linux g++)·Lua 모의 통과. 미확인: 수정한 HttpWorker의 Windows 빌드·CTest 등록·실게임 시한/취소 동작. timeout_ms 설정값(config 30000)과 규격 기본 15000의 차이는 미정리 | 접수 기준 전체 시한·만료 즉시 취소·상태 회수. 대기열/시간 초과 뒤 재입력 경합 검사 |
 | SR-06 · P1 | UF-05/59 | [bridge.buildBody](../game/cet/anpc/bridge.lua)가 항상 max_output_tokens=512. 토큰 예산·원장·예약·설정 UI 없음 | [비용 규격](api-cost-specification.md)의 예산·개인 한도·예약/정산. 로드로 지출 초기화 금지 |
 | SR-07 · P2 | UF-19/20 | StrLen==0만 거름. 공백 요청 가능, 200자 제출 경계 검사 없음 | 공백·200자·조합 확정·직접 제출 검사 |
@@ -221,7 +222,7 @@ Node.js 22 이상, 추가 패키지 없음. 저장소 루트에서 `npm start` �
 | `npm run check:story` | 진행 정책·관계 단계 |
 | `node scripts/validate-content.mjs` | 콘텐츠 JSON·참조·조건 |
 | `npm run build:cet-prompts` | 프롬프트 명세 → CET prompts.lua 동기화 |
-| 저장소 루트에서 Lua로 `game/tests/*.test.lua` 실행 | CET 브리지·행동·정체성·진행·음성 실패 대체 |
+| 저장소 루트에서 Lua로 `game/tests/*.test.lua` 실행 | CET 브리지·행동·정체성·진행(공개/개발 채널 차단)·저장별 기억(모의 MemorySave)·음성 실패 대체 |
 | `ANPC_LUA=lua npm test` | 웹/CET 지식·예시·읽기 비교 포함. Lua 없으면 비교 검사 건너뜀 |
 | CTest | Native 응답 처리 |
 

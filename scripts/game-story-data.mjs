@@ -10,7 +10,16 @@ export function buildGameStoryData() {
     'sq030_judy_lover','sq027_panam_knows_about_chip','sq027_panam_doesnt_know_about_johnny','sq027_panam_lover',
     'sq027_failed','sq032_johnny_friend','q115_point_of_no_return','q307_start'];
   for(const fact of facts) if(!registry.fact_bindings.find(f=>f.fact===fact && f.write_count>0)) throw new Error(`게임 파일 쓰기 근거 없음: ${fact}`);
-  return {version:'priority-story-1',keys,quests:registry.quest_bindings.filter(q=>quests.includes(q.policy_id)).map(q=>({id:q.policy_id,path:q.journal.path})),facts};
+  // 인물별 binding 증거 상태. 실게임 확인(runtime_verified)과 의미 검토가 모두 끝난 인물만 공개 채널에서 허용한다.
+  const bindings={};
+  for(const key of keys){
+    const scope=registry.npc_scopes.find(s=>s.character_key===key);
+    if(!scope) throw new Error(`npc_scopes 없음: ${key}`);
+    const verified=scope.runtime_verified===true && scope.semantic_review==='approved'
+      && scope.facts.every(name=>registry.fact_bindings.find(f=>f.fact===name)?.runtime_verified===true);
+    bindings[key]={runtime_verified:verified};
+  }
+  return {version:'priority-story-2',keys,bindings,quests:registry.quest_bindings.filter(q=>quests.includes(q.policy_id)).map(q=>({id:q.policy_id,path:q.journal.path})),facts};
 }
 
 export function renderGameStoryCollector(data) {

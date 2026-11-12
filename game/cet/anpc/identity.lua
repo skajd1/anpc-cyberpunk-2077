@@ -177,8 +177,7 @@ local function makeCrowd(request)
     generator_version=archetype.personality_generation.generator_version,content_version=data.version,knowledge=knowledge,summaries=A()}
 end
 
-local function stageFor(card,snapshot,resolved)
-  local id=resolved and resolved.stage or (not resolved and snapshot.relationshipKnown==true and snapshot.relationshipStage)
+local function stageFor(card,id)
   if not id then return nil end
   for _, stage in ipairs(card.relationship_stages or {}) do if stage.id==id then
     assert(usable(stage) and stage.available==true,"story_blocked"); return stage
@@ -207,10 +206,15 @@ local function ruleView(rule)
 end
 function identity.compose(record,request,turns,availableActions)
   local card,snapshot=record.card,request.context
-  local resolved=story.resolve(snapshot,card.character_key)
-  if resolved and resolved.blocked then error("story_blocked") end
-  local stage=stageFor(card,snapshot,resolved)
-  if card.npc_type~="crowd" and not stage and config.allow_draft_content~=true then error("story_blocked") end
+  -- 인물 진행·관계 인지는 story.relationship 한 곳에서 판정한다. 공개 채널은 검증된 binding과 확인된 단계가 없으면 차단한다.
+  local rel
+  if card.npc_type~="crowd" then
+    local ok=story.allowed(snapshot,card.character_key)
+    if not ok then error("story_blocked") end
+    rel=story.relationship(snapshot,card.character_key)
+  end
+  local resolved=rel and rel.resolved
+  local stage=stageFor(card,rel and rel.stage)
   local fields=fieldsFor(card,snapshot,stage,resolved)
   if stage then assert(identity.condition(card.dialogue_conditions,fields)==true,"story_blocked") end
   local instructions=A(); assert(validCore(record.core),"context_unavailable")
@@ -352,12 +356,20 @@ local function short(text,limit)
   for i=1,#text do if text:byte(i)<128 or text:byte(i)>=192 then count=count+1; if count>limit then stop=i-1; break end end end
   return text:sub(1,stop):gsub('[\r\n]',' ')
 end
+local revision=0
+local function summaryOf(turns)
+  if #turns==0 then return nil end
+  return short("V의 발화: " .. short(turns[1].text,130) .. " / NPC의 답변: " .. short(turns[#turns].text,130),320)
+end
+local function addSummary(record,text)
+  record.summaries[#record.summaries+1]=text
+  while #record.summaries>64 do table.remove(record.summaries,1) end
+  revision=revision+1
+end
 function identity.finish(session,turns,now)
   for _, record in pairs(records) do if record.activeSession==session then
-    if #turns>0 then
-      record.summaries[#record.summaries+1]=short("V의 발화: " .. short(turns[1].text,130) .. " / NPC의 답변: " .. short(turns[#turns].text,130),320)
-      while #record.summaries>64 do table.remove(record.summaries,1) end
-    end
+    local text=summaryOf(turns)
+    if text then addSummary(record,text) end
     record.activeSession=nil; record.endedAt=now; record.touchedAt=now
   end end
   local inactive={}; for key,record in pairs(records) do if record.card.npc_type=="crowd" and not record.activeSession then inactive[#inactive+1]={key=key,record=record} end end
@@ -368,5 +380,46 @@ function identity.prune(now,system)
   for key,record in pairs(records) do if record.card.npc_type=="crowd" and not record.activeSession
     and (now-(record.endedAt or now)>600 or not system:IsIdentityAlive(record.instanceToken)) then records[key]=nil end end
 end
-function identity.reset() records={} end
+function identity.reset() records={}; revision=revision+1 end
+
+-- 저장 연결(memory.lua)용 단일 접점. 커뮤니티 기억만 다룬다. 군중 기억은 저장에 넣지 않는다.
+function identity.revision() return revision end
+function identity.contentVersion() return data.version end
+-- 세계 전환(빠른 이동 등): 군중 기록과 진행 중 세션 연결만 버리고 커뮤니티 기억은 유지한다.
+function identity.suspend()
+  for key,record in pairs(records) do
+    if record.card.npc_type=="crowd" then records[key]=nil else record.activeSession=nil end
+  end
+  revision=revision+1
+end
+-- 반환: {{npc_key=, summaries={문자열...}, turns={{role=,text=}...}}...} npc_key 순. inProgress(sessionId)는 수용된 진행 중 발화.
+function identity.exportCommunity(inProgress)
+  local list={}
+  for key,record in pairs(records) do if record.card.npc_type~="crowd" then
+    local turns=record.activeSession and inProgress and inProgress(record.activeSession) or {}
+    if #record.summaries>0 or #turns>0 then
+      local item={npc_key=key:gsub("^community:",""),summaries={},turns={}}
+      for _,text in ipairs(record.summaries) do item.summaries[#item.summaries+1]=text end
+      for _,turn in ipairs(turns) do item.turns[#item.turns+1]={role=turn.role,text=turn.text} end
+      list[#list+1]=item
+    end
+  end end
+  table.sort(list,function(a,b) return a.npc_key<b.npc_key end)
+  return list
+end
+-- 저장 자료로 커뮤니티 기억을 완전히 교체한다. 군중·진행 중 세션은 모두 폐기한다. 진행 중이던 발화는 로컬 한 줄 요약으로 닫는다.
+function identity.restoreCommunity(list)
+  records={}
+  for _,item in ipairs(list or {}) do
+    local card=data.cards[item.npc_key]
+    if usable(card) and card.npc_type~="crowd" and validCore(card.core_personality) then
+      local record={card=card,core=copy(card.core_personality),content_version=data.version,summaries=A()}
+      for _,text in ipairs(item.summaries or {}) do addSummary(record,text) end
+      local text=summaryOf(item.turns or {})
+      if text then addSummary(record,text) end
+      records['community:' .. item.npc_key]=record
+    end
+  end
+  revision=revision+1
+end
 return identity

@@ -1,4 +1,6 @@
 local json=require("json")
+local config=require("config")
+local meta=assert(json.decode(require("prompts").story_data))
 local story={}
 local targets={judy=true,panam=true,johnny=true}
 local related={
@@ -97,6 +99,45 @@ function story.resolve(snapshot,key)
   result.facts={}
   for _,name in ipairs(factKeys[key]) do result.facts[name]=f[name] end
   return result
+end
+
+-- 인물별 binding 상태. 저장소 정적 조사 근거가 있는 인물만 static_research, 나머지는 unbound(불명)다.
+-- runtime_verified는 game-state-bindings.json(npc_scopes·fact_bindings)에서 생성한다. 실게임 확인 전에는 모두 false다.
+function story.binding(key)
+  local item=meta.bindings and meta.bindings[key]
+  if not targets[key] or not item then return {mode="unbound",runtime_verified=false} end
+  return {mode="static_research",runtime_verified=item.runtime_verified==true}
+end
+
+-- 관계·사건 인지의 단일 판정. 반환: {status="known"|"unknown"|"blocked",stage=,reason=,binding=,resolved=}
+-- unbound 인물은 게임 상태로 단계를 알 수 없으므로 unknown이다. 수동 주입(snapshot.relationshipStage)은 개발 채널의 시험 입력으로만 받는다.
+function story.relationship(snapshot,key)
+  local binding=story.binding(key)
+  local result={status="unknown",binding=binding}
+  if binding.mode=="unbound" then
+    local s=snapshot or {}
+    if config.allow_draft_content==true and s.relationshipKnown==true and type(s.relationshipStage)=="string" and s.relationshipStage~="" then
+      result.status="known";result.stage=s.relationshipStage;result.injected=true
+    else result.reason="binding_unavailable" end
+    return result
+  end
+  local resolved=story.resolve(snapshot,key)
+  result.resolved=resolved
+  if not resolved then result.reason="story_unavailable"
+  elseif resolved.blocked then result.status="blocked";result.reason=resolved.blocked
+  elseif resolved.stage then result.status="known";result.stage=resolved.stage
+  else result.reason="stage_unresolved" end
+  return result
+end
+
+-- 채널별 허용. 개발 채널은 초안·불명도 단계 없이 허용(차단 사유만 막음). 공개 채널은 검증된 binding과 확인된 단계가 있어야 한다.
+function story.allowed(snapshot,key)
+  local rel=story.relationship(snapshot,key)
+  if rel.status=="blocked" then return false,rel.reason,rel end
+  if config.allow_draft_content==true then return true,nil,rel end
+  if not rel.binding.runtime_verified then return false,"binding_unverified",rel end
+  if rel.status~="known" then return false,rel.reason or "stage_unknown",rel end
+  return true,nil,rel
 end
 
 function story.fingerprint(snapshot,key)

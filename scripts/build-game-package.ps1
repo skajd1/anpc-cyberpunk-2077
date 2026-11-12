@@ -15,6 +15,7 @@ if ($Channel -eq 'public') {
   if (!$anpcProfile.public_release_ready -or @($anpcProfile.release_blockers).Count -gt 0) { throw '공개 배포 수용 미완료: 개발·검증 계획의 출시 전 결함을 먼저 해결하세요.' }
   if (!$anpcContent.runtime_enabled -or !(Test-Path (Join-Path $anpcRepo 'LICENSE'))) { throw '콘텐츠 활성/프로젝트 라이선스가 미완료입니다.' }
   if ((Get-Content (Join-Path $anpcRepo 'game/cet/anpc/config.lua') -Raw -Encoding UTF8) -match 'allow_draft_content\s*=\s*true') { throw '초안 허용 설정은 공개 패키지에 포함할 수 없습니다.' }
+  if ((Get-Content (Join-Path $anpcRepo 'game/cet/anpc/config.lua') -Raw -Encoding UTF8) -notmatch 'channel\s*=\s*"public"') { throw 'config.lua의 기본 채널은 public이어야 합니다.' }
 }
 $anpcBinary = (Resolve-Path -LiteralPath $NativeDll).Path
 $anpcBinaryBytes = [IO.File]::ReadAllBytes($anpcBinary)
@@ -32,6 +33,8 @@ foreach ($anpcMapping in @(
   @('game/redscript/ANPC','r6/scripts/ANPC','*.reds')
 )) {
   foreach ($anpcFile in Get-ChildItem -LiteralPath (Join-Path $anpcRepo $anpcMapping[0]) -File -Filter $anpcMapping[2]) {
+    # 개발 전용 덮어쓰기(초안 허용)는 공개 패키지에 넣지 않는다.
+    if ($Channel -eq 'public' -and $anpcFile.Name -eq 'config_dev.lua') { continue }
     $anpcInputs += [pscustomobject]@{ source=$anpcFile.FullName; path=($anpcMapping[1]+'/'+$anpcFile.Name); install=$true }
   }
 }

@@ -21,9 +21,8 @@ public class ContextSnapshot extends IScriptable {
   public let npcAliveConfirmed: Bool;
   public let npcFreeConfirmed: Bool;
   public let npcIdentity: ref<ContextNPCIdentity>;
-  // 실제 관계 매핑 전에는 빈 문자열/false. 웹 프리셋이나 모델 출력으로 채우지 않는다.
-  public let relationshipKnown: Bool;
-  public let relationshipStage: String;
+  // 관계 단계는 StorySnapshot(일지·fact 원본)에서 Lua story.relationship이 인물별로 판정한다(단일 기준).
+  // 여기서 단계 문자열을 채우지 않는다. binding이 없는 인물은 불명이며 공개 채널에서는 차단된다.
   public let story: ref<StorySnapshot>;
   // 직접 확인한 업무·표시 역할만 원형 후보를 채운다. 복장/지역으로 보충하지 않는다.
   public let crowdEvidenceKnown: Bool;

@@ -83,3 +83,53 @@ assert(c.fingerprint(a,"judy",false)~=c.fingerprint(b,"judy",false))
 local first=compose("panam",snapshot({ghost_town="completed"}),"지금 목표는?")
 assert(#first.canon_context.current_goals==0) -- 이미 끝낸 차량 회수 목표를 다시 만들지 않는다.
 print("UF-66 실제 identity 프롬프트에 관계·공개 지식 연결 및 원시 fact 키 미전송 검사 통과")
+
+-- SR-03: 인물별 binding·단계 판정(story.relationship)과 공개/개발 채널 차단
+local config=require("config")
+assert(config.channel=="development" and config.allow_draft_content==true) -- config_dev.lua가 있는 개발 트리
+assert(story.binding("judy").mode=="static_research" and story.binding("judy").runtime_verified==false)
+for _,key in ipairs({"viktor","misty","jackie","evelyn","goro","kerry","river","rogue","songbird"}) do
+  assert(story.binding(key).mode=="unbound",key)
+  local rel=story.relationship(snapshot({information="completed"}),key)
+  assert(rel.status=="unknown" and rel.reason=="binding_unavailable" and rel.stage==nil,key)
+end
+local rel=story.relationship(snapshot({information="completed"}),"judy")
+assert(rel.status=="known" and rel.stage=="first" and rel.resolved.met==true)
+assert(story.relationship(snapshot({},{sq026_13_maiko_money=1}),"judy").status=="blocked")
+assert(story.relationship(snapshot({pisces="completed",pyramid_song="completed"},{sq030_judy_lover=1}),"judy").stage=="partner")
+assert(story.relationship({}, "judy").status=="unknown")
+-- 개발 채널: 수동 주입 단계는 unbound 인물에만 받고, 불명은 차단하지 않는다.
+local injected=snapshot();injected.relationshipKnown=true;injected.relationshipStage="relic"
+assert(story.relationship(injected,"viktor").stage=="relic" and story.relationship(injected,"viktor").injected==true)
+assert(story.relationship(injected,"judy").injected==nil)
+assert(story.allowed(snapshot(),"viktor")==true)
+assert(story.allowed(snapshot({},{sq026_13_maiko_money=1}),"judy")==false)
+
+-- 공개 채널: 초안·불명·미검증 binding은 모두 차단. 동일 판정에서 실제 프롬프트도 만들지 못한다.
+config.channel="public";config.allow_draft_content=false
+for _,key in ipairs({"viktor","judy","panam","johnny","jackie"}) do
+  local ok,reason=story.allowed(snapshot(complete),key)
+  assert(ok==false and reason=="binding_unverified",key)
+  assert(not pcall(identity.prepare,{npcKey=key,crowd=false,session=300,context=snapshot(complete),text="안녕"},{},0,{}),key)
+end
+-- 검증된 binding이라도 단계가 불명이면 차단, 확인된 단계만 허용 (검증 상태는 생성 데이터에서만 바뀐다: 모의 데이터).
+local prompts=require("prompts");local saved=prompts.story_data
+local verified=json.decode(saved);for _,item in pairs(verified.bindings) do item.runtime_verified=true end
+prompts.story_data=json.encode(verified);package.loaded.story=nil
+local pub=require("story")
+assert(pub.binding("judy").runtime_verified==true)
+local ok,reason=pub.allowed(snapshot({information="completed"}),"judy");assert(ok==true and reason==nil)
+ok,reason=pub.allowed(snapshot({pyramid_song="active"},{sq030_judy_lover=1}),"judy");assert(ok==false and reason=="stage_unresolved")
+ok,reason=pub.allowed(snapshot({},{sq026_13_maiko_money=1}),"judy");assert(ok==false and reason=="judy_cut_off")
+ok,reason=pub.allowed(injected,"viktor");assert(ok==false and reason=="binding_unverified")
+prompts.story_data=saved;package.loaded.story=nil;story=require("story")
+config.channel="development";config.allow_draft_content=true
+-- config_dev.lua가 없으면(공개 패키지) 공개 채널·초안 차단이 기본이다. 개발 파일이 채널을 속여 true만 줘도 public이면 강제로 false다.
+local keep,keepDev=package.loaded.config,package.loaded.config_dev;package.loaded.config=nil;package.loaded.config_dev=nil
+package.preload.config_dev=function() error("missing") end
+local pubConfig=dofile("game/cet/anpc/config.lua")
+assert(pubConfig.channel=="public" and pubConfig.allow_draft_content==false)
+package.loaded.config_dev=nil;package.preload.config_dev=function() return {channel="public",allow_draft_content=true} end
+pubConfig=dofile("game/cet/anpc/config.lua");assert(pubConfig.allow_draft_content==false)
+package.preload.config_dev=nil;package.loaded.config,package.loaded.config_dev=keep,keepDev
+print("SR-03 인물별 binding·허용 단계·불명/차단 사유·공개 채널 초안/불명 차단 검사 통과")
