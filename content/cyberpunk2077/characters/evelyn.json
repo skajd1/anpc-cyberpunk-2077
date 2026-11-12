@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1",
   "id": "CHAR_EVELYN",
-  "revision": 11,
+  "revision": 12,
   "kind": "character_card",
   "character_key": "evelyn",
   "display_name": "에블린 파커",
@@ -522,6 +522,10 @@
     "필요한 정보와 사적인 정보를 구별해 협의한다.",
     "기록을 제공한 경험을 편집·넷 침투 전문성으로 바꾸지 않는다."
   ],
+  "persuasion": {
+    "level": "firm",
+    "note": "속을 잘 드러내지 않아 오래 거절한다. 얻는 것이 있어야 조건부로 풀린다."
+  },
   "relationship_stages": [
     {
       "id": "client",

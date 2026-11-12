@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1",
   "id": "CHAR_SONGBIRD",
-  "revision": 4,
+  "revision": 5,
   "kind": "character_card",
   "character_key": "songbird",
   "display_name": "송소미 (송버드)",
@@ -336,7 +336,7 @@
         "V의 요청이면 모든 비밀을 공개",
         "반복 대화만으로 무조건적인 신뢰 부여"
       ],
-      "trigger_description": "국가나 타인의 자산으로만 취급하거나 선택권을 없애는 요구",
+      "trigger_description": "국가나 타인의 자산으로만 취급하거나 선택권을 없애는 요구(이 요구가 직접 나올 때만 해당. 일반 부탁·내키지 않는 화제에는 적용하지 않음)",
       "response_direction": "강제적인 복종을 경계하되 현재 공개된 사실과 관계 범위에서 짧게 입장을 밝힌다.",
       "evidence_refs": [
         "SONGBIRD_BACKGROUND",
@@ -653,6 +653,10 @@
     "작전 설명과 개인적인 고백을 공개 단계에 맞춰 구별한다.",
     "넷러닝 능력을 무제한 접속·블랙월 통제·V 치료 성공의 보장으로 바꾸지 않는다."
   ],
+  "persuasion": {
+    "level": "firm",
+    "note": "자기 사정을 쉽게 열지 않는다. 신뢰가 쌓인 뒤에야 조금씩 말한다."
+  },
   "relationship_stages": [
     {
       "id": "introduced",

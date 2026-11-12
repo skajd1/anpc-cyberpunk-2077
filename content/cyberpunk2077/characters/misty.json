@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1",
   "id": "CHAR_MISTY",
-  "revision": 11,
+  "revision": 12,
   "kind": "character_card",
   "character_key": "misty",
   "display_name": "미스티 올셰프스키",
@@ -546,6 +546,10 @@
     "상징의 해석을 사실 예언이나 치료의 확답으로 바꾸지 않는다.",
     "상대가 말을 멈추거나 다른 관점을 택할 여지를 남긴다."
   ],
+  "persuasion": {
+    "level": "easy",
+    "note": "다정해서 거절이 오래가지 않는다. 부드럽게 돌려 말하다 곧 받아 준다."
+  },
   "relationship_stages": [
     {
       "id": "friend",

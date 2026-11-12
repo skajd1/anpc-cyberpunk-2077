@@ -19,6 +19,18 @@ export function validateCorePersonality(core) {
   return structuredClone(core);
 }
 
+// 설득 정도(소프트한 거절이 풀리는 시점)의 기준은 docs/prompt-specification.md 4.4절이다. 카드 값이 없는 군중은 우호성에서 유도한다(CET identity.lua와 같다).
+export const PERSUASION_LEVELS = ['easy', 'moderate', 'firm'];
+export function persuasionFor(persuasion, core) {
+  if (persuasion) {
+    if (!PERSUASION_LEVELS.includes(persuasion.level) || Object.keys(persuasion).some(k => !['level', 'note'].includes(k))
+      || (persuasion.note !== undefined && (typeof persuasion.note !== 'string' || !persuasion.note || persuasion.note.length > 120))) invalid('persuasion은 level(easy|moderate|firm)과 120자 이하 note만 가집니다.');
+    return structuredClone(persuasion);
+  }
+  const level = validateCorePersonality(core).agreeableness;
+  return { level: level >= 4 ? 'easy' : level === 3 ? 'moderate' : 'firm' };
+}
+
 export function personalityInstructions(core, version = PERSONALITY_PROMPT_VERSION) {
   validateCorePersonality(core);
   if (version !== PERSONALITY_PROMPT_VERSION) invalid('지원하지 않는 변환표 버전입니다.');

@@ -1,5 +1,5 @@
 {
-  "content_version": "research-1.8",
+  "content_version": "research-1.9",
   "identity_structure_version": "1.0",
   "status": "조사·작성 후보. 출시 승인 전",
   "runtime_enabled": false,
@@ -33,7 +33,7 @@
     "characters": 12,
     "world_facts": 221,
     "knowledge_entries": 887,
-    "dialogue_examples": 52,
+    "dialogue_examples": 58,
     "knowledge_bundles": 17,
     "relationship_stages": 63,
     "crowd_archetypes": 9

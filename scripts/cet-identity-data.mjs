@@ -11,7 +11,7 @@ export async function buildIdentityData(bundle) {
   return {
     version: manifest.content_version, runtime_enabled: manifest.runtime_enabled, generator_version: 'cet-identity-1.1',
     cards: Object.fromEntries(bundle.cards.filter(c => c.npc_type !== 'crowd').map(c => [c.character_key,
-      pick(c, ['character_key', 'display_name', 'revision', 'review_status', 'runtime_enabled', 'core_personality', 'personal_principles',
+      pick(c, ['character_key', 'display_name', 'revision', 'review_status', 'runtime_enabled', 'core_personality', 'persuasion', 'personal_principles',
         'background', 'lived_context', 'voice_style', 'speech_rules', 'forbidden_claims', 'identity_rules', 'goals', 'relationship_stages',
         'dialogue_conditions', 'knowledge_ids', 'knowledge_profile', 'example_ids', 'fallback_lines', 'everyday_fiction_policy'])])),
     facts: Object.fromEntries(bundle.facts.map(f => [f.id, pick(f, ['id', 'statement', 'review_status', 'validity_condition', 'spoiler_scope',

@@ -101,6 +101,8 @@ for(const c of cards){
  for(const ref of profile?.exposure_background?.evidence_refs??[])check(ids.get(ref)?.kind==='world_fact','노출 배경 근거 오류: '+c.id);
  check(c.identity_structure_version==='1.0'&&c.review_status==='draft'&&c.runtime_enabled===false,'현재 조사 카드 활성 상태 오류: '+c.id);
  check(c.phase_labels.length>0&&c.identity_rules.length>0&&c.example_ids.length>0,'정체성 자료 누락: '+c.id);
+ check(['easy','moderate','firm'].includes(c.persuasion?.level)&&typeof c.persuasion.note==='string'&&c.persuasion.note.length>0&&c.persuasion.note.length<=120&&Object.keys(c.persuasion).every(k=>['level','note'].includes(k)),'설득 정도(persuasion) 오류: '+c.id);
+ for(const r of c.identity_rules)if(r.preferred_intent==='refuse')check(r.trigger_description?.includes('직접 나올 때만'),'거절 규칙 발동 조건 누락: '+r.id);
  condition(c.dialogue_conditions,c.id);
  const stages=c.relationship_stages??[];
  check(stages.length>0&&new Set(stages.map(s=>s.id)).size===stages.length,'관계 단계 누락·중복: '+c.id);

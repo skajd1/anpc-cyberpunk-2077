@@ -1,7 +1,7 @@
 import { selectReadings } from './speech.js';
-import { validateCorePersonality, personalityInstructions, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
+import { validateCorePersonality, personalityInstructions, persuasionFor, generateCrowdPersonality, PERSONALITY_RULE, PERSONALITY_PROMPT_VERSION, PERSONALITY_SCALE_VERSION } from './personality.js';
 import { AMM_MOTIONS } from './motions.js';
-export const PROMPT_VERSION = '0.26';
+export const PROMPT_VERSION = '0.27';
 export const INTENTS = ['answer', 'ask', 'refuse', 'warn', 'farewell'];
 export const EMOTIONS = ['neutral', 'friendly', 'wary', 'annoyed', 'afraid', 'sad', 'curious'];
 // 음성 활성 응답의 말 빠르기. 세부 규칙은 docs/npc-voice-output-specification.md 2절.
@@ -116,7 +116,7 @@ export function assemblePrompt(base, persona, context, playerText, { styleExampl
   let instructions = base.replace('{{OUTPUT_CONTRACT}}', contract);
   if (Object.hasOwn(persona, 'core_personality')) {
     const { core_personality, identity, traits, personality_instructions, ...data } = requestPersona;
-    requestPersona = { personality_instructions: personalityInstructions(core_personality), ...data };
+    requestPersona = { personality_instructions: personalityInstructions(core_personality), ...data, persuasion: persuasionFor(data.persuasion, core_personality) };
     if (!instructions.includes(PERSONALITY_RULE)) instructions += `\n${PERSONALITY_RULE}`;
   }
   if (requestPersona.knowledge_profile) {

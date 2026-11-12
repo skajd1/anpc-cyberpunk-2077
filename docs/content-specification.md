@@ -1,6 +1,6 @@
 # 콘텐츠 데이터 규격
 
-규격 버전: 0.9. 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
+규격 버전: 0.10. 작성 파일: UTF-8 JSON. 모듈 출력: [공통 규격](module-interface-specification.md)의 IdentityProfile/PersonaView/KnowledgeView. 작성 메타데이터·seed·출처 전문은 전송 제외.
 
 신규 성격은 [Big Five 규격](personality-specification.md). 기존 identity/군중 세 슬롯은 호환 입력이며 신규 성격과 동시 적용·자동 환산 금지. 구현 상태: [개발·검증 계획](development-validation.md).
 
@@ -39,6 +39,7 @@ source_checked는 출처 확인만 의미한다. draft 카드/규칙/예시/인�
 | character_key | 문자열 | NPC 식별 규격의 고유 인물 매핑 |
 | core_personality | 신규 필수 객체 | Big Five 규격의 작성된 고정 다섯 수준. 기존 카드에는 별도 전환 필요 |
 | personal_principles | 문자열 목록 | 작성된 개인 원칙. core_personality와 분리하며 금지·지식·관계의 상한을 해제하지 않음 |
+| persuasion | 객체 | community 필수. level(easy/moderate/firm)과 note(120자 이하). 소프트한 거절이 반복 요청에 풀리는 정도이며 하드 리밋·금기·권한은 바꾸지 않음. 군중은 필드 없이 우호성에서 유도. 정의: [프롬프트 4.4절](prompt-specification.md#44-반복-요청과-설득-정도) |
 | identity | 전환 전 객체 | 기존 신념·욕구·두려움·금기·자기 인식의 조사·호환 자료. 신규 요청의 핵심 성격으로 전송하지 않음 |
 | goals | 조건부 목표 목록 | 현재 단계에서 추구하는 목적과 우선순위 |
 | relationship_stages | 단계 목록 | 아래 2.1절. 인물별 오리지널 분기와 관계·사건·목표의 단일 기준 |
@@ -168,11 +169,13 @@ certainty=확실성, depth=설명 범위, disclosure=공개. unknown은 근거 �
 | --- | --- |
 | reaction_rule | priority, condition, topic_ids, action_preferences, prohibited_claims, reaction_tone. 기존 attitude_delta 누적 적용 금지 |
 | 적용 순서 | 금기/지식 → 단계 목표/관계 → 장비/평판 → 말투. 동률 ID순. 금지 우선 |
-| dialogue_example | input, context_condition, expected_intent, sample_dialogue, preferred_actions, rationale. 문체 참고이며 반복 강제/미실행 성공 표현 금지 |
+| dialogue_example | input, context_condition, expected_intent, sample_dialogue, preferred_actions, rationale. 문체 참고이며 반복 강제/미실행 성공 표현 금지. 반복 요청 예시는 input 앞에 `[n번째 요청]`을 붙이고 누그러진 답 또는 문구를 바꾼 하드 리밋 거절을 보인다 |
 
 ### 5.1. 상황별 판단 기준과 근거
 
 identity_rules: trigger_tags, context_condition, value_priority, preferred_intent, prohibited_choices, evidence_refs, review_status(draft/approved).
+
+- preferred_intent가 refuse인 규칙은 하드 리밋(핵심 원칙 위반)이다. trigger_description은 그 요청이 직접 나올 때만 해당하도록 구체적으로 쓰며 일반 부탁·소프트한 거절에 적용하지 않는다.
 
 - 카드 가치/금기·현재 목표/관계 우선. 금지 선택으로 행동 권한 확대 금지.
 - evidence_refs: 오리지널 사실 ID/장면. 장면에는 작품·언어·퀘스트/장면 ID·전후 맥락·관계·검수 요약. 해석/오리지널 구분.

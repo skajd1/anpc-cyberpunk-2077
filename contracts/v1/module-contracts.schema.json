@@ -728,6 +728,27 @@
         }
       }
     },
+    "Persuasion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "easy",
+            "moderate",
+            "firm"
+          ]
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        }
+      }
+    },
     "IdentityProfile": {
       "type": "object",
       "additionalProperties": false,
@@ -780,6 +801,9 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "persuasion": {
+          "$ref": "#/$defs/Persuasion"
         },
         "voice_style": {
           "$ref": "#/$defs/VoiceStyle"
@@ -857,6 +881,9 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "persuasion": {
+          "$ref": "#/$defs/Persuasion"
         },
         "voice_style": {
           "$ref": "#/$defs/VoiceStyle"

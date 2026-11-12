@@ -204,6 +204,12 @@ local function ruleView(rule)
   return {trigger_description=rule.trigger_description or table.concat(tags,", "),value_priority=rule.value_priority,
     response_direction=rule.response_direction,prohibited_choices=rule.prohibited_choices}
 end
+-- 설득 정도의 기준은 docs/prompt-specification.md 4.4절이다. 카드 값이 없는 군중은 우호성에서 유도한다(웹 personality.js persuasionFor와 같다).
+local function persuasionFor(card,core)
+  if card.persuasion then return {level=card.persuasion.level,note=card.persuasion.note} end
+  local a=core.agreeableness
+  return {level=a>=4 and "easy" or a==3 and "moderate" or "firm"}
+end
 function identity.compose(record,request,turns,availableActions)
   local card,snapshot=record.card,request.context
   -- 인물 진행·관계 인지는 story.relationship 한 곳에서 판정한다. 공개 채널은 검증된 binding과 확인된 단계가 없으면 차단한다.
@@ -225,7 +231,7 @@ function identity.compose(record,request,turns,availableActions)
       explanation_level=card.speech_rules.explanation_level,slang_density=card.speech_rules.slang_density,humor_and_profanity_limit=card.speech_rules.humor_and_profanity_limit}
   end
   voice.review_status=nil
-  local persona={persona_id=card.character_key,npc_type=card.npc_type or "community",display_name=card.display_name,personality_instructions=instructions,
+  local persona={persona_id=card.character_key,npc_type=card.npc_type or "community",display_name=card.display_name,personality_instructions=instructions,persuasion=persuasionFor(card,record.core),
     personal_principles=card.personal_principles,voice_style=voice,background={text=card.background.summary},lived_context=card.lived_context,
     forbidden_claims=card.forbidden_claims,knowledge_profile={default_depth=card.knowledge_profile.default_depth or "unknown",response_rules=card.knowledge_profile.response_rules}}
   persona.game_identity=context.npcIdentity(snapshot)

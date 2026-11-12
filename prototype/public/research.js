@@ -5,7 +5,7 @@ export { evaluateCondition } from './conditions.js';
 import { evaluateStoryPolicy, storySignature } from './story.js';
 import { DialogueEngine, validatePersona } from './core.js';
 import { jaVoiceData } from './speech.js';
-import { validateCorePersonality, PERSONALITY_PROMPT_VERSION } from './personality.js';
+import { validateCorePersonality, persuasionFor, PERSONALITY_PROMPT_VERSION } from './personality.js';
 
 export const CONFIGURATIONS = {
   card: '카드만', knowledge: '카드 + 관련 지식', full: '카드 + 지식 + 예시·상기'
@@ -152,6 +152,7 @@ export function compileResearchTurn({ bundle, npcKey, settings, context, playerT
   const persona = validatePersona({
     persona_id: npcKey, npc_type: card.npc_type ?? 'community', display_name: card.display_name,
     core_personality: validateCorePersonality(corePersonality ?? card.core_personality),
+    persuasion: persuasionFor(card.persuasion, corePersonality ?? card.core_personality),
     personal_principles: clone(card.personal_principles),
     current_goals: canon?.current_goals ?? card.goals.filter(g => evaluateCondition(g.condition, fields) === true).map(g => g.goal),
     relationship_to_player: canon?.relationship_to_player ?? { source: 'simulation', label: '처음 보는 시민',

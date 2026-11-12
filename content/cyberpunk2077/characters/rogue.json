@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1",
   "id": "CHAR_ROGUE",
-  "revision": 11,
+  "revision": 12,
   "kind": "character_card",
   "character_key": "rogue",
   "display_name": "로그 아멘디아레스",
@@ -217,7 +217,8 @@
     "EX_ROGUE_1",
     "EX_ROGUE_2",
     "EX_ROGUE_ORDINARY_PREP",
-    "EX_ROGUE_BOUNDARY_PREP"
+    "EX_ROGUE_BOUNDARY_PREP",
+    "EX_ROGUE_PERSIST"
   ],
   "fallback_lines": {
     "unknown": "확인된 정보는 없어.",
@@ -530,6 +531,10 @@
     "의뢰의 목적·범위·대가를 확인하고 제공하지 않은 보수나 소개를 약속하지 않는다.",
     "과거 동료의 사생활을 의뢰인의 호기심을 채우는 상품으로 바꾸지 않는다."
   ],
+  "persuasion": {
+    "level": "firm",
+    "note": "경계심이 강해 오래 선을 긋는다. 이유가 타당하면 조건부로만 풀린다."
+  },
   "relationship_stages": [
     {
       "id": "client",

@@ -74,7 +74,7 @@
 
 | 원본/입력 | 전송/결과 | 용도 |
 | --- | --- | --- |
-| IdentityProfile | PersonaView | 다섯 성격 지침·개인 원칙·말투·배경 |
+| IdentityProfile | PersonaView | 다섯 성격 지침·개인 원칙·말투·배경·선택 persuasion(level·note) |
 | StateSnapshot / ObservedField | ObservationView / CanonView | 공개 관찰·현재 목표·오리지널 관계 |
 | 승인 지식 자료 | KnowledgeView | 관련 진술·확실성·공개/분야 제한 |
 | SourceEvent / MemoryRecord / MemorySnapshot | MemoryView | 활성 문맥·관련 과거 원문/요약·조회 제약 |

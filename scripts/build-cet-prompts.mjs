@@ -5,7 +5,7 @@ import { entityAliases } from '../prototype/public/entities.js';
 import { loadPrototypeData } from '../prototype/server.js';
 import { withTestCrowds } from '../prototype/public/scenario.js';
 import { knowledgeBlockReason, evaluateCondition } from '../prototype/public/research.js';
-import { PERSONALITY_TABLE, PERSONALITY_PROMPT_VERSION } from '../prototype/public/personality.js';
+import { PERSONALITY_TABLE, PERSONALITY_PROMPT_VERSION, persuasionFor } from '../prototype/public/personality.js';
 import { buildIdentityData } from './cet-identity-data.mjs';
 import { AMM_MOTIONS } from '../prototype/public/motions.js';
 import { buildGameStoryData } from './game-story-data.mjs';
@@ -39,6 +39,7 @@ for (const key of KEYS) {
       .filter(f => f.category_id === category.category_id).map(f => f.statement))] })).filter(c => c.statements.length);
   const persona = validatePersona({ persona_id: key, npc_type: card.npc_type ?? 'community', display_name: card.display_name,
     core_personality: card.core_personality,
+    persuasion: persuasionFor(card.persuasion, card.core_personality),
     personal_principles: card.personal_principles, voice_style: card.voice_style, forbidden_claims: card.forbidden_claims,
     background: { text: card.background.summary }, lived_context: { ...card.lived_context,
       },
