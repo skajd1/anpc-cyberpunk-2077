@@ -35,13 +35,14 @@ function fixture(){
     GameMenu:{},ChatPopup:{Create(e,mode,text,caret){runtime.opened.push({mode,text,caret});return {Open(){}};}}};
   for(const [name,args]of [['IsOpen',['game']],['Request',['game']]])env.GameMenu[name]=compile(menuSource,name,args,env);
   env.Entry.FailureMessage=compile(entrySource,'FailureMessage',['status'],env);
+  env.Entry.IdleSeconds=compile(entrySource,'IdleSeconds',[],env);
   env.UTF8StrMid=(t,i,n)=>[...t].slice(i,i+n).join('');env.ToString=String;env.StrContains=(a,b)=>a.includes(b);
   // UF-19/20 제출 검사 본문도 제품 소스(Session.reds)를 그대로 실행한다.
   env.AnpcInput={};
   for(const [name,args]of [['MaxChars',[]],['CharCount',['text']],['IsSpace',['c']],['IsBlank',['text']],['Check',['text']],['Notice',['reason','text']]])env.AnpcInput[name]=compile(popupSource,name,args,env);
   env.ChatPopup.HintText=compile(popupSource,'HintText',[],env);
   // 별도 메뉴 규칙을 복제하지 않고 제품 메서드 본문을 모의 엔진에서 실행한다.
-  for(const [name,args]of [['PrepareGameMenu',[]],['OpenGameMenu',['popup']],['QueueMenuResume',['session']],['OnChatMenuChanged',['inMenu']],['OpenInput',['session']],['SessionEndReason',['session']],['ProtectedReason',['session']],['QueueCancel',['session','requestId']],['CancelPending',['session']],['OnEscape',[]],['OnAIResponse',['requestId','status','text']],['IsWaitingForReply',['requestId']],['OnSubtitleTimer',['callback']],['OnChatClosed',['popup']],['IsChatMenuOpen',[]]]){
+  for(const [name,args]of [['PrepareGameMenu',[]],['OpenGameMenu',['popup']],['QueueMenuResume',['session']],['OnChatMenuChanged',['inMenu']],['OpenInput',['session']],['SessionEndReason',['session']],['ProtectedReason',['session']],['QueueCancel',['session','requestId']],['CancelPending',['session']],['OnEscape',[]],['OnAIResponse',['requestId','status','text']],['IsWaitingForReply',['requestId']],['OnSubtitleTimer',['callback']],['OnChatClosed',['popup']],['IsChatMenuOpen',[]],['NoteActivity',[]],['IdleReason',['session']]]){
     const run=new Function(...Object.keys(env),...args,body(entrySource,name));entry[name]=function(...values){return run.call(this,...Object.values(env),...values);};
   }
   entry.SubmitChat=text=>{runtime.submitted=text;};
@@ -269,6 +270,31 @@ test('UF-19/20 입력칸을 거치지 않는 직접 제출도 같은 검사를 �
     assert.equal(g.session.inputDraft,bad,'입력 유지');assert.equal(g.runtime.messages.length,1);
     assert.ok(g.runtime.timers.some(t=>t.kind===2),'같은 대화의 입력 차례 복귀');
   }
-  const ok=fixture();submitFor(ok)('가'.repeat(200));
+  const ok=fixture();ok.runtime.time=33;submitFor(ok)('가'.repeat(200));assert.equal(ok.session.lastActivity,33,'제출은 UI 활동');
   assert.equal(ok.entry.outbox.length,1);assert.equal(ok.entry.outbox[0].text.length,200);assert.equal(ok.session.pendingRequest,1);
+});
+
+test('UF-31 active 유휴 60초는 입력/UI 활동 기준이며 응답 대기·메뉴 보류와 구분한다',()=>{
+  const watch=f=>f.entry.OnSubtitleTimer({kind:3,session:f.session,epoch:1});
+  let f=fixture();f.session.lastActivity=0;f.session.popup=null;
+  f.runtime.time=60;watch(f);assert.equal(f.runtime.ended.length,0,'정확히 60초는 유지');
+  f.runtime.time=60.5;watch(f);assert.deepEqual(f.runtime.ended,['session_idle']);assert.match(f.runtime.messages[0],/입력이 없어/);
+  // 응답 대기(waiting)는 유휴가 아니라 요청 제한 시간이 적용된다. 대기가 끝나는 순간 기준이 갱신되어 대기 시간이 합산되지 않는다.
+  f=fixture();f.session.lastActivity=0;f.session.popup=null;f.session.pendingRequest=3;f.session.latestRequest=3;
+  f.runtime.time=300;watch(f);assert.equal(f.runtime.ended.length,0);
+  f.entry.OnAIResponse(3,'error:timeout','');assert.equal(f.session.lastActivity,300);
+  f.runtime.time=359;watch(f);assert.equal(f.runtime.ended.length,0);f.runtime.time=361;watch(f);assert.deepEqual(f.runtime.ended,['session_idle']);
+  // 취소로 대기에서 돌아와도 기준이 갱신된다.
+  f=fixture();f.session.lastActivity=0;f.session.popup=null;f.session.pendingRequest=4;f.session.latestRequest=4;
+  f.runtime.time=200;f.entry.OnEscape();assert.equal(f.session.lastActivity,200);f.runtime.time=250;watch(f);assert.equal(f.runtime.ended.length,0);
+  // Tab 메뉴 보류 중에는 유휴가 아니며 복귀하면 기준이 갱신된다.
+  f=fixture();f.session.lastActivity=0;f.runtime.time=100;f.press('tab');assert.ok(f.session.menuSuspended);assert.equal(f.session.lastActivity,100);
+  f.runtime.time=500;watch(f);assert.equal(f.runtime.ended.length,0);
+  f.menu(true);f.menu(false);f.resume();assert.equal(f.session.lastActivity,500);
+  f.runtime.time=555;watch(f);assert.equal(f.runtime.ended.length,0);
+  // 입력칸의 키 입력이 기준을 갱신한다.
+  f=fixture();f.session.lastActivity=0;f.runtime.time=59;f.press('a',{},'press');assert.equal(f.session.lastActivity,59);
+  f.runtime.time=118;watch(f);assert.equal(f.runtime.ended.length,0);f.runtime.time=120;watch(f);assert.deepEqual(f.runtime.ended,['session_idle']);
+  f=fixture();f.session.lastActivity=0;f.runtime.time=40;
+  assert.equal(f.entry.IdleReason(f.session),'');f.runtime.time=61;assert.equal(f.entry.IdleReason(f.session),'session_idle');
 });

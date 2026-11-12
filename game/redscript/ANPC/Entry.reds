@@ -545,6 +545,7 @@ public class Entry extends ScriptableSystem {
     session.id = this.sessionSeq;
     session.pendingRequest = -1;
     session.latestRequest = -1;
+    session.lastActivity = EngineTime.ToFloat(GameInstance.GetSimTime(npc.GetGame()));
     // 군중 화자 이름은 각 입력에서 모델과 같은 스캔 신원 스냅샷으로 갱신한다.
     session.name = crowd ? "" : GetLocalizedText(npc.GetDisplayName());
     this.session = session;
@@ -591,6 +592,24 @@ public class Entry extends ScriptableSystem {
   // 대화 종료 거리. 시작 거리 4m보다 여유를 두며 원작처럼 멀어지면 바로 끊는다.
   public static func LeaveDistance() -> Float { return 6.0; }
 
+  // UF-31/runtime 3절: active에서 입력/UI 조작 없이 이 시간을 넘기면 종료한다. 응답 대기(waiting)는 요청 제한 시간(40초)이 따로 적용된다.
+  public static func IdleSeconds() -> Float { return 60.0; }
+
+  // 입력/UI 조작·응답 대기 종료·메뉴 복귀 때 유휴 기준 시각을 갱신한다.
+  public func NoteActivity() -> Void {
+    let session = this.session;
+    if !IsDefined(session) { return; }
+    session.lastActivity = EngineTime.ToFloat(GameInstance.GetSimTime(this.GetGameInstance()));
+  }
+
+  // 대기 중이거나 Tab 메뉴로 보류 중이면 유휴가 아니다. 대기가 끝나는 순간 기준 시각을 갱신하므로 대기 시간은 유휴에 합산되지 않는다.
+  private func IdleReason(session: ref<ChatSession>) -> String {
+    if session.pendingRequest >= 0 || session.menuSuspended { return ""; }
+    let now = EngineTime.ToFloat(GameInstance.GetSimTime(this.GetGameInstance()));
+    if now - session.lastActivity > Entry.IdleSeconds() { return "session_idle"; }
+    return "";
+  }
+
   public func IsChatMenuOpen() -> Bool {
     return IsDefined(this.session) && this.session.menuSuspended;
   }
@@ -600,6 +619,7 @@ public class Entry extends ScriptableSystem {
     if !IsDefined(session) || session.menuSuspended { return; }
     let reason = this.SessionEndReason(session);
     if NotEquals(reason, "") { this.EndSession(session, reason); return; }
+    this.NoteActivity();
     session.menuSuspended = true;
     session.menuObservedOpen = false;
     session.menuResumeScheduled = false;
@@ -715,6 +735,7 @@ public class Entry extends ScriptableSystem {
     let diagnostics = SceneEntryInstaller.Get();
     if IsDefined(diagnostics) { diagnostics.RecordInput("chat_submit len=" + ToString(StrLen(text)) + " session=" + ToString(IsDefined(session))); }
     if !IsDefined(session) { return; }
+    this.NoteActivity();
     let reason = this.SessionEndReason(session);
     if NotEquals(reason, "") {
       this.EndSession(session, reason);
@@ -777,6 +798,7 @@ public class Entry extends ScriptableSystem {
     let session = this.session;
     if !IsDefined(session) || session.pendingRequest != requestId { return; }
     session.pendingRequest = -1;
+    this.NoteActivity();
     // 표시 직전 보호 조건 재검사. 달라졌으면 대사·행동 없이 세션을 끝낸다.
     let blocked = this.SessionEndReason(session);
     if NotEquals(blocked, "") { this.EndSession(session, blocked); return; }
@@ -835,6 +857,7 @@ public class Entry extends ScriptableSystem {
       if !session.menuSuspended || !session.menuResumeScheduled || GameMenu.IsOpen(game) { return; }
       session.menuSuspended = false;
       session.menuResumeScheduled = false;
+      this.NoteActivity();
       let reason = this.SessionEndReason(session);
       if NotEquals(reason, "") { this.EndSession(session, reason); return; }
       if session.resumeInputAfterMenu && session.pendingRequest < 0 { this.OpenInput(session); }
@@ -878,6 +901,12 @@ public class Entry extends ScriptableSystem {
         this.EndSession(session, watchReason);
         return;
       }
+      let idleReason = this.IdleReason(session);
+      if NotEquals(idleReason, "") {
+        Entry.ShowMessage(game, "[ANPC] 입력이 없어 대화를 종료했습니다.");
+        this.EndSession(session, idleReason);
+        return;
+      }
       if IsDefined(session.control) { session.control.Maintain(); }
       if session.inputDeferred { this.OpenInput(session); }
       this.ScheduleWatch(game);
@@ -914,6 +943,7 @@ public class Entry extends ScriptableSystem {
     if requestId < 0 { return; }
     session.pendingRequest = -1;
     session.latestRequest = -1;
+    this.NoteActivity();
     this.QueueCancel(session, requestId);
     this.HideSubtitles(session);
     let game = this.GetGameInstance();
@@ -928,6 +958,7 @@ public class Entry extends ScriptableSystem {
   public func OnEscape() -> Bool {
     let session = this.session;
     if !IsDefined(session) || session.menuSuspended || IsDefined(session.popup) { return false; }
+    this.NoteActivity();
     if session.pendingRequest >= 0 {
       this.CancelPending(session);
     } else {
@@ -1046,6 +1077,7 @@ public class Entry extends ScriptableSystem {
       return;
     }
     session.pendingRequest = -1;
+    this.NoteActivity();
     let blocked = this.SessionEndReason(session);
     if NotEquals(blocked, "") { this.EndSession(session, blocked); return; }
     let diagnostics = SceneEntryInstaller.Get();
