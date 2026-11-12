@@ -98,6 +98,48 @@ public class AnpcSubtitleCallback extends DelayCallback {
   }
 }
 
+// UF-19/20: 제출 입력 검사. 규칙은 이 한 곳에서만 정의하고 입력칸(Enter)과 Entry.SubmitChat(직접 제출)이 함께 쓴다.
+// 글자 수는 UTF8StrMid의 코드포인트 기준이며 입력을 잘라 보내지 않는다.
+public abstract class AnpcInput {
+  // 첫 게임판 입력칸 기본 길이(UF-20). 생성 출력/전체 문맥 한도와 별개다.
+  public static func MaxChars() -> Int32 { return 200; }
+
+  public static func CharCount(text: String) -> Int32 {
+    let count = 0;
+    while NotEquals(UTF8StrMid(text, count, 1), "") && count < 100000 { count += 1; }
+    return count;
+  }
+
+  // 공백 글자: 스페이스·탭·개행·NBSP(U+00A0)·제로폭 공백(U+200B)·전각 공백(U+3000).
+  public static func IsSpace(c: String) -> Bool {
+    let spaces = " \t\r\n ​　";
+    return StrContains(spaces, c);
+  }
+
+  public static func IsBlank(text: String) -> Bool {
+    let i = 0;
+    let c = UTF8StrMid(text, i, 1);
+    while NotEquals(c, "") {
+      if !AnpcInput.IsSpace(c) { return false; }
+      i += 1;
+      c = UTF8StrMid(text, i, 1);
+    }
+    return true;
+  }
+
+  // 0 허용, 1 비었거나 공백만, 2 길이 초과. 200자는 허용하고 201자부터 거부한다.
+  public static func Check(text: String) -> Int32 {
+    if AnpcInput.IsBlank(text) { return 1; }
+    if AnpcInput.CharCount(text) > AnpcInput.MaxChars() { return 2; }
+    return 0;
+  }
+
+  public static func Notice(reason: Int32, text: String) -> String {
+    if reason == 1 { return "내용을 입력해주세요."; }
+    return "입력은 " + ToString(AnpcInput.MaxChars()) + "자 이하여야 합니다 (현재 " + ToString(AnpcInput.CharCount(text)) + "자). 줄여서 다시 보내주세요.";
+  }
+}
+
 // 중앙 하단에 입력칸과 안내 한 줄만 둔다. 게임 입력은 ModalPopup 게임 문맥으로만 막고
 // 화면 상태 전환·비네트·시간 감속·배경 흐림은 쓰지 않는다(화면 상태 전환 시 게임 화면이 검게 가려졌다).
 // 입력칸이 떠 있는 동안 자막이 보이지 않아 V 차례에만 연다.
@@ -116,6 +158,8 @@ public class ChatPopup extends InGamePopup {
   private let held: array<EInputKey>;
   private let pendingClose: Bool;
   private let pendingText: String;
+  private let hint: ref<inkText>;
+  private let noticeShown: Bool;
 
   public static func Create(entry: ref<Entry>, hangulMode: Bool, opt draft: String, opt caret: Int32) -> ref<ChatPopup> {
     let popup = new ChatPopup();
@@ -126,7 +170,24 @@ public class ChatPopup extends InGamePopup {
     return popup;
   }
 
+  public static func HintText() -> String { return "Enter 보내기 · Esc 종료 · Tab 캐릭터/인벤토리 · 한/영 또는 Shift+Space 전환"; }
+
   public func WasSubmitted() -> Bool { return this.submitted; }
+
+  // 거부 사유를 안내 줄에 표시한다. 다음 키 입력에서 기본 안내로 돌아간다.
+  private func ShowNotice(text: String) -> Void {
+    if !IsDefined(this.hint) { return; }
+    this.hint.SetText(text);
+    this.hint.SetOpacity(1.0);
+    this.noticeShown = true;
+  }
+
+  private func ClearNotice() -> Void {
+    if !this.noticeShown || !IsDefined(this.hint) { return; }
+    this.noticeShown = false;
+    this.hint.SetText(ChatPopup.HintText());
+    this.hint.SetOpacity(0.7);
+  }
 
   public func GetDraft() -> String {
     this.input.FinishComposition();
@@ -192,7 +253,8 @@ public class ChatPopup extends InGamePopup {
     this.input = HangulTextInput.Create();
     this.input.SetName(n"input");
     this.input.SetWidth(1100.0);
-    this.input.SetMaxLength(200);
+    this.input.SetMaxLength(AnpcInput.MaxChars());
+    this.input.SetMaxChars(AnpcInput.MaxChars());
     this.input.SetHangulMode(this.startHangul);
     this.input.SetText(this.startText);
     this.input.SetCaretPosition(this.startCaret);
@@ -210,8 +272,9 @@ public class ChatPopup extends InGamePopup {
     hint.SetOpacity(0.7);
     hint.SetStyle(r"base\\gameplay\\gui\\common\\main_colors.inkstyle");
     hint.BindProperty(n"tintColor", n"MainColors.Red");
-    hint.SetText("Enter 보내기 · Esc 종료 · Tab 캐릭터/인벤토리 · 한/영 또는 Shift+Space 전환");
+    hint.SetText(ChatPopup.HintText());
     hint.Reparent(column);
+    this.hint = hint;
     this.UpdateMode();
   }
 
@@ -251,6 +314,7 @@ public class ChatPopup extends InGamePopup {
     let key = event.GetKey();
     if Equals(event.GetAction(), EInputAction.IACT_Press) {
       if !ArrayContains(this.held, key) { ArrayPush(this.held, key); }
+      this.ClearNotice();
       return;
     }
     if NotEquals(event.GetAction(), EInputAction.IACT_Release) { return; }
@@ -266,7 +330,12 @@ public class ChatPopup extends InGamePopup {
     if Equals(key, EInputKey.IK_Enter) {
       this.input.FinishComposition();
       let text = this.input.GetText();
-      if StrLen(text) == 0 { return; }
+      // UF-19/20: 공백뿐이거나 200자를 넘으면 전송하지 않고 입력을 그대로 둔다(자르지 않는다).
+      let reason = AnpcInput.Check(text);
+      if reason != 0 {
+        this.ShowNotice(AnpcInput.Notice(reason, text));
+        return;
+      }
       this.input.Clear();
       this.submitted = true;
       this.RequestClose(text);

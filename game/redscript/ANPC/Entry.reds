@@ -722,6 +722,16 @@ public class Entry extends ScriptableSystem {
     }
     let player: ref<PlayerPuppet> = session.player;
     let game = player.GetGame();
+    // UF-19/20: 입력칸을 거치지 않은 직접 제출도 같은 검사를 통과해야 한다. 거부하면 요청·자막·기억 없이
+    // 입력을 그대로 돌려 같은 대화의 입력 차례로 복귀한다(자르지 않는다).
+    let inputReason = AnpcInput.Check(text);
+    if inputReason != 0 {
+      session.inputDraft = text;
+      session.inputDraftCaret = AnpcInput.CharCount(text);
+      Entry.ShowMessage(game, "[ANPC] " + AnpcInput.Notice(inputReason, text));
+      this.ScheduleSubtitle(game, AnpcSubtitleCallback.Reopen(), this.NextSubtitleId(), 0.1);
+      return;
+    }
     this.HideSubtitles(session);
     let playerLine = this.NextSubtitleId();
     AnpcSubtitles.Show(game, playerLine, player, "V", text);

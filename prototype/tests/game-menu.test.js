@@ -35,17 +35,23 @@ function fixture(){
     GameMenu:{},ChatPopup:{Create(e,mode,text,caret){runtime.opened.push({mode,text,caret});return {Open(){}};}}};
   for(const [name,args]of [['IsOpen',['game']],['Request',['game']]])env.GameMenu[name]=compile(menuSource,name,args,env);
   env.Entry.FailureMessage=compile(entrySource,'FailureMessage',['status'],env);
+  env.UTF8StrMid=(t,i,n)=>[...t].slice(i,i+n).join('');env.ToString=String;env.StrContains=(a,b)=>a.includes(b);
+  // UF-19/20 제출 검사 본문도 제품 소스(Session.reds)를 그대로 실행한다.
+  env.AnpcInput={};
+  for(const [name,args]of [['MaxChars',[]],['CharCount',['text']],['IsSpace',['c']],['IsBlank',['text']],['Check',['text']],['Notice',['reason','text']]])env.AnpcInput[name]=compile(popupSource,name,args,env);
+  env.ChatPopup.HintText=compile(popupSource,'HintText',[],env);
   // 별도 메뉴 규칙을 복제하지 않고 제품 메서드 본문을 모의 엔진에서 실행한다.
   for(const [name,args]of [['PrepareGameMenu',[]],['OpenGameMenu',['popup']],['QueueMenuResume',['session']],['OnChatMenuChanged',['inMenu']],['OpenInput',['session']],['SessionEndReason',['session']],['ProtectedReason',['session']],['QueueCancel',['session','requestId']],['CancelPending',['session']],['OnEscape',[]],['OnAIResponse',['requestId','status','text']],['IsWaitingForReply',['requestId']],['OnSubtitleTimer',['callback']],['OnChatClosed',['popup']],['IsChatMenuOpen',[]]]){
     const run=new Function(...Object.keys(env),...args,body(entrySource,name));entry[name]=function(...values){return run.call(this,...Object.values(env),...values);};
   }
   entry.SubmitChat=text=>{runtime.submitted=text;};
   const popup={entry,closing:false,held:[],pendingClose:false,pendingText:'',submitted:false,GetGame:()=>runtime,
-    input:{text:'안녕하세요',caret:3,FinishComposition(){runtime.finished=true;},GetText(){return this.text;},GetCaretPosition(){return this.caret;},Clear(){this.text='';}},
+    hint:{text:'기본',opacity:0.7,SetText(t){this.text=t;},SetOpacity(o){this.opacity=o;}},noticeShown:false,
+    input:{text:'안녕하세요',composing:'',caret:3,FinishComposition(){runtime.finished=true;this.text+=this.composing;this.composing='';},GetText(){return this.text;},GetCaretPosition(){return this.caret;},Clear(){this.text='';}},
     IsHangulMode:()=>false,Close(){this.closing=true;runtime.closes=(runtime.closes??0)+1;entry.OnChatClosed(this);},WasSubmitted(){return this.submitted;}};
   const keyEnv={...env,EInputAction:{IACT_Release:'release',IACT_Press:'press'},EInputKey:{IK_Tab:'tab',IK_Enter:'enter',IK_Escape:'escape'},
     StrLen:s=>s.length,ArrayContains:(a,v)=>a.includes(v),ArrayPush:(a,v)=>a.push(v),ArrayRemove:(a,v)=>{const i=a.indexOf(v);if(i>=0)a.splice(i,1);},ChatCloseTimeout:class{}};
-  for(const [name,args]of [['GetDraft',[]],['GetDraftCaret',[]],['OnChatKey',['event']],['RequestClose',['text']],['FinishClose',[]]]){
+  for(const [name,args]of [['GetDraft',[]],['GetDraftCaret',[]],['OnChatKey',['event']],['RequestClose',['text']],['FinishClose',[]],['ShowNotice',['text']],['ClearNotice',[]]]){
     const run=new Function(...Object.keys(keyEnv),...args,body(popupSource,name));popup[name]=function(...values){return run.call(this,...Object.values(keyEnv),...values);};
   }
   session.popup=popup;
@@ -207,4 +213,62 @@ test('SR-06/UF-59 비용 한도 차단은 한도 도달 사유와 설정 위치�
   f.entry.OnAIResponse(12,'error:budget_exceeded','');
   assert.equal(f.runtime.messages.length,1);assert.match(f.runtime.messages[0],/비용 한도에 도달/);assert.match(f.runtime.messages[0],/ANPC 비용 설정/);
   assert.equal(f.session.pendingRequest,-1);assert.ok(f.runtime.timers.some(t=>t.kind===2),'같은 대화의 입력 차례 복귀');
+});
+
+test('UF-19 공백만/빈 입력은 전송하지 않고 입력을 유지하며 호출·자막·기억을 만들지 않는다',()=>{
+  const blanks=['','   ','\t\n','\r\n ','\u00a0','\u200b','\u3000\u3000',' \u3000\t\u200b '];
+  for(const blank of blanks){
+    const f=fixture();f.popup.input.text=blank;
+    f.press('enter');
+    assert.equal(f.runtime.submitted,undefined,JSON.stringify(blank));assert.equal(f.runtime.closes,undefined);
+    assert.equal(f.popup.input.text,blank,'입력 유지');assert.equal(f.popup.submitted,false);
+    assert.equal(f.runtime.ended.length,0);assert.equal(f.runtime.delayed.length,0);
+    assert.match(f.popup.hint.text,/내용을 입력/);assert.equal(f.popup.hint.opacity,1);
+    // 다음 키 입력에서 기본 안내로 돌아간다.
+    f.press('a',{},'press');assert.equal(f.popup.hint.text,'Enter 보내기 · Esc 종료 · Tab 캐릭터/인벤토리 · 한/영 또는 Shift+Space 전환');assert.equal(f.popup.hint.opacity,0.7);
+  }
+  // 공백이 섞인 실제 글자는 그대로 전송한다(앞뒤 공백을 임의로 바꾸지 않는다).
+  const g=fixture();g.popup.input.text='  안녕  ';g.press('enter');assert.equal(g.runtime.submitted,'  안녕  ');
+});
+
+test('UF-20 200자 제출 경계: 200자는 전송, 201자는 자르지 않고 거부하며 허용 길이를 안내한다',()=>{
+  const f=fixture();f.popup.input.text='가'.repeat(200);f.press('enter');
+  assert.equal(f.runtime.submitted.length,200);
+  const over=fixture();over.popup.input.text='가'.repeat(201);over.press('enter');
+  assert.equal(over.runtime.submitted,undefined);assert.equal(over.popup.input.text.length,201,'입력을 자르지 않는다');
+  assert.match(over.popup.hint.text,/200자 이하/);assert.match(over.popup.hint.text,/현재 201자/);
+  // 편집해 줄이면 다시 보낼 수 있다.
+  over.popup.input.text='가'.repeat(200);over.press('enter');assert.equal(over.runtime.submitted.length,200);
+  // 코드포인트 기준: 이모지·한자도 1글자로 센다.
+  assert.equal(fixture().env.AnpcInput.CharCount('a😀한'),3);
+  assert.equal(fixture().env.AnpcInput.Check('😀'.repeat(200)),0);assert.equal(fixture().env.AnpcInput.Check('😀'.repeat(201)),2);
+});
+
+test('UF-19/20 조합 중인 글자는 Enter에서 확정한 뒤 검사·전송한다',()=>{
+  const f=fixture();f.popup.input.text='가나';f.popup.input.composing='다';
+  f.press('enter');
+  assert.equal(f.runtime.finished,true);assert.equal(f.runtime.submitted,'가나다');
+  // 조합 확정 글자가 201번째면 거부한다.
+  const g=fixture();g.popup.input.text='가'.repeat(200);g.popup.input.composing='나';
+  g.press('enter');assert.equal(g.runtime.submitted,undefined);assert.equal(g.popup.input.text.length,201);
+  // 공백뿐인 입력에 조합 글자가 있으면 글자가 있는 입력이다.
+  const h=fixture();h.popup.input.text='  ';h.popup.input.composing='가';h.press('enter');assert.equal(h.runtime.submitted,'  가');
+});
+
+test('UF-19/20 입력칸을 거치지 않는 직접 제출도 같은 검사를 통과해야 한다',()=>{
+  const submitFor=g=>{
+    const env={...g.env,AnpcSubtitleCallback:Object.assign(class{},g.env.AnpcSubtitleCallback),SceneEntryInstaller:{Get:()=>null},
+      AnpcSubtitles:{Show(){}},GameContext:{Collect:()=>({npcIdentity:null})},GetLocalizedText:t=>t,AnpcRequest:class{}};
+    const run=new Function(...Object.keys(env),'text',body(entrySource,'SubmitChat'));
+    g.session.popup=null;g.session.subtitles=[];g.entry.outbox=[];g.entry.requestSeq=0;
+    return text=>run.call(g.entry,...Object.values(env),text);
+  };
+  for(const bad of ['','   ','\u3000','가'.repeat(201)]){
+    const g=fixture();submitFor(g)(bad);
+    assert.equal(g.entry.outbox.length,0,JSON.stringify(bad));assert.equal(g.session.pendingRequest,-1);
+    assert.equal(g.session.inputDraft,bad,'입력 유지');assert.equal(g.runtime.messages.length,1);
+    assert.ok(g.runtime.timers.some(t=>t.kind===2),'같은 대화의 입력 차례 복귀');
+  }
+  const ok=fixture();submitFor(ok)('가'.repeat(200));
+  assert.equal(ok.entry.outbox.length,1);assert.equal(ok.entry.outbox[0].text.length,200);assert.equal(ok.session.pendingRequest,1);
 });

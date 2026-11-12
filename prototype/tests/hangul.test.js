@@ -72,3 +72,33 @@ test('UF-62 Tab은 한글 조합만 확정하고 입력 문자나 기본 커서 
   processKey.call(ui,{GetKey:()=>keys.IK_Tab,IsShiftDown:()=>false,IsControlDown:()=>false,IsAltDown:()=>false},keys,(a,b)=>a===b,Composer,{},String,()=>{});
   assert.equal(finished,1);assert.equal(base,0);
 });
+
+// UF-20: 조합이 커밋 글자를 밀어내며 최대 길이를 넘기지 못하게 한다(제품 ApplyComposition 본문 실행).
+const applyBody = source.split('  private func ApplyComposition(committed: String, incoming: String) -> Void {')[1]
+  .split('\n  }\n')[0];
+const applyComposition = new Function('StrLen', 'committed', 'incoming', translate(applyBody));
+function editor(text, max, composeLen = 0) {
+  const chars = [...text]; let resets = 0;
+  const ui = {
+    maxChars: max, composeLen, composePos: composeLen ? chars.length - 1 : 0,
+    composer: { Reset() { resets++; } },
+    m_text: { GetLength: () => chars.length, DeleteCharAt: i => chars.splice(i, 1), InsertCharAt: (i, c) => chars.splice(i, 0, c),
+      DeleteCharRange: (a, b) => chars.splice(a, b - a), GetText: () => chars.join('') },
+    m_selection: { IsEmpty: () => true, SetMaxPosition() {}, Clear() {} },
+    m_caret: { GetPosition: () => chars.length, SetMaxPosition() {}, SetPosition() {} },
+    m_measurer: { MeasureAllChars() {} }, UpdateLayout() {}, TriggerChangeCallback() {},
+  };
+  return { ui, chars, resets: () => resets };
+}
+test('UF-20 조합 글자가 있는 상태에서 커밋+새 조합이 최대 길이를 넘기면 커밋만 남기고 조합을 접는다', () => {
+  const run = (ui, committed, composing) => applyComposition.call(ui, s => [...s].length, committed, composing);
+  // 199글자 + 조합 1글자(=200). 다음 자음이 오면 커밋 글자와 새 조합이 겹쳐 201이 될 상황.
+  let e = editor('가'.repeat(199) + '나', 200, 1);
+  run(e.ui, '나', 'ㄱ');
+  assert.equal(e.chars.length, 200); assert.equal(e.resets(), 1); assert.equal(e.ui.composeLen, 0);
+  // 여유가 있으면 평소처럼 커밋+조합 둘 다 넣는다.
+  e = editor('가'.repeat(150) + '나', 200, 1); run(e.ui, '나', 'ㄱ');
+  assert.equal(e.chars.length, 152); assert.equal(e.resets(), 0); assert.equal(e.ui.composeLen, 1);
+  // 제한이 없으면(0) 기존 동작을 유지한다.
+  e = editor('가'.repeat(199) + '나', 0, 1); run(e.ui, '나', 'ㄱ'); assert.equal(e.chars.length, 201);
+});

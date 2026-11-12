@@ -249,6 +249,8 @@ public class HangulTextInput extends HubTextInput {
   private let hangulMode: Bool;
   private let composePos: Int32;
   private let composeLen: Int32;
+  // 0이면 제한 없음. 조합이 커밋 글자를 밀어내 최대 길이를 넘기지 않게 한다(UF-20).
+  private let maxChars: Int32;
 
   public static func Create() -> ref<HangulTextInput> {
     let self = new HangulTextInput();
@@ -260,6 +262,8 @@ public class HangulTextInput extends HubTextInput {
   }
 
   public func IsHangulMode() -> Bool { return this.hangulMode; }
+
+  public func SetMaxChars(value: Int32) -> Void { this.maxChars = value; }
 
   public func SetHangulMode(value: Bool) -> Void {
     this.FinishComposition();
@@ -342,7 +346,14 @@ public class HangulTextInput extends HubTextInput {
   }
 
   // 조합 중 글자를 committed + composing으로 바꾸고 전체 글자 폭을 다시 잰다(측정은 캐시를 쓴다).
-  private func ApplyComposition(committed: String, composing: String) -> Void {
+  private func ApplyComposition(committed: String, incoming: String) -> Void {
+    let composing = incoming;
+    // 커밋 글자와 새 조합 글자가 함께 늘어나 최대 길이를 넘기면 커밋만 남기고 조합을 접는다.
+    let overflow = this.maxChars > 0 && StrLen(committed) > 0 && StrLen(composing) > 0 && this.m_text.GetLength() - this.composeLen + 2 > this.maxChars;
+    if overflow {
+      composing = "";
+      this.composer.Reset();
+    }
     let pos: Int32;
     if this.composeLen > 0 {
       pos = this.composePos;
